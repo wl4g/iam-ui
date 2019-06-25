@@ -84,6 +84,7 @@ export default {
 
     ],
     groupData:[],
+    namespaces:[],
     envirData: [],
     instanceData:[],
     envirFormData: [],
@@ -107,6 +108,7 @@ export default {
   mounted () {
     this.getGroup();
     this.getData();
+    this.getNamespace();
   },
       // 删除一列
   methods: {
@@ -351,6 +353,26 @@ export default {
             fn: data => {
               if(data.code == 200){
                 this.groupData = data.data.grouplist;
+              }else{
+                this.$alert(data.message, '错误', {
+                  confirmButtonText: '确定'
+                });
+              }
+            },
+            errFn: () => {
+              this.$alert('访问失败，请稍后重试！', '错误', {
+                confirmButtonText: '确定',
+              });
+            }
+          })
+        },
+
+        // 在字典获取配置文件名
+        getNamespace() {
+          this.$$api_configguration_getByType({
+            fn: data => {
+              if(data.code == 200){
+                this.namespaces = data.data.dicts;
               }else{
                 this.$alert(data.message, '错误', {
                   confirmButtonText: '确定'

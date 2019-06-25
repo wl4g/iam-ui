@@ -69,5 +69,11 @@ export default [
     method: 'statistics',
     path: '/srm/statistics/statisticsLog',
     type: 'json'
+  },
+  {
+    name: '根据type获取字典',
+    method: 'getByType',
+    path: '/scm/dict/getByType?type=app_ns_type',
+    type: 'json'
   }
 ]

@@ -109,11 +109,21 @@
                       :data="ruleForm.tableData2"
                       style="width: 100%">
                       <!-- 动态标签 -->
-                      <el-table-column prop="filename" label="Filename" min-width="130">
+                      <el-table-column prop="namespaceId" label="NamespaceId" min-width="290">
                           <template scope="scope">
-                            <el-form-item :prop="'tableData2.' + scope.$index + '.filename'" :rules='rules.filename' >
+                            
+                            <el-select v-model="scope.row.namespaceId"  placeholder="namespace" v-bind:disabled="isedit">
+                              <el-option
+                                  v-for="item in namespaces"
+                                  :key="item.id"
+                                  :label="item.value"
+                                  :value="item.id">
+                              </el-option>
+                            </el-select>
+
+                            <!-- <el-form-item :prop="'tableData2.' + scope.$index + '.filename'" :rules='rules.filename' >
                               <el-input size="small" class="mm" v-model="scope.row.filename" placeholder="Please filename" ></el-input> 
-                            </el-form-item>
+                            </el-form-item> -->
                           </template>
                       </el-table-column>
                       <el-table-column prop="type" label="Type" min-width="130">
