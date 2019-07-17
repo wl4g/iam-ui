@@ -3,22 +3,23 @@
 
     <header class="head-nav">
       <el-row>
-        <el-col :span="4" class='logo-container' style="width:14%">
+        <el-col :span="4" class='logo-container' style="width:13%">
           <img src="../../assets/logo-sm.png" class='logo' alt="">
         </el-col>
         <el-col :span="16" style="width:68.66667%">
-          <p style="height:60px;line-height:60px">Spring Cloud DevOps Admin Platform</p>
-          <!-- <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
+
+            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
                    mode="horizontal" unique-opened router>
-            <!- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)' -->
-            <!-- <el-menu-item -->
-              <!-- v-for='(item,index) in $router.options.routes'
+            <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
+            <el-menu-item
+              v-for='(item,index) in $router.options.routes'
               :index="item.path"
               :key='item.path'
-              v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'> -->
-              <!-- {{item.name}}{{item.path}} -->
-            <!-- </el-menu-item> -->
-          <!-- </el-menu> --> 
+              v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
+               {{item.name}}<!--{{item.path}}-->
+             </el-menu-item>
+          </el-menu>
+
         </el-col>
         <el-col :span="4" class="userinfo">
           <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->

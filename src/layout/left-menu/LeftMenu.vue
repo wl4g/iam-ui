@@ -1,7 +1,7 @@
 <template>
 
   <div class="left" :style="{'height':win_size.height,'width':$store.state.leftmenu.width}" id='admin-left'>
-    <div class="acm">应用配置管理 ACM</div>
+    <!--<div class="acm">应用配置管理 ACM</div>-->
     <div id='left-menu'>
         <el-row class="tac">
           <el-col :span="24">

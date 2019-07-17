@@ -9,6 +9,7 @@ import Demo from './demo/'
 import Components from './components/'
 import Scm from './scm/'
 import Srm from './srm/'
+import Ci from './ci'
 
 export {
   Login,
@@ -18,4 +19,5 @@ export {
   Components,
   Scm,
   Srm,
+  Ci,
 }

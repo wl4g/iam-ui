@@ -19,6 +19,7 @@ import configguration from './configguration/'
 import instanceman from './instanceman/'
 import historic from './historic/'
 import track from './track/'
+import ci from './ci/'
 export default [{
   module: 'user',
   name: '用户管理',
@@ -59,4 +60,8 @@ export default [{
   module: 'track',
   name: '版本管理',
   list: track
+},{
+  module: 'ci',
+  name: '部署管理',
+  list: ci
 }]

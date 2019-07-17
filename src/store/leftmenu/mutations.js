@@ -6,7 +6,7 @@ export default {
     state.menu_flag = true
   },
   [types.SET_MENU_CLOSE] (state) {
-    state.width = '50px'
+    state.width = '1px'
     state.menu_flag = false
   }
 }

@@ -60,7 +60,6 @@ export default {
       value2: new Date(),
       value3: new Date(),
       websocket: null,
-      total: 0,
       _timeOut: '',
       textarea: "2018-11-14 13:13:18.496  INFO 4931 --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=56/n2018-11-14 13:13:18.496  INFO 4931 --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=58",
       ruleForm: {

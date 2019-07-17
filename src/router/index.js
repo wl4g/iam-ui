@@ -14,6 +14,7 @@ import Function from './function/'
 import Demo from './demo/'
 import components from './components/'
 import Main from './main/'
+import Ci from './ci/'
 
 export default new Router({
   routes: [
@@ -30,7 +31,8 @@ export default new Router({
       hidden: true,
       component: Login
     },
-    Function,
+    //Function,
     Main,
+    Ci,
   ]
 })

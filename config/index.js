@@ -24,7 +24,7 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: 8080,
-    autoOpenBrowser: true,
+    autoOpenBrowser: false,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     devtool: 'eval-source-map',
@@ -34,7 +34,14 @@ module.exports = {
         target: 'http://localhost:14043',
         changeOrigin: true,
         pathRewrite: {
-          '^/scm': 'scm'
+          '^/scm': 'scm-server'
+        }
+      },
+      '/ci-server': {
+        target: 'http://localhost:14047',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ci-server': 'ci-server'
         }
       },
     },
