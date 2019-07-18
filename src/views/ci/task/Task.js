@@ -146,7 +146,6 @@ export default {
         //双击
         doubleClickRow(row, column, event) {
             this.detailVisible = true;
-
             this.$$api_ci_taskDetail({
                 data: {
                     taskId: row.id,
@@ -168,8 +167,10 @@ export default {
                     });
                 }
             })
+        },
 
-
+        detail(row){
+            this.doubleClickRow(row);
         },
 
         //获取实例名称
@@ -268,6 +269,7 @@ export default {
                     instances: this.buildForm.instances.toString(),
                 },
                 fn: data => {
+                    this.dialogLoading = false;
                     if (data.code == 200) {
                         this.dialogVisible = false;
                         this.getData();
@@ -277,13 +279,12 @@ export default {
                             confirmButtonText: '确定'
                         });
                     }
-                    this.dialogLoading = false;
                 },
                 errFn: () => {
+                    this.dialogLoading = false;
                     this.$alert('访问失败，请稍后重试！', '错误', {
                         confirmButtonText: '确定',
                     });
-                    this.dialogLoading = false;
                 }
             })
         },

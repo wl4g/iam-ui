@@ -56,12 +56,11 @@
                     <!--<el-table-column prop="envRemark" label="Environment" min-width="120"></el-table-column>
                     <el-table-column prop="host" label="Host"></el-table-column>-->
 
-                    <!--<el-table-column label="Operation" min-width="100">
+                    <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="addOne(1,scope.row)">Edit</el-button>
-                            <el-button @click="details(scope.row)" type="text" size="small">Detail</el-button>
+                            <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
                         </template>
-                    </el-table-column>-->
+                    </el-table-column>
 
                 </el-table>
             </template>
@@ -110,7 +109,7 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="Instance:" prop="instances">
+                <el-form-item label="Branch:" prop="instances">
                     <el-input v-model="buildForm.branch" placeholder="分支名"></el-input>
                 </el-form-item>
 
@@ -139,7 +138,16 @@
                         <el-table :data="detailForm.taskDetails" style="width: 100%" >
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="instanceName" label="Instance"></el-table-column>
-                            <el-table-column prop="status" label="status" :formatter="convertStatus"></el-table-column>
+
+                            <el-table-column prop="status" label="Status" :formatter="convertStatus"></el-table-column>
+                            <el-table-column prop="result" label="Result" min-width="100" >
+                                <template slot-scope="scope">
+                                    <el-popover placement="right" width="400" trigger="click">
+                                        <el-input type="textarea" :rows="30" placeholder="暂无数据" class="mytextarea" :readonly="true" v-model="scope.row.result"></el-input>
+                                        <el-button slot="reference">Detail</el-button>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
                         </el-table>
                     </template>
                 </div>
