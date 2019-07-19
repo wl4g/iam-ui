@@ -107,5 +107,11 @@ export default [
         path: '/ci-server/trigger/del',
         type: 'post'
     },
+    {
+        name: '校验cron',
+        method: 'checkCron',
+        path: '/ci-server/trigger/cronNextExecTime',
+        type: 'post'
+    },
 
 ]

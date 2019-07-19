@@ -24,6 +24,8 @@ export default {
                 tarType: '',
                 remark: '',
                 enable: '1',
+                type: '',
+                cron: '',
 
                 //other
                 group: '',
@@ -54,6 +56,8 @@ export default {
                 taskDetails: [],
                 result:''
             },
+
+            checkResult: '',
 
         }
     },
@@ -98,6 +102,8 @@ export default {
                         this.saveForm.tarType = data.data.trigger.tarType;
                         this.saveForm.remark = data.data.trigger.remark;
                         this.saveForm.enable = data.data.trigger.enable;
+                        this.saveForm.type = data.data.trigger.type;
+                        this.saveForm.cron = data.data.trigger.cron;
 
                         this.saveForm.group = data.data.appGroupId;
 
@@ -185,6 +191,8 @@ export default {
                     tarType: this.saveForm.tarType.toString(),
                     remark: this.saveForm.remark,
                     enable: this.saveForm.enable.toString(),
+                    type: this.saveForm.type,
+                    cron: this.saveForm.cron,
                 },
                 fn: data => {
                     this.dialogLoading = false;
@@ -217,6 +225,9 @@ export default {
             this.saveForm.enable = '1';
             this.saveForm.group = '';
             this.saveForm.environment = '';
+
+            this.saveForm.type = '';
+            this.saveForm.cron = '';
         },
 
         delTrigger(row){
@@ -356,6 +367,38 @@ export default {
                 }
             })
         },
+
+
+        checkCron(){
+            this.$$api_ci_checkCron({
+                data: {
+                    expression: this.saveForm.cron,
+                    numTimes: 5,
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        //delete success
+                        console.info(data.data);
+                        if(data.data.validExpression){
+                            this.checkResult = data.data.nextExecTime;
+                        }else{
+                            this.checkResult = 'Expression unvalid';
+                        }
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        }
 
 
     }
