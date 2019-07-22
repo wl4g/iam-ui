@@ -67,6 +67,7 @@ export default {
         dic2.set(1, "进行");
         dic2.set(2, "成功");
         dic2.set(3, "失败");
+        dic2.set(4, "超时");
         this.dictData.set("ci_task_status", dic2);
 
     },
@@ -293,6 +294,44 @@ export default {
             this.buildForm.group = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
+        },
+
+        rollbackTask(row, column, event) {
+            this.$confirm('回滚操作, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+
+                this.$$api_ci_rollbackTask({
+                    data: {
+                        taskId: row.id,
+                    },
+                    fn: data => {
+                        if (data.code == 200) {
+                            this.$message({
+                                type: 'success',
+                                message: '操作成功!'
+                            });
+                            this.getData();
+                        } else {
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定'
+                            });
+                        }
+                    },
+                    errFn: () => {
+                        this.$alert('访问失败，请稍后重试！', '错误', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
+            }).catch(() => {
+                /*this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });*/
+            });
         },
 
 

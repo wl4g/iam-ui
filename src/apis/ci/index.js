@@ -23,6 +23,12 @@ export default [
         path: '/ci-server/task/detail',
         type: 'post'
     },
+    {
+        name: '回滚',
+        method: 'rollbackTask',
+        path: '/ci-server/task/rollback',
+        type: 'post'
+    },
 
     //project
     {
@@ -55,6 +61,13 @@ export default [
         path: '/ci-server/project/all',
         type: 'post'
     },
+    {
+        name: '解锁项目',
+        method: 'unlock',
+        path: '/ci-server/project/unlock',
+        type: 'post'
+    },
+
 
     //dependency
     {

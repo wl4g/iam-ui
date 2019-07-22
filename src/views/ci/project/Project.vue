@@ -38,6 +38,13 @@
                     <el-table-column prop="gitUrl" label="Git" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
 
+                    <!--<el-table-column prop="lockStatus" label="LockStatus" :formatter="convertLockStatus"></el-table-column>-->
+                    <el-table-column prop="lockStatus" label="LockStatus" :formatter="convertLockStatus">
+                        <template slot-scope="scope">
+                            <el-button size="small" :disabled="convertLockStatusDisable(scope.row)" @click="unlock(scope.row)">{{convertLockStatus(scope.row)}}</el-button>
+                        </template>
+
+                    </el-table-column>
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">

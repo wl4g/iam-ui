@@ -32,7 +32,7 @@
 
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="parentName" label="Parent"></el-table-column>
-                    <el-table-column prop="parentBranch" label="ParentBranch"></el-table-column>
+                    <el-table-column prop="branch" label="ParentBranch"></el-table-column>
 
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
 
@@ -67,8 +67,8 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Parent:" prop="parentId">
-                            <el-select v-model="saveForm.parentId" placeholder="父项目">
+                        <el-form-item label="Dependent:" prop="dependentId">
+                            <el-select v-model="saveForm.dependentId" placeholder="父项目">
                                 <el-option
                                         v-for="item in ProjectData"
                                         :key="item.id"
@@ -79,8 +79,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Parent Branch:" prop="parentBranch">
-                            <el-input v-model="saveForm.parentBranch" placeholder="父项目分支"></el-input>
+                        <el-form-item label="Parent Branch:" prop="branch">
+                            <el-input v-model="saveForm.branch" placeholder="父项目分支"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

@@ -19,8 +19,8 @@ export default {
             saveForm: {
                 id: '',
                 projectId: '',
-                parentId: '',
-                parentBranch: '',
+                dependentId: '',
+                branch: '',
             },
 
             dialogVisible: false,
@@ -163,8 +163,8 @@ export default {
                 data: {
                     id: this.saveForm.id,
                     projectId: this.saveForm.projectId,
-                    parentId: this.saveForm.parentId,
-                    parentBranch: this.saveForm.parentBranch,
+                    dependentId: this.saveForm.dependentId,
+                    branch: this.saveForm.branch,
                 },
                 fn: data => {
                     this.dialogLoading = false;
@@ -190,8 +190,8 @@ export default {
         cleanSaveForm() {
             this.saveForm.id = '';
             this.saveForm.projectId = '';
-            this.saveForm.parentId = '';
-            this.saveForm.parentBranch = '';
+            this.saveForm.dependentId = '';
+            this.saveForm.branch = '';
         },
 
         delDependency(row){

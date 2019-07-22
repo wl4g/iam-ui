@@ -233,6 +233,66 @@ export default {
                     });
                 }
             })
+        },
+
+        convertLockStatus(row) {
+            console.info("into"+ row.id);
+            if(row.lockStatus==1){
+                return '解锁';
+            }else{
+                return '非锁定';
+            }
+        },
+
+        convertLockStatusDisable(row){
+            if(row.lockStatus==1){
+                return false;
+            }else{
+                return true;
+            }
+        },
+
+        unlock(row){
+            if(!row.id){
+                return;
+            }
+            this.$confirm('解锁操作, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_ci_unlock({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+                        if (data.code == 200) {
+                            this.$message({
+                                type: 'success',
+                                message: '操作成功!'
+                            });
+                            this.getData();
+                        } else {
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定'
+                            });
+                        }
+                    },
+                    errFn: () => {
+                        this.$alert('访问失败，请稍后重试！', '错误', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
+            }).catch(() => {
+                /*this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });*/
+            });
+
+
+
         }
 
 

@@ -50,7 +50,7 @@
 
 
                     <el-table-column prop="status" label="Status" :formatter="convertStatus"></el-table-column>
-                    <el-table-column prop="result" label="Result" :show-overflow-tooltip="true"></el-table-column>
+                    <!--<el-table-column prop="result" label="Result" :show-overflow-tooltip="true"></el-table-column>-->
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
 
                     <!--<el-table-column prop="envRemark" label="Environment" min-width="120"></el-table-column>
@@ -59,6 +59,7 @@
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
+                            <el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
                         </template>
                     </el-table-column>
 
