@@ -3,9 +3,17 @@
 
     <header class="head-nav">
       <el-row>
-        <el-col :span="4" class='logo-container' style="width:13%">
+        <el-col :span="4" class='logo-container' style="width:5%">
           <img src="../../assets/logo-sm.png" class='logo' alt="">
         </el-col>
+          <!--<el-col :span="4" class='logo-container' style="width:8%;text-align:center;line-height:50px" >
+              <el-link disabled >Devops</el-link>
+          </el-col>-->
+          <el-col :span="4" class='logo-container' style="width:8%" >
+                  <a style="font-size:30px;line-height:55px;" width="100%"  disabled >Devops</a>
+          </el-col>
+
+
         <el-col :span="16" style="width:68.66667%">
 
             <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"

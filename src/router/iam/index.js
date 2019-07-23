@@ -6,10 +6,10 @@ import { Home , Content } from 'layout/'
 import Main  from './main'
 
 export default {
-  path: '/ci',
-  name: 'CI/CD',
+  path: '/iam',
+  name: 'IAM',
   icon: 'inbox',
   component: Home,Content,
-  redirect: '/ci/task',
+  redirect: '/iam/online',
   children:Main,
 }

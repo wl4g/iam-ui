@@ -6,15 +6,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-// import { Home } from 'layout/'
 import { Login } from 'views/'
 
-import Adv from './adv/'
-import Function from './function/'
-import Demo from './demo/'
-import components from './components/'
-import Main from './main/'
+import Scm from './scm/'
 import Ci from './ci/'
+import Umc from './umc/'
+import Iam from './iam/'
+import Srm from './srm/'
+
 
 export default new Router({
   routes: [
@@ -32,7 +31,11 @@ export default new Router({
       component: Login
     },
     //Function,
-    Main,
+    Umc,
+    Iam,
+    Srm,
+    Scm,
     Ci,
+
   ]
 })

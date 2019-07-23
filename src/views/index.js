@@ -10,6 +10,8 @@ import Components from './components/'
 import Scm from './scm/'
 import Srm from './srm/'
 import Ci from './ci'
+import Umc from './umc'
+import Iam from './iam'
 
 export {
   Login,
@@ -20,4 +22,6 @@ export {
   Scm,
   Srm,
   Ci,
+  Umc,
+  Iam
 }
