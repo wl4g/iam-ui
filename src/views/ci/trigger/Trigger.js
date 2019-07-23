@@ -50,11 +50,11 @@ export default {
 
             //详情
             detailVisible: false,
-            detailForm:{
+            detailForm: {
                 group: '',
                 branch: '',
                 taskDetails: [],
-                result:''
+                result: ''
             },
 
             checkResult: '',
@@ -85,7 +85,7 @@ export default {
 
         //edit
         editTrigger(row) {
-            if(!row.id){
+            if (!row.id) {
                 return;
             }
             this.dialogVisible = true;
@@ -230,8 +230,8 @@ export default {
             this.saveForm.cron = '';
         },
 
-        delTrigger(row){
-            if(!row.id){
+        delTrigger(row) {
+            if (!row.id) {
                 return;
             }
             this.$$api_ci_delTrigger({
@@ -279,16 +279,16 @@ export default {
 
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght_ ins:"+this.instanceData.length);
-                        for(let i=0;i<this.instanceData.length;i++){
-                            console.info("check:"+this.instanceData[i].id);
-                            console.info("check2:"+this.saveForm.instances);
-                            if(this.instanceData[i].id==this.saveForm.instances[0]){
+                        console.info("lenght_ ins:" + this.instanceData.length);
+                        for (let i = 0; i < this.instanceData.length; i++) {
+                            console.info("check:" + this.instanceData[i].id);
+                            console.info("check2:" + this.saveForm.instances);
+                            if (this.instanceData[i].id == this.saveForm.instances[0]) {
                                 needClean = false;
                                 break;
                             }
                         }
-                        if(needClean){
+                        if (needClean) {
                             this.saveForm.instances = [];
                         }
 
@@ -323,14 +323,14 @@ export default {
                         this.envirData = data.data.envlist;
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght:"+this.envirData.length);
-                        for(let i=0;i<this.envirData.length;i++){
-                            if(this.envirData[i].id==this.saveForm.environment){
+                        console.info("lenght:" + this.envirData.length);
+                        for (let i = 0; i < this.envirData.length; i++) {
+                            if (this.envirData[i].id == this.saveForm.environment) {
                                 needClean = false;
                                 break;
                             }
                         }
-                        if(needClean){
+                        if (needClean) {
                             this.saveForm.environment = "";
                             this.saveForm.instances = [];
                         }
@@ -369,7 +369,7 @@ export default {
         },
 
 
-        checkCron(){
+        checkCron() {
             this.$$api_ci_checkCron({
                 data: {
                     expression: this.saveForm.cron,
@@ -380,9 +380,9 @@ export default {
                     if (data.code == 200) {
                         //delete success
                         console.info(data.data);
-                        if(data.data.validExpression){
+                        if (data.data.validExpression) {
                             this.checkResult = data.data.nextExecTime;
-                        }else{
+                        } else {
                             this.checkResult = 'Expression unvalid';
                         }
                     } else {
@@ -398,7 +398,19 @@ export default {
                     });
                 }
             })
-        }
+        },
+
+        convertType(row) {
+            if (row.type == 4) {
+                return '调度';
+            }
+            if (row.type == 1) {
+                return '钩子';
+            }
+            return '--';
+
+
+        },
 
 
     }

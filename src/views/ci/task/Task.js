@@ -42,11 +42,11 @@ export default {
 
             //详情
             detailVisible: false,
-            detailForm:{
+            detailForm: {
                 group: '',
                 branch: '',
                 taskDetails: [],
-                result:''
+                result: ''
             },
 
         }
@@ -170,7 +170,7 @@ export default {
             })
         },
 
-        detail(row){
+        detail(row) {
             this.doubleClickRow(row);
         },
 
@@ -290,7 +290,7 @@ export default {
             })
         },
 
-        cleanBuildForm(){
+        cleanBuildForm() {
             this.buildForm.group = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';

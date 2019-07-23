@@ -33,9 +33,13 @@
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="branchName" label="branchName"></el-table-column>
 
+                    <el-table-column prop="type" label="type">
+                        <template slot-scope="scope">
+                            {{convertType(scope.row)}}
+                        </template>
+                    </el-table-column>
+
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-
-
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="editTrigger(scope.row)">Edit</el-button>
@@ -116,9 +120,9 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="Type:" prop="type">
-                            <el-select v-model="saveForm.type"  placeholder="类型" style="width: 100%;">
-                                <el-option label="调度" :value="4" ></el-option>
-                                <el-option label="钩子" :value="1" ></el-option>
+                            <el-select v-model="saveForm.type" placeholder="类型" style="width: 100%;">
+                                <el-option label="调度" :value="4"></el-option>
+                                <el-option label="钩子" :value="1"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -126,7 +130,7 @@
                         <el-form-item label="Cron:" prop="cron" v-if="saveForm.type==4">
                             <!--<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>-->
                             <el-popover placement="right" width="200" trigger="focus" title="最近5次运行时间:">
-                                <el-input type="textarea" :rows="10" placeholder="暂无数据"  :readonly="true" v-model="checkResult"></el-input>
+                                <el-input type="textarea" :rows="10" placeholder="暂无数据" :readonly="true" v-model="checkResult"></el-input>
                                 <el-input slot="reference" v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>
                             </el-popover>
 
@@ -138,10 +142,10 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="PackType:" prop="tarType">
-                            <el-select v-model="saveForm.tarType"  placeholder="打包类型" style="width: 100%;">
-                                <el-option label="tar" :value="1" ></el-option>
-                                <el-option disabled label="jar" :value="2" ></el-option>
-                                <el-option disabled label="docker" :value="3" ></el-option>
+                            <el-select v-model="saveForm.tarType" placeholder="打包类型" style="width: 100%;">
+                                <el-option label="tar" :value="1"></el-option>
+                                <el-option disabled label="jar" :value="2"></el-option>
+                                <el-option disabled label="docker" :value="3"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

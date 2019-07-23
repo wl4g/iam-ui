@@ -38,11 +38,11 @@ export default {
 
             //详情
             detailVisible: false,
-            detailForm:{
+            detailForm: {
                 group: '',
                 branch: '',
                 taskDetails: [],
-                result:''
+                result: ''
             },
 
         }
@@ -70,7 +70,7 @@ export default {
 
         //edit
         editDependency(row) {
-            if(!row.id){
+            if (!row.id) {
                 return;
             }
 
@@ -194,8 +194,8 @@ export default {
             this.saveForm.branch = '';
         },
 
-        delDependency(row){
-            if(!row.id){
+        delDependency(row) {
+            if (!row.id) {
                 return;
             }
             this.$$api_ci_delDependency({

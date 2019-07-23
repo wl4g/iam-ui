@@ -39,7 +39,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width: 100%" >
+                <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="groupName" label="Group"></el-table-column>
@@ -66,7 +66,7 @@
                 </el-table>
             </template>
         </div>
-        <el-pagination background layout="prev, pager, next":total="total" @current-change='currentChange'></el-pagination>
+        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================add build task================================-->
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
@@ -98,9 +98,9 @@
                 <el-form-item label="Instance:" prop="instances">
                     <el-select v-model="buildForm.instances" multiple placeholder="请选择">
 
-                            <!--<el-option label="ALL" value=""></el-option>
-                            <el-option label="a" value="1"></el-option>
-                            <el-option label="b" value="2"></el-option>-->
+                        <!--<el-option label="ALL" value=""></el-option>
+                        <el-option label="a" value="1"></el-option>
+                        <el-option label="b" value="2"></el-option>-->
                         <el-option
                                 v-for="item in instanceData"
                                 :key="item.id"
@@ -136,12 +136,12 @@
 
                 <div>
                     <template>
-                        <el-table :data="detailForm.taskDetails" style="width: 100%" >
+                        <el-table :data="detailForm.taskDetails" style="width: 100%">
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="instanceName" label="Instance"></el-table-column>
 
                             <el-table-column prop="status" label="Status" :formatter="convertStatus"></el-table-column>
-                            <el-table-column prop="result" label="Result" min-width="100" >
+                            <el-table-column prop="result" label="Result" min-width="100">
                                 <template slot-scope="scope">
                                     <el-popover placement="right" width="400" trigger="click">
                                         <el-input type="textarea" :rows="30" placeholder="暂无数据" class="mytextarea" :readonly="true" v-model="scope.row.result"></el-input>
@@ -182,6 +182,7 @@
         height: 70vh;
         overflow-y: auto;
     }
+
     .mytextarea .el-textarea__inner {
         height: 100%;
         color: #aaa;

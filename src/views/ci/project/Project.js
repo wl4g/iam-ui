@@ -41,11 +41,11 @@ export default {
 
             //详情
             detailVisible: false,
-            detailForm:{
+            detailForm: {
                 group: '',
                 branch: '',
                 taskDetails: [],
-                result:''
+                result: ''
             },
 
         }
@@ -73,7 +73,7 @@ export default {
 
         //edit
         editPriject(row) {
-            if(!row.id){
+            if (!row.id) {
                 return;
             }
 
@@ -207,8 +207,8 @@ export default {
             this.saveForm.remark = '';
         },
 
-        delProject(row){
-            if(!row.id){
+        delProject(row) {
+            if (!row.id) {
                 return;
             }
             this.$$api_ci_delProject({
@@ -236,24 +236,24 @@ export default {
         },
 
         convertLockStatus(row) {
-            console.info("into"+ row.id);
-            if(row.lockStatus==1){
+            console.info("into" + row.id);
+            if (row.lockStatus == 1) {
                 return '解锁';
-            }else{
+            } else {
                 return '非锁定';
             }
         },
 
-        convertLockStatusDisable(row){
-            if(row.lockStatus==1){
+        convertLockStatusDisable(row) {
+            if (row.lockStatus == 1) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         },
 
-        unlock(row){
-            if(!row.id){
+        unlock(row) {
+            if (!row.id) {
                 return;
             }
             this.$confirm('解锁操作, 是否继续?', '提示', {
@@ -290,7 +290,6 @@ export default {
                     message: '已取消删除'
                 });*/
             });
-
 
 
         }

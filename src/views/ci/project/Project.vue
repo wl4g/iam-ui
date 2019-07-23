@@ -30,7 +30,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width: 100%" >
+                <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="groupName" label="Group"></el-table-column>
@@ -56,7 +56,7 @@
                 </el-table>
             </template>
         </div>
-        <el-pagination background layout="prev, pager, next":total="total" @current-change='currentChange'></el-pagination>
+        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
@@ -111,8 +111,6 @@
         </el-dialog>
 
 
-
-
     </section>
 </template>
 
@@ -129,6 +127,7 @@
         height: 70vh;
         overflow-y: auto;
     }
+
     .mytextarea .el-textarea__inner {
         height: 100%;
         color: #aaa;
