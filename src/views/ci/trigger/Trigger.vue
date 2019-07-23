@@ -117,13 +117,13 @@
                     <el-col :span="12">
                         <el-form-item label="Type:" prop="type">
                             <el-select v-model="saveForm.type"  placeholder="类型" style="width: 100%;">
-                                <el-option label="调度" :value="1" ></el-option>
-                                <el-option label="钩子" :value="2" ></el-option>
+                                <el-option label="调度" :value="4" ></el-option>
+                                <el-option label="钩子" :value="1" ></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Cron:" prop="cron" v-if="saveForm.type==1">
+                        <el-form-item label="Cron:" prop="cron" v-if="saveForm.type==4">
                             <!--<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>-->
                             <el-popover placement="right" width="200" trigger="focus" title="最近5次运行时间:">
                                 <el-input type="textarea" :rows="10" placeholder="暂无数据"  :readonly="true" v-model="checkResult"></el-input>
