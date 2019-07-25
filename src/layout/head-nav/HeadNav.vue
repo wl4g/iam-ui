@@ -14,8 +14,7 @@
           </el-col>
 
 
-        <el-col :span="16" style="width:68.66667%">
-
+        <el-col :span="16" style="width:66%">
             <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
                    mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->

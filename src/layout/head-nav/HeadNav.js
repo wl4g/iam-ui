@@ -77,7 +77,12 @@ export default {
         this.$store.dispatch('remove_userinfo').then(() => {
           this.$router.push('/login')
         })
-      })
+      }).catch(() => {
+        /*this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });*/
+      });
     },
 
     /**

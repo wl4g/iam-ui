@@ -145,7 +145,7 @@
                             <el-select v-model="saveForm.tarType" placeholder="打包类型" style="width: 100%;">
                                 <el-option label="tar" :value="1"></el-option>
                                 <el-option disabled label="jar" :value="2"></el-option>
-                                <el-option disabled label="docker" :value="3"></el-option>
+                                <el-option label="docker" :value="3"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

@@ -24,6 +24,7 @@ export default {
                 instances: [],
                 branch: '',
                 desc: '',
+                tarType: '',
             },
             dialogVisible: false,
             dialogTitle: '',
@@ -268,6 +269,7 @@ export default {
                     appGroupId: this.buildForm.group,
                     branchName: this.buildForm.branch,
                     instances: this.buildForm.instances.toString(),
+                    tarType: this.buildForm.tarType,
                 },
                 fn: data => {
                     this.dialogLoading = false;
@@ -294,6 +296,7 @@ export default {
             this.buildForm.group = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
+            this.buildForm.tarType = '';
         },
 
         rollbackTask(row, column, event) {
