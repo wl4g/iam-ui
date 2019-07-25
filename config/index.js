@@ -38,7 +38,7 @@ module.exports = {
         }
       },
       '/ci-server': {
-        target: 'http://localhost:14047',
+        target: 'http://localhost:14046',
         changeOrigin: true,
         pathRewrite: {
           '^/ci-server': 'ci-server'
