@@ -67,6 +67,12 @@ export default [
         path: '/ci-server/project/unlock',
         type: 'post'
     },
+    {
+        name: '获取分支列表',
+        method: 'getBranchs',
+        path: '/ci-server/project/getBranchs',
+        type: 'post'
+    },
 
 
     //dependency

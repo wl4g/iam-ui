@@ -73,59 +73,94 @@
             <el-form :inline="true" label-width="80px" size="mini" :model="buildForm" ref="buildForm"
                      class="demo-form-inline">
 
-                <el-form-item label="Group:" prop="group">
-                    <el-select v-model="buildForm.group" @change="getenvir()" placeholder="Please group">
-                        <el-option
-                                v-for="item in groupData"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item label="Group:" prop="group">
+                            <el-select v-model="buildForm.group" @change="getenvir()" placeholder="Please group">
+                                <el-option
+                                        v-for="item in groupData"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-form-item label="Env:" prop="environment">
+                            <el-select v-model="buildForm.environment" @change="getinstance()" placeholder="Please Env">
+                                <el-option
+                                        v-for="item in envirData"
+                                        :key="item.id"
+                                        :label="item.remark"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
 
-                <el-form-item label="Env:" prop="environment">
-                    <el-select v-model="buildForm.environment" @change="getinstance()" placeholder="Please Env">
-                        <el-option
-                                v-for="item in envirData"
-                                :key="item.id"
-                                :label="item.remark"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item label="Instance:" prop="instances">
+                            <el-select v-model="buildForm.instances" multiple placeholder="请选择">
 
-                <el-form-item label="Instance:" prop="instances">
-                    <el-select v-model="buildForm.instances" multiple placeholder="请选择">
+                                <!--<el-option label="ALL" value=""></el-option>
+                                <el-option label="a" value="1"></el-option>
+                                <el-option label="b" value="2"></el-option>-->
+                                <el-option
+                                        v-for="item in instanceData"
+                                        :key="item.id"
+                                        :label="item.host"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-form-item label="PackType:" prop="tarType">
+                            <el-select v-model="buildForm.tarType" placeholder="打包类型" style="width: 100%;">
+                                <el-option label="tar" :value="1"></el-option>
+                                <el-option disabled label="jar" :value="2"></el-option>
+                                <el-option disabled label="docker" :value="3"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
 
-                        <!--<el-option label="ALL" value=""></el-option>
-                        <el-option label="a" value="1"></el-option>
-                        <el-option label="b" value="2"></el-option>-->
-                        <el-option
-                                v-for="item in instanceData"
-                                :key="item.id"
-                                :label="item.host"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
 
-                <el-form-item label="Branch:" prop="instances">
-                    <el-input v-model="buildForm.branch" placeholder="分支名"></el-input>
-                </el-form-item>
 
-                <el-form-item label="PackType:" prop="tarType">
-                    <el-select v-model="buildForm.tarType" placeholder="打包类型" style="width: 100%;">
-                        <el-option label="tar" :value="1"></el-option>
-                        <el-option disabled label="jar" :value="2"></el-option>
-                        <el-option label="docker" :value="3"></el-option>
-                    </el-select>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item label="Branch Type:" prop="tarOrBranch" >
+                            <el-switch v-model="buildForm.tagOrBranch" @change="getBranchs"
+                                       :on-value="2" :off-value="1"
+                                       on-text="tag" off-text="branch"
+                                       on-color="#20A0FF" off-color="#13CE66" :width="80">
+                            </el-switch>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="Branch:" prop="branch">
+                            <!--<el-input v-model="buildForm.branch" placeholder="分支名" style="width: 100%;"></el-input>-->
+
+                            <el-select v-model="buildForm.branch" placeholder="branch" style="width: 100%;">
+                                <el-option
+                                        v-for="item in branchs"
+                                        :key="item"
+                                        :label="item"
+                                        :value="item">
+                                </el-option>
+                            </el-select>
+
+                        </el-form-item>
+                    </el-col>
+                </el-row>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="createTask()">Create</el-button>
-                <el-button @click="dialogVisible = false;if(!isedit){instancelist=[]}">Cancel</el-button>
+                <el-button @click="dialogVisible = false;">Cancel</el-button>
           </span>
         </el-dialog>
 

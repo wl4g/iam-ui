@@ -25,6 +25,7 @@ export default {
                 branch: '',
                 desc: '',
                 tarType: '',
+                tagOrBranch: '1',
             },
             dialogVisible: false,
             dialogTitle: '',
@@ -34,6 +35,7 @@ export default {
             groupData: [],
             envirData: [],
             instanceData: [],
+            branchs: [],
 
             //列表Data
             tableData: [],
@@ -237,6 +239,7 @@ export default {
                     });
                 }
             })
+            this.getBranchs();
         },
 
         // 获取分组名称
@@ -285,6 +288,34 @@ export default {
                 },
                 errFn: () => {
                     this.dialogLoading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+
+        getBranchs() {
+            console.info(this.buildForm.group);
+            console.info(this.buildForm.tagOrBranch);
+
+            this.$$api_ci_getBranchs({
+                data: {
+                    appGroupId: this.buildForm.group,
+                    tarOrBranch: this.buildForm.tagOrBranch,
+                },
+                fn: data => {
+                    if (data.code == 200) {
+                        console.info(this.buildForm.group);
+                        this.branchs=data.data.branchNames;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
                     this.$alert('访问失败，请稍后重试！', '错误', {
                         confirmButtonText: '确定',
                     });
