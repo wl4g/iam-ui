@@ -26,6 +26,7 @@ export default {
                 parentAppHome: '',
                 linkAppHome: '',
                 remark: '',
+                restartCommand: '',
             },
 
             dialogVisible: false,
@@ -171,6 +172,7 @@ export default {
                     gitUrl: this.saveForm.gitUrl,
                     tarPath: this.saveForm.tarPath,
                     parentAppHome: this.saveForm.parentAppHome,
+                    restartCommand: this.saveForm.restartCommand,
                     linkAppHome: this.saveForm.linkAppHome,
                     remark: this.saveForm.remark,
                 },
@@ -203,6 +205,7 @@ export default {
             this.saveForm.gitUrl = '';
             this.saveForm.tarPath = '';
             this.saveForm.parentAppHome = '';
+            this.saveForm.restartCommand = '',
             this.saveForm.linkAppHome = '';
             this.saveForm.remark = '';
         },

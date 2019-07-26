@@ -12,9 +12,9 @@ export default [
         type: 'post'
     },
     {
-        name: '创建任务',
-        method: 'createTask',
-        path: '/ci-server/task/create',
+        name: '保存任务',
+        method: 'saveTask',
+        path: '/ci-server/task/save',
         type: 'post'
     },
     {
@@ -24,9 +24,37 @@ export default [
         type: 'post'
     },
     {
+        name: '删除任务',
+        method: 'delTask',
+        path: '/ci-server/task/del',
+        type: 'post'
+    },
+
+
+
+    //taskhis
+    {
+        name: '任务列表',
+        method: 'taskHisList',
+        path: '/ci-server/taskHis/list',
+        type: 'post'
+    },
+    {
+        name: '创建任务',
+        method: 'createTaskHis',
+        path: '/ci-server/taskHis/create',
+        type: 'post'
+    },
+    {
+        name: '任务详情',
+        method: 'taskHisDetail',
+        path: '/ci-server/taskHis/detail',
+        type: 'post'
+    },
+    {
         name: '回滚',
-        method: 'rollbackTask',
-        path: '/ci-server/task/rollback',
+        method: 'rollbackTaskHis',
+        path: '/ci-server/taskHis/rollback',
         type: 'post'
     },
 

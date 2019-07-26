@@ -1,20 +1,15 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'task',
+    name: 'taskhis',
     data() {
         return {
 
             //查询条件
             searchParams: {
-                id: '',
-                taskName: '',
                 groupName: '',
                 projectName: '',
-                branchName: '',
-                tarType:'',
-                startDate:'',
-                endDate:'',
+                branchName: ''
             },
 
             //分页信息
@@ -24,8 +19,6 @@ export default {
 
             //弹窗表单
             buildForm: {
-                id: '',
-                taskName: '',
                 group: '',
                 environment: '',
                 instances: [],
@@ -33,9 +26,6 @@ export default {
                 desc: '',
                 tarType: '',
                 tagOrBranch: '1',
-
-                preCommand: '',
-                postCommand: '',
             },
             dialogVisible: false,
             dialogTitle: '',
@@ -50,6 +40,17 @@ export default {
             //列表Data
             tableData: [],
 
+            //字典
+            dictData: new Map(),
+
+            //详情
+            detailVisible: false,
+            detailForm: {
+                group: '',
+                branch: '',
+                taskDetails: [],
+                result: ''
+            },
 
         }
     },
@@ -58,17 +59,32 @@ export default {
         this.getData();
         this.getGroup();
 
+        const dic = new Map();
+        dic.set(1, "钩子触发");
+        dic.set(2, "手动部署");
+        dic.set(3, "回滚");
+        this.dictData.set("ci_task_type", dic);
+
+        const dic2 = new Map();
+        dic2.set(0, "创建");
+        dic2.set(1, "进行");
+        dic2.set(2, "成功");
+        dic2.set(3, "失败");
+        dic2.set(4, "超时");
+        this.dictData.set("ci_task_status", dic2);
+
     },
 
     methods: {
+
         onSubmit() {
             //this.loading = true;
+
             this.getData();
         },
 
-        add() {
+        create() {
             console.info("open create taskhis window")
-            this.cleanBuildForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
         },
@@ -85,20 +101,11 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_ci_taskList({
+            this.$$api_ci_taskHisList({
                 data: {
-
-                    id: this.searchParams.id,
-                    taskName: this.searchParams.taskName,
-
                     groupName: this.searchParams.groupName,
                     projectName: this.searchParams.projectName,
                     branchName: this.searchParams.branchName,
-
-                    tarType: this.searchParams.tarType,
-                    startDate: this.searchParams.startDate,
-                    endDate: this.searchParams.endDate,
-
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -124,18 +131,50 @@ export default {
 
 
         //Dict convert
+        getDatagridDict(category, cellValue) {
+            var dictGroup = this.dictData.get(category);
+            var result = dictGroup.get(cellValue);
+            //TODO add format tag
+            return result;
+        },
+
+        convertType(row, column, cellValue, index) {
+            return this.getDatagridDict("ci_task_type", cellValue);
+        },
+
+        convertStatus(row, column, cellValue, index) {
+            return this.getDatagridDict("ci_task_status", cellValue);
+        },
 
 
-        convertTarType(row, column, cellValue, index) {
-            if(cellValue=="1"){
-                return "tar";
-            }else if(cellValue=="2"){
-                return "jar";
-            }else if(cellValue=="3"){
-                return "docker";
-            }else{
+        //双击
+        doubleClickRow(row, column, event) {
+            this.detailVisible = true;
+            this.$$api_ci_taskHisDetail({
+                data: {
+                    taskId: row.id,
+                },
+                fn: data => {
+                    if (data.code == 200) {
+                        this.detailForm = data.data;
+                        console.info(data.data);
 
-            }
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        detail(row) {
+            this.doubleClickRow(row);
         },
 
         //获取实例名称
@@ -143,7 +182,7 @@ export default {
             var groupId = this.buildForm.group;
             var environmentId = this.buildForm.environment;
             this.instanceData = [];
-
+            this.buildForm.instances = [];
             if (environmentId == "" || groupId == "") {
                 return;
             }
@@ -155,20 +194,9 @@ export default {
                 fn: data => {
                     if (data.code == 200) {
                         this.instanceData = data.data.instancelist;
-                        //判断要不要清空选中
-                        var needClean = true;
-                        console.info("lenght_ ins:" + this.instanceData.length);
-                        for (let i = 0; i < this.instanceData.length; i++) {
-                            console.info("check:" + this.instanceData[i].id);
-                            console.info("check2:" + this.buildForm.instances);
-                            if (this.instanceData[i].id == this.buildForm.instances[0]) {
-                                needClean = false;
-                                break;
-                            }
-                        }
-                        if (needClean) {
-                            this.buildForm.instances = [];
-                        }
+                        console.info(groupId);
+                        console.info(environmentId);
+                        console.info(data.data.instancelist);
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -186,6 +214,7 @@ export default {
         //获取环境名称
         getenvir() {
             this.envirData = [];
+            this.buildForm.environment = "";
             var groupId = this.buildForm.group;
             if (groupId == "") {
                 return;
@@ -198,19 +227,6 @@ export default {
                     if (data.code == 200) {
                         this.instanceData = [];
                         this.envirData = data.data.envlist;
-                        //判断要不要清空选中
-                        var needClean = true;
-                        console.info("lenght:" + this.envirData.length);
-                        for (let i = 0; i < this.envirData.length; i++) {
-                            if (this.envirData[i].id == this.buildForm.environment) {
-                                needClean = false;
-                                break;
-                            }
-                        }
-                        if (needClean) {
-                            this.buildForm.environment = "";
-                            this.buildForm.instances = [];
-                        }
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -246,30 +262,24 @@ export default {
             })
         },
 
-        save() {
+        createTask() {
             console.info(this.buildForm.group);
             console.info(this.buildForm.instances.toString());
             console.info(this.buildForm.branch);
-
             this.dialogLoading = true;
-            this.$$api_ci_saveTask({
+            this.$$api_ci_createTaskHis({
                 data: {
-                    id: this.buildForm.id,
-                    taskName: this.buildForm.taskName,
                     appGroupId: this.buildForm.group,
                     branchName: this.buildForm.branch,
-                    instance: this.buildForm.instances.toString(),
+                    instances: this.buildForm.instances.toString(),
                     tarType: this.buildForm.tarType,
-                    branchType: this.buildForm.tagOrBranch,
-                    preCommand: this.buildForm.preCommand,
-                    postCommand: this.buildForm.postCommand,
                 },
                 fn: data => {
                     this.dialogLoading = false;
                     if (data.code == 200) {
                         this.dialogVisible = false;
                         this.getData();
-                        this.cleanBuildForm();
+                        cleanBuildForm();
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -285,47 +295,11 @@ export default {
             })
         },
 
-        taskDetail(row){
-            this.dialogVisible=true;
-            this.$$api_ci_taskDetail({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.buildForm.id=data.data.task.id;
-                        this.buildForm.taskName=data.data.task.taskName;
-                        this.buildForm.group=data.data.task.appGroupId;
-
-                        this.buildForm.environment=data.data.envId;
-                        console.info(data.data.envId+"into edit"+this.buildForm.environment)
-
-                        this.buildForm.instances=data.data.instances;
-                        this.buildForm.branch=data.data.task.branchName;
-                        this.buildForm.tarType=data.data.task.tarType;
-                        this.buildForm.preCommand=data.data.task.preCommand;
-                        this.buildForm.postCommand=data.data.task.postCommand;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-
-        },
-
 
         getBranchs() {
-            this.branchs=[];
-            if(this.buildForm.group==''){
-                return;
-            }
+            console.info(this.buildForm.group);
+            console.info(this.buildForm.tagOrBranch);
+
             this.$$api_ci_getBranchs({
                 data: {
                     appGroupId: this.buildForm.group,
@@ -349,52 +323,49 @@ export default {
             })
         },
 
-        delTask(row) {
-            this.$$api_ci_delTask({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-        },
-
         cleanBuildForm() {
-            this.buildForm.id = '';
-            this.buildForm.taskName = '';
             this.buildForm.group = '';
-            this.buildForm.environment = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
             this.buildForm.tarType = '';
-            this.buildForm.tagOrBranch = '1';
-            this.buildForm.preCommand = '';
-            this.buildForm.postCommand = '';
         },
 
-        countInstance(row){
-            //return "1";
-            return row.instances.length
-        },
+        rollbackTask(row, column, event) {
+            this.$confirm('回滚操作, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
 
-        instances2Str(row){
-            var result = "";
-            for(var i=0;i<row.instances.length;i++){
-                result += row.instances[i].remark+"\n";
-            }
-            return result;
+                this.$$api_ci_rollbackTaskHis({
+                    data: {
+                        taskId: row.id,
+                    },
+                    fn: data => {
+                        if (data.code == 200) {
+                            this.$message({
+                                type: 'success',
+                                message: '操作成功!'
+                            });
+                            this.getData();
+                        } else {
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定'
+                            });
+                        }
+                    },
+                    errFn: () => {
+                        this.$alert('访问失败，请稍后重试！', '错误', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
+            }).catch(() => {
+                /*this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });*/
+            });
         },
 
 

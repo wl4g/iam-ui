@@ -103,6 +103,19 @@
                     <el-input v-model="saveForm.remark" placeholder="备注"></el-input>
                 </el-form-item>
 
+                <el-form-item label="restart:" prop="restartCommand">
+                    <el-input type="textarea" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
+                </el-form-item>
+
+                <!--<el-form-item label="restart:" prop="restartCommand">
+                    &lt;!&ndash;<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>&ndash;&gt;
+                    <el-popover placement="right" width="200" trigger="focus" title="占位提示:">
+                        <el-input type="textarea" :rows="5" :readonly="true" value="#{alias}=>sso<br>#{project}">
+                        </el-input>
+                        <el-input type="textarea" slot="reference" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
+                    </el-popover>
+                </el-form-item>-->
+
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="saveProject()">Save</el-button>

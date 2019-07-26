@@ -7,9 +7,15 @@ import { Ci } from 'views/'
 export default [
     {
         path: 'task',
-        name: 'Deploy',
+        name: 'Task',
         icon: 'window-restore',
         component: Ci.Task
+    },
+    {
+        path: 'taskhis',
+        name: 'Task History',
+        icon: 'window-restore',
+        component: Ci.TaskHistory
     },
     {
         path: 'project',
@@ -25,7 +31,7 @@ export default [
     },
     {
         path: 'trigger',
-        name: 'Trigger',
+        name: 'Scheduler',
         icon: 'window-restore',
         component: Ci.Trigger
     },
