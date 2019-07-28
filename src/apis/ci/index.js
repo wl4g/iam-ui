@@ -29,6 +29,15 @@ export default [
         path: '/ci-server/task/del',
         type: 'post'
     },
+    {
+        name: '根据appGroupId获取任务',
+        method: 'getTasksByAppGroupId',
+        path: '/ci-server/task/getListByAppGroupId',
+        type: 'post'
+    },
+
+
+
 
 
 
@@ -69,7 +78,7 @@ export default [
         name: '保存项目',
         method: 'saveProject',
         path: '/ci-server/project/save',
-        type: 'post'
+        type: 'json'
     },
     {
         name: '项目详情',

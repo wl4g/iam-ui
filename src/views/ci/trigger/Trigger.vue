@@ -2,8 +2,27 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
 
-            <el-form-item label="ProjectName:">
-                <el-input v-model="searchParams.projectName" placeholder="项目名："></el-input>
+            <el-form-item label="Id:">
+                <el-input v-model="searchParams.id" placeholder="Id："></el-input>
+            </el-form-item>
+            <el-form-item label="Name:">
+                <el-input v-model="searchParams.name" placeholder="Name："></el-input>
+            </el-form-item>
+            <el-form-item label="TaskId:">
+                <el-input v-model="searchParams.taskId" placeholder="TaskId："></el-input>
+            </el-form-item>
+            <el-form-item label="Status:">
+                <!--<el-switch v-model="searchParams.enable" on-value="1" off-value="0"></el-switch>-->
+                <el-select v-model="searchParams.enable">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="启用" value="1"></el-option>
+                    <el-option label="停用" value="0"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="Create Date Range:">
+                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy - MM - dd " ></el-date-picker>
+                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy - MM - dd" ></el-date-picker>
             </el-form-item>
 
             <el-form-item>
@@ -30,14 +49,23 @@
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
 
-                    <el-table-column prop="projectName" label="Project"></el-table-column>
-                    <el-table-column prop="branchName" label="branchName"></el-table-column>
+                    <el-table-column prop="name" label="Name"></el-table-column>
+                    <el-table-column prop="taskId" label="Task ID"></el-table-column>
 
                     <el-table-column prop="type" label="type">
                         <template slot-scope="scope">
                             {{convertType(scope.row)}}
                         </template>
                     </el-table-column>
+
+
+                    <el-table-column prop="enable" label="Status">
+                        <template slot-scope="scope">
+                            <el-tag :type="convertEnableType(scope.row)">{{convertEnableValue(scope.row)}}</el-tag>
+                        </template>
+                    </el-table-column>
+
+
 
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
                     <el-table-column label="Operation" min-width="100">
@@ -57,7 +85,7 @@
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm"
                      class="demo-form-inline">
 
-                <el-row>
+                <!--<el-row>
                     <el-col :span="12">
                         <el-form-item label="Project:" prop="projectId">
                             <el-select v-model="saveForm.projectId" placeholder="项目" style="width: 100%;">
@@ -75,13 +103,13 @@
                             <el-input v-model="saveForm.branchName" placeholder="项目分支"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
+                </el-row>-->
 
 
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="Group:" prop="group">
-                            <el-select v-model="saveForm.group" @change="getenvir()" placeholder="Please group" style="width: 100%;">
+                            <el-select v-model="saveForm.group" @change="getTasksByAppGroupId()" placeholder="Please group" style="width: 100%;">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"
@@ -91,7 +119,22 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+
                     <el-col :span="12">
+                        <el-form-item label="Env:" prop="taskId">
+                            <el-select v-model="saveForm.taskId" placeholder="Please Task" style="width: 100%;">
+                                <el-option
+                                        v-for="item in tasksData"
+                                        :key="item.id"
+                                        :label="item.taskName"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+                    <!--<el-col :span="12">
                         <el-form-item label="Env:" prop="environment">
                             <el-select v-model="saveForm.environment" @change="getinstance()" placeholder="Please Env" style="width: 100%;">
                                 <el-option
@@ -115,7 +158,7 @@
                                 :value="item.id">
                         </el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item>-->
 
                 <el-row>
                     <el-col :span="12">
@@ -140,7 +183,7 @@
 
 
                 <el-row>
-                    <el-col :span="12">
+                    <!--<el-col :span="12">
                         <el-form-item label="PackType:" prop="tarType">
                             <el-select v-model="saveForm.tarType" placeholder="打包类型" style="width: 100%;">
                                 <el-option label="tar" :value="1"></el-option>
@@ -148,7 +191,13 @@
                                 <el-option label="docker" :value="3"></el-option>
                             </el-select>
                         </el-form-item>
+                    </el-col>-->
+                    <el-col :span="12">
+                        <el-form-item label="Name:" prop="name">
+                            <el-input v-model="saveForm.name" placeholder="备注"></el-input>
+                        </el-form-item>
                     </el-col>
+
                     <el-col :span="12">
                         <el-form-item label="Enable:" prop="enable">
                             <el-switch v-model="saveForm.enable" :on-value="1" :off-value="0"></el-switch>

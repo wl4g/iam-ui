@@ -103,9 +103,9 @@
                     <el-input v-model="saveForm.remark" placeholder="备注"></el-input>
                 </el-form-item>
 
-                <el-form-item label="restart:" prop="restartCommand">
+                <!--<el-form-item label="restart:" prop="restartCommand">
                     <el-input type="textarea" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
-                </el-form-item>
+                </el-form-item>-->
 
                 <!--<el-form-item label="restart:" prop="restartCommand">
                     &lt;!&ndash;<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>&ndash;&gt;
@@ -115,6 +115,46 @@
                         <el-input type="textarea" slot="reference" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
                     </el-popover>
                 </el-form-item>-->
+
+                <el-form-item label="Dependencys：" prop="dependencies">
+                    <!-- 查询结果表格 -->
+                    <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
+                        <template>
+                            <el-table :data="saveForm.dependencies" style="width: 100%">
+                                <!-- 动态标签 -->
+                                <el-table-column prop="dependentId" label="Dependent" min-width="290">
+                                    <template scope="scope">
+                                        <el-select v-model="scope.row.dependentId"  placeholder="project" >
+                                            <el-option
+                                                    v-for="item in ProjectData"
+                                                    :key="item.id"
+                                                    :label="item.projectName"
+                                                    :value="item.id">
+                                            </el-option>
+                                        </el-select>
+                                    </template>
+                                </el-table-column>
+
+                                <el-table-column prop="branch" label="BranchName" min-width="130">
+                                    <template scope="scope">
+                                        <el-input  v-model="scope.row.branch"></el-input>
+                                    </template>
+                                </el-table-column>
+
+                                <el-table-column label="Operation" min-width="140">
+                                    <template slot-scope="scope">
+                                        <el-row>
+                                            <el-button @click.native.prevent="deleteDep(scope.$index)" type="text" size="mini" style="float: left;line-height: 20px;">
+                                                Delete
+                                            </el-button>
+                                        </el-row>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    <!--</div>-->
+                    <el-button type="primary"  @click.native.prevent="addRow()">Append</el-button>
+                </el-form-item>
 
             </el-form>
             <span slot="footer" class="dialog-footer">

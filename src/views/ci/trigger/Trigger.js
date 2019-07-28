@@ -7,7 +7,12 @@ export default {
 
             //查询条件
             searchParams: {
-                projectName: '',
+                id: '',
+                name: '',
+                taskId: '',
+                enable: '',
+                startDate: '',
+                endDate: '',
             },
 
             //分页信息
@@ -18,14 +23,13 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
-                projectId: '',
-                branchName: '',
-                instances: [],
+                taskId: '',
                 tarType: '',
                 remark: '',
                 enable: '1',
                 type: '',
                 cron: '',
+                name: '',
 
                 //other
                 group: '',
@@ -41,6 +45,7 @@ export default {
             groupData: [],
             envirData: [],
             instanceData: [],
+            tasksData: [],
 
             //列表Data
             tableData: [],
@@ -97,9 +102,8 @@ export default {
                 fn: data => {
                     if (data.code == 200) {
                         this.saveForm.id = data.data.trigger.id;
-                        this.saveForm.projectId = data.data.trigger.projectId;
-                        this.saveForm.branchName = data.data.trigger.branchName;
-                        this.saveForm.tarType = data.data.trigger.tarType;
+                        this.saveForm.taskId = data.data.trigger.taskId;
+                        this.saveForm.name = data.data.trigger.name;
                         this.saveForm.remark = data.data.trigger.remark;
                         this.saveForm.enable = data.data.trigger.enable;
                         this.saveForm.type = data.data.trigger.type;
@@ -107,9 +111,7 @@ export default {
 
                         this.saveForm.group = data.data.appGroupId;
 
-                        this.saveForm.environment = data.data.envId;
 
-                        this.saveForm.instances = data.data.instances;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -134,7 +136,12 @@ export default {
         getData() {
             this.$$api_ci_triggerList({
                 data: {
-                    projectName: this.searchParams.projectName,
+                    id: this.searchParams.id,
+                    name: this.searchParams.name,
+                    taskId: this.searchParams.taskId,
+                    enable: this.searchParams.enable,
+                    startDate: this.searchParams.startDate,
+                    endDate: this.searchParams.endDate,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -185,12 +192,11 @@ export default {
             this.$$api_ci_saveTrigger({
                 data: {
                     id: this.saveForm.id,
-                    projectId: this.saveForm.projectId,
-                    branchName: this.saveForm.branchName,
-                    instances: this.saveForm.instances.toString(),
-                    tarType: this.saveForm.tarType.toString(),
+                    groupId: this.saveForm.group,
+                    taskId: this.saveForm.taskId,
+                    name: this.saveForm.name,
                     remark: this.saveForm.remark,
-                    enable: this.saveForm.enable.toString(),
+                    enable: this.saveForm.enable,
                     type: this.saveForm.type,
                     cron: this.saveForm.cron,
                 },
@@ -217,10 +223,9 @@ export default {
 
         cleanSaveForm() {
             this.saveForm.id = '';
-            this.saveForm.projectId = '';
-            this.saveForm.branchName = '';
-            this.saveForm.instances = [];
-            this.saveForm.tarType = '';
+            this.saveForm.group = '';
+            this.saveForm.taskId = '';
+            this.saveForm.name = '';
             this.saveForm.remark = '';
             this.saveForm.enable = '1';
             this.saveForm.group = '';
@@ -400,6 +405,33 @@ export default {
             })
         },
 
+
+        getTasksByAppGroupId() {
+            this.$$api_ci_getTasksByAppGroupId({
+                data: {
+                    appGroupId: this.saveForm.group,
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        //delete success
+                        console.info(data.data);
+                        this.tasksData = data.data.tasks;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
         convertType(row) {
             if (row.type == 4) {
                 return '调度';
@@ -410,6 +442,28 @@ export default {
             return '--';
 
 
+        },
+
+
+        convertEnableValue(row){
+            if (row.enable == 0) {
+                return '停用';
+            }
+            if (row.enable == 1) {
+                console.info("into qiyong")
+                return '启用';
+            }
+
+        },
+
+        convertEnableType(row){
+            if (row.enable == '0') {
+                return 'danger';
+            }
+            if (row.enable == '1') {
+                return 'success';
+            }
+            return 'warning';
         },
 
 

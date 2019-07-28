@@ -27,6 +27,7 @@ export default {
                 linkAppHome: '',
                 remark: '',
                 restartCommand: '',
+                dependencies: [],
             },
 
             dialogVisible: false,
@@ -35,6 +36,9 @@ export default {
 
             //create内的下拉数据
             groupData: [],
+
+            //create内的下拉数据
+            ProjectData: [],
 
             //列表Data
             tableData: [],
@@ -56,6 +60,8 @@ export default {
         this.getData();
         this.getGroup();
 
+        this.getProject();
+
     },
 
     methods: {
@@ -70,6 +76,37 @@ export default {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
+        },
+
+        // 获取分组名称
+        getProject() {
+            this.$$api_ci_allProject({
+                fn: data => {
+                    if (data.code == 200) {
+                        this.ProjectData = data.data.list;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        deleteDep(index) {
+            this.saveForm.dependencies.splice(index, 1);
+        },
+
+        addRow() {
+            this.saveForm.dependencies.push({
+                dependentId: '',
+                branch: '',
+            })
         },
 
         //edit
@@ -175,6 +212,7 @@ export default {
                     restartCommand: this.saveForm.restartCommand,
                     linkAppHome: this.saveForm.linkAppHome,
                     remark: this.saveForm.remark,
+                    dependencies: this.saveForm.dependencies,
                 },
                 fn: data => {
                     this.dialogLoading = false;
