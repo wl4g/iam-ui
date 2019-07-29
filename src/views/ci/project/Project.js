@@ -198,7 +198,6 @@ export default {
         },
 
         saveProject() {
-            console.info(this.saveForm);
             this.dialogLoading = true;
 
             this.$$api_ci_saveProject({
@@ -216,7 +215,6 @@ export default {
                 },
                 fn: data => {
                     this.dialogLoading = false;
-                    console.info("in");
                     if (data.code == 200) {
                         this.dialogVisible = false;
                         this.getData();
@@ -277,7 +275,6 @@ export default {
         },
 
         convertLockStatus(row) {
-            console.info("into" + row.id);
             if (row.lockStatus == 1) {
                 return '解锁';
             } else {

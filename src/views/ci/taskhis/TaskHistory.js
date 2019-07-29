@@ -84,13 +84,8 @@ export default {
         },
 
         create() {
-            console.info("open create taskhis window")
             this.dialogVisible = true;
             this.dialogTitle = '新增';
-        },
-
-        tellme(value) {
-            console.info(value);
         },
 
         currentChange(i) {
@@ -157,8 +152,6 @@ export default {
                 fn: data => {
                     if (data.code == 200) {
                         this.detailForm = data.data;
-                        console.info(data.data);
-
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -194,9 +187,6 @@ export default {
                 fn: data => {
                     if (data.code == 200) {
                         this.instanceData = data.data.instancelist;
-                        console.info(groupId);
-                        console.info(environmentId);
-                        console.info(data.data.instancelist);
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -263,9 +253,6 @@ export default {
         },
 
         createTask() {
-            console.info(this.buildForm.group);
-            console.info(this.buildForm.instances.toString());
-            console.info(this.buildForm.branch);
             this.dialogLoading = true;
             this.$$api_ci_createTaskHis({
                 data: {
@@ -297,9 +284,6 @@ export default {
 
 
         getBranchs() {
-            console.info(this.buildForm.group);
-            console.info(this.buildForm.tagOrBranch);
-
             this.$$api_ci_getBranchs({
                 data: {
                     appGroupId: this.buildForm.group,
@@ -307,7 +291,6 @@ export default {
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        console.info(this.buildForm.group);
                         this.branchs=data.data.branchNames;
                     } else {
                         this.$alert(data.message, '错误', {

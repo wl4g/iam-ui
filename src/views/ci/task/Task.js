@@ -67,14 +67,9 @@ export default {
         },
 
         add() {
-            console.info("open create taskhis window")
             this.cleanBuildForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
-        },
-
-        tellme(value) {
-            console.info(value);
         },
 
         currentChange(i) {
@@ -85,6 +80,16 @@ export default {
 
         // 获取列表数据
         getData() {
+
+            var start = '';
+            var end = '';
+            if(this.searchParams.startDate!=''){
+                start = this.getDate(this.searchParams.startDate);
+            }
+            if(this.searchParams.endDate!=''){
+                end = this.getDate(this.searchParams.endDate);
+            }
+
             this.$$api_ci_taskList({
                 data: {
 
@@ -96,8 +101,8 @@ export default {
                     branchName: this.searchParams.branchName,
 
                     tarType: this.searchParams.tarType,
-                    startDate: this.searchParams.startDate,
-                    endDate: this.searchParams.endDate,
+                    startDate: start,
+                    endDate: end,
 
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
@@ -120,6 +125,13 @@ export default {
                     });
                 }
             })
+        },
+
+        getDate(startDate){
+            let Y = startDate.getFullYear() + '-';
+            let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
+            let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();
+            return Y+M+D;
         },
 
 
@@ -157,10 +169,7 @@ export default {
                         this.instanceData = data.data.instancelist;
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght_ ins:" + this.instanceData.length);
                         for (let i = 0; i < this.instanceData.length; i++) {
-                            console.info("check:" + this.instanceData[i].id);
-                            console.info("check2:" + this.buildForm.instances);
                             if (this.instanceData[i].id == this.buildForm.instances[0]) {
                                 needClean = false;
                                 break;
@@ -200,7 +209,6 @@ export default {
                         this.envirData = data.data.envlist;
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght:" + this.envirData.length);
                         for (let i = 0; i < this.envirData.length; i++) {
                             if (this.envirData[i].id == this.buildForm.environment) {
                                 needClean = false;
@@ -247,10 +255,6 @@ export default {
         },
 
         save() {
-            console.info(this.buildForm.group);
-            console.info(this.buildForm.instances.toString());
-            console.info(this.buildForm.branch);
-
             this.dialogLoading = true;
             this.$$api_ci_saveTask({
                 data: {
@@ -296,10 +300,7 @@ export default {
                         this.buildForm.id=data.data.task.id;
                         this.buildForm.taskName=data.data.task.taskName;
                         this.buildForm.group=data.data.task.appGroupId;
-
                         this.buildForm.environment=data.data.envId;
-                        console.info(data.data.envId+"into edit"+this.buildForm.environment)
-
                         this.buildForm.instances=data.data.instances;
                         this.buildForm.branch=data.data.task.branchName;
                         this.buildForm.tarType=data.data.task.tarType;
@@ -333,7 +334,6 @@ export default {
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        console.info(this.buildForm.group);
                         this.branchs=data.data.branchNames;
                     } else {
                         this.$alert(data.message, '错误', {

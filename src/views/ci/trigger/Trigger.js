@@ -134,14 +134,23 @@ export default {
 
         // 获取列表数据
         getData() {
+            var start = '';
+            var end = '';
+            if(this.searchParams.startDate!=''){
+                start = this.getDate(this.searchParams.startDate);
+            }
+            if(this.searchParams.endDate!=''){
+                end = this.getDate(this.searchParams.endDate);
+            }
+
             this.$$api_ci_triggerList({
                 data: {
                     id: this.searchParams.id,
                     name: this.searchParams.name,
                     taskId: this.searchParams.taskId,
                     enable: this.searchParams.enable,
-                    startDate: this.searchParams.startDate,
-                    endDate: this.searchParams.endDate,
+                    startDate: start,
+                    endDate: end,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -165,6 +174,13 @@ export default {
             })
         },
 
+        getDate(startDate){
+            let Y = startDate.getFullYear() + '-';
+            let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
+            let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();
+            return Y+M+D;
+        },
+
         // 获取分组名称
         getProject() {
             this.$$api_ci_allProject({
@@ -186,7 +202,6 @@ export default {
         },
 
         saveTrigger() {
-            console.info(this.saveForm);
             this.dialogLoading = true;
 
             this.$$api_ci_saveTrigger({
@@ -284,10 +299,7 @@ export default {
 
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght_ ins:" + this.instanceData.length);
                         for (let i = 0; i < this.instanceData.length; i++) {
-                            console.info("check:" + this.instanceData[i].id);
-                            console.info("check2:" + this.saveForm.instances);
                             if (this.instanceData[i].id == this.saveForm.instances[0]) {
                                 needClean = false;
                                 break;
@@ -328,7 +340,6 @@ export default {
                         this.envirData = data.data.envlist;
                         //判断要不要清空选中
                         var needClean = true;
-                        console.info("lenght:" + this.envirData.length);
                         for (let i = 0; i < this.envirData.length; i++) {
                             if (this.envirData[i].id == this.saveForm.environment) {
                                 needClean = false;
@@ -384,7 +395,6 @@ export default {
                     //this.loading = false;
                     if (data.code == 200) {
                         //delete success
-                        console.info(data.data);
                         if (data.data.validExpression) {
                             this.checkResult = data.data.nextExecTime;
                         } else {
@@ -415,7 +425,6 @@ export default {
                     //this.loading = false;
                     if (data.code == 200) {
                         //delete success
-                        console.info(data.data);
                         this.tasksData = data.data.tasks;
                     } else {
                         this.$alert(data.message, '错误', {
@@ -440,17 +449,13 @@ export default {
                 return '钩子';
             }
             return '--';
-
-
         },
-
-
+        
         convertEnableValue(row){
             if (row.enable == 0) {
                 return '停用';
             }
             if (row.enable == 1) {
-                console.info("into qiyong")
                 return '启用';
             }
 

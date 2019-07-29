@@ -13,19 +13,16 @@
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
-
-            <el-form-item style='float:right'>
-                <!-- 新增按钮 -->
-                <el-button type="primary" @click="addPriject()">Add</el-button>
-            </el-form-item>
-
         </el-form>
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
         <div class="query">
             <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span></div>
+            <div class="">Result Total： <span class="number">{{total}}</span>
+                <!-- 新增按钮 -->
+                <el-button type="primary" @click="addPriject()" style='float:right;margin:5px'>Add</el-button>
+            </div>
         </div>
         <!-- 查询结果表格 -->
         <div>
