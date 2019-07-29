@@ -137,8 +137,47 @@ export default {
             return this.getDatagridDict("ci_task_type", cellValue);
         },
 
-        convertStatus(row, column, cellValue, index) {
+        /*convertStatus(row, column, cellValue, index) {
             return this.getDatagridDict("ci_task_status", cellValue);
+        },*/
+
+        convertStatusValue(row){
+            console.info()
+            if (row.status == 0) {
+                return '创建';
+            }
+            if (row.status == 1) {
+                return '进行';
+            }
+            if (row.status == 2) {
+                return '成功';
+            }
+            if (row.status == 3) {
+                return '失败';
+            }
+            if (row.status == 4) {
+                return '超时';
+            }
+            return '--';
+        },
+
+        convertStatusType(row){
+            if (row.status == 0) {
+                return 'info';
+            }
+            if (row.status == 1) {
+                return '';
+            }
+            if (row.status == 2) {
+                return 'success';
+            }
+            if (row.status == 3) {
+                return 'danger';
+            }
+            if (row.status == 4) {
+                return 'danger';
+            }
+            return 'warning';
         },
 
 

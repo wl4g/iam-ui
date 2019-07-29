@@ -18,6 +18,7 @@
             </el-form-item>
             <el-form-item label="PackType:">
                 <el-select v-model="searchParams.tarType" placeholder="Pack" style="width: 100px;">
+                    <el-option label="All" value=""></el-option>
                     <el-option label="tar" :value="1"></el-option>
                     <el-option disabled label="jar" :value="2"></el-option>
                     <el-option disabled label="docker" :value="3"></el-option>

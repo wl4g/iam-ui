@@ -49,7 +49,11 @@
                     <el-table-column prop="type" label="Type" min-width="50" :formatter="convertType"></el-table-column>
 
 
-                    <el-table-column prop="status" label="Status" :formatter="convertStatus"></el-table-column>
+                    <el-table-column prop="status" label="Status">
+                        <template slot-scope="scope">
+                            <el-tag :type="convertStatusType(scope.row)">{{convertStatusValue(scope.row)}}</el-tag>
+                        </template>
+                    </el-table-column>
                     <!--<el-table-column prop="result" label="Result" :show-overflow-tooltip="true"></el-table-column>-->
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
 
@@ -183,7 +187,12 @@
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="instanceName" label="Instance"></el-table-column>
 
-                            <el-table-column prop="status" label="Status" :formatter="convertStatus"></el-table-column>
+                            <el-table-column prop="status" label="Status">
+                                <template slot-scope="scope">
+                                    <el-tag :type="convertStatusType(scope.row)">{{convertStatusValue(scope.row)}}</el-tag>
+                                </template>
+
+                            </el-table-column>
                             <el-table-column prop="result" label="Result" min-width="100">
                                 <template slot-scope="scope">
                                     <el-popover placement="right" width="400" trigger="click">
