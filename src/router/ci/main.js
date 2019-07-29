@@ -13,21 +13,9 @@ export default [
     },
     {
         path: 'taskhis',
-        name: 'Task History',
+        name: 'History',
         icon: 'window-restore',
         component: Ci.TaskHistory
-    },
-    {
-        path: 'project',
-        name: 'Project',
-        icon: 'window-restore',
-        component: Ci.Project
-    },
-    {
-        path: 'dependency',
-        name: 'Dependency',
-        icon: 'window-restore',
-        component: Ci.Dependency
     },
     {
         path: 'trigger',
@@ -35,9 +23,12 @@ export default [
         icon: 'window-restore',
         component: Ci.Trigger
     },
-
-
-
+    {
+        path: 'project',
+        name: 'Projects',
+        icon: 'window-restore',
+        component: Ci.Project
+    },
 
 
 ]
