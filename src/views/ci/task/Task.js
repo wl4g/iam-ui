@@ -397,6 +397,33 @@ export default {
             return result;
         },
 
+        runTask(row){
+            if(!row.id){
+                return;
+            }
+            this.$$api_ci_runTask({
+                data: {
+                    taskId: row.id,
+                },
+                fn: data => {
+                    if (data.code == 200) {
+                        this.$alert('创建任务成功', '信息', {
+                            confirmButtonText: '确定'
+                        });
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        }
+
 
     }
 }

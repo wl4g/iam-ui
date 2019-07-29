@@ -35,6 +35,12 @@ export default [
         path: '/ci-server/task/getListByAppGroupId',
         type: 'post'
     },
+    {
+        name: '创建任务',
+        method: 'runTask',
+        path: '/ci-server/task/create',
+        type: 'post'
+    },
 
 
 

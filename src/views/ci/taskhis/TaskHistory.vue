@@ -25,7 +25,7 @@
 
             <el-form-item style='float:right'>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="create()">Create</el-button>
+                <!--<el-button type="primary" @click="create()">Create</el-button>-->
             </el-form-item>
 
         </el-form>

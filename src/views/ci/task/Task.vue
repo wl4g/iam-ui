@@ -66,6 +66,7 @@
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
+                            <el-button type="text" size="small" @click="runTask(scope.row)">Build</el-button>
                             <el-button type="text" size="small" @click="taskDetail(scope.row)">Edit</el-button>
                             <el-button type="text" size="small" @click="delTask(scope.row)">Del</el-button>
                             <!--<el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>-->
