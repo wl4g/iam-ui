@@ -80,8 +80,8 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================add build taskhis================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="buildForm" ref="buildForm"
+        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible"  width="60%" v-loading='dialogLoading'>
+            <el-form label-width="80px" size="mini" :model="buildForm" ref="buildForm" :rules="rules"
                      class="demo-form-inline">
 
                 <el-row>

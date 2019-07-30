@@ -3,6 +3,17 @@ import {transDate, getDay} from 'utils/'
 export default {
     name: 'task',
     data() {
+
+        var validateInstances = (rule, value, callback) => {
+            console.info(value.length);
+            if (value.length<=0) {
+                callback(new Error('Instances is Empty'));
+            } else {
+                callback();
+            }
+
+        };
+
         return {
 
             //查询条件
@@ -49,6 +60,26 @@ export default {
 
             //列表Data
             tableData: [],
+
+            // 表单规则
+            rules: {
+                taskName: [
+                    {required: true, message: 'Please Input taskName', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                group: [
+                    {type:'number', required: true, message: 'Plese select Group', trigger: 'change' },
+                ],
+                tarType: [
+                    {type:'number', required: true, message: 'Plese select tar type', trigger: 'change' },
+                ],
+                instances: [
+                    { validator: validateInstances,required: true, trigger: 'change' },
+                ],
+                branch: [
+                    {type:'number', required: true, message: 'Plese select branch', trigger: 'change' },
+                ],
+            },
 
 
         }
@@ -255,38 +286,45 @@ export default {
         },
 
         save() {
-            this.dialogLoading = true;
-            this.$$api_ci_saveTask({
-                data: {
-                    id: this.buildForm.id,
-                    taskName: this.buildForm.taskName,
-                    appGroupId: this.buildForm.group,
-                    branchName: this.buildForm.branch,
-                    instance: this.buildForm.instances.toString(),
-                    tarType: this.buildForm.tarType,
-                    branchType: this.buildForm.tagOrBranch,
-                    preCommand: this.buildForm.preCommand,
-                    postCommand: this.buildForm.postCommand,
-                },
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        this.cleanBuildForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+            this.$refs['buildForm'].validate((valid) => {
+                if (valid) {
+                    this.dialogLoading = true;
+                    this.$$api_ci_saveTask({
+                        data: {
+                            id: this.buildForm.id,
+                            taskName: this.buildForm.taskName,
+                            appGroupId: this.buildForm.group,
+                            branchName: this.buildForm.branch,
+                            instance: this.buildForm.instances.toString(),
+                            tarType: this.buildForm.tarType,
+                            branchType: this.buildForm.tagOrBranch,
+                            preCommand: this.buildForm.preCommand,
+                            postCommand: this.buildForm.postCommand,
+                        },
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                this.cleanBuildForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-            })
+            });
         },
 
         taskDetail(row){

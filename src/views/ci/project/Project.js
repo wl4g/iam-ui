@@ -3,6 +3,17 @@ import {transDate, getDay} from 'utils/'
 export default {
     name: 'project',
     data() {
+
+        var validateDependencies = (rule, value, callback) => {
+            console.info(value.length);
+            if (value.length<=0) {
+                callback(new Error('Dependencies is Empty'));
+            } else {
+                callback();
+            }
+
+        };
+
         return {
 
             //查询条件
@@ -53,8 +64,42 @@ export default {
                 result: ''
             },
 
+            // 表单规则
+            rules: {
+                appGroupId: [
+                    {type:'number', required: true, message: 'Plese select Group', trigger: 'change' },
+                ],
+                projectName: [
+                    {required: true, message: 'Please Input projectName', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                gitUrl: [
+                    { required: true, message: 'Please Input Git Url', trigger: 'change' },
+                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
+                ],
+                tarPath: [
+                    { required: true, message: 'Please Input Tar Path', trigger: 'change' },
+                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
+                ],
+                parentAppHome: [
+                    { required: true, message: 'Please Input App Home', trigger: 'change' },
+                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
+                ],
+                linkAppHome: [
+                    { required: true, message: 'Please Input Link App Home', trigger: 'change' },
+                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
+                ],
+                dependencies: [
+                    { validator: validateDependencies, message: 'Dependencies is Empty', trigger: 'change' },
+                ],
+            },
+
+
+
         }
     },
+
+
 
     mounted() {
         this.getData();
@@ -198,40 +243,46 @@ export default {
         },
 
         saveProject() {
-            this.dialogLoading = true;
-
-            this.$$api_ci_saveProject({
-                data: {
-                    id: this.saveForm.id,
-                    appGroupId: this.saveForm.appGroupId,
-                    projectName: this.saveForm.projectName,
-                    gitUrl: this.saveForm.gitUrl,
-                    tarPath: this.saveForm.tarPath,
-                    parentAppHome: this.saveForm.parentAppHome,
-                    restartCommand: this.saveForm.restartCommand,
-                    linkAppHome: this.saveForm.linkAppHome,
-                    remark: this.saveForm.remark,
-                    dependencies: this.saveForm.dependencies,
-                },
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    this.dialogLoading = true;
+                    this.$$api_ci_saveProject({
+                        data: {
+                            id: this.saveForm.id,
+                            appGroupId: this.saveForm.appGroupId,
+                            projectName: this.saveForm.projectName,
+                            gitUrl: this.saveForm.gitUrl,
+                            tarPath: this.saveForm.tarPath,
+                            parentAppHome: this.saveForm.parentAppHome,
+                            restartCommand: this.saveForm.restartCommand,
+                            linkAppHome: this.saveForm.linkAppHome,
+                            remark: this.saveForm.remark,
+                            dependencies: this.saveForm.dependencies,
+                        },
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                cleanSaveForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     });
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-            })
+            });
         },
 
         cleanSaveForm() {

@@ -80,7 +80,7 @@
 
         <!--================================save dialog================================-->
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm"
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" :rules="rules"
                      class="demo-form-inline">
 
                 <!--<el-row>

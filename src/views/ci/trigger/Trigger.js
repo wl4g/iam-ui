@@ -64,6 +64,24 @@ export default {
 
             checkResult: '',
 
+            // 表单规则
+            rules: {
+                name: [
+                    {required: true, message: 'Please Input name', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                group: [
+                    {type:'number', required: true, message: 'Plese select Group', trigger: 'change' },
+                ],
+                taskId: [
+                    {type:'number', required: true, message: 'Plese select task', trigger: 'change' },
+                ],
+                type: [
+                    {type:'number', required: true, message: 'Plese select type', trigger: 'change' },
+                ],
+
+            },
+
         }
     },
 
@@ -202,38 +220,44 @@ export default {
         },
 
         saveTrigger() {
-            this.dialogLoading = true;
-
-            this.$$api_ci_saveTrigger({
-                data: {
-                    id: this.saveForm.id,
-                    groupId: this.saveForm.group,
-                    taskId: this.saveForm.taskId,
-                    name: this.saveForm.name,
-                    remark: this.saveForm.remark,
-                    enable: this.saveForm.enable,
-                    type: this.saveForm.type,
-                    cron: this.saveForm.cron,
-                },
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    this.dialogLoading = true;
+                    this.$$api_ci_saveTrigger({
+                        data: {
+                            id: this.saveForm.id,
+                            groupId: this.saveForm.group,
+                            taskId: this.saveForm.taskId,
+                            name: this.saveForm.name,
+                            remark: this.saveForm.remark,
+                            enable: this.saveForm.enable,
+                            type: this.saveForm.type,
+                            cron: this.saveForm.cron,
+                        },
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                cleanSaveForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-            })
+            });
         },
 
         cleanSaveForm() {
