@@ -77,9 +77,11 @@ export default {
                     { validator: validateInstances,required: true, trigger: 'change' },
                 ],
                 branch: [
-                    {type:'number', required: true, message: 'Plese select branch', trigger: 'change' },
+                    {required: true, message: 'Plese select branch', trigger: 'change' },
                 ],
             },
+
+            postCommandTip: '<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && ',
 
 
         }

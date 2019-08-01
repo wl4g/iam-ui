@@ -4,15 +4,6 @@ export default {
     name: 'project',
     data() {
 
-        var validateDependencies = (rule, value, callback) => {
-            console.info(value.length);
-            if (value.length<=0) {
-                callback(new Error('Dependencies is Empty'));
-            } else {
-                callback();
-            }
-
-        };
 
         return {
 
@@ -66,9 +57,7 @@ export default {
 
             // 表单规则
             rules: {
-                appGroupId: [
-                    {type:'number', required: true, message: 'Plese select Group', trigger: 'change' },
-                ],
+
                 projectName: [
                     {required: true, message: 'Please Input projectName', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
@@ -89,9 +78,7 @@ export default {
                     { required: true, message: 'Please Input Link App Home', trigger: 'change' },
                     { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
-                dependencies: [
-                    { validator: validateDependencies, message: 'Dependencies is Empty', trigger: 'change' },
-                ],
+
             },
 
 
