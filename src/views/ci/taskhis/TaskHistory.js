@@ -211,16 +211,16 @@ export default {
 
         //获取实例名称
         getinstance() {
-            var groupId = this.buildForm.group;
+            var clusterId = this.buildForm.group;
             var environmentId = this.buildForm.environment;
             this.instanceData = [];
             this.buildForm.instances = [];
-            if (environmentId == "" || groupId == "") {
+            if (environmentId == "" || clusterId == "") {
                 return;
             }
             this.$$api_instanceman_instancelist({
                 data: {
-                    groupId: groupId,
+                    clusterId: clusterId,
                     envId: environmentId
                 },
                 fn: data => {
@@ -244,13 +244,13 @@ export default {
         getenvir() {
             this.envirData = [];
             this.buildForm.environment = "";
-            var groupId = this.buildForm.group;
-            if (groupId == "") {
+            var clusterId = this.buildForm.group;
+            if (clusterId == "") {
                 return;
             }
             this.$$api_instanceman_envirlist({
                 data: {
-                    groupId: groupId
+                    clusterId: clusterId
                 },
                 fn: data => {
                     if (data.code == 200) {
@@ -295,7 +295,7 @@ export default {
             this.dialogLoading = true;
             this.$$api_ci_createTaskHis({
                 data: {
-                    appGroupId: this.buildForm.group,
+                    appClusterId: this.buildForm.group,
                     branchName: this.buildForm.branch,
                     instances: this.buildForm.instances.toString(),
                     tarType: this.buildForm.tarType,
@@ -325,7 +325,7 @@ export default {
         getBranchs() {
             this.$$api_ci_getBranchs({
                 data: {
-                    appGroupId: this.buildForm.group,
+                    appClusterId: this.buildForm.group,
                     tarOrBranch: this.buildForm.tagOrBranch,
                 },
                 fn: data => {

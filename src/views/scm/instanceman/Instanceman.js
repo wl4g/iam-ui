@@ -92,25 +92,25 @@ export default {
   // 删除一列
   methods: {
       getenvir(flag){
-        var groupId;
+        var clusterId;
         if(flag==0){
           this.envirData=[];
           this.selectProp.environment="";
-          groupId=this.selectProp.group;
-          if(groupId==""){
+          clusterId=this.selectProp.group;
+          if(clusterId==""){
             return;
           }
         }else{
           this.envirFormData=[];
           this.ruleForm.environment="";
-          groupId=this.ruleForm.group
-          if(groupId==""){
+          clusterId=this.ruleForm.group
+          if(clusterId==""){
             return;
           }
         }
         this.$$api_instanceman_envirlist({
           data: {
-            groupId: groupId
+            clusterId: clusterId
           },
           fn: data => {
             if(data.code == 200){

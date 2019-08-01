@@ -93,7 +93,7 @@ export default {
     instancelist: [],
     isedit: false,
     envId: '',
-    groupId: '',
+    clusterId: '',
     dialogDisable: false,
     propertiesData: [],
     propertiesid: '',
@@ -197,10 +197,10 @@ export default {
           }else{
             if(this.envId == ""){
               this.envId = row.envId;
-              this.groupId = row.groupId;
+              this.clusterId = row.clusterId;
               this.instancelist.push(row.nodeId);
             }else{
-              if(this.envId == row.envId && this.groupId == row.groupId){
+              if(this.envId == row.envId && this.clusterId == row.clusterId){
                 this.instancelist.push(row.nodeId);
               }else{
                 row.enable = false;
@@ -212,7 +212,7 @@ export default {
           }
           if(this.instancelist.length == 0){
             this.envId = "";
-            this.groupId = "";
+            this.clusterId = "";
           }
         },
         addOne(falg,row) {
@@ -224,7 +224,7 @@ export default {
           content: '',}];
           if(falg == 1){
             this.dialogTitle = 'Configuration Edit';
-            this.ruleForm.group = parseInt(row.groupId);
+            this.ruleForm.group = parseInt(row.clusterId);
             this.ruleForm.environment = parseInt(row.envId);
             this.ruleForm.instance = row.nodeId;
             this.ruleForm.remark = row.remark;
@@ -245,7 +245,7 @@ export default {
             }else{
               this.dialogTitle = '批量新增';
               this.ruleForm.remark = "";
-              this.ruleForm.group = parseInt(this.groupId);
+              this.ruleForm.group = parseInt(this.clusterId);
               this.ruleForm.environment = parseInt(this.envId);
               this.ruleForm.instance = "";
               this.isedit = true;
@@ -253,28 +253,28 @@ export default {
           }
         },
         getinstance(flag){
-          var groupId;
+          var clusterId;
           var environmentId;
           if(flag==0){
             this.instanceData=[];
             this.formInline.instance="";
-            groupId = this.formInline.group;
+            clusterId = this.formInline.group;
             environmentId = this.formInline.environment;
-            if(environmentId==""||groupId==""){
+            if(environmentId==""||clusterId==""){
               return;
             }
           }else{
             this.instanceFormData=[];
             this.ruleForm.instance="";
-            groupId=this.ruleForm.group;
+            clusterId=this.ruleForm.group;
             environmentId = this.ruleForm.environment;
-            if(groupId==""){
+            if(clusterId==""){
               return;
             }
           }
           this.$$api_instanceman_instancelist({
             data: {
-              groupId: groupId,
+              clusterId: clusterId,
               envId: environmentId
             },
             fn: data => {
@@ -305,25 +305,25 @@ export default {
           })
         },
         getenvir(flag){
-          var groupId;
+          var clusterId;
           if(flag==0){
             this.envirData=[];
             this.formInline.environment="";
-            groupId=this.formInline.group;
-            if(groupId==""){
+            clusterId=this.formInline.group;
+            if(clusterId==""){
               return;
             }
           }else{
             this.envirFormData=[];
             this.ruleForm.environment="";
-            groupId=this.ruleForm.group
-            if(groupId==""){
+            clusterId=this.ruleForm.group
+            if(clusterId==""){
               return;
             }
           }
           this.$$api_instanceman_envirlist({
             data: {
-              groupId: groupId
+              clusterId: clusterId
             },
             fn: data => {
               if(data.code == 200){
@@ -390,7 +390,7 @@ export default {
         getData() {
           this.$$api_configguration_lists({
             data: {
-              groupId : this.formInline.group,
+              clusterId : this.formInline.group,
               envId : this.formInline.environment,
               instanceId: this.formInline.instance,
               pageNum: this.pageNum,
@@ -480,14 +480,14 @@ export default {
           _this.instancelist = [];
           let indexlist = [];
           _this.envId = "";
-          _this.groupId = "";
+          _this.clusterId = "";
           val.forEach((val1, index) => {
             if(_this.envId == ""){
               _this.envId = val1.envId;
-              _this.groupId = val1.groupId;
+              _this.clusterId = val1.clusterId;
               _this.instancelist.push(val1.nodeId);
             }else{
-              if(_this.envId == val1.envId && _this.groupId == val1.groupId){
+              if(_this.envId == val1.envId && _this.clusterId == val1.clusterId){
                 _this.instancelist.push(val1.nodeId);
               }else{
                 indexlist.push(val1);
@@ -507,7 +507,7 @@ export default {
           } 
           if(_this.instancelist.length == 0){
             _this.envId = "";
-            _this.groupId = "";
+            _this.clusterId = "";
           }          
         },
         submit(){
@@ -535,7 +535,7 @@ export default {
               id: this.ruleForm.group,
               nodeIdList: nodeIdList,
               content: '',
-              groupId: this.ruleForm.group
+              clusterId: this.ruleForm.group
             },
             fn: data => {
               if(data.code == 200){

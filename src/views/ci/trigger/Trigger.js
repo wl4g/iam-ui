@@ -127,7 +127,7 @@ export default {
                         this.saveForm.type = data.data.trigger.type;
                         this.saveForm.cron = data.data.trigger.cron;
 
-                        this.saveForm.group = data.data.appGroupId;
+                        this.saveForm.group = data.data.appClusterId;
 
 
                     } else {
@@ -226,7 +226,7 @@ export default {
                     this.$$api_ci_saveTrigger({
                         data: {
                             id: this.saveForm.id,
-                            groupId: this.saveForm.group,
+                            clusterId: this.saveForm.group,
                             taskId: this.saveForm.taskId,
                             name: this.saveForm.name,
                             remark: this.saveForm.remark,
@@ -305,16 +305,16 @@ export default {
 
         //获取实例名称
         getinstance() {
-            var groupId = this.saveForm.group;
+            var clusterId = this.saveForm.group;
             var environmentId = this.saveForm.environment;
             this.instanceData = [];
 
-            if (environmentId == "" || groupId == "") {
+            if (environmentId == "" || clusterId == "") {
                 return;
             }
             this.$$api_instanceman_instancelist({
                 data: {
-                    groupId: groupId,
+                    clusterId: clusterId,
                     envId: environmentId
                 },
                 fn: data => {
@@ -350,13 +350,13 @@ export default {
         //获取环境名称
         getenvir() {
             this.envirData = [];
-            var groupId = this.saveForm.group;
-            if (groupId == "") {
+            var clusterId = this.saveForm.group;
+            if (clusterId == "") {
                 return;
             }
             this.$$api_instanceman_envirlist({
                 data: {
-                    groupId: groupId
+                    clusterId: clusterId
                 },
                 fn: data => {
                     if (data.code == 200) {
@@ -440,10 +440,10 @@ export default {
         },
 
 
-        getTasksByAppGroupId() {
-            this.$$api_ci_getTasksByAppGroupId({
+        getTasksByAppClusterId() {
+            this.$$api_ci_getTasksByAppClusterId({
                 data: {
-                    appGroupId: this.saveForm.group,
+                    appClusterId: this.saveForm.group,
                 },
                 fn: data => {
                     //this.loading = false;

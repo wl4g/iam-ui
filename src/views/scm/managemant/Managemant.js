@@ -84,19 +84,19 @@ export default {
   // 删除一列
   methods: {
       getenvir(flag){
-        var groupId;
+        var clusterId;
         if(flag==0){
           this.envirData=[];
           this.selectProp.environment="";
-          groupId=this.selectProp.group
+          clusterId=this.selectProp.group
         }else{
           this.envirFormData=[];
           this.ruleForm.environment="";
-          groupId=this.ruleForm.group
+          clusterId=this.ruleForm.group
         }
         this.$$api_managemant_envirlist({
           data: {
-            groupId: groupId
+            clusterId: clusterId
           },
           fn: data => {
             if(data.code == 200){

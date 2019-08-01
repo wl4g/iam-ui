@@ -62,8 +62,8 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Group:" prop="appGroupId">
-                            <el-select v-model="saveForm.appGroupId" placeholder="Please group">
+                        <el-form-item label="Group:" prop="appClusterId">
+                            <el-select v-model="saveForm.appClusterId" placeholder="Please group">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"

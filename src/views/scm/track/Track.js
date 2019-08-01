@@ -65,13 +65,13 @@ export default {
           }).then(() => {
             let id = row.id;
             let remark = row.remark;
-            let groupId = row.groupId;
+            let clusterId = row.clusterId;
             let envId = row.envId;
             let instanceId = row.instanceId;
             this.$$api_track_releaseback({
               data: {
                 id: id,
-                groupId : groupId,
+                clusterId : clusterId,
                 instanceId : instanceId,
                 envId: envId,
                 remark: remark
@@ -111,12 +111,12 @@ export default {
         },
         // 获取列表数据
         getData() {
-          let groupId = this.formInline.group;
+          let clusterId = this.formInline.group;
           let envId = this.formInline.environment;
           let instanceId = this.formInline.instance;
           this.$$api_track_releaselist({
             data: {
-              groupId : groupId,
+              clusterId : clusterId,
               instanceId : instanceId,
               envId: envId,
               pageNum: this.pageNum,
@@ -144,14 +144,14 @@ export default {
     getinstance(){
       this.instanceFormData=[];
       this.formInline.instance="";
-      var groupId = this.formInline.group;
+      var clusterId = this.formInline.group;
       var environmentId = this.formInline.environment;
-      if(environmentId==""||groupId==""){
+      if(environmentId==""||clusterId==""){
         return;
       }
       this.$$api_instanceman_instancelist({
         data: {
-          groupId: groupId,
+          clusterId: clusterId,
           envId: environmentId
         },
         fn: data => {
@@ -191,13 +191,13 @@ export default {
     getenvir(){
       this.envirFormData=[];
       this.formInline.environment="";
-      var groupId=this.formInline.group;
-      if(groupId==""){
+      var clusterId=this.formInline.group;
+      if(clusterId==""){
         return;
       }
       this.$$api_instanceman_envirlist({
         data: {
-          groupId: groupId
+          clusterId: clusterId
         },
         fn: data => {
           if(data.code == 200){

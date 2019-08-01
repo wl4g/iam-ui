@@ -30,9 +30,9 @@ export default [
         type: 'post'
     },
     {
-        name: '根据appGroupId获取任务',
-        method: 'getTasksByAppGroupId',
-        path: '/ci-server/task/getListByAppGroupId',
+        name: '根据appClusterId获取任务',
+        method: 'getTasksByAppClusterId',
+        path: '/ci-server/task/getListByAppClusterId',
         type: 'post'
     },
     {

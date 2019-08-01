@@ -21,7 +21,7 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
-                appGroupId: '',
+                appClusterId: '',
                 projectName: '',
                 gitUrl: '',
                 tarPath: '',
@@ -236,7 +236,7 @@ export default {
                     this.$$api_ci_saveProject({
                         data: {
                             id: this.saveForm.id,
-                            appGroupId: this.saveForm.appGroupId,
+                            appClusterId: this.saveForm.appClusterId,
                             projectName: this.saveForm.projectName,
                             gitUrl: this.saveForm.gitUrl,
                             tarPath: this.saveForm.tarPath,
@@ -274,7 +274,7 @@ export default {
 
         cleanSaveForm() {
             this.saveForm.id = '';
-            this.saveForm.appGroupId = '';
+            this.saveForm.appClusterId = '';
             this.saveForm.projectName = '';
             this.saveForm.gitUrl = '';
             this.saveForm.tarPath = '';
