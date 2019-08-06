@@ -20,6 +20,8 @@ import instanceman from './instanceman/'
 import historic from './historic/'
 import track from './track/'
 import ci from './ci/'
+import umc from './umc/'
+
 export default [{
   module: 'user',
   name: '用户管理',
@@ -64,4 +66,8 @@ export default [{
   module: 'ci',
   name: '部署管理',
   list: ci
+},{
+  module: 'umc',
+  name: '部署管理',
+  list: umc
 }]

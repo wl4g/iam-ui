@@ -29,6 +29,12 @@ export default [
         icon: 'window-restore',
         component: Umc.Biztraffic
     },
+    {
+        path: 'contact',
+        name: 'Contact',
+        icon: 'window-restore',
+        component: Umc.Contact
+    },
 
 
 

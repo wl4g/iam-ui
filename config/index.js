@@ -44,6 +44,13 @@ module.exports = {
           '^/ci-server': 'ci-server'
         }
       },
+      '/umc-admin': {
+        target: 'http://localhost:14048',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/umc-admin': 'umc-admin'
+        }
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
