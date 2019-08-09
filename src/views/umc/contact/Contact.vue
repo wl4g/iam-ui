@@ -218,7 +218,7 @@
             </section>
 
         </el-tab-pane>
-        <el-tab-pane label="Contact Group">
+        <el-tab-pane label="Group">
 
             <el-form :inline="true" :model="searchGroupParams" class="demo-form-inline">
 

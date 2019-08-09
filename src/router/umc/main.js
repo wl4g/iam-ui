@@ -35,6 +35,39 @@ export default [
         icon: 'window-restore',
         component: Umc.Contact
     },
+    {
+        path: 'collector',
+        name: 'Collector',
+        icon: 'window-restore',
+        component: Umc.Collector
+    },
+    {
+        path: 'record',
+        name: 'Record',
+        icon: 'window-restore',
+        component: Umc.Record
+    },
+    {
+        path: 'templat',
+        name: 'Template',
+        icon: 'window-restore',
+        component: Umc.Templat
+    },
+    {
+        path: 'metrictemplate',
+        name: 'MetricTemplate',
+        icon: 'window-restore',
+        component: Umc.MetricTemplate
+    },
+    {
+        path: 'notification',
+        name: 'Notification',
+        icon: 'window-restore',
+        component: Umc.Notification
+    },
+
+
+
 
 
 

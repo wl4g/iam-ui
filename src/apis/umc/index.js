@@ -56,6 +56,109 @@ export default [
         type: 'post'
     },
 
+    //collector
+    {
+        name: '采集点列表',
+        method: 'collectorList',
+        path: '/umc-admin/collector/list',
+        type: 'post'
+    },
+    {
+        name: '保存采集点',
+        method: 'saveCollector',
+        path: '/umc-admin/collector/save',
+        type: 'post'
+    },
+    {
+        name: '保存采集点',
+        method: 'collectorDetail',
+        path: '/umc-admin/collector/detail',
+        type: 'post'
+    },
+    {
+        name: '删除采集点',
+        method: 'delCollector',
+        path: '/umc-admin/collector/del',
+        type: 'post'
+    },
+
+    //template
+    {
+        name: '模版列表',
+        method: 'templatList',
+        path: '/umc-admin/template/list',
+        type: 'post'
+    },
+    {
+        name: '保存模板',
+        method: 'saveTemplat',
+        path: '/umc-admin/template/save',
+        type: 'json'
+    },
+    {
+        name: '模版详情',
+        method: 'templatDetail',
+        path: '/umc-admin/template/detail',
+        type: 'post'
+    },
+    {
+        name: '删除模板',
+        method: 'delTemplat',
+        path: '/umc-admin/template/del',
+        type: 'post'
+    },
+
+
+
+    //host
+    {
+        name: '所有host',
+        method: 'allHost',
+        path: '/umc-admin/host/all',
+        type: 'post'
+    },
+
+    //record
+    {
+        name: '记录列表',
+        method: 'recordList',
+        path: '/umc-admin/record/list',
+        type: 'post'
+    },
+    {
+        name: '记录详情',
+        method: 'recordDetail',
+        path: '/umc-admin/record/detail',
+        type: 'post'
+    },
+
+
+    //metric
+    {
+        name: '模版列表',
+        method: 'metricList',
+        path: '/umc-admin/metric/list',
+        type: 'post'
+    },
+    {
+        name: '保存模板',
+        method: 'saveMetric',
+        path: '/umc-admin/metric/save',
+        type: 'json'
+    },
+    {
+        name: '模版详情',
+        method: 'metricDetail',
+        path: '/umc-admin/metric/detail',
+        type: 'post'
+    },
+    {
+        name: '删除模板',
+        method: 'delMetric',
+        path: '/umc-admin/metric/del',
+        type: 'post'
+    },
+
 
 
 
