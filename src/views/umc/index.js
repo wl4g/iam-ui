@@ -8,6 +8,7 @@ import Record from './record/'
 import Templat from './templat/'
 import MetricTemplate from './metrictemplate/'
 import Notification from './notification/'
+import Config from './config/'
 
 
 
@@ -23,5 +24,6 @@ export default {
     Templat,
     MetricTemplate,
     Notification,
+    Config,
 
 }

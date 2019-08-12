@@ -36,6 +36,7 @@ export default [
         type: 'post'
     },
 
+
     //group
     {
         name: '联系人分组列表',
@@ -53,6 +54,12 @@ export default [
         name: '删除联系人分组',
         method: 'delContactGroup',
         path: '/umc-admin/contactGroup/del',
+        type: 'post'
+    },
+    {
+        name: '所有联系人分组',
+        method: 'allContactGroup',
+        path: '/umc-admin/contactGroup/all',
         type: 'post'
     },
 
@@ -105,6 +112,12 @@ export default [
         name: '删除模板',
         method: 'delTemplat',
         path: '/umc-admin/template/del',
+        type: 'post'
+    },
+    {
+        name: '根据类别获取列表',
+        method: 'getTemplateByClassify',
+        path: '/umc-admin/template/getByClassify',
         type: 'post'
     },
 
@@ -172,6 +185,31 @@ export default [
         type: 'post'
     },
 
+    //config
+    {
+        name: '模版列表',
+        method: 'configList',
+        path: '/umc-admin/config/list',
+        type: 'post'
+    },
+    {
+        name: '保存模板',
+        method: 'saveConfig',
+        path: '/umc-admin/config/save',
+        type: 'json'
+    },
+    {
+        name: '模版详情',
+        method: 'configDetail',
+        path: '/umc-admin/config/detail',
+        type: 'post'
+    },
+    {
+        name: '删除模板',
+        method: 'delConfig',
+        path: '/umc-admin/config/del',
+        type: 'post'
+    },
 
 
 

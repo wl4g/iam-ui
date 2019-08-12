@@ -65,6 +65,12 @@ export default [
         icon: 'window-restore',
         component: Umc.Notification
     },
+    {
+        path: 'config',
+        name: 'Config',
+        icon: 'window-restore',
+        component: Umc.Config
+    },
 
 
 
