@@ -18,12 +18,9 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
-                name: '',
-                metric: '',
-                classify: '',
-                notifyLevel: '',
-                tagMap: [],
-                rules: [],
+                alarmTime: '',
+                alarmNote: '',
+                contacts: [],
             },
 
             dialogVisible: false,
@@ -69,7 +66,7 @@ export default {
                 end = this.getDate(this.searchParams.endDate);
             }
 
-            this.$$api_umc_metricList({
+            this.$$api_umc_notificationList({
                 data: {
                     startDate: start,
                     endDate: end,
@@ -106,82 +103,23 @@ export default {
 
         cleanSaveForm() {
             this.saveForm = {};
-            /*this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.metric = '';
-            this.saveForm.classify = '';
-            this.saveForm.notifyLevel = '';
-            this.saveForm.tagMap = [];
-            this.saveForm.rules = [];*/
         },
 
-        saveData() {
-            this.$refs['saveForm'].validate((valid) => {
-                if (valid) {
-                    //this.dialogLoading = true;
-                    this.$$api_umc_saveMetric({
-                        data: this.saveForm,
-
-                        fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
-                        }
-                    });
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-        },
-
-        convertClassifyValue(value){
-            console.info(value);
-
-            if (value == 1) {
-                return 'basic';
-            }
-            if (value == 2) {
-                return 'docker';
-            }
-            if (value == 3) {
-                return 'redis';
-            }
-            if (value == 4) {
-                return 'kafka';
-            }
-            if (value == 5) {
-                return 'zookeeper';
-            }
-            return '--';
-        },
-
-        editData(row) {
+        dataDetail(row) {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_metricDetail({
+            this.$$api_umc_notificationDetail({
                 data: {
                     id: row.id,
                 },
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        console.info(data.data.metricTemplate);
-                        this.saveForm = data.data.metricTemplate;
+                        console.info(data.data.notification);
+                        console.info(data.data.notificationContacts);
+                        this.saveForm = data.data.notification;
+                        this.saveForm.contacts = data.data.notificationContacts;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -195,41 +133,36 @@ export default {
                     });
                 }
             })
-
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
         },
 
-
-        delData(row) {
-            if (!row.id) {
-                return;
+        convertStatusValue(value){
+            console.info(value)
+            if (value == 0) {
+                return 'send';
             }
-            this.$$api_umc_delMetric({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+            if (value == 1) {
+                return 'unsend';
+            }
+            if (value == 2) {
+                return 'accepted';
+            }
+            if (value == 3) {
+                return 'unaccepted';
+            }
+            return '--';
+        },
+
+        timestampToTime(row, column, cellValue) {
+            var date = new Date(cellValue); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = date.getDate() + ' ';
+            var h = date.getHours() + ':';
+            var m = date.getMinutes() + ':';
+            var s = date.getSeconds();
+            return Y + M + D + h + m + s;
         },
 
     }

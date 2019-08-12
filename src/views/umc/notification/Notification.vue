@@ -26,17 +26,17 @@
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="alarmTime" label="AlarmTime"></el-table-column>
+                    <el-table-column prop="alarmTime" label="AlarmTime" :formatter="timestampToTime"></el-table-column>
                     <el-table-column prop="groupName" label="GroupName">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="detail(scope.row)">{{scope.row.groupName}}</el-button>
+                            <el-button type="text" size="small" @click="dataDetail(scope.row)">{{scope.row.groupName}}</el-button>
                         </template>
                     </el-table-column>
 
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column label="Operation">
                         <template slot-scope="scope">
-                            <!--<el-button type="text" size="small" @click="editData(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>-->
+                            <el-button type="text" size="small">Detail</el-button>
+                            <!--<el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>-->
                         </template>
                     </el-table-column>
 
@@ -50,13 +50,46 @@
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
 
                 <el-row>
-                    <el-col :span="8">
+                    <el-col :span="12">
                         <el-form-item label="AlarmTime:" >
-                            <el-input v-model="saveForm.alarmTime" readonly></el-input>
+                            <el-input :value="timestampToTime(null,null,saveForm.alarmTime)" readonly></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
 
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="AlarmNote:" >
+                            <el-input type="textarea" v-model="saveForm.alarmNote" readonly></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="Contacts:">
+                            <template>
+                                <el-table :data="saveForm.contacts" style="width: 100%">
+
+                                    <el-table-column prop="name" label="Name"></el-table-column>
+                                    <el-table-column prop="email" label="Email"></el-table-column>
+                                    <el-table-column prop="phone" label="Phone"></el-table-column>
+                                    <!-- 动态标签 -->
+                                    <el-table-column prop="status" label="Status">
+                                        <template slot-scope="scope">
+                                            <el-tag type="primary">{{convertStatusValue(scope.row.status)}}</el-tag>
+                                        </template>
+                                    </el-table-column>
+
+
+                                </el-table>
+                            </template>
+
+                        </el-form-item>
+
+                    </el-col>
+                </el-row>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
