@@ -159,6 +159,18 @@ export default [
         type: 'post'
     },
 
+    {
+        name: '记录列表',
+        method: 'notificationList',
+        path: '/umc-admin/notification/list',
+        type: 'post'
+    },
+    {
+        name: '记录详情',
+        method: 'notificationDetail',
+        path: '/umc-admin/notification/detail',
+        type: 'post'
+    },
 
 
 
