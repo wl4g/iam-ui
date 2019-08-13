@@ -21,6 +21,7 @@ import historic from './historic/'
 import track from './track/'
 import ci from './ci/'
 import umc from './umc/'
+import share from './share/'
 
 export default [{
   module: 'user',
@@ -70,4 +71,8 @@ export default [{
   module: 'umc',
   name: '部署管理',
   list: umc
+},{
+  module: 'share',
+  name: '设置管理',
+  list: share
 }]

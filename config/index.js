@@ -51,6 +51,13 @@ module.exports = {
           '^/umc-admin': 'umc-admin'
         }
       },
+      '/share-admin': {
+        target: 'http://localhost:14051',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/share-admin': 'share-admin'
+        }
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

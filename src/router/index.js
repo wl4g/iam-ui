@@ -13,6 +13,7 @@ import Ci from './ci/'
 import Umc from './umc/'
 import Iam from './iam/'
 import Srm from './srm/'
+import Share from './share/'
 
 
 export default new Router({
@@ -36,6 +37,7 @@ export default new Router({
     Srm,
     Scm,
     Ci,
+    Share,
 
   ]
 })
