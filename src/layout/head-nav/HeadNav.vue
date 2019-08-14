@@ -27,7 +27,7 @@
 						<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-col :span="3" class='logo-container' style="width:8%">
-					  <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;">
+					  <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
 					</el-col>
 					<el-dropdown-menu slot="dropdown">
 						<el-dropdown-item style="font-size:13px;" command='pass' v-if='$store.state.user.userinfo.is_update_pass'>Your profile</el-dropdown-item>
