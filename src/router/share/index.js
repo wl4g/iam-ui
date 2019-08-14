@@ -7,7 +7,7 @@ import Main  from './main'
 
 export default {
   path: '/share',
-  name: 'SETTING',
+  name: 'Settings',
   icon: 'inbox',
   component: Home,Content,
   redirect: '/share/dict',

@@ -3,18 +3,11 @@
 
     <header class="head-nav">
       <el-row>
-        <el-col :span="4" class='logo-container' style="width:5%">
-          <img src="../../assets/logo-sm.png" class='logo' alt="">
+        <el-col :span="4" class='logo-container' style="width:14%" >
+			<a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a>
         </el-col>
-          <!--<el-col :span="4" class='logo-container' style="width:8%;text-align:center;line-height:50px" >
-              <el-link disabled >Devops</el-link>
-          </el-col>-->
-          <el-col :span="4" class='logo-container' style="width:8%" >
-                  <a style="font-size:30px;line-height:55px;" width="100%"  disabled >Devops</a>
-          </el-col>
 
-
-        <el-col :span="16" style="width:66%">
+        <el-col :span="16" style="width:69%">
             <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
                    mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
@@ -26,31 +19,24 @@
                {{item.name}}<!--{{item.path}}-->
              </el-menu-item>
           </el-menu>
-
         </el-col>
         <el-col :span="4" class="userinfo">
-          <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
           <span class='username'>
-                        <el-dropdown
-                          trigger="click"
-                          @command='setDialogInfo'>
-                            <span class="el-dropdown-link">
-                                {{this.$store.state.user.userinfo.username}}<i
-                              class="el-icon-caret-bottom el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command='info'>修改信息</el-dropdown-item>
-                                <el-dropdown-item
-                                  command='pass'
-                                  v-if='$store.state.user.userinfo.is_update_pass'>修改密码</el-dropdown-item>
-                                <el-dropdown-item
-                                  command='set'
-                                  v-if='$store.state.user.userinfo.pid==0'>系统设置</el-dropdown-item>
-                                <el-dropdown-item
-                                  command='logout'>退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </span>
+				<el-dropdown trigger="click" @command='setDialogInfo'>
+					<span class="el-dropdown-link">
+						{{this.$store.state.user.userinfo.username}}
+						<i class="el-icon-caret-bottom el-icon--right"></i>
+					</span>
+					<el-col :span="3" class='logo-container' style="width:8%">
+					  <img src="../../assets/logo-sm.png" class='logo' alt="">
+					</el-col>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item style="font-size:13px;" command='info'>Your profile</el-dropdown-item>
+						<el-dropdown-item style="font-size:13px;" command='pass' v-if='$store.state.user.userinfo.is_update_pass'>Your settings</el-dropdown-item>
+						<el-dropdown-item style="font-size:13px;" command='logout'>Logout</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+          </span>
           <i class="fa fa-sign-out logout" @click='logout'></i>
         </el-col>
       </el-row>

@@ -7,7 +7,7 @@ import Main  from './main'
 
 export default {
   path: '/ci',
-  name: 'CI/CD',
+  name: 'CICD',
   icon: 'inbox',
   component: Home,Content,
   redirect: '/ci/taskhis',

@@ -3,9 +3,6 @@
  */
 
 import Login from './login/'
-import Function from './function/'
-import Adv from './adv/'
-import Demo from './demo/'
 import Components from './components/'
 import Scm from './scm/'
 import Srm from './srm/'

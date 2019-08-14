@@ -10,10 +10,7 @@
  */
 
 import user from './user/'
-import article from './article/'
-import order from './order/'
 import system from './system/'
-import test from './test/'
 import managemant from './managemant/'
 import configguration from './configguration/'
 import instanceman from './instanceman/'
@@ -27,22 +24,10 @@ export default [{
   module: 'user',
   name: '用户管理',
   list: user
-}, {
-  module: 'article',
-  name: '文章管理',
-  list: article
-}, {
-  module: 'order',
-  name: '订单管理',
-  list: order
-}, {
+},{
   module: 'system',
   name: '系统设置',
   list: system
-}, {
-  module: 'test',
-  name: '测试模块',
-  list: test
 }, {
   module: 'managemant',
   name: '节点',

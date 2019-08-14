@@ -10,7 +10,7 @@ var gbs = {
   api_data_field: 'data',
 
   api_custom: {
-    404: function (res) {
+    401: function (res) {
       this.$store.dispatch('remove_userinfo').then(() => {
         this.$alert(res.status + ',' + res.msg + '！', '登录错误', {
           confirmButtonText: '确定',
