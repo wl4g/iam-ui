@@ -4,12 +4,11 @@
     <header class="head-nav">
       <el-row>
         <el-col :span="4" class='logo-container' style="width:14%" >
-			<a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a>
+			<img data-v-12af00ba="" src="../../assets/logo.png" alt="" style="width:160px;" class="logo">
+			<!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
         </el-col>
-
         <el-col :span="16" style="width:69%">
-            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo"
-                   mode="horizontal" unique-opened router>
+            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo" mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
             <el-menu-item
               v-for='(item,index) in $router.options.routes'
@@ -28,12 +27,12 @@
 						<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-col :span="3" class='logo-container' style="width:8%">
-					  <img src="../../assets/logo-sm.png" class='logo' alt="">
+					  <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;">
 					</el-col>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item style="font-size:13px;" command='info'>Your profile</el-dropdown-item>
-						<el-dropdown-item style="font-size:13px;" command='pass' v-if='$store.state.user.userinfo.is_update_pass'>Your settings</el-dropdown-item>
-						<el-dropdown-item style="font-size:13px;" command='logout'>Logout</el-dropdown-item>
+						<el-dropdown-item style="font-size:13px;" command='pass' v-if='$store.state.user.userinfo.is_update_pass'>Your profile</el-dropdown-item>
+						<el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
+						<el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
           </span>
