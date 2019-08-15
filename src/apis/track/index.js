@@ -42,7 +42,7 @@ export default [
   {
     name: '获取分组名称',
     method: 'grouplists',
-    path: '/scm/appGroup/group_list',
+    path: '/share/appGroup/group_list',
     type: 'post'
   },
   {
