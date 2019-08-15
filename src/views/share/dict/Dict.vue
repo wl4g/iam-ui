@@ -40,28 +40,24 @@
             <template>
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="key" label="Key"></el-table-column>
-                    <el-table-column prop="type" label="Type"></el-table-column>
-                    <el-table-column prop="value" label="Value"></el-table-column>
-                    <el-table-column prop="label" label="Label"></el-table-column>
-                    <el-table-column prop="labelEn" label="LabelEn"></el-table-column>
-                    <el-table-column prop="remark" label="Remark" :show-overflow-tooltip="true" ></el-table-column>
-                    <el-table-column prop="themes" label="Themes"></el-table-column>
-                    <el-table-column prop="sort" label="Sort"></el-table-column>
-
+                    <el-table-column prop="key" label="Key" width=190></el-table-column>
+                    <el-table-column prop="type" label="Type" width=150></el-table-column>
+                    <el-table-column prop="value" label="Value" width=120></el-table-column>
+                    <el-table-column prop="label" label="Label" width=95></el-table-column>
+                    <el-table-column prop="labelEn" label="LabelEn" width=90></el-table-column>
+                    <el-table-column prop="sort" label="Sort" width=70></el-table-column>
+					<el-table-column prop="remark" label="Remark" :show-overflow-tooltip="true" width=140></el-table-column>
                     <el-table-column prop="themes" label="Themes">
                         <template slot-scope="scope">
                             <el-tag :type="dictutil.getDictThemesByTypeAndValue('dict_theme_type',scope.row.themes)">{{dictutil.getDictLabelByTypeAndValue('dict_theme_type',scope.row.themes)}}</el-tag>
                         </template>
                     </el-table-column>
-
                     <el-table-column label="Operation">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="dataDetail(scope.row)">Edit</el-button>
                             <el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
-
                 </el-table>
             </template>
         </div>
