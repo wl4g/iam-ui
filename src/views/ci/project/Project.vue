@@ -2,12 +2,12 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
 
-            <el-form-item label="GroupName:">
-                <el-input v-model="searchParams.groupName" placeholder="分组名："></el-input>
+            <el-form-item label="Cluster:">
+                <el-input v-model="searchParams.groupName" placeholder="e.g. sso | portal"></el-input>
             </el-form-item>
 
-            <el-form-item label="ProjectName:">
-                <el-input v-model="searchParams.projectName" placeholder="项目名："></el-input>
+            <el-form-item label="Project:">
+                <el-input v-model="searchParams.projectName" placeholder="e.g. safecloud-web-support"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -30,7 +30,7 @@
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="groupName" label="Group"></el-table-column>
+                    <el-table-column prop="groupName" label="Cluster"></el-table-column>
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="gitUrl" label="Git" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>

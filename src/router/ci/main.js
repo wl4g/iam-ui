@@ -7,25 +7,25 @@ import { Ci } from 'views/'
 export default [
     {
         path: 'task',
-        name: 'Task',
+        name: 'Pipeline',
         icon: 'window-restore',
         component: Ci.Task
     },
     {
-        path: 'taskhis',
-        name: 'History',
-        icon: 'window-restore',
-        component: Ci.TaskHistory
-    },
-    {
         path: 'trigger',
-        name: 'Scheduler',
+        name: 'Schedule',
         icon: 'window-restore',
         component: Ci.Trigger
     },
     {
+        path: 'taskhis',
+        name: 'Changes',
+        icon: 'window-restore',
+        component: Ci.TaskHistory
+    },
+    {
         path: 'project',
-        name: 'Projects',
+        name: 'Artifacts',
         icon: 'window-restore',
         component: Ci.Project
     },
