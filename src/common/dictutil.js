@@ -21,38 +21,38 @@ export default {
 
     getDictLabelByTypeAndValue: function (type, value) {
         if (!type || !value) {//type can not be null
-            return;
+            return 'default';
         }
         let dicts_cache = stor.get("dicts_cache");
         if (!dicts_cache) {
-            return value;
+            return 'default';
         }
         let dictGroup = dicts_cache.dictMap[type];
         if (!dictGroup) {
-            return value;
+            return 'default';
         }
         let dict = dictGroup[value];
         if (!dict) {
-            return value;
+            return 'default';
         }
         return dict.themes;
     },
 
     getDictThemesByTypeAndValue: function (type, value) {
         if (!type || !value) {//type can not be null
-            return;
+            return ;
         }
         let dicts_cache = stor.get("dicts_cache");
         if (!dicts_cache) {
-            return value;
+            return;
         }
         let dictGroup = dicts_cache.dictMap[type];
         if (!dictGroup) {
-            return value;
+            return;
         }
         let dict = dictGroup[value];
         if (!dict) {
-            return value;
+            return;
         }
         return dict.themes;
     },
