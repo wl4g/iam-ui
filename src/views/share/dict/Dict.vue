@@ -9,7 +9,7 @@
                 <el-input v-model="searchParams.label" placeholder="Label"></el-input>
             </el-form-item>
             <el-form-item label="Type:">
-                <el-select v-model="searchParams.type" placeholder="Type" style="width: 100%">
+                <el-select v-model="searchParams.type" placeholder="Type" style="width: 100%" :filterable="true" >
                     <el-option
                             v-for="item in allType"
                             :key="item"
@@ -51,7 +51,7 @@
 
                     <el-table-column prop="themes" label="Themes">
                         <template slot-scope="scope">
-                            <el-tag :type="getDictThemesByTypeAndValue('dict_theme_type',scope.row.themes)">{{getDictLabelByTypeAndValue('dict_theme_type',scope.row.themes)}}</el-tag>
+                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('dict_theme_type',scope.row.themes)">{{dictutil.getDictLabelByTypeAndValue('dict_theme_type',scope.row.themes)}}</el-tag>
                         </template>
                     </el-table-column>
 
@@ -116,7 +116,17 @@
                             </el-select>
                         </el-form-item>
 
-
+                        <!-- TODO dictuse example -->
+                        <!--<el-form-item label="Themes:" prop="themes">
+                            <el-select v-model="saveForm.themes" placeholder="Themes" style="width: 100%">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('dict_theme_type')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>-->
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="Sort:" prop="sort">

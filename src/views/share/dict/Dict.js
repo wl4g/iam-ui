@@ -1,4 +1,5 @@
 import {transDate, getDay} from 'utils/'
+import dictutil from "../../../common/dictutil";
 
 export default {
     name: 'dict',
