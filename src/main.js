@@ -27,52 +27,16 @@ Vue.config.devtools = true;
 /*
 * 尝试过提取到一个文件中，但是出现'this.$$api_share_allDictType'这种方法无法调用的问题，所以暂时先放在这里
 * */
-Vue.prototype.getDictListByType = function (type) {//not use now
+Vue.prototype.getDictListByType = function (type) {
     if (!type) {//type can not be null
-        return;
+        return [];
     }
-    let dictGroup = dictstore.dictDataList.get(type);
-    if (!dictGroup) {//if not found on catch ,  get from server
-        let dicts = this.getDictByTypeFromServer(this, type);
-        if (!dicts) {
-            return;
-        }
-        dictstore.dictDataList.set(type, dictGroup);
+    let dicts_cache = stor.get("dicts_cache");
+    if(!dicts_cache){
+        return [];
     }
+    let dictGroup = dicts_cache.dictList[type];
     return dictGroup;
-};
-
-Vue.prototype.getData=function(url){
-  return axios.get(url).then(res=>{
-    return res.data;
-  });
-}
-
-let getDictByTypeFromServer =  function (oo, type) {
-    console.info("not found in cache,get from server");
-    let dicts;
-    return  oo.$$api_share_getDictByType({
-        data: {
-            type: type,
-        },
-        fn: data => {
-            //this.loading = false;
-            if (data.code == 200) {
-                dicts = data.data.dict;
-              return dicts;
-            } else {
-                this.$alert(data.message, '错误', {
-                    confirmButtonText: '确定'
-                });
-            }
-        },
-        errFn: () => {
-            //this.loading = false;
-            this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-            });
-        }
-    });
 };
 
 Vue.prototype.getDictLabelByTypeAndValue = function (type, value) {

@@ -9,7 +9,7 @@ export default {
                 key: '',
                 label: '',
                 type: '',
-                description: '',
+                remark: '',
             },
 
             //分页信息
@@ -19,12 +19,12 @@ export default {
 
             //弹窗表单
             saveForm: {
-                id: '',
                 key: '',
                 value: '',
                 label: '',
+                labelEn: '',
                 type: '',
-                description: '',
+                remark: '',
                 themes: '',
                 icon: '',
                 sort: '',
@@ -38,7 +38,7 @@ export default {
             //所有的类型，用做下拉框
             allType: [],
 
-            themess: ['primary','gray','success','warning','danger'],
+            themess: ['default','primary','gray','success','warning','danger'],
 
             diseditable: false,
 
@@ -75,7 +75,7 @@ export default {
                     key: this.searchParams.key,
                     label: this.searchParams.label,
                     type: this.searchParams.type,
-                    description: this.searchParams.description,
+                    remark: this.searchParams.remark,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -127,15 +127,24 @@ export default {
             this.dialogVisible = true;
             this.dialogTitle = '新增';
             this.diseditable = false;
+
+            //默认值
+            this.saveForm.themes = 'default';
+            this.saveForm.sort = 50;
+
         },
 
         cleanSaveForm() {
-            this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.addr = '';
-            this.saveForm.hostId = '';
+            this.saveForm.key = '';
+            this.saveForm.value = '';
+            this.saveForm.label = '';
+            this.saveForm.labelEn = '';
+            this.saveForm.type = '';
+            this.saveForm.remark = '';
+            this.saveForm.themes = '';
+            this.saveForm.icon = '';
+            this.saveForm.sort = '';
         },
-
 
         saveData() {
             this.$refs['saveForm'].validate((valid) => {
@@ -143,15 +152,17 @@ export default {
                     //this.dialogLoading = true;
                     this.$$api_share_saveDict({
                         data: {
-                            id: this.saveForm.id,
                             key: this.saveForm.key,
                             value: this.saveForm.value,
                             label: this.saveForm.label,
+                            labelEn: this.saveForm.labelEn,
                             type: this.saveForm.type,
-                            description: this.saveForm.description,
+                            remark: this.saveForm.remark,
                             themes: this.saveForm.themes,
                             icon: this.saveForm.icon,
                             sort: this.saveForm.sort,
+
+                            isEdit: this.diseditable,
                         },
                         fn: data => {
                             this.dialogLoading = false;
@@ -180,12 +191,12 @@ export default {
         },
 
         dataDetail(row) {
-            if (!row.id) {
+            if (!row.key) {
                 return;
             }
             this.$$api_share_dictDetail({
                 data: {
-                    id: row.id,
+                    key: row.key,
                 },
                 fn: data => {
                     //this.loading = false;
@@ -212,12 +223,12 @@ export default {
 
 
         delData(row) {
-            if (!row.id) {
+            if (!row.key) {
                 return;
             }
             this.$$api_share_delDict({
                 data: {
-                    id: row.id,
+                    key: row.key,
                 },
                 fn: data => {
                     //this.loading = false;

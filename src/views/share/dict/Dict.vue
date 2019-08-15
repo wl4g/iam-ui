@@ -18,8 +18,8 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Description">
-                <el-input v-model="searchParams.description" placeholder="Description"></el-input>
+            <el-form-item label="Remark">
+                <el-input v-model="searchParams.remark" placeholder="Remark"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
@@ -40,12 +40,12 @@
             <template>
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="key" label="Key"></el-table-column>
                     <el-table-column prop="type" label="Type"></el-table-column>
                     <el-table-column prop="value" label="Value"></el-table-column>
                     <el-table-column prop="label" label="Label"></el-table-column>
-                    <el-table-column prop="description" label="Description" :show-overflow-tooltip="true" ></el-table-column>
+                    <el-table-column prop="labelEn" label="LabelEn"></el-table-column>
+                    <el-table-column prop="remark" label="Remark" :show-overflow-tooltip="true" ></el-table-column>
                     <el-table-column prop="themes" label="Themes"></el-table-column>
                     <el-table-column prop="sort" label="Sort"></el-table-column>
 
@@ -78,27 +78,33 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Value:" prop="value">
-                            <el-input v-model="saveForm.value" :disabled="diseditable" placeholder="Value"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item label="Type:" prop="type">
                             <el-input v-model="saveForm.type" placeholder="Type" :disabled="diseditable"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                </el-row>
+
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="Value:" prop="value">
+                            <el-input v-model="saveForm.value" :disabled="diseditable" placeholder="Value"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
                         <el-form-item label="Label:" prop="label">
                             <el-input v-model="saveForm.label" placeholder="Label"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="Label:" prop="labelEn">
+                            <el-input v-model="saveForm.labelEn" placeholder="LabelEn"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col :span="12">
+
                         <el-form-item label="Themes:" prop="themes">
                             <el-select v-model="saveForm.themes" placeholder="Themes" style="width: 100%">
                                 <el-option
@@ -109,6 +115,8 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+
+
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="Sort:" prop="sort">
@@ -127,8 +135,8 @@
 
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="Description:" prop="description">
-                            <el-input v-model="saveForm.description" placeholder="Description"></el-input>
+                        <el-form-item label="Remark:" prop="remark">
+                            <el-input v-model="saveForm.remark" placeholder="Remark"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
