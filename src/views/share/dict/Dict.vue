@@ -48,6 +48,13 @@
                     <el-table-column prop="description" label="Description" :show-overflow-tooltip="true" ></el-table-column>
                     <el-table-column prop="themes" label="Themes"></el-table-column>
                     <el-table-column prop="sort" label="Sort"></el-table-column>
+
+                    <el-table-column prop="themes" label="Themes">
+                        <template slot-scope="scope">
+                            <el-tag :type="getDictThemesByTypeAndValue('dict_theme_type',scope.row.themes)">{{getDictLabelByTypeAndValue('dict_theme_type',scope.row.themes)}}</el-tag>
+                        </template>
+                    </el-table-column>
+
                     <el-table-column label="Operation">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="dataDetail(scope.row)">Edit</el-button>

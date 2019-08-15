@@ -1,3 +1,6 @@
+import {
+  store
+} from 'utils/'
 /**
  * Created by sailengsi on 2017/5/11.
  */
@@ -216,5 +219,19 @@ export default {
       this.data.password = this.remumber.remumber_login_info.token.substring(0, 16)
       this.$set(this.data, 'token', this.remumber.remumber_login_info.token)
     }
+
+    //cache the dict
+    this.$$api_share_dictCache({
+      fn: data => {
+        console.info(data.data)
+        store.set("dicts_cache",data.data);
+      },
+      errFn: () => {
+        console.error("get dicts cache failss")
+      },
+    })
+
+
+
   }
 }

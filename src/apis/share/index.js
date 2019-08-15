@@ -41,6 +41,12 @@ export default [
         path: '/share-admin/dict/getByType',
         type: 'post'
     },
+    {
+        name: '获取字典缓存',
+        method: 'dictCache',
+        path: '/share-admin/dict/cache',
+        type: 'post'
+    },
 
 
 
