@@ -1,5 +1,4 @@
 /**
- * 用户模块
  * @type {Object}
  */
 export default [
