@@ -11,7 +11,7 @@ export default [
         component: Share.Dict
     }, {
         path: 'managemant',
-        name: 'Group',
+        name: 'Cluster',
         icon: 'window-restore',
         component: Share.Managemant
     }, {
