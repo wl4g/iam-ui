@@ -3,11 +3,10 @@
  */
 import { Umc } from 'views/'
 
-
 export default [
     {
         path: 'sbamonitor',
-        name: 'SBA Monior',
+        name: 'SBA Monitor',
         icon: 'window-restore',
         component: Umc.Sbamonitor
     },
@@ -18,46 +17,39 @@ export default [
         component: Umc.Biztraffic
     },
     {
-        path: 'contact',
-        name: 'Contact',
-        icon: 'window-restore',
-        component: Umc.Contact
-    },
-    {
-        path: 'record',
-        name: 'Record',
-        icon: 'window-restore',
-        component: Umc.Record
-    },
-    {
-        path: 'templat',
-        name: 'Template',
-        icon: 'window-restore',
-        component: Umc.Templat
-    },
-    {
-        path: 'metrictemplate',
-        name: 'MetricTemplate',
-        icon: 'window-restore',
-        component: Umc.MetricTemplate
-    },
-    {
         path: 'notification',
-        name: 'Notification',
+        name: 'Notification Logs',
         icon: 'window-restore',
         component: Umc.Notification
     },
     {
+        path: 'record',
+        name: 'Alarm Logs',
+        icon: 'window-restore',
+        component: Umc.Record
+    },
+    {
         path: 'config',
-        name: 'Config',
+        name: 'Alarm Config',
         icon: 'window-restore',
         component: Umc.Config
     },
-
-
-
-
-
-
-
+    {
+        path: 'templat',
+        name: 'Alarm Template',
+        icon: 'window-restore',
+        component: Umc.Templat
+    },
+    {
+        path: 'contact',
+        name: 'Alarm Contact',
+        icon: 'window-restore',
+        component: Umc.Contact
+    },
+    {
+        path: 'metrictemplate',
+        name: 'Metric Template',
+        icon: 'window-restore',
+        component: Umc.MetricTemplate
+    },
 ]
