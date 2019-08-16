@@ -3,8 +3,8 @@
     <!-- //表单 -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline" style="height: 0px;">
       
-      <el-form-item label="Log-level:" >
-        <el-tooltip class="item" effect="dark" content="日志级别过滤：如INFO ↑表示仅输出INFO级别即以上级别的(ERROR/WARN)日志" placement="bottom-start">
+      <el-form-item label="Log Level:" >
+        <el-tooltip class="item" effect="dark" content="e.g. INFO↑ only outputs logs containing (INFO/WARN/ERROR/FATAL) level." placement="bottom-start">
           <el-select v-model="formInline.loglevle" class="testinput" >
             <el-option
                   v-for="item in loglevle"
@@ -16,28 +16,24 @@
         </el-tooltip>
       </el-form-item>
       
-      <el-form-item label="keword:">
-        <el-input v-model="formInline.content" placeholder="查询value" class="testinput1"></el-input>
-        <!-- <el-input v-model="formInline.user" placeholder=""></el-input>  -->
+      <el-form-item label="Keyword:">
+        <el-input v-model="formInline.content" placeholder="e.g. addr=11111119" style="width:230px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-checkbox v-model="formInline.enable"></el-checkbox>
       </el-form-item>
       <el-form-item>
-        <p @click="screen" style="color:#48576a;cursor:pointer;">高级筛选</p>
+        <p @click="screen" style="color:#48576a;cursor:pointer;">Advance Filter</p>
       </el-form-item>
       <el-form-item>
-       <el-tooltip class="item" effect="dark" content="高级筛选说明：支持多条件查询，包括条件的包含与不包含查询" placement="bottom-start">
+       <el-tooltip class="item" effect="dark" content="Desc: Multi-conditional filter to support include and exclude relationships." placement="bottom-start">
           <i class="el-icon-warning" style="color:#e0e0e2;"></i>
         </el-tooltip>
       </el-form-item>
-       <el-form-item label="更新频率:" >
+       <el-form-item label="Update freq:" >
         <el-select v-model="formInline.fq" class="testinput" @change="flshfq" >
-           <el-option
-                v-for="item in fq"
-                :key="item.id"
-                :label="item.value"
-                :value="item.id">
+           <el-option v-for="item in fq" :key="item.id"
+                :label="item.value" :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -103,26 +99,26 @@
       </el-dialog>
 
         <el-dialog
-        title="日志时间选项"
+        title="Log Loading Policy Settings"
         :visible.sync="historylog"
         width="30%"
         class="tanchuang1"
        >
         <el-form :inline="true" :model="formInline" >
           <!-- 插入表格 -->
-          <el-form-item label="日志加载方式：" prop="miaoshu">
+          <el-form-item label="Policy:" prop="miaoshu">
             <div style="float:left;">
               <el-radio-group v-model="radio">
-                <el-radio-button  :label="1" class="myradio">相对时间</el-radio-button>
-                <el-radio-button :label="2" class="myradio">自定义</el-radio-button>
+                <el-radio-button :label="1" class="myradio">Relative Time</el-radio-button>
+                <el-radio-button :label="2" class="myradio">Custom Time</el-radio-button>
               </el-radio-group>
             </div>
             <div v-show="radio==1" style="float:left;">
              <el-radio-group v-model="radio1">
-                <el-radio :label="1">1分钟</el-radio>
-                <el-radio :label="2">15分钟</el-radio>
-                <el-radio :label="3">1小时</el-radio>
-                <el-radio :label="4">4小时</el-radio>
+                <el-radio :label="1">1 min</el-radio>
+                <el-radio :label="2">15 min</el-radio>
+                <el-radio :label="3">1 hour</el-radio>
+                <el-radio :label="4">4 hour</el-radio>
               </el-radio-group>
             </div>
              <div v-show="radio==2"  style="float:left;">
@@ -149,17 +145,17 @@
                   placeholder="任意时间点">
                 </el-time-picker>
             </div>
-             <div v-show="radio==1"  style="float:left;">
-                 例: 即加载最新一分钟日志,日志采集有一定延迟
+             <div v-show="radio==1"  style="float:left;color:rgb(119,122,126);line-height:25px;margin-top:20px;">
+                 e.g. Selected 1 min, means loading the latest minute log, </br>note: there may be some delay.
             </div>
-             <div v-show="radio==2"  style="float:left;">
-                例: 加载采集时间为[StartTime,EndTime]之间的日志,日志采集有一定延迟
+             <div v-show="radio==2"  style="float:left;color:rgb(119,122,126);line-height:25px;margin-top:20px;">
+				Description: Load logs between absolute time intervals [startTime, endTime]
             </div>
-          </el-form-item>      
+          </el-form-item>
           <!-- end -->
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="submit">确 定</el-button>
+          <el-button type="primary" @click="submit">OK</el-button>
         </span>
       </el-dialog>
         <!-- end -->
@@ -241,9 +237,6 @@
     box-sizing: border-box;
     width: 40%;
 } */
-  .testinput1 .el-input__inner {
-    width: 150px;
-  }
   .mytextarea {
     height: 70vh;
     overflow-y: auto;

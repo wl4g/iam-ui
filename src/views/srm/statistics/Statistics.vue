@@ -3,8 +3,8 @@
     <!-- //表单 -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       
-      <el-form-item label="Log-level:" >
-        <el-tooltip class="item" effect="dark" content="日志级别过滤：如INFO ↑表示仅输出INFO级别即以上级别的(ERROR/WARN)日志" placement="bottom-start">
+      <el-form-item label="Log Level:" >
+        <el-tooltip class="item" effect="dark" content="e.g. INFO↑ only analyze logs containing (INFO/WARN/ERROR/FATAL) level." placement="bottom-start">
           <el-select v-model="formInline.loglevle" class="testinput" >
             <el-option
                   v-for="item in loglevle"
@@ -16,18 +16,17 @@
         </el-tooltip>
       </el-form-item>
       
-      <el-form-item label="keword:">
-        <el-input v-model="formInline.content" placeholder="查询value" class="testinput1"></el-input>
-        <!-- <el-input v-model="formInline.user" placeholder=""></el-input>  -->
+      <el-form-item label="Keyword:">
+        <el-input v-model="formInline.content" placeholder="e.g. addr=11111119" style="width:230px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-checkbox v-model="formInline.enable"></el-checkbox>
       </el-form-item>
       <el-form-item>
-        <p @click="screen" style="color:#48576a;cursor:pointer;">高级筛选</p>
+        <p @click="screen" style="color:#48576a;cursor:pointer;">Advance Filter</p>
       </el-form-item>
       <el-form-item>
-       <el-tooltip class="item" effect="dark" content="高级筛选说明：支持多条件查询，包括条件的包含与不包含查询" placement="bottom-start">
+       <el-tooltip class="item" effect="dark" content="Desc: Multi-conditional filter analyze to support include and exclude relationships." placement="bottom-start">
           <i class="el-icon-warning" style="color:#e0e0e2;"></i>
         </el-tooltip>
       </el-form-item>
@@ -38,23 +37,23 @@
                 placeholder="选择日期" >
         </el-date-picker>
       </el-form-item>
-       <el-form-item label="开始时间:">
+       <el-form-item label="StartTime:">
         <el-time-picker
             v-model="value2"
             :picker-options="{
               selectableRange: '00:00:00 - 23:59:59'
             }"
-            placeholder="任意时间点">
+            placeholder="StartTime">
           </el-time-picker>
         </el-form-item>
-        <el-form-item label="结束时间:">
+        <el-form-item label="EndTime:">
           <el-time-picker
             arrow-control
             v-model="value3"
             :picker-options="{
               selectableRange: '00:00:00 - 23:59:59'
             }"
-            placeholder="任意时间点">
+            placeholder="EndTime">
           </el-time-picker>
       </el-form-item>
       <el-form-item>
@@ -144,7 +143,7 @@
        <!-- 查询结果数值 -->
     <div class="query">
       <div class="line"></div>
-      <div class="">查询结果：共查询到 <span class="number">{{total}}</span> 条记录</div>
+      <div class="">Total：Matched to <span class="number">{{total}}</span></div>
     </div>
   </section>
 </template>

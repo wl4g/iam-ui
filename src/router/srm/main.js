@@ -7,19 +7,15 @@ import { Srm } from 'views/'
 export default [
     {
         path: 'console',
-        name: 'Console',
+        name: 'Log Console',
         icon: 'window-restore',
         component: Srm.Console
     },
     {
         path: 'statistics',
-        name: 'Statistics',
+        name: 'Log Analysis',
         icon: 'window-restore',
         component: Srm.Statistics
     },
-
-
-
-
 
 ]

@@ -31,10 +31,10 @@ export default new Router({
     },
     //Function,
     Umc,
-    Iam,
     Srm,
-    Scm,
     Ci,
+	Scm,
+	Iam,
     Share,
   ]
 })
