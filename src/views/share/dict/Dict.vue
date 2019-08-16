@@ -9,7 +9,7 @@
             </el-form-item>
             <el-form-item label="Type:">
                 <el-select v-model="searchParams.type" placeholder="e.g. app_ns_type" style="width:160px" :filterable="true" >
-                    <el-option></el-option>
+                    <el-option value="">e.g. app_ns_type</el-option>
 					<el-option v-for="item in allType" :key="item" :label="item" :value="item"></el-option>
                 </el-select>
             </el-form-item>
