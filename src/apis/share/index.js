@@ -29,7 +29,7 @@ export default [
         type: 'post'
     },
     {
-        name: '删除字典',
+        name: '所有字典类型',
         method: 'allDictType',
         path: '/share-admin/dict/allType',
         type: 'post'
@@ -44,6 +44,15 @@ export default [
         name: '获取字典缓存',
         method: 'dictCache',
         path: '/share-admin/dict/cache',
+        type: 'post'
+    },
+
+
+    //host
+    {
+        name: '所有host',
+        method: 'allHost',
+        path: '/share-admin/host/all',
         type: 'post'
     },
 

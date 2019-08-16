@@ -89,6 +89,37 @@ export default {
             })
         },
 
+        // 获取列表数据
+        getAllHost() {
+            this.$$api_share_allHost({
+                data: {
+
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.allHost = data.data.list;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        addCollector() {
+            this.cleanSaveForm();
+            this.dialogVisible = true;
+            this.dialogTitle = '新增';
+        },
+
         cleanSaveForm() {
             this.saveForm = {};
             /*this.saveForm.id = '';

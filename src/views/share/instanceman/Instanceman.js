@@ -25,6 +25,7 @@ export default {
         environment: [],
         tableData1: [{
           enable: true,
+          hostId: '',
           host: '',
           ip: '',
           port: '',
@@ -82,12 +83,17 @@ export default {
       envirData: [],
       envirFormData: [],
       instanceData: [],
-      selectdisabled: false
+      selectdisabled: false,
+
+      //allHost
+      allHost: [],
+
     }
   },
   mounted() {
     this.getGroup();
     this.getData();
+    this.getAllHost();
   },
   // 删除一列
   methods: {
@@ -319,6 +325,7 @@ export default {
                 data.data.iof.appInstance[i].enable === 1? data.data.iof.appInstance[i].enable = true : data.data.iof.appInstance[i].enable = false;
               }
               this.ruleForm.tableData1 = data.data.iof.appInstance;
+              console.info(this.ruleForm.tableData1);
             }
             
           }else{
@@ -458,6 +465,30 @@ export default {
         })
       }
     },
+
+
+    //host
+    // 获取分组名称
+    getAllHost() {
+      this.$$api_share_allHost({
+        fn: data => {
+          if(data.code == 200){
+            this.allHost = data.data.list;
+          }else{
+            this.$alert(data.message, '错误', {
+              confirmButtonText: '确定'
+            });
+          }
+        },
+        errFn: () => {
+          this.$alert('访问失败，请稍后重试！', '错误', {
+            confirmButtonText: '确定',
+          });
+        }
+      })
+    },
+
+
   },
 
 }

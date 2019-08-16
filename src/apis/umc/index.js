@@ -122,15 +122,6 @@ export default [
     },
 
 
-
-    //host
-    {
-        name: '所有host',
-        method: 'allHost',
-        path: '/umc-admin/host/all',
-        type: 'post'
-    },
-
     //record
     {
         name: '记录列表',

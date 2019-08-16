@@ -6,7 +6,7 @@ export default [
   {
     name: '节点增加',
     method: 'insert',
-    path: '/share-admin-admin/appGroup/insert',
+    path: '/share-admin/appGroup/insert',
     type: 'json'
   },
   {
