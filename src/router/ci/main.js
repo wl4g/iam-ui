@@ -25,7 +25,7 @@ export default [
     },
     {
         path: 'project',
-        name: 'Artifacts',
+        name: 'Projects',
         icon: 'window-restore',
         component: Ci.Project
     },

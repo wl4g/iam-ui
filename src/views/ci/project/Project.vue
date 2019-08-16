@@ -7,7 +7,7 @@
             </el-form-item>
 
             <el-form-item label="Project:">
-                <el-input v-model="searchParams.projectName" placeholder="e.g. safecloud-web-support"></el-input>
+                <el-input v-model="searchParams.projectName" placeholder="e.g. safecloud-web-portal"></el-input>
             </el-form-item>
 
             <el-form-item>
@@ -21,7 +21,7 @@
             <div class="line"></div>
             <div class="">Result Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addPriject()" style='float:right;margin:5px'>Add</el-button>
+                <el-button type="primary" @click="addPriject()" style='float:right;margin-right:20px'>+</el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->
@@ -150,7 +150,7 @@
                             </el-table>
                         </template>
                     <!--</div>-->
-                    <el-button type="primary"  @click.native.prevent="addRow()">Append</el-button>
+                    <el-button type="primary"  @click.native.prevent="addRow()">+</el-button>
                 </el-form-item>
 
             </el-form>

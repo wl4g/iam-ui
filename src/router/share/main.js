@@ -5,11 +5,7 @@ import { Share } from 'views/'
 
 
 export default [
-    {	path: 'dict',
-        name: 'Dict',
-        icon: 'window-restore',
-        component: Share.Dict
-    }, {
+    {
         path: 'managemant',
         name: 'Cluster',
         icon: 'window-restore',
@@ -19,6 +15,9 @@ export default [
         name: 'Instance',
         icon: 'window-restore',
         component: Share.Instanceman
+    },{	path: 'dict',
+        name: 'Dictionaries',
+        icon: 'window-restore',
+        component: Share.Dict
     },
-
 ]

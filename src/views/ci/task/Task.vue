@@ -1,32 +1,32 @@
 <template>
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-            <el-form-item label="Id:">
-                <el-input v-model="searchParams.id" placeholder="id" style="width: 80px;"></el-input>
-            </el-form-item>
-            <el-form-item label="TaskName:">
-                <el-input v-model="searchParams.taskName" placeholder="任务名" ></el-input>
-            </el-form-item>
-            <el-form-item label="GroupName:">
-                <el-input v-model="searchParams.groupName" placeholder="分组名" ></el-input>
-            </el-form-item>
-            <!--<el-form-item label="ProjectName:">
-                <el-input v-model="searchParams.projectName" placeholder="项目名" style="width: 120px;"></el-input>
+            <!--<el-form-item label="ID:">
+                <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width: 80px;"></el-input>
             </el-form-item>-->
-            <el-form-item label="BranchName:">
-                <el-input v-model="searchParams.branchName" placeholder="分支名" ></el-input>
+            <el-form-item label="Name:">
+                <el-input v-model="searchParams.taskName" placeholder="e.g. TaskProtalDev" style="width:150px;"></el-input>
+            </el-form-item>
+            <el-form-item label="Cluster:">
+                <el-input v-model="searchParams.groupName" placeholder="e.g. portal" style="width:110px;"></el-input>
+            </el-form-item>
+            <!--<el-form-item label="Project:">
+                <el-input v-model="searchParams.projectName" placeholder="项目名" style="width:120px;"></el-input>
+            </el-form-item>-->
+            <el-form-item label="Branch:">
+                <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
             </el-form-item>
             <el-form-item label="PackType:">
-                <el-select v-model="searchParams.tarType" placeholder="Pack" style="width: 100px;">
+                <el-select v-model="searchParams.tarType" placeholder="Pack" style="width:75px;">
                     <el-option label="All" value=""></el-option>
                     <el-option label="tar" :value="1"></el-option>
                     <el-option disabled label="jar" :value="2"></el-option>
                     <el-option disabled label="docker" :value="3"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Create Date Range:">
-                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy - MM - dd " ></el-date-picker>
-                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy - MM - dd" ></el-date-picker>
+            <el-form-item label="Create Date:">
+                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
+                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
@@ -37,9 +37,9 @@
         <!-- 查询结果数值 -->
         <div class="query">
             <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span>
-                <el-button style='float:right;margin:5px' type="primary" @click="add()">Add</el-button>
-                <!--<el-button style='float:right;margin:5px' type="primary" @click="create()">Add</el-button>-->
+            <div class="">Total： <span class="number">{{total}}</span>
+                <el-button style='float:right;margin-right:20px' type="primary" @click="add()">+</el-button>
+                <!--<el-button style='float:right;margin:5px' type="primary" @click="create()">+</el-button>-->
             </div>
         </div>
         <!-- 查询结果表格 -->
@@ -47,10 +47,10 @@
             <template>
                 <el-table :data="tableData"  style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="taskName" label="Name"></el-table-column>
-                    <el-table-column prop="groupName" label="Group"></el-table-column>
-                    <el-table-column prop="instances" label="Instance Count">
+                    <el-table-column prop="id" label="ID" min-width="40"></el-table-column>
+                    <el-table-column prop="taskName" label="Name" min-width="70"></el-table-column>
+                    <el-table-column prop="groupName" label="Group" min-width="60"></el-table-column>
+                    <el-table-column prop="instances" label="Instances" min-width="70">
                         <template slot-scope="scope">
                             <el-popover placement="right" width="200" trigger="hover">
                                 <el-input type="textarea" :rows="3" placeholder="暂无数据" :readonly="true" :value="instances2Str(scope.row)"></el-input>
@@ -58,12 +58,12 @@
                             </el-popover>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="branchName" label="Branch"></el-table-column>
+                    <el-table-column prop="branchName" label="Branch" min-width="58"></el-table-column>
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
-                    <el-table-column prop="tarType" label="PackType" min-width="50" :formatter="convertTarType"></el-table-column>
+                    <el-table-column prop="tarType" label="PackType" min-width="80" :formatter="convertTarType"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-                    <el-table-column prop="preCommand" label="Pre Command"></el-table-column>
-                    <el-table-column prop="postCommand" label="Post Command"></el-table-column>
+                    <el-table-column prop="preCommand" label="PreCmd"></el-table-column>
+                    <el-table-column prop="postCommand" label="PostCmd"></el-table-column>
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">

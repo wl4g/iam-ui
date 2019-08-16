@@ -2,39 +2,36 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
 
-            <el-form-item label="GroupName:">
-                <el-input v-model="searchParams.groupName" placeholder="分组名："></el-input>
+            <el-form-item label="Cluster:">
+                <el-input v-model="searchParams.groupName" placeholder="e.g. sso | portal"></el-input>
             </el-form-item>
 
-            <el-form-item label="ProjectName:">
-                <el-input v-model="searchParams.projectName" placeholder="项目名："></el-input>
+            <el-form-item label="Project:">
+                <el-input v-model="searchParams.projectName" placeholder="e.g. safecloud-web-portal"></el-input>
             </el-form-item>
 
-            <el-form-item label="BranchName:">
-                <el-input v-model="searchParams.branchName" placeholder="分支名："></el-input>
+            <el-form-item label="Branch:">
+                <el-input v-model="searchParams.branchName" placeholder="1.0.1-rc1"></el-input>
                 <!--<el-select v-model="searchParams.instance" placeholder="请选择实例:">
                     <el-option label="ALL" value=""></el-option>
                     <el-option label="a" value="1"></el-option>
                     <el-option label="b" value="2"></el-option>
                 </el-select>-->
             </el-form-item>
-
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
-
             <el-form-item style='float:right'>
                 <!-- 新增按钮 -->
                 <!--<el-button type="primary" @click="create()">Create</el-button>-->
             </el-form-item>
-
         </el-form>
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
         <div class="query">
             <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span></div>
+            <div class="">Total： <span class="number">{{total}}</span></div>
         </div>
         <!-- 查询结果表格 -->
         <div>

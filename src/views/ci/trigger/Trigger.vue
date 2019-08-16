@@ -1,28 +1,27 @@
 <template>
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-
-            <el-form-item label="Id:">
-                <el-input v-model="searchParams.id" placeholder="Id："></el-input>
+            <el-form-item label="ID:">
+                <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width:80px"></el-input>
             </el-form-item>
-            <el-form-item label="Name:">
-                <el-input v-model="searchParams.name" placeholder="Name："></el-input>
-            </el-form-item>
-            <el-form-item label="TaskId:">
-                <el-input v-model="searchParams.taskId" placeholder="TaskId："></el-input>
+            <!-- <el-form-item label="Name:">
+                <el-input v-model="searchParams.name" placeholder="e.g. TaskPortalDev"></el-input>
+            </el-form-item> -->
+            <el-form-item label="Task:">
+                <el-input v-model="searchParams.taskId" placeholder="e.g. TaskPortalDev" style="width:155px"></el-input>
             </el-form-item>
             <el-form-item label="Status:">
                 <!--<el-switch v-model="searchParams.enable" on-value="1" off-value="0"></el-switch>-->
-                <el-select v-model="searchParams.enable">
-                    <el-option label="全部" value=""></el-option>
-                    <el-option label="启用" value="1"></el-option>
-                    <el-option label="停用" value="0"></el-option>
+                <el-select v-model="searchParams.enable" style="width:100px">
+                    <el-option label="All" value=""></el-option>
+                    <el-option label="Enable" value="1"></el-option>
+                    <el-option label="Disable" value="0"></el-option>
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="Create Date Range:">
-                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy - MM - dd " ></el-date-picker>
-                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy - MM - dd" ></el-date-picker>
+            <el-form-item label="Create Date:">
+                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
+                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
             </el-form-item>
 
             <el-form-item>
@@ -35,9 +34,9 @@
         <!-- 查询结果数值 -->
         <div class="query">
             <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span>
+            <div class="">Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addTrigger()" style='float:right;margin:5px' >Add</el-button>
+                <el-button type="primary" @click="addTrigger()" style='float:right;margin-right:20px'>+</el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->

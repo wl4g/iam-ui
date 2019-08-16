@@ -1,9 +1,9 @@
-import Dict from './dict/'
 import Managemant from './managemant/'
 import Instanceman from './instanceman/'
+import Dict from './dict/'
 
 export default {
-    Dict,
     Instanceman,
 	Managemant,
+	Dict,
 }
