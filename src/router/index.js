@@ -7,14 +7,12 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import { Login } from 'views/'
-
+import Umc from './umc/'
 import Scm from './scm/'
 import Ci from './ci/'
-import Umc from './umc/'
 import Iam from './iam/'
 import Srm from './srm/'
 import Share from './share/'
-
 
 export default new Router({
   routes: [
@@ -38,6 +36,5 @@ export default new Router({
     Scm,
     Ci,
     Share,
-
   ]
 })

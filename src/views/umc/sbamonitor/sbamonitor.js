@@ -1,7 +1,7 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'infrastructure',
+    name: 'sbamonitor',
     data() {
         return {
 

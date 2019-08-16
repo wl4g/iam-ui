@@ -10,6 +10,6 @@ export default {
   name: 'UMC',
   icon: 'inbox',
   component: Home,Content,
-  redirect: '/umc/infrastructure',
+  redirect: '/umc/sbamonitor',
   children:Main,
 }

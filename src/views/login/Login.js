@@ -156,7 +156,7 @@ export default {
                 if (data.userinfo.default_web_routers) {
                   this.$router.push(data.userinfo.default_web_routers)
                 } else {
-                  this.$router.push('/scm/configuration')
+                  this.$router.push('/umc/sbamonitor')
                 }
               })
             // },

@@ -6,22 +6,10 @@ import { Umc } from 'views/'
 
 export default [
     {
-        path: 'infrastructure',
-        name: 'Infrastructure',
-        icon: 'window-restore',
-        component: Umc.Infrastructure
-    },
-    {
-        path: 'container',
-        name: 'Container',
-        icon: 'window-restore',
-        component: Umc.Container
-    },
-    {
-        path: 'sbamonior',
+        path: 'sbamonitor',
         name: 'SBA Monior',
         icon: 'window-restore',
-        component: Umc.Sbamonior
+        component: Umc.Sbamonitor
     },
     {
         path: 'biztraffic',
@@ -34,12 +22,6 @@ export default [
         name: 'Contact',
         icon: 'window-restore',
         component: Umc.Contact
-    },
-    {
-        path: 'collector',
-        name: 'Collector',
-        icon: 'window-restore',
-        component: Umc.Collector
     },
     {
         path: 'record',
