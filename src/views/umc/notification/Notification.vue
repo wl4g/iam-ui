@@ -27,11 +27,11 @@
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="alarmTime" label="AlarmTime" :formatter="timestampToTime"></el-table-column>
-                    <el-table-column prop="groupName" label="GroupName">
+                    <!--<el-table-column prop="groupName" label="GroupName">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="dataDetail(scope.row)">{{scope.row.groupName}}</el-button>
                         </template>
-                    </el-table-column>
+                    </el-table-column>-->
 
                     <el-table-column label="Operation">
                         <template slot-scope="scope">
