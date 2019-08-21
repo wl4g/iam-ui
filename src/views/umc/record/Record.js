@@ -24,6 +24,7 @@ export default {
 
 
             saveForm: {
+                alarmTemplate: {},
 
             },
 
@@ -95,6 +96,23 @@ export default {
             return Y + M + D + h + m + s;
         },
 
+        convertStatusValue(value){
+            console.info(value)
+            if (value == 0) {
+                return 'send';
+            }
+            if (value == 1) {
+                return 'unsend';
+            }
+            if (value == 2) {
+                return 'accepted';
+            }
+            if (value == 3) {
+                return 'unaccepted';
+            }
+            return '--';
+        },
+
         getDate(startDate){
             let Y = startDate.getFullYear() + '-';
             let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
@@ -114,6 +132,7 @@ export default {
                     //this.loading = false;
                     if (data.code == 200) {
                         this.saveForm = data.data.alarmRecord;
+                        console.info(this.saveForm);
                         this.saveForm.createTime = this.timestampToTime(null,null,this.saveForm.createTime);
                     } else {
                         this.$alert(data.message, '错误', {

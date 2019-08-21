@@ -16,12 +16,12 @@ export default [
         icon: 'window-restore',
         component: Umc.Biztraffic
     },
-    {
+/*    {
         path: 'notification',
         name: 'Notification Logs',
         icon: 'window-restore',
         component: Umc.Notification
-    },
+    },*/
     {
         path: 'record',
         name: 'Alarm Logs',
