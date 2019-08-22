@@ -75,7 +75,7 @@
                                 <el-option
                                         v-for="item in instanceData"
                                         :key="item.id"
-                                        :label="item.host"
+                                        :label="item.hostname"
                                         :value="item.id">
                                 </el-option>
                             </el-select>

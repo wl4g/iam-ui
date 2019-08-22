@@ -166,11 +166,11 @@
                                     <el-table-column  label="Aggregator">
                                         <template scope="scope">
                                             <el-select v-model="scope.row.aggregator" placeholder="Aggregator">
-                                                <el-option label="avg" value='1'></el-option>
-                                                <el-option label="sum" value='2'></el-option>
-                                                <el-option label="min" value='3'></el-option>
-                                                <el-option label="max" value='4'></el-option>
-                                                <el-option label="lastest" value='5'></el-option>
+                                                <el-option label="avg" value='avg'></el-option>
+                                                <el-option label="sum" value='sum'></el-option>
+                                                <el-option label="min" value='min'></el-option>
+                                                <el-option label="max" value='max'></el-option>
+                                                <el-option label="lastest" value='lastest'></el-option>
                                             </el-select>
                                         </template>
                                     </el-table-column>
