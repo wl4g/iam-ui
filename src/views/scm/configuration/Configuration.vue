@@ -229,12 +229,12 @@
             label="Host"
              >
           </el-table-column>
-          <el-table-column
+          <!--<el-table-column
              min-width="90"
             prop="ip"
             label="IP"
              >
-          </el-table-column>
+          </el-table-column>-->
            <el-table-column
             prop="port"
             label="Port"

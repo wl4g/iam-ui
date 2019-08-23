@@ -224,7 +224,7 @@ export default {
           content: '',}];
           if(falg == 1){
             this.dialogTitle = 'Configuration Edit';
-            this.ruleForm.group = parseInt(row.clusterId);
+            this.ruleForm.group = parseInt(row.appClusterId);
             this.ruleForm.environment = parseInt(row.envId);
             this.ruleForm.instance = row.nodeId;
             this.ruleForm.remark = row.remark;
@@ -245,7 +245,7 @@ export default {
             }else{
               this.dialogTitle = '批量新增';
               this.ruleForm.remark = "";
-              this.ruleForm.group = parseInt(this.clusterId);
+              this.ruleForm.group = parseInt(this.appClusterId);
               this.ruleForm.environment = parseInt(this.envId);
               this.ruleForm.instance = "";
               this.isedit = true;
