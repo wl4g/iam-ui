@@ -135,7 +135,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     //this.dialogLoading = true;
-                    this.$$api_umc_saveConfig({
+                    this.$$api_umc_saveMetric({
                         data: this.saveForm,
 
                         fn: data => {

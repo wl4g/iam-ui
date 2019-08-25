@@ -7,20 +7,31 @@
                 <el-input v-model="searchParams.name" placeholder="Name"></el-input>
             </el-form-item>
 
-            <el-form-item label="Metric">
-                <el-input v-model="searchParams.metric" placeholder="Metric"></el-input>
+            <el-form-item label="Classify">
+                    <el-select v-model="searchParams.classify" @change="getMetricByClassify()">
+                        <el-option label="all" value=""></el-option>
+                        <el-option
+                                v-for="item in dictutil.getDictListByType('metric_classify')"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
             </el-form-item>
 
-            <el-form-item label="Classify:" prop="Classify">
-                <el-select v-model="searchParams.classify" placeholder="请选择">
-                    <!-- TODO -->
+            <el-form-item label="Metric">
+               <!-- <el-input v-model="searchParams.metric" placeholder="Metric"></el-input>-->
+
+                <el-select v-model="searchParams.metricId">
                     <el-option label="all" value=""></el-option>
-                    <el-option label="basic" value="1"></el-option>
-                    <el-option label="docker" value="2"></el-option>
-                    <el-option label="redis" value="3"></el-option>
-                    <el-option label="kafka" value="4"></el-option>
-                    <el-option label="zookeeper" value="5"></el-option>
+                    <el-option
+                            v-for="item in metricList"
+                            :key="item.id"
+                            :label="item.metric"
+                            :value="item.id">
+                    </el-option>
                 </el-select>
+
             </el-form-item>
 
             <el-form-item>
@@ -82,19 +93,28 @@
                     </el-col>
 
                     <el-col :span="6">
-                        <el-form-item label="Metric:" prop="addr">
-                            <el-input v-model="saveForm.metric" placeholder="Metric"></el-input>
+                        <el-form-item label="Classify:">
+                            <el-select v-model="saveForm.classify" @change="getMetricByClassifyForm()">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('metric_classify')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="6">
-                        <el-form-item label="Classify:">
-                            <el-select v-model="saveForm.classify" placeholder="请选择">
-                                <el-option label="basic" value="1"></el-option>
-                                <el-option label="docker" value="2"></el-option>
-                                <el-option label="redis" value="3"></el-option>
-                                <el-option label="kafka" value="4"></el-option>
-                                <el-option label="zookeeper" value="5"></el-option>
+                        <el-form-item label="Metric:" prop="addr">
+                            <el-select v-model="saveForm.metricId">
+                                <el-option
+                                        v-for="item in metricList2"
+                                        :key="item.id"
+                                        :label="item.metric"
+                                        :value="item.id">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

@@ -323,6 +323,37 @@ export default {
             })
         },
 
+        delData(row) {
+            if (!row.id) {
+                return;
+            }
+            this.$$api_umc_delConfig({
+                data: {
+                    id: row.id,
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
+                        this.getData();
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
 
     }
 }

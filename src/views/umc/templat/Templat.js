@@ -7,7 +7,7 @@ export default {
             //查询条件
             searchParams: {
                 name: '',
-                metric: '',
+                metricId: '',
                 classify: '',
             },
 
@@ -20,7 +20,7 @@ export default {
             saveForm: {
                 id: '',
                 name: '',
-                metric: '',
+                metricId: '',
                 classify: '',
                 notifyLevel: '',
                 tagMap: [],
@@ -32,6 +32,9 @@ export default {
             dialogLoading: false,
 
             tableData: [],
+
+            metricList: [],
+            metricList2: [],
 
         }
     },
@@ -65,7 +68,7 @@ export default {
             this.$$api_umc_templatList({
                 data: {
                     name: this.searchParams.name,
-                    metric: this.searchParams.metric,
+                    metricId: this.searchParams.metricId,
                     classify: this.searchParams.classify,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
@@ -117,7 +120,7 @@ export default {
 
         addRule() {
             this.saveForm.rules.push({
-                logicalOperator: '1',
+                logicalOperator: 1,
                 aggregator: '',
                 relateOperator: '',
                 value: '',
@@ -227,19 +230,19 @@ export default {
         convertClassifyValue(value){
             console.info(value);
 
-            if (value == 1) {
+            if (value == 'basic') {
                 return 'basic';
             }
-            if (value == 2) {
+            if (value == 'docker') {
                 return 'docker';
             }
-            if (value == 3) {
+            if (value == 'redis') {
                 return 'redis';
             }
-            if (value == 4) {
+            if (value == 'kafka') {
                 return 'kafka';
             }
-            if (value == 5) {
+            if (value == 'zookeeper') {
                 return 'zookeeper';
             }
             return '--';
@@ -279,6 +282,56 @@ export default {
             }
             return 'danger';
         },
+
+
+        getMetricByClassify(){
+            this.$$api_umc_getMetricByClassify({
+                data: {
+                    classify: this.searchParams.classify,
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.metricList = data.data.list;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        getMetricByClassifyForm(){
+            this.$$api_umc_getMetricByClassify({
+                data: {
+                    classify: this.saveForm.classify,
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.metricList2 = data.data.list;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        }
+
 
 
 

@@ -6,15 +6,15 @@
                 <el-input v-model="searchParams.metric" placeholder="Metric"></el-input>
             </el-form-item>
 
-            <el-form-item label="Classify:" prop="Classify">
-                <el-select v-model="searchParams.classify" placeholder="请选择">
-                    <!-- TODO -->
+            <el-form-item label="Classify">
+                <el-select v-model="searchParams.classify">
                     <el-option label="all" value=""></el-option>
-                    <el-option label="basic" value="1"></el-option>
-                    <el-option label="docker" value="2"></el-option>
-                    <el-option label="redis" value="3"></el-option>
-                    <el-option label="kafka" value="4"></el-option>
-                    <el-option label="zookeeper" value="5"></el-option>
+                    <el-option
+                            v-for="item in dictutil.getDictListByType('metric_classify')"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
                 </el-select>
             </el-form-item>
 
@@ -40,9 +40,15 @@
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="metric" label="Metric"></el-table-column>
 
-                    <el-table-column prop="classify" label="Classify">
+                    <!--<el-table-column prop="classify" label="Classify">
                         <template slot-scope="scope">
                             <el-tag type="primary">{{convertClassifyValue(scope.row.classify)}}</el-tag>
+                        </template>
+                    </el-table-column>-->
+
+                    <el-table-column prop="classify" label="Classify">
+                        <template slot-scope="scope">
+                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('metric_classify',scope.row.classify)">{{dictutil.getDictLabelByTypeAndValue('metric_classify',scope.row.classify)}}</el-tag>
                         </template>
                     </el-table-column>
 
@@ -70,12 +76,13 @@
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="Classify:">
-                            <el-select v-model="saveForm.classify" placeholder="请选择">
-                                <el-option label="basic" value="1"></el-option>
-                                <el-option label="docker" value="2"></el-option>
-                                <el-option label="redis" value="3"></el-option>
-                                <el-option label="kafka" value="4"></el-option>
-                                <el-option label="zookeeper" value="5"></el-option>
+                            <el-select v-model="saveForm.classify">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('metric_classify')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

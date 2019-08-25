@@ -118,7 +118,7 @@
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item label="Env:" prop="taskId">
+                        <el-form-item label="Task:" prop="taskId">
                             <el-select v-model="saveForm.taskId" placeholder="Please Task" style="width: 100%;">
                                 <el-option
                                         v-for="item in tasksData"

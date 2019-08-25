@@ -162,6 +162,12 @@ export default [
         path: '/umc-admin/metric/del',
         type: 'post'
     },
+    {
+        name: '模版列表',
+        method: 'getMetricByClassify',
+        path: '/umc-admin/metric/getByClassify',
+        type: 'post'
+    },
 
     {
         name: '记录列表',

@@ -82,7 +82,6 @@
 					<el-col :span="12">
                         <el-form-item label="Themes:" prop="themes">
                             <el-select v-model="saveForm.themes" placeholder="" style="width:100%">
-								<el-option label=""></el-option>
                                 <el-option v-for="item in themess" :key="item" :label="item" :value="item">
                                 </el-option>
                             </el-select>

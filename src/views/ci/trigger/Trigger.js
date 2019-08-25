@@ -226,7 +226,7 @@ export default {
                     this.$$api_ci_saveTrigger({
                         data: {
                             id: this.saveForm.id,
-                            clusterId: this.saveForm.group,
+                            appClusterId: this.saveForm.group,
                             taskId: this.saveForm.taskId,
                             name: this.saveForm.name,
                             remark: this.saveForm.remark,

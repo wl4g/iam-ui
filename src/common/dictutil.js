@@ -15,7 +15,7 @@ export default {
             return [];
         }
         let dictGroup = dicts_cache.dictList[type];
-        console.info(dictGroup);
+        //console.info(dictGroup);
         return dictGroup;
     },
 
@@ -35,7 +35,7 @@ export default {
         if (!dict) {
             return 'default';
         }
-        return dict.themes;
+        return dict.label;
     },
 
     getDictThemesByTypeAndValue: function (type, value) {
