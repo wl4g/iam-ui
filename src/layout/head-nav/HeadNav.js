@@ -75,7 +75,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
-          this.$router.push('/login')
+          //this.$router.push('/login')
         })
       }).catch(() => {
         /*this.$message({

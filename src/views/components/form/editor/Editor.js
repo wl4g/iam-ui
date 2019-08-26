@@ -44,7 +44,7 @@ export default {
                   this.$alert(result.status + ',' + result.msg + '！', '登录错误', {
                     confirmButtonText: '确定',
                     callback: action => {
-                      this.$router.push('/login')
+                      //this.$router.push('/login')
                     }
                   })
                 })
@@ -53,7 +53,7 @@ export default {
                   this.$alert(result.status + ',' + result.msg + '！', '登录错误', {
                     confirmButtonText: '确定',
                     callback: action => {
-                      this.$router.push('/login')
+                      //this.$router.push('/login')
                     }
                   })
                 } else {

@@ -13,7 +13,7 @@ import Share from './share'
 
 export {
   Login,
-  Function,
+
   Components,
   Scm,
   Srm,

@@ -96,7 +96,7 @@ export default {
         cleanSaveForm() {
             this.saveForm.id = '';
             this.saveForm.name = '';
-            this.saveForm.metric = '';
+            this.saveForm.metricId = '';
             this.saveForm.classify = '';
             this.saveForm.notifyLevel = '';
             this.saveForm.tagMap = [];

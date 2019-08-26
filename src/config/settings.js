@@ -15,7 +15,7 @@ var gbs = {
         this.$alert(res.status + ',' + res.msg + '！', '登录错误', {
           confirmButtonText: '确定',
           callback: action => {
-            this.$router.push('/login')
+            //this.$router.push('/login')
           }
         })
       })
@@ -41,7 +41,7 @@ var cbs = {
         this.$alert(err.status + ',' + err.msg + '！', '登录错误', {
           confirmButtonText: '确定',
           callback: action => {
-            this.$router.push('/login')
+            //this.$router.push('/login')
           }
         })
       })
