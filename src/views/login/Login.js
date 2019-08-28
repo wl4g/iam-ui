@@ -43,7 +43,7 @@ export default {
     // IAM认证服务based URI
 //var iamBaseURI = "http://passport.anjiancloud.test/sso";
 //var iamBaseURI = "http://passport.wl4g.com/sso";
-    var iamBaseURI = "http://localhost:14040/iam-server";
+    var iamBaseURI = "http://localhost.com:14040/iam-server";
 
 // 引用IAM SDK插件，处理SNS授权操作
     (function () {
@@ -165,6 +165,9 @@ export default {
       var url = iamBaseURI + "/login/errread";
       $.ajax({
         url: url,
+        xhrFields: {
+          withCredentials: true // 跨域调用时，必须设置才会发送cookie
+        },
         success: function (res) {
           //console.log(res);
           var errmsg = res.data["errorTipsInfo"];

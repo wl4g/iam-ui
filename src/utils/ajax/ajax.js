@@ -15,6 +15,8 @@ import {
 // 动态设置本地和线上接口域名
 Vue.axios.defaults.baseURL = gbs.host
 
+Vue.axios.defaults.withCredentials = true
+
 /**
  * 封装axios的通用请求
  * @param  {string}   type      get或post
@@ -39,11 +41,14 @@ export default function ({
   if (typeof path === 'function') {
     p = path(pathParams || {})
   }
-  var options = {
-    method: type === 'json' ? 'post' : type,
-    url: p,
-    headers: headers && typeof headers === 'object' ? headers : {}
-  }
+    var options = {
+        method: type === 'json' ? 'post' : type,
+        url: 'http://localhost.com' + p,
+        headers: headers && typeof headers === 'object' ? headers : {},
+
+        withCredentials: true,
+
+    }
   options[type === 'get' ? 'params' : 'data'] = type === 'json' ? data : this.$qs.stringify(data)
   //options[type === 'get' ? 'params' : 'data'] = data
   
@@ -56,6 +61,8 @@ export default function ({
     // data.token = this.$store.state.user.userinfo.token;
 
     options.headers.token = this.$store.state.user.userinfo.token
+
+      options.headers.withCredentials = true
   }
 
   // axios内置属性均可写在这里
@@ -66,29 +73,28 @@ export default function ({
   }
 
   // 发送请求
-  Vue.axios(options).then((res) => {
-    this.$store.dispatch('hide_loading')
-    if (res.data[gbs.api_status_key_field] === gbs.api_status_value_field||gbs.api_status_value_field==200) {
-      fn(res.data)
-      // console.log(JSON.stringify(res.data))
-      // if (gbs.api_data_field) {
-      //   fn(res.data[gbs.api_data_field])
-      // } else {
-      //   fn(res.data)
-      // }
-    } else {
-      if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
-        gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data)
-      } else {
-        if (errFn) {
-          errFn.call(this, res.data)
+    Vue.axios(options).then((res) => {
+        this.$store.dispatch('hide_loading')
+        //有时候后台返回的是“200” || 200
+        if (res.data[gbs.api_status_key_field] === gbs.api_status_value_field || res.data[gbs.api_status_key_field] == gbs.api_status_value_field) {
+            if (gbs.api_data_field) {
+                //fn(res.data[gbs.api_data_field])
+                fn(res.data)
+            } else {
+                fn(res.data)
+            }
         } else {
-          cbs.statusError.call(this, res.data)
+            //返回code不是200的时候处理
+            if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
+                gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data)
+            } else {
+                if (errFn) {
+                    errFn.call(this, res.data)
+                }
+            }
         }
-      }
-    }
-  }).catch(() => {
-    this.$store.dispatch('hide_loading')
-    // cbs.requestError.call(this, err);
-  })
+    }).catch(() => {
+        this.$store.dispatch('hide_loading')
+        errFn.call(this, null)
+    })
 };

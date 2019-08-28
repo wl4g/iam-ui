@@ -1,3 +1,5 @@
+import fa from "element-ui/src/locale/lang/fa";
+
 var gbs = {
 //  host: '/srm', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
   db_prefix: 'devops_', // 本地存储的key
@@ -12,12 +14,37 @@ var gbs = {
   api_custom: {
     401: function (res) {
       this.$store.dispatch('remove_userinfo').then(() => {
-        this.$alert(res.status + ',' + res.msg + '！', '登录错误', {
-          confirmButtonText: '确定',
-          callback: action => {
-            //this.$router.push('/login')
+        //this.$router.push('/login')
+        //window.location.href = res['data'].redirect_url;
+        console.info("redirect_url==" + res['data'].redirect_url);
+        /*$.ajax({
+          url: res['data'].redirect_url,
+          type: "get",
+          xhrFields: {
+            withCredentials: true // 跨域调用时，必须设置才会发送cookie
+          },
+          success: function(resp){
+            console.info("success");
+          },
+          error: function(req, status, errmsg){
+            console.info(errmsg);
+          }
+        });*/
+
+        $.ajax({
+          url: res['data'].redirect_url,   //去请求项目二中的url
+          dataType: "jsonp",
+          type: "get",
+          xhrFields: {
+            withCredentials: true // 跨域调用时，必须设置才会发送cookie
+          },
+          success: function (data) {
+            console.info("success");
           }
         })
+
+        //window.location.href = res['data'].redirect_url
+
       })
     }
   }

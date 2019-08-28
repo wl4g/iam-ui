@@ -8,31 +8,31 @@ export default [
     {
         name: '联系人列表',
         method: 'contactList',
-        path: '/umc-admin/contact/list',
+        path: ':14048/umc-admin/contact/list',
         type: 'post'
     },
     {
         name: '保存',
         method: 'saveContact',
-        path: '/umc-admin/contact/save',
+        path: ':14048/umc-admin/contact/save',
         type: 'json'
     },
     {
         name: '分组列表',
         method: 'groupList',
-        path: '/umc-admin/contact/groupList',
+        path: ':14048/umc-admin/contact/groupList',
         type: 'post'
     },
     {
         name: '联系人详情',
         method: 'contactDetail',
-        path: '/umc-admin/contact/detail',
+        path: ':14048/umc-admin/contact/detail',
         type: 'post'
     },
     {
         name: '逻辑删除联系人',
         method: 'delContact',
-        path: '/umc-admin/contact/del',
+        path: ':14048/umc-admin/contact/del',
         type: 'post'
     },
 
@@ -41,25 +41,25 @@ export default [
     {
         name: '联系人分组列表',
         method: 'contactGroupList',
-        path: '/umc-admin/contactGroup/list',
+        path: ':14048/umc-admin/contactGroup/list',
         type: 'post'
     },
     {
         name: '保存联系人分组',
         method: 'saveContactGroup',
-        path: '/umc-admin/contactGroup/save',
+        path: ':14048/umc-admin/contactGroup/save',
         type: 'post'
     },
     {
         name: '删除联系人分组',
         method: 'delContactGroup',
-        path: '/umc-admin/contactGroup/del',
+        path: ':14048/umc-admin/contactGroup/del',
         type: 'post'
     },
     {
         name: '所有联系人分组',
         method: 'allContactGroup',
-        path: '/umc-admin/contactGroup/all',
+        path: ':14048/umc-admin/contactGroup/all',
         type: 'post'
     },
 
@@ -67,25 +67,25 @@ export default [
     {
         name: '采集点列表',
         method: 'collectorList',
-        path: '/umc-admin/collector/list',
+        path: ':14048/umc-admin/collector/list',
         type: 'post'
     },
     {
         name: '保存采集点',
         method: 'saveCollector',
-        path: '/umc-admin/collector/save',
+        path: ':14048/umc-admin/collector/save',
         type: 'post'
     },
     {
         name: '保存采集点',
         method: 'collectorDetail',
-        path: '/umc-admin/collector/detail',
+        path: ':14048/umc-admin/collector/detail',
         type: 'post'
     },
     {
         name: '删除采集点',
         method: 'delCollector',
-        path: '/umc-admin/collector/del',
+        path: ':14048/umc-admin/collector/del',
         type: 'post'
     },
 
@@ -93,31 +93,31 @@ export default [
     {
         name: '模版列表',
         method: 'templatList',
-        path: '/umc-admin/template/list',
+        path: ':14048/umc-admin/template/list',
         type: 'post'
     },
     {
         name: '保存模板',
         method: 'saveTemplat',
-        path: '/umc-admin/template/save',
+        path: ':14048/umc-admin/template/save',
         type: 'json'
     },
     {
         name: '模版详情',
         method: 'templatDetail',
-        path: '/umc-admin/template/detail',
+        path: ':14048/umc-admin/template/detail',
         type: 'post'
     },
     {
         name: '删除模板',
         method: 'delTemplat',
-        path: '/umc-admin/template/del',
+        path: ':14048/umc-admin/template/del',
         type: 'post'
     },
     {
         name: '根据类别获取列表',
         method: 'getTemplateByClassify',
-        path: '/umc-admin/template/getByClassify',
+        path: ':14048/umc-admin/template/getByClassify',
         type: 'post'
     },
 
@@ -126,13 +126,13 @@ export default [
     {
         name: '记录列表',
         method: 'recordList',
-        path: '/umc-admin/record/list',
+        path: ':14048/umc-admin/record/list',
         type: 'post'
     },
     {
         name: '记录详情',
         method: 'recordDetail',
-        path: '/umc-admin/record/detail',
+        path: ':14048/umc-admin/record/detail',
         type: 'post'
     },
 
@@ -141,44 +141,44 @@ export default [
     {
         name: '模版列表',
         method: 'metricList',
-        path: '/umc-admin/metric/list',
+        path: ':14048/umc-admin/metric/list',
         type: 'post'
     },
     {
         name: '保存模板',
         method: 'saveMetric',
-        path: '/umc-admin/metric/save',
+        path: ':14048/umc-admin/metric/save',
         type: 'json'
     },
     {
         name: '模版详情',
         method: 'metricDetail',
-        path: '/umc-admin/metric/detail',
+        path: ':14048/umc-admin/metric/detail',
         type: 'post'
     },
     {
         name: '删除模板',
         method: 'delMetric',
-        path: '/umc-admin/metric/del',
+        path: ':14048/umc-admin/metric/del',
         type: 'post'
     },
     {
         name: '模版列表',
         method: 'getMetricByClassify',
-        path: '/umc-admin/metric/getByClassify',
+        path: ':14048/umc-admin/metric/getByClassify',
         type: 'post'
     },
 
     {
         name: '记录列表',
         method: 'notificationList',
-        path: '/umc-admin/notification/list',
+        path: ':14048/umc-admin/notification/list',
         type: 'post'
     },
     {
         name: '记录详情',
         method: 'notificationDetail',
-        path: '/umc-admin/notification/detail',
+        path: ':14048/umc-admin/notification/detail',
         type: 'post'
     },
 
@@ -186,25 +186,25 @@ export default [
     {
         name: '模版列表',
         method: 'configList',
-        path: '/umc-admin/config/list',
+        path: ':14048/umc-admin/config/list',
         type: 'post'
     },
     {
         name: '保存模板',
         method: 'saveConfig',
-        path: '/umc-admin/config/save',
+        path: ':14048/umc-admin/config/save',
         type: 'json'
     },
     {
         name: '模版详情',
         method: 'configDetail',
-        path: '/umc-admin/config/detail',
+        path: ':14048/umc-admin/config/detail',
         type: 'post'
     },
     {
         name: '删除模板',
         method: 'delConfig',
-        path: '/umc-admin/config/del',
+        path: ':14048/umc-admin/config/del',
         type: 'post'
     },
 

@@ -18,7 +18,8 @@ function myBrowser() {
         userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
 
     if (!isChrome) {
-        window.location.href = "./inform.html";
+        //TODO
+        //window.location.href = "./inform.html";
     }
 
 }
