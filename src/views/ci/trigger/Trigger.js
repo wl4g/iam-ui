@@ -239,7 +239,7 @@ export default {
                             if (data.code == 200) {
                                 this.dialogVisible = false;
                                 this.getData();
-                                cleanSaveForm();
+                                this.cleanSaveForm();
                             } else {
                                 this.$alert(data.message, '错误', {
                                     confirmButtonText: '确定'
@@ -248,7 +248,7 @@ export default {
                         },
                         errFn: () => {
                             this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
+                            this.$alert('访问失败，请稍后重试！2', '错误', {
                                 confirmButtonText: '确定',
                             });
                         }
@@ -441,6 +441,9 @@ export default {
 
 
         getTasksByAppClusterId() {
+            if(!this.saveForm.group){
+                return;
+            }
             this.$$api_ci_getTasksByAppClusterId({
                 data: {
                     appClusterId: this.saveForm.group,

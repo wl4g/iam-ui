@@ -116,10 +116,10 @@
                                     <el-table-column label="RelateOperator">
                                         <template scope="scope">
                                             <el-select v-model="scope.row.relateOperator">
-                                                <el-option label=">" :value="1"></el-option>
-                                                <el-option label="<" :value="2"></el-option>
-                                                <el-option label="=" :value="3"></el-option>
-                                                <el-option label=">=" :value="4"></el-option>
+                                                <el-option label="=" :value="1"></el-option>
+                                                <el-option label=">" :value="2"></el-option>
+                                                <el-option label=">=" :value="3"></el-option>
+                                                <el-option label="<" :value="4"></el-option>
                                                 <el-option label="<=" :value="5"></el-option>
                                             </el-select>
                                         </template>
