@@ -9,6 +9,11 @@
 </template>
 
 <script>
+
+  import {
+    store
+  } from 'utils/'
+
   export default {
     name: 'app',
     components: {},
@@ -35,7 +40,19 @@
       }
     },
     mounted () {
-      this.init()
+      this.init();
+
+      this.$$api_share_dictCache({
+        fn: data => {
+          //console.info(data.data)
+          store.set("dicts_cache",data.data);
+          console.info(store.get("dicts_cache"));
+        },
+        errFn: () => {
+          console.error("get dicts cache failss")
+        },
+      })
+
     },
     watch: {
       $route (to, from) {

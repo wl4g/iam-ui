@@ -255,7 +255,8 @@
 		var principal = encodeURIComponent(CommonUtils.getEleValue("account.principal", settings.account.principal, false));
 		var checkUrl = CommonUtils.checkEmpty("baseUri",settings.baseUri)
 			+ CommonUtils.checkEmpty("definition.checkUri",settings.definition.checkUri) + "?"
-			+ CommonUtils.checkEmpty("definition.principalKey",settings.definition.principalKey) + "=" + principal;
+			+ CommonUtils.checkEmpty("definition.principalKey",settings.definition.principalKey) + "=" + principal
+			+ "&verifyType=VerifyWithJigsawGraph";
 
 		// 请求安全预检
 		$.ajax({

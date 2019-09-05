@@ -67,7 +67,7 @@ $(function() {
     $('.code-close').click(function () {
         $('.code-write').hide()
     })
-    document.querySelector(".select-area").onchange = function (e) {
+    /*document.querySelector(".select-area").onchange = function (e) {
         for (var i = 0; i < this.options.length; i++) {
             if (this.options[i].value != "+086") {
                 alert("目前此功能仅对中国大陆用户开放！敬请谅解");
@@ -75,6 +75,6 @@ $(function() {
                 break;
             }
         }
-    }
+    }*/
 
 });

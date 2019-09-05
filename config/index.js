@@ -31,7 +31,7 @@ module.exports = {
     devtool: 'eval-source-map',
     cacheBusting: false,
     proxyTable: {
-      /*'/scm': {
+      '/scm': {
         target: 'http://localhost:14043',
         changeOrigin: true,
         pathRewrite: {
@@ -58,7 +58,7 @@ module.exports = {
         pathRewrite: {
           '^/share-admin': 'share-admin'
         }
-      },*/
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

@@ -15,7 +15,7 @@ import {
 // 动态设置本地和线上接口域名
 Vue.axios.defaults.baseURL = gbs.host
 
-Vue.axios.defaults.withCredentials = true
+//Vue.axios.defaults.withCredentials = true
 
 /**
  * 封装axios的通用请求
@@ -43,10 +43,11 @@ export default function ({
   }
     var options = {
         method: type === 'json' ? 'post' : type,
-        url: 'http://localhost.com' + p,
+        //url: 'http://localhost.com' + p,
+        url: p,
         headers: headers && typeof headers === 'object' ? headers : {},
 
-        withCredentials: true,
+        //withCredentials: true,
 
     }
   options[type === 'get' ? 'params' : 'data'] = type === 'json' ? data : this.$qs.stringify(data)
@@ -62,7 +63,7 @@ export default function ({
 
     options.headers.token = this.$store.state.user.userinfo.token
 
-      options.headers.withCredentials = true
+      //options.headers.withCredentials = true
   }
 
   // axios内置属性均可写在这里
