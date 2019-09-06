@@ -274,7 +274,7 @@ export default {
           }
           this.$$api_instanceman_instancelist({
             data: {
-              clusterId: clusterId,
+              appClusterId: clusterId,
               envId: environmentId
             },
             fn: data => {
@@ -371,8 +371,10 @@ export default {
         getNamespace() {
           this.$$api_configguration_getByType({
             fn: data => {
+              console.info(data)
               if(data.code == 200){
-                this.namespaces = data.data.dicts;
+                this.namespaces = data.data.list;
+                console.info(this.namespaces);
               }else{
                 this.$alert(data.message, '错误', {
                   confirmButtonText: '确定'
@@ -390,7 +392,7 @@ export default {
         getData() {
           this.$$api_configguration_lists({
             data: {
-              clusterId : this.formInline.group,
+              appClusterId : this.formInline.group,
               envId : this.formInline.environment,
               instanceId: this.formInline.instance,
               pageNum: this.pageNum,
@@ -535,7 +537,7 @@ export default {
               id: this.ruleForm.group,
               nodeIdList: nodeIdList,
               content: '',
-              clusterId: this.ruleForm.group
+              appClusterId: this.ruleForm.group
             },
             fn: data => {
               if(data.code == 200){

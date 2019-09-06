@@ -71,7 +71,7 @@ export default {
             this.$$api_track_releaseback({
               data: {
                 id: id,
-                clusterId : clusterId,
+                appClusterId : clusterId,
                 instanceId : instanceId,
                 envId: envId,
                 remark: remark
@@ -116,7 +116,7 @@ export default {
           let instanceId = this.formInline.instance;
           this.$$api_track_releaselist({
             data: {
-              clusterId : clusterId,
+              appClusterId : clusterId,
               instanceId : instanceId,
               envId: envId,
               pageNum: this.pageNum,
@@ -151,7 +151,7 @@ export default {
       }
       this.$$api_instanceman_instancelist({
         data: {
-          clusterId: clusterId,
+          appClusterId: clusterId,
           envId: environmentId
         },
         fn: data => {

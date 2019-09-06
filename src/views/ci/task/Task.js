@@ -194,7 +194,7 @@ export default {
             }
             this.$$api_instanceman_instancelist({
                 data: {
-                    clusterId: clusterId,
+                    appClusterId: clusterId,
                     envId: environmentId
                 },
                 fn: data => {
@@ -373,16 +373,10 @@ export default {
                     tarOrBranch: this.buildForm.tagOrBranch,
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        this.branchs=data.data.branchNames;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.branchs=data.data.branchNames;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
+                errFn: (data) => {
+                    this.$alert(data.message, '错误', {
                         confirmButtonText: '确定',
                     });
                 }

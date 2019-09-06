@@ -115,9 +115,9 @@
                             <el-select v-model="scope.row.namespaceId"  placeholder="namespace" v-bind:disabled="isedit">
                               <el-option
                                   v-for="item in namespaces"
-                                  :key="item.id"
+                                  :key="item.key"
                                   :label="item.value"
-                                  :value="item.id">
+                                  :value="item.key">
                               </el-option>
                             </el-select>
 

@@ -314,7 +314,7 @@ export default {
             }
             this.$$api_instanceman_instancelist({
                 data: {
-                    clusterId: clusterId,
+                    appClusterId: clusterId,
                     envId: environmentId
                 },
                 fn: data => {
