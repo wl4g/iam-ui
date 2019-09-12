@@ -282,7 +282,7 @@ export default {
               return;
             }
             if(list.length>=limit){
-              this.$message.warning('log datas is too big , some logs will be lost , Please add filter');
+              //this.$message.warning('log datas is too big , some logs will be lost , Please add filter');
               /*this.$message({
                 message: '警告哦，这是一条警告消息',
                 type: 'warning'

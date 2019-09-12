@@ -38,7 +38,7 @@
       </el-form-item>
       <el-form-item>
           <el-tooltip placement="top">
-              <div slot="content">Desc: Multi-conditional filter to support include and exclude relationships.<br/>Tick to indicate enablement.</div>
+              <div slot="content">Desc: Multi-conditional filter to support include and exclude relationships.<br/>Check to enable advanced.</div>
               <i class="el-icon-warning" style="color:#e0e0e2;"></i>
           </el-tooltip>
       </el-form-item>
@@ -168,7 +168,9 @@
                  e.g. Selected 1 min, means loading the latest minute log, <br>note: there may be some delay.
             </div>
              <div v-show="radio==2"  style="float:left;color:rgb(119,122,126);line-height:25px;margin-top:20px;">
-				Description: Load logs between absolute time intervals [startTime, endTime]
+				Description: Load logs between absolute time intervals [startTime, endTime]<br>
+                 This time range is the log collection time. It is not the actual log generation time and has a certain delay (approximate value). <br>
+                 To filter the exact log time, use keyword and advanced to filter.
             </div>
           </el-form-item>
           <!-- end -->
