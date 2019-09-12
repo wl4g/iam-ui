@@ -8,13 +8,11 @@ export default {
         show_pass: false,
         title: '修改密码',
         user_info: this.$store.state.user.userinfo,
-
         set_info: {
           login_style: '',
           disabled_update_pass: [],
           select_users: []
         },
-
         user_info_rules: {
           old_password: [{
             required: true,
@@ -75,7 +73,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
-          //this.$router.push('/login')
+          this.$router.push('/login')
         })
       }).catch(() => {
         /*this.$message({
@@ -155,7 +153,6 @@ export default {
               data.setting_info.disabled_update_pass = []
             }
             data.setting_info.login_style = data.setting_info.login_style + ''
-
             this.dialog.set_info = data.setting_info
           }
         })

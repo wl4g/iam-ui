@@ -8,9 +8,6 @@
   </div>
 </template>
 <script>
-  import {
-    store
-  } from 'utils/'
   export default {
     name: 'app',
     components: {},
@@ -36,17 +33,7 @@
       }
     },
     mounted () {
-      this.init();
-      this.$$api_share_dictCache({
-        fn: data => {
-          //console.info(data.data)
-          store.set("dicts_cache",data.data);
-          console.info(store.get("dicts_cache"));
-        },
-        errFn: () => {
-          console.error("get dicts cache failss")
-        },
-      })
+      this.init()
     },
     watch: {
       $route (to, from) {
@@ -62,6 +49,7 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    z-index:10;
   }
   .bounce-enter-active {
     animation: bounce-in .5s;
