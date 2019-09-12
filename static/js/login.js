@@ -16,12 +16,9 @@ function myBrowser() {
     var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
     var isChrome = userAgent.indexOf("Chrome") > -1 &&
         userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
-
     if (!isChrome) {
-        //TODO
-        //window.location.href = "./inform.html";
+        window.location.href = "./upgrade.html";
     }
-
 }
 
 function changeTab(showId, hideId) {
@@ -62,12 +59,11 @@ $(function() {
         $('.active').removeClass('active');
         $(this).addClass('active')
     })
-
     //关闭 code-close
     $('.code-close').click(function () {
         $('.code-write').hide()
     })
-    /*document.querySelector(".select-area").onchange = function (e) {
+    document.querySelector(".select-area").onchange = function (e) {
         for (var i = 0; i < this.options.length; i++) {
             if (this.options[i].value != "+086") {
                 alert("目前此功能仅对中国大陆用户开放！敬请谅解");
@@ -75,6 +71,6 @@ $(function() {
                 break;
             }
         }
-    }*/
+    }
 
 });
