@@ -149,13 +149,13 @@ export default {
           let startDate = this.value2;
           let endDate = this.value3;
           let ymd = '';
-          if(ymdDate!=''){
+          if(ymdDate!=''&&ymdDate!=undefined){
             ymd = this.getDate1(ymdDate);
           }
-          if(startDate!='' && ymd != ''){
+          if(startDate!='' &&startDate!=undefined&& ymd != ''){
             start = ymd +" "+ this.getDate2(startDate);
           }
-          if(endDate!='' && ymd != ''){
+          if(endDate!=''&&endDate!=undefined && ymd != ''){
             end = ymd +" "+ this.getDate2(endDate);
           }
           this.execute(start,end,interval);
@@ -310,13 +310,7 @@ export default {
             }
           })
         },
-        // 增加一列表格
-        flshfq(){
-          if( this.excute == 'Stop'){
-            clearTimeout(this._timeOut);
-            this.schedule(this.formInline.fq*1000);
-          }
-        },
+
          // 加载最新
          onflush(){
           this.execute();

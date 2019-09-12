@@ -1,47 +1,28 @@
+import fa from "element-ui/src/locale/lang/fa";
 
 export default {
   name: 'console',
   data() {
     return {
       formInline: {
-        index: 'sink-node',
+        index: 'ems',
         loglevle: 3,
-        fq: 5,
+        fq: '5',
         content: '',
         enable: false
       },
-      fq: [{
-        id: 5,
-        value: '5 sec'
-      }, {
-        id: 10,
-        value: '10 sec'
-      }, {
-        id: 15,
-        value: '15 sec'
-      }, {
-        id: 20,
-        value: '20 sec'
-      }, {
-        id: 25,
-        value: '25 sec'
-      }],
-      loglevle: [{
-        id: 5,
-        value: 'ERROR ↑'
-      }, {
-        id: 4,
-        value: 'WARN ↑'
-      }, {
-        id: 3,
-        value: 'INFO ↑'
-      }, {
-        id: 2,
-        value: 'DEBUG ↑'
-      }, {
-        id: 1,
-        value: 'TRACE ↑'
-      }],
+      groupData:[],
+      fq: [{value: '3'},
+        {value: '5'},
+        {value: '10'},
+        {value: '15'},
+        {value: '20'},
+        {value: '25'}],
+      loglevle: [{id: 5, value: 'ERROR ↑'},
+        {id: 4, value: 'WARN ↑'},
+        {id: 3, value: 'INFO ↑'},
+        {id: 2, value: 'DEBUG ↑'},
+        {id: 1, value: 'TRACE ↑'}],
       radio: 1,
       radio1: 1,
       //页
@@ -62,7 +43,8 @@ export default {
       websocket: null,
       _timeOut: '',
       timeout: '',
-      textarea: "2018-11-14 13:13:18.496  INFO 4931  \r\n  --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=56/n2018-11-14 13:13:18.496  INFO 4931 --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=58",
+      //textarea: "2018-11-14 13:13:18.496  INFO 4931  \r\n  --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=56/n2018-11-14 13:13:18.496  INFO 4931 --- [inner-job-com.sm.sink.service.xschedule.job.DeviceRealtimeEventWatchJob-2] c.s.s.service.rt.RealtimeStateWatcher    : Processing. addr=11111119, order=58",
+      textarea: '',
       ruleForm: {
         desc: '',
       },
@@ -76,10 +58,13 @@ export default {
         enable: true,
         value: '',
       }],
-
       // 最大表格数据
       tableData: [
-      ]
+      ],
+      //0910add
+      logThread: 0,//记录读取日志的线程
+      logTimeStamp: new Date(),//已经读到哪个时刻的日志
+      isFirst: true,
     }
   },
   watch: {
@@ -88,19 +73,53 @@ export default {
     }
   },
   mounted() {
+    this.getGroup();
   },
 
-  beforeDestroy() {//路由之后清除定时器
-    clearTimeout(this._timeOut);
-  },
-  // watch:{
-  //   $router(){
-  //     alert(88888)
-  //     clearInterval(this._timeOut);
-  //   }
-  // },
-  // 删除一列
   methods: {
+
+    // 获取分组名称
+    getGroup() {
+      this.$$api_instanceman_grouplist({
+        fn: data => {
+          if (data.code == 200) {
+            this.groupData = data.data.grouplist;
+          } else {
+            this.$alert(data.message, '错误', {
+              confirmButtonText: '确定'
+            });
+          }
+        },
+        errFn: () => {
+          this.$alert('访问失败，请稍后重试！', '错误', {
+            confirmButtonText: '确定',
+          });
+        }
+      })
+    },
+
+
+    querySearch(queryString, cb) {
+      var fq = this.fq;
+      var results = queryString ? fq.filter(this.createFilter(queryString)) : fq;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+
+    createFilter(queryString) {
+      return (fq) => {
+        return (fq.value.indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+
+    checkfq(){
+      let fq  = this.formInline.fq;
+      if (!(/(^[0-9]*[1-9][0-9]*$)/.test(fq))||fq<3) {
+        this.$message.error('please input a useful number');
+        this.formInline.fq = 5;
+      }
+    },
+
     //滚动
     scroll() {
       this.$nextTick(() => {
@@ -109,37 +128,7 @@ export default {
       })
 
     },
-    // 获取列表数据
-    getData() {
-      this.$$api_configguration_lists({
-        data: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-        },
-        fn: data => {
-          this.loading = false;
-          if (data.code == 200) {
-            this.total = data.data.page.total;
-            this.tableData = data.data.list;
-          } else {
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
-        },
-        errFn: () => {
-          this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
-        }
-      })
-    },
-    currentChange(i) {
-      this.loading = true;
-      this.pageNum = i;
-      this.getData();
-    },
+
     deleteRow(index, rows) {
       rows.splice(index, 1);
     },
@@ -154,12 +143,28 @@ export default {
       this.formInline.enable = true;
     },
     submit() {
+      //stop cron
+      this.stopThread();
+      this.cleanConsole();
+
       let start = null;
       let end = null;
-      let interval = null;
       this.historylog = false;
       if (this.radio == 1) {
-        interval = this.radio1;
+        //TODO
+        end = new Date();
+        if(this.radio1==1){
+          start = new Date(end.valueOf() - 60 * 1000);//1min
+        }else if(this.radio1==2){
+          start = new Date(end.valueOf() - 15 * 60 * 1000);//15min
+        }else if(this.radio1==3){
+          start = new Date(end.valueOf() - 60 * 60 * 1000);//1hour
+        }else if(this.radio1==4){
+          start = new Date(end.valueOf() - 4 * 60 * 60 * 1000);//4hour
+        }else{
+          alert("program is error");
+          return;
+        }
       } else {
         let ymdDate = this.value1;
         let startDate = this.value2;
@@ -175,124 +180,58 @@ export default {
           end = ymd + " " + this.getDate2(endDate);
         }
       }
-      //clearTimeout(this._timeOut);
-      this.excute = 'Start';
-      this.execute(start, end, interval);
+      start = new Date(start).getTime();
+      end = new Date(end).getTime();
+
+      let queryList = this.getQueryList();
+      this.getlog(start,end,false,queryList,1000)
     },
-    getDate1(startDate) {
+
+    getDate1(startDate) {//date tools
       let Y = startDate.getFullYear() + '-';
       let M = (startDate.getMonth() + 1 < 10 ? '0' + (startDate.getMonth() + 1) : startDate.getMonth() + 1) + '-';
       let D = startDate.getDate() < 10 ? '0' + (startDate.getDate()) : startDate.getDate();
       return Y + M + D;
     },
-    getDate2(startDate) {
+
+    getDate2(startDate) {//date tools
       let H = startDate.getHours() < 10 ? '0' + (startDate.getHours()) : startDate.getHours();
       let m = startDate.getMinutes() < 10 ? '0' + (startDate.getMinutes()) : startDate.getMinutes();
       let S = startDate.getSeconds() < 10 ? '0' + (startDate.getSeconds()) : startDate.getSeconds();
       return H + ":" + m + ":" + S;
     },
-    schedule(fq) {
-      let _this = this;
-      _this.execute();
-      // _this.execute(null,null,null,data=>{
-      //   let list = data.value;
-      //   let size = list.length;
-      //   let fq = 5*1000/size;
-      //   let index=0;
-      //   clearInterval(this.timeout);
-      //   this.timeout = setInterval(()=>{
-      //     this.textarea = this.textarea+"\r\n"+list[index];
-      //     index++;
-      //     if(index>list.length-2){
-      //       clearInterval(this.timeout);
-      //     }
-      //   },fq);
-      // });
-      this._timeOut = setTimeout(() => {
-        _this.schedule(fq);
-      }, fq);
-    },
-    // schedule(fq) {
-    //   this._timeOut = setInterval(() => { 
-    //       this.execute();
-    //   }, fq)
-    // },
-    initWebSocket() { //初始化weosocket
-      this.websocket = new WebSocket('ws://localhost:8080/monitor/logsocket/');
-      //指定事件回调
-      this.websocket.onmessage = this.websocketOnMessage;
-      this.websocket.onopen = this.websocketOnOpen;
-      this.websocket.onerror = this.websocketOnError;
-      this.websocket.onclose = this.websocketClose;
+
+    //clean console
+    cleanConsole(){
+      this.textarea = "";
+      this.total = 0;
     },
 
-    websocketOnOpen() { //连接建立之后执行send方法发送数据
-      this.excutestatus = !this.excutestatus;
-      if (this.excutestatus) {
-        let actions = { 'index': 'sink-node', 'level': 3 }
-        this.websocketSend(JSON.stringify(actions));
-        //连接后,定时发送,否则不段时间不通信会自动断连(时间长短一般是服务端指定的)
-        var that = this;
-        setInterval(function () {
-          that.websocketSend(JSON.stringify({ 'index': 'sink-node', 'level': 3 }));
-        }, 15000);
-        this.excute = 'Stop';
-        //this.schedule(this.formInline.fq*1000);
-      } else {
-        this.excute = 'Start';
-        // clearTimeout(this._timeOut);
-        this.websocket.close();
-      }
-    },
-
-    websocketOnError() {//连接建立失败重连
-      this.initWebSocket();
-    },
-
-    websocketOnMessage(e) { //数据接收
-      this.textarea = this.textarea + e.data;
-    },
-
-    websocketSend(Data) {//数据发送
-      this.websocket.send(Data);
-    },
-
-    // eslint-disable-next-line
-    websocketClose(e) {  //关闭
-      // eslint-disable-next-line
-      console.log('断开连接', e);
-    },
-    excutemethod() {
+    //TODO start log getter
+    startThread(){
+      let that = this;
       this.excutestatus = !this.excutestatus;
       if (this.excutestatus) {
         this.excute = 'Stop';
-        this.execute(null, null, null, true);
-        //this.schedule(this.formInline.fq*1000);
+        this.isFirst = true;
+
+        //check
+        let fq  = this.formInline.fq;
+        if (!(/(^[0-9]*[1-9][0-9]*$)/.test(fq))) {
+          return;
+        }
+
+        console.info("fq="+that.formInline.fq);
+        that.logThread=self.setInterval(function () {
+          that.dataAppend();
+        },that.formInline.fq*1000);
       } else {
         this.excute = 'Start';
-        //clearTimeout(this._timeOut);
+        window.clearInterval(that.logThread);
       }
-
     },
-    // excutemethod(){
-    //   this.excutestatus = !this.excutestatus;
-    //   if( this.excutestatus){
-    //     let websocket = new WebSocket('ws://localhost:8080/monitor/logsocket/sink-node/3');
-    //     this.excute = 'Stop';
-    //     websocket.onmessage = data => {
-    //       // 接收服务端的实时日志并添加到HTML页面中
-    //       this.textarea = this.textarea + data.data ;
-    //     };
-    //     //this.schedule(this.formInline.fq*1000);
-    //   }else{
-    //     let websocket = new WebSocket('ws://localhost:8080/monitor/logsocket/');
-    //     this.excute = 'Start';
-    //    // clearTimeout(this._timeOut);
-    //     websocket.close();
-    //   }
 
-    // },
-    execute(start, end, interval, flag) {
+    getQueryList(){
       let queryList;
       if (this.formInline.enable) {
         queryList = this.tableData1;
@@ -302,62 +241,56 @@ export default {
           value: this.formInline.content,
         }]
       }
+      return queryList;
+    },
+
+    dataAppend(){
+      //console.info("thread start"+this.isFirst);
+      let queryList = this.getQueryList();
+
+      if(this.isFirst){
+        this.logTimeStamp = new Date();
+        this.isFirst = false;
+      }
+      let start  = this.logTimeStamp.getTime();
+      let now = new Date();
+      let end = now.getTime();
+      this.logTimeStamp = now;
+      this.getlog(start-10000,end-10000,true,queryList,1000)
+    },
+
+
+    getlog(start,end,isAppend,queryList,limit){
+      let _self = this;
       this.$$api_configguration_getlog({
         data: {
           queryList: queryList,
-          level: this.formInline.loglevle,
-          index: this.formInline.index,
-          startDate: start,
-          endDate: end,
-          flag: flag,
-          interval: interval
+          level: _self.formInline.loglevle,
+          index: _self.formInline.index,
+          startTime: start,
+          endTime: end,
+          limit: limit,
         },
         fn: data => {
+          console.info(data);
           if (data.code == 200) {
-            if (this.excute == 'Stop') {
-              // if(this.falg&&this.falg1){
-              //   this.textarea = data.data+"进行中.";
-              //   this.falg =false;
-              // }else if(!this.falg&&this.falg1){
-              //   this.falg1 = false;
-              //   this.textarea = data.data+"进行中. . ";
-              // }else if(!this.falg&&!this.falg1){
-              //   this.textarea = data.data+"进行中. . .";
-              //   this.falg = true;
-              // }else{
-              //   this.falg1 = true;
-              //   this.textarea = data.data+"进行中. . . .";
-              // }
-              // callback(data.data)
-              let _self = this;
-              let list = data.data.value;
-              let st = data.data.key;
-              let size = list.length;
-              let sec = _self.formInline.fq -1;
-              let fq = sec * 1000 / size;
-              let index = 0;
-
-              if(data.data.value.length == 0){
-                // setTimeout(()=>{
-
-                // },1000)
-                _self.execute(null, end, interval, true);
-                return;
-              }
-              
-              clearInterval(_self.timeout);
-              _self.timeout = setInterval(() => {
-                _self.textarea = _self.textarea + "\r\n" + list[index];
-                index++;
-                if (index > list.length - 1) {
-                  clearInterval(_self.timeout);
-                  _self.execute(st, end, interval, true)
-                }
-              }, fq);
-            } else {
-              if (!flag) {
-                this.textarea = data.data;
-              }
+            let list = data.data.data;
+            if (!isAppend) {
+              _self.textarea = "";
+            }
+            if(!list||list.length == 0){
+              return;
+            }
+            if(list.length>=limit){
+              this.$message.warning('log datas is too big , some logs will be lost , Please add filter');
+              /*this.$message({
+                message: '警告哦，这是一条警告消息',
+                type: 'warning'
+              });*/
+            }
+            this.total = this.total+list.length;
+            for(let i = 0;i<list.length;i++){
+              _self.textarea = _self.textarea + "\r\n" + list[i];
             }
           } else {
             this.$alert(data.message, '错误', {
@@ -372,32 +305,37 @@ export default {
         }
       })
     },
-    sleep(numberMillis) {
-      var now = new Date();
-      var exitTime = now.getTime() + numberMillis;
-      while (true) {
-        now = new Date();
-        if (now.getTime() > exitTime)
-          return;
-      }
-    },
-    // 增加一列表格
-    flshfq() {
+
+    //stop
+    stopThread() {
       if (this.excute == 'Stop') {
-        clearTimeout(this._timeOut);
-        this.schedule(this.formInline.fq * 1000);
+        this.excute = 'Start';
+        this.excutestatus = false;
+        window.clearInterval(this.logThread);
       }
     },
+
     // 加载最新
-    onflush() {
-      this.excute = 'Start'
-      this.execute();
+    tailLast() {
+      this.stopThread();
+      this.cleanConsole();
+      let queryList = this.getQueryList();
+      this.getlog(0,0,false,queryList,100);
+      //auto start Thread
+      //this.startThread();
     },
+
     // 增加一列表格
     addRow() {
-
       this.tableData1.push({ enable: true, value: '' })
     }
   },
+
+  //离开前清除定时任务
+  beforeRouteLeave(to,from,next){
+    console.info("leave , stop the thread");
+    this.stopThread();
+    next();
+  }
 
 }

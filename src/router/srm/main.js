@@ -11,11 +11,11 @@ export default [
         icon: 'window-restore',
         component: Srm.Console
     },
-    {
+    /*{
         path: 'statistics',
         name: 'Log Analysis',
         icon: 'window-restore',
         component: Srm.Statistics
-    },
+    },*/
 
 ]

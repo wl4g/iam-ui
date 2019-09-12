@@ -15,34 +15,53 @@
           </el-select>
         </el-tooltip>
       </el-form-item>
+
+        <el-form-item label="Cluster:" prop="group">
+            <el-select v-model="formInline.index" style="width: 120px;">
+                <el-option
+                        v-for="item in groupData"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.name">
+                </el-option>
+            </el-select>
+        </el-form-item>
       
       <el-form-item label="Keyword:">
-        <el-input v-model="formInline.content" placeholder="e.g. addr=11111119" style="width:230px"></el-input>
+        <el-input v-model="formInline.content" placeholder="e.g. addr=11111119" style="width:200px"></el-input>
       </el-form-item>
       <el-form-item>
         <el-checkbox v-model="formInline.enable"></el-checkbox>
       </el-form-item>
       <el-form-item>
-        <p @click="screen" style="color:#48576a;cursor:pointer;">Advance Filter</p>
+        <p @click="screen" style="color:#48576a;cursor:pointer;">Advance</p>
       </el-form-item>
       <el-form-item>
-       <el-tooltip class="item" effect="dark" content="Desc: Multi-conditional filter to support include and exclude relationships." placement="bottom-start">
-          <i class="el-icon-warning" style="color:#e0e0e2;"></i>
-        </el-tooltip>
+          <el-tooltip placement="top">
+              <div slot="content">Desc: Multi-conditional filter to support include and exclude relationships.<br/>Tick to indicate enablement.</div>
+              <i class="el-icon-warning" style="color:#e0e0e2;"></i>
+          </el-tooltip>
       </el-form-item>
-       <el-form-item label="Update freq:" >
-        <el-select v-model="formInline.fq" class="testinput" @change="flshfq" >
+       <el-form-item label="Update:" >
+        <!--<el-select v-model="formInline.fq" class="testinput" @change="stopThread" >
            <el-option v-for="item in fq" :key="item.id"
                 :label="item.value" :value="item.id">
           </el-option>
-        </el-select>
+        </el-select>-->
+
+           <el-input v-model="formInline.fq" placeholder="sec" style="width: 40px;" @blur="checkfq"></el-input>
+
+
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="excutemethod()">{{excute}}</el-button>
+        <el-button type="primary" @click="startThread()" >{{excute}}</el-button>
       </el-form-item>
        <el-form-item style='float:right'>
-        <el-button type="success" @click="onflush">Latest</el-button>
+        <el-button type="success" @click="tailLast()">Tail</el-button>
       </el-form-item>
+        <el-form-item style='float:right'>
+            <el-button type="danger" @click="cleanConsole()" icon='delete2' ></el-button>
+        </el-form-item>
       <el-form-item style='float:right'>
         <!-- 新增按钮 -->
         <el-button type="primary" @click="historylog = true">History</el-button>
@@ -146,7 +165,7 @@
                 </el-time-picker>
             </div>
              <div v-show="radio==1"  style="float:left;color:rgb(119,122,126);line-height:25px;margin-top:20px;">
-                 e.g. Selected 1 min, means loading the latest minute log, </br>note: there may be some delay.
+                 e.g. Selected 1 min, means loading the latest minute log, <br>note: there may be some delay.
             </div>
              <div v-show="radio==2"  style="float:left;color:rgb(119,122,126);line-height:25px;margin-top:20px;">
 				Description: Load logs between absolute time intervals [startTime, endTime]
@@ -160,13 +179,18 @@
       </el-dialog>
         <!-- end -->
     </el-form>
+
     <div class="log">
       <!-- <span>进行中. . . .</span> -->
+            <div class="line" style="margin-bottom: 10px;">
+                <div>Total:<span class="number">{{total}}</span></div>
+            </div>
+
       <template>
           <el-input
             type="textarea"
             :rows="30"
-            placeholder="暂无数据"
+            placeholder="无数暂据"
             v-model="textarea" class="mytextarea" :readonly="true">
           </el-input>
       </template>
@@ -256,6 +280,10 @@
     height: 30px;
     line-height: 30px;
 }
+
+  .log{
+      margin-top: 40px;
+  }
 /* .log{
   position: relative;
 }

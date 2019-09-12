@@ -64,8 +64,7 @@
         title="高级筛选"
         :visible.sync="dialogVisible"
         width="30%"
-        class="tanchuang"
-        :before-close="handleClose">
+        class="tanchuang">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <!-- 插入表格 -->
           <el-form-item label="配置：" prop="miaoshu">
@@ -114,8 +113,7 @@
         title="日志时间选项"
         :visible.sync="historylog"
         width="30%"
-        class="tanchuang1"
-        :before-close="handleClose">
+        class="tanchuang1">
         <el-form :inline="true" :model="formInline" >
           <!-- 插入表格 -->
           <el-form-item label="日志加载方式：" prop="miaoshu">
