@@ -114,8 +114,8 @@ export default {
 
     checkfq(){
       let fq  = this.formInline.fq;
-      if (!(/(^[0-9]*[1-9][0-9]*$)/.test(fq))||fq<3) {
-        this.$message.error('please input a useful number');
+      if (!(/(^[0-9]*[1-9][0-9]*$)/.test(fq))||fq<2) {
+        this.$message.error('Flush frequency should not be less than 2sec');
         this.formInline.fq = 5;
       }
     },

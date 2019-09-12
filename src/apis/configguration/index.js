@@ -52,23 +52,17 @@ export default [
     type: 'post'
   },
   {
-    name: '校验配置',
+    name: '校验配置格式',
     method: 'configcheck',
     path: '/scm/configGuration/config-check.json',
     type: 'post'
   },
   {
-    name: '获取分组名称',
+    name: '获取控制台日志',
     method: 'getlog',
     path: '/srm/console/consoleLog',
     type: 'json',
     async : false
-  },
-  {
-    name: '获取分组名称',
-    method: 'statistics',
-    path: '/srm/statistics/statisticsLog',
-    type: 'json'
   },
   {
     name: '根据type获取字典',

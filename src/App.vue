@@ -7,13 +7,10 @@
     </transition>
   </div>
 </template>
-
 <script>
-
   import {
     store
   } from 'utils/'
-
   export default {
     name: 'app',
     components: {},
@@ -35,13 +32,11 @@
         });
       },
       init () {
-//        this.onTestRestFulApi();
         this.onUpdateTabs();
       }
     },
     mounted () {
       this.init();
-
       this.$$api_share_dictCache({
         fn: data => {
           //console.info(data.data)
@@ -52,7 +47,6 @@
           console.error("get dicts cache failss")
         },
       })
-
     },
     watch: {
       $route (to, from) {
@@ -61,7 +55,6 @@
     }
   }
 </script>
-
 <style lang="less">
   * {
     -webkit-box-sizing: border-box;
@@ -70,17 +63,14 @@
     margin: 0px;
     padding: 0px;
   }
-
   .bounce-enter-active {
     animation: bounce-in .5s;
     -webkit-animation: bounce-in .5s;
   }
-
   .bounce-leave-active {
     animation: bounce-out .2s;
     -webkit-animation: bounce-out .2s;
   }
-
   @keyframes bounce-in {
     0% {
       transform: scale(0);
@@ -92,7 +82,6 @@
       transform: scale(1);
     }
   }
-
   @keyframes bounce-out {
     0% {
       transform: scale(1);
