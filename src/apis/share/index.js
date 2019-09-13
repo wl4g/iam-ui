@@ -2,7 +2,6 @@
  * @type {Object}
  */
 export default [
-
     //dict
     {
         name: '字典列表',
@@ -46,8 +45,6 @@ export default [
         path: '/share-admin/dict/cache',
         type: 'post'
     },
-
-
     //host
     {
         name: '所有host',
@@ -55,8 +52,5 @@ export default [
         path: '/share-admin/host/all',
         type: 'post'
     },
-
-
-
 
 ]

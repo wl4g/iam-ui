@@ -152,14 +152,11 @@ export default {
             this.saveForm.facebookNumOfFreq = '';
             this.saveForm.groups = [];
         },
-
         addContact() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add notification contacts';
         },
-
-
         // 获取列表数据
         groupList() {
             this.$$api_umc_groupList({

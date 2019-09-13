@@ -33,8 +33,8 @@ export default new Router({
     Umc,
     Srm,
     Ci,
-	Scm,
-	Iam,
+    Scm,
+    Iam,
     Share,
   ]
 })

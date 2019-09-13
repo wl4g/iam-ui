@@ -8,12 +8,10 @@ export default {
             searchParams: {
 
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             //弹窗表单
             saveForm: {
                 id: '',
@@ -39,7 +37,6 @@ export default {
             dialogLoading: false,
 
             tableData: [],
-
         }
     },
 
@@ -227,7 +224,7 @@ export default {
             if (environmentId == "" || clusterId == "" || clusterId == undefined|| environmentId == undefined) {
                 return;
             }
-            this.$$api_instanceman_instancelist({
+            this.$$api_instance_instancelist({
                 data: {
                     appClusterId: clusterId,
                     envId: environmentId
@@ -268,7 +265,7 @@ export default {
             if (clusterId == "" || clusterId == undefined) {
                 return;
             }
-            this.$$api_instanceman_envirlist({
+            this.$$api_instance_envirlist({
                 data: {
                     clusterId: clusterId
                 },
@@ -305,7 +302,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_instanceman_grouplist({
+            this.$$api_instance_grouplist({
                 fn: data => {
                     if (data.code == 200) {
                         this.groupData = data.data.grouplist;

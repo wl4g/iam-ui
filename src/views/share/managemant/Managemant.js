@@ -207,7 +207,7 @@ export default {
     },
     addOne() {
       this.dialogVisible = true;
-      this.dialogTitle = '新增';
+      this.dialogTitle = 'Add cluster';
       this.ruleForm.tableData1 =  [{
         groupid: '',
         name: '',
@@ -295,7 +295,6 @@ export default {
       this.dialogTitle = 'Group Environment Edit';
       this.dialogVisible = true;
       this.inquiry(id);
-
     },
     closeDialog(){
       this.ruleForm.tableData1 = [{
@@ -329,7 +328,7 @@ export default {
       if(id==undefined){
         this.ruleForm.tableData1.splice(index, 1);
       }else{
-        this.$$api_instanceman_deleteenv({
+        this.$$api_instance_deleteenv({
           data: {
             id: id
           },

@@ -49,7 +49,23 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    z-index:50;
+  }
+  button{
+    position: relative;
     z-index:10;
+  }
+  .el-pager{
+    position: relative;
+    z-index:50;
+  }
+  .left-menu{
+    position: relative;
+    z-index:50;
+  }
+  .el-dialog{
+    position: relative;
+    z-index:3000;
   }
   .bounce-enter-active {
     animation: bounce-in .5s;

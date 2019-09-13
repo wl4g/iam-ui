@@ -114,7 +114,7 @@ export default {
             return;
           }
         }
-        this.$$api_instanceman_envirlist({
+        this.$$api_instance_envirlist({
           data: {
             clusterId: clusterId
           },
@@ -140,7 +140,7 @@ export default {
       },
       // 获取分组名称
       getGroup() {
-        this.$$api_instanceman_grouplist({
+        this.$$api_instance_grouplist({
           fn: data => {
             if(data.code == 200){
               this.groupData = data.data.grouplist;
@@ -159,7 +159,7 @@ export default {
       },
     deleteRow(id) {
       this.loading = true;
-      this.$$api_instanceman_deleteenv({
+      this.$$api_instance_deleteenv({
         data: {
           id: id
         },
@@ -212,7 +212,7 @@ export default {
     },
     // 获取列表数据
     getData() {
-      this.$$api_instanceman_list({
+      this.$$api_instance_list({
         data: {
           name : this.selectProp.group,
           evnsci : this.selectProp.environment,
@@ -253,7 +253,7 @@ export default {
       this.ruleForm.environment = "";
       this.envirFormData = [];
       this.dialogVisible = true;
-      this.dialogTitle = '新增';
+      this.dialogTitle = 'Add instance';
     },
     //新增或编辑应用组 
     submitForm(formName) {
@@ -273,7 +273,7 @@ export default {
         for(var i = 0; i < this.ruleForm.tableData1.length; i++){
           this.ruleForm.tableData1[i].enable === true? this.ruleForm.tableData1[i].enable = 1 : this.ruleForm.tableData1[i].enable = 0;
         }
-      this.$$api_instanceman_insert({
+      this.$$api_instance_insert({
         data: {
           appInstance: this.ruleForm.tableData1,
           deptId: 1,
@@ -309,7 +309,7 @@ export default {
     //查询节点
     inquiry(id,envId) {
       this.dialogLoading = true;
-      this.$$api_instanceman_select({
+      this.$$api_instance_select({
         data: {
           id: id,
           evnsci: envId
@@ -384,7 +384,7 @@ export default {
       if(id==undefined){
         this.ruleForm.tableData1.splice(index, 1);
       }else{
-        this.$$api_instanceman_deleteInstance({
+        this.$$api_instance_deleteInstance({
           data: {
             id: id
           },
@@ -401,7 +401,7 @@ export default {
     submitInstance(rowData){
       this.dialogLoading = true;
       if(typeof rowData.id != 'undefined' && '' != rowData.id){
-        this.$$api_instanceman_updateInstance({
+        this.$$api_instance_updateInstance({
           data: {
             id: rowData.id,
             enable: rowData.enable===true?1:0,
@@ -439,7 +439,7 @@ export default {
             port: rowData.port,
             remark: rowData.remark
         }];
-        this.$$api_instanceman_insertInstance({
+        this.$$api_instance_insertInstance({
           data: {
             id: this.ruleForm.id,
             appInstance: data
@@ -487,7 +487,6 @@ export default {
         }
       })
     },
-
 
   },
 

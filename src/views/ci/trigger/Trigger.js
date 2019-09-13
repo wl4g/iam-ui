@@ -312,7 +312,7 @@ export default {
             if (environmentId == "" || clusterId == "") {
                 return;
             }
-            this.$$api_instanceman_instancelist({
+            this.$$api_instance_instancelist({
                 data: {
                     appClusterId: clusterId,
                     envId: environmentId
@@ -354,7 +354,7 @@ export default {
             if (clusterId == "") {
                 return;
             }
-            this.$$api_instanceman_envirlist({
+            this.$$api_instance_envirlist({
                 data: {
                     clusterId: clusterId
                 },
@@ -390,7 +390,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_instanceman_grouplist({
+            this.$$api_instance_grouplist({
                 fn: data => {
                     if (data.code == 200) {
                         this.groupData = data.data.grouplist;

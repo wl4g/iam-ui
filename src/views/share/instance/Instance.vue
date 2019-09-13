@@ -1,5 +1,5 @@
 <template>
-    <section id="instanceman" class="instanceman">
+    <section id="instance" class="instance">
         <!-- //表单 -->
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
@@ -14,7 +14,6 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-
             <el-form-item label="Environment:">
                 <el-select v-model="selectProp.environment" placeholder="请选择环境：">
                     <el-option label="ALL" value=""></el-option>
@@ -35,10 +34,8 @@
 
         <!-- 弹窗内容 -->
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close='closeDialog;selectdisabled=false' size="large">
-
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
                 <!-- 插入内容 -->
-
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="Group:" v-if="!selectdisabled" prop="group">
@@ -170,7 +167,7 @@
             <div class="line"></div>
             <div class="">Result Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addOne" style='float:right;margin:5px'>Add</el-button>
+                <el-button type="primary" @click="addOne" style='float:right;margin:5px'> + </el-button>
             </div>
         </div>
 
@@ -221,10 +218,8 @@
     </section>
 </template>
 <script>
-    import Instanceman from './Instanceman.js'
-
-    export default Instanceman
+    import Instance from './Instance.js'
+    export default Instance
 </script>
 <style>
-
 </style>

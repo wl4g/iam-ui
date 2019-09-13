@@ -13,7 +13,7 @@ import user from './user/'
 import system from './system/'
 import managemant from './managemant/'
 import configguration from './configguration/'
-import instanceman from './instanceman/'
+import instance from './instance/'
 import historic from './historic/'
 import track from './track/'
 import ci from './ci/'
@@ -37,9 +37,9 @@ export default [{
   name: '版本管理',
   list: configguration
 },{
-  module: 'instanceman',
+  module: 'instance',
   name: '版本管理',
-  list: instanceman
+  list: instance
 },{
   module: 'historic',
   name: '版本管理',

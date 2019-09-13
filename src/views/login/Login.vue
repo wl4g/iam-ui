@@ -143,7 +143,7 @@
 				<img class="rightImage" src="static/images/qrcode.jpg">
 			</div>
 		</div> -->
-        <div class="gb_box"></div>
+        <div class="gb_box" style="z-index:20"></div>
     </div>
 </template>
 <script>

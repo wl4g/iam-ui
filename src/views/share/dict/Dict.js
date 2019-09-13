@@ -12,7 +12,6 @@ export default {
                 type: '',
                 remark: '',
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
@@ -126,13 +125,11 @@ export default {
         addData() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add dictionaries';
             this.diseditable = false;
-
             //默认值
             this.saveForm.themes = 'default';
             this.saveForm.sort = 50;
-
         },
 
         cleanSaveForm() {

@@ -45,7 +45,7 @@
             <div class="line"></div>
             <div class="">Result Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addTemplat()" style='float:right;margin:5px'>Add</el-button>
+                <el-button type="primary" @click="addTemplat()" style='float:right;margin:5px'> + </el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->

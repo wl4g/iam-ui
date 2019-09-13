@@ -1,8 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-
-
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
@@ -14,7 +12,7 @@
             <div class="line"></div>
             <div class="">Result Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addData()" style='float:right;margin:5px'>Add</el-button>
+                <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + </el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->
@@ -138,14 +136,10 @@
         </el-dialog>
     </section>
 </template>
-
-
 <script>
     import Config from './Config.js'
-
     export default Config
 </script>
-
 <style scoped>
 
 </style>

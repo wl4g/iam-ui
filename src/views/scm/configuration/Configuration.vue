@@ -288,76 +288,76 @@
   export default Configuration
 </script>
 <style>
-  .query{
-    line-height: 18px;
-    margin-bottom: 22px;
-  }
-  .number{
-    font-weight: bold;color: #6cb33e;
-  }
-  .line{
-    width:4px;height:18px;background:#6cb33e;display: block;float: left;margin-right: 6px;
-  }
-  .el-table th{
-    background-color: #34302c;
-  }
-  .el-table__footer-wrapper thead div, .el-table__header-wrapper thead div{
-    background-color: #34302c;
-    color: #fff;
-  }
-  .tanchuang .el-form-item{
-    width: 48%;
-  }
-  .tanchuang .el-form-item__content,.tanchuang .el-select{
-    width: 77%;
-  }
-  .tanchuang .el-form-item{
-    margin-bottom: 10px !important;
-  }
-  .tanchuang .ms{
-    width: 100%;
-  }
-  .tanchuang .mh{
-    width: 100%;
-    height: 20px;
-  }
-  .tanchuang .mm .el-textarea__inner {
-    display: block;
-    resize: vertical;
-    padding: 5px 7px;
-    line-height: 1.5;
-    width: 130px;
-    color: #1f2d3d;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #bfcbd9;
-    border-radius: 4px;
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-  }
-  .tanchuang .el-textarea{
-    width: 97%;
-  }
-  .myinput .el-textarea:focus { 
-    border-color: #719ECE;
-    box-shadow: 0 0 10px #719ECE;
-  }
-   .logo {
-    height: 25px;
-    width: auto;
-    margin-left: 0px;
-    margin-top: 0px;
-  }
-  .mytc .el-dialog__body {
-    padding: 10px 10px;
-    color: #48576a;
-    font-size: 14px;
-  }
-  .el-input--small .el-input__inner {
-    height: 30px;
-    width: 120px;
+.query{
+  line-height: 18px;
+  margin-bottom: 22px;
 }
-   #configuration .el-form-item__error{
-  position: static;
+.number{
+  font-weight: bold;color: #6cb33e;
+}
+.line{
+  width:4px;height:18px;background:#6cb33e;display: block;float: left;margin-right: 6px;
+}
+.el-table th{
+  background-color: #34302c;
+}
+.el-table__footer-wrapper thead div, .el-table__header-wrapper thead div{
+  background-color: #34302c;
+  color: #fff;
+}
+.tanchuang .el-form-item{
+  width: 48%;
+}
+.tanchuang .el-form-item__content,.tanchuang .el-select{
+  width: 77%;
+}
+.tanchuang .el-form-item{
+  margin-bottom: 10px !important;
+}
+.tanchuang .ms{
+  width: 100%;
+}
+.tanchuang .mh{
+  width: 100%;
+  height: 20px;
+}
+.tanchuang .mm .el-textarea__inner {
+  display: block;
+  resize: vertical;
+  padding: 5px 7px;
+  line-height: 1.5;
+  width: 130px;
+  color: #1f2d3d;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #bfcbd9;
+  border-radius: 4px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+}
+.tanchuang .el-textarea{
+  width: 97%;
+}
+.myinput .el-textarea:focus { 
+  border-color: #719ECE;
+  box-shadow: 0 0 10px #719ECE;
+}
+.logo {
+  height: 25px;
+  width: auto;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+.mytc .el-dialog__body {
+  padding: 10px 10px;
+  color: #48576a;
+  font-size: 14px;
+}
+.el-input--small .el-input__inner {
+  height: 30px;
   width: 120px;
-  }
+}
+#configuration .el-form-item__error{
+position: relative;
+width: 120px;
+}
 </style>

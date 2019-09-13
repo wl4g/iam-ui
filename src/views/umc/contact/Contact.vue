@@ -1,22 +1,17 @@
 <template>
-
     <el-tabs type="border-card">
         <el-tab-pane label="Contact">
             <section id="configuration" class="configuration">
                 <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-
                     <el-form-item label="Name:">
                         <el-input v-model="searchParams.name" placeholder="名字"></el-input>
                     </el-form-item>
-
                     <el-form-item label="Email">
                         <el-input v-model="searchParams.email" placeholder="Email"></el-input>
                     </el-form-item>
-
                     <el-form-item label="Phone">
                         <el-input v-model="searchParams.phone" placeholder="Phone"></el-input>
                     </el-form-item>
-
                     <el-form-item>
                         <el-button @click="onSubmit" type="success">Search</el-button>
                     </el-form-item>
@@ -216,28 +211,23 @@
                     </span>
                 </el-dialog>
             </section>
-
         </el-tab-pane>
         <el-tab-pane label="Group">
-
             <el-form :inline="true" :model="searchGroupParams" class="demo-form-inline">
-
                 <el-form-item label="Name:">
-                    <el-input v-model="searchGroupParams.name" placeholder="名字"></el-input>
+                    <el-input v-model="searchGroupParams.name" placeholder="Input group name"></el-input>
                 </el-form-item>
-
                 <el-form-item>
                     <el-button @click="getGroupData" type="success">Search</el-button>
                 </el-form-item>
             </el-form>
-
             <!--================================table================================-->
             <!-- 查询结果数值 -->
             <div class="query">
                 <div class="line"></div>
                 <div class="">Result Total： <span class="number">{{groupTotal}}</span>
                     <!-- 新增按钮 -->
-                    <el-button type="primary" @click="addGroup()" style='float:right;margin:5px'>Add</el-button>
+                    <el-button type="primary" @click="addGroup()" style='float:right;margin:5px'> + </el-button>
                 </div>
             </div>
             <!-- 查询结果表格 -->
