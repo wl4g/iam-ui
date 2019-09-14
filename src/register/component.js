@@ -3,8 +3,7 @@
  */
 
 import { ListData, FormData, DialogInfo, Echarts } from 'cps/'
-
-console.log(ListData);
+console.debug(ListData);
 
 export default {
   ListData,

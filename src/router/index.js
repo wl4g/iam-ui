@@ -18,11 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'Login',
       hidden: true,
       redirect (to) {
         return 'login'
-      }
+    }
     }, {
       path: '/login',
       name: '登录',

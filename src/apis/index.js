@@ -8,7 +8,6 @@
  * 一级属性中的方法：当前模块需要用的接口
  * @type {Object}
  */
-
 import user from './user/'
 import system from './system/'
 import managemant from './managemant/'

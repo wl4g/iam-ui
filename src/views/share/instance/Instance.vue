@@ -145,7 +145,7 @@
                                 </el-table>
                             </template>
                             <p>
-                                <el-button type="primary" @click.native.prevent="addRow()">Append</el-button>
+                                <el-button type="primary" @click.native.prevent="addRow()"> + </el-button>
                             </p>
 
                         </el-form-item>

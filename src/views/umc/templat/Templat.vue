@@ -162,11 +162,10 @@
                                 </el-table>
                             </template>
                             <!--</div>-->
-                            <el-button type="primary"  @click.native.prevent="addTag()">Append</el-button>
+                            <el-button type="primary"  @click.native.prevent="addTag()"> + </el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <!-- rules -->
                 <el-row >
                     <el-col>
@@ -182,7 +181,6 @@
                                             </el-select>
                                         </template>
                                     </el-table-column>
-
                                     <el-table-column  label="Aggregator">
                                         <template scope="scope">
                                             <el-select v-model="scope.row.aggregator" placeholder="Aggregator">
@@ -194,7 +192,6 @@
                                             </el-select>
                                         </template>
                                     </el-table-column>
-
                                     <el-table-column  label="RelateOperator">
                                         <template scope="scope">
                                             <el-select v-model="scope.row.relateOperator" placeholder="RelateOperator">
@@ -242,15 +239,10 @@
                                 </el-table>
                             </template>
                             <!--</div>-->
-                            <el-button type="primary"  @click.native.prevent="addRule()">Append</el-button>
+                            <el-button type="primary"  @click.native.prevent="addRule()"> + </el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-
-
-
-
             </el-form>
             <span slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="saveTemplat()">Save</el-button>
@@ -258,16 +250,10 @@
                     </span>
         </el-dialog>
     </section>
-
 </template>
-
-
 <script>
     import Templat from './Templat.js'
-
     export default Templat
 </script>
-
 <style scoped>
-
 </style>

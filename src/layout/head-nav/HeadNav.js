@@ -59,13 +59,9 @@ export default {
   mounted () {
     // this.setDialogInfo('access');
     console.log()
-
     // this.onGetSetting();
   },
   methods: {
-    /**
-     * 退出登录
-     */
     logout () {
       this.$confirm('你确定退出登录么?', '确认退出', {
         confirmButtonText: '确定',

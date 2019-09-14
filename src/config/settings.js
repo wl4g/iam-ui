@@ -7,43 +7,27 @@ var gbs = {
   api_status_key_field: 'code',
   // 状态码value
   api_status_value_field: 200,
-
   // 存放数据的字段
   api_data_field: 'data',
-
   api_custom: {
     401: function (res) {
+      console.info("redirect_url==" + res['data'].redirect_url);
       this.$store.dispatch('remove_userinfo').then(() => {
         //this.$router.push('/login')
         //window.location.href = res['data'].redirect_url;
-        console.info("redirect_url==" + res['data'].redirect_url);
-        /*$.ajax({
-          url: res['data'].redirect_url,
+
+        $.ajax({
+          url: res['data'].redirect_url,   //去请求项目二中的url
+          dataType: "json",
           type: "get",
-          xhrFields: {
-            withCredentials: true // 跨域调用时，必须设置才会发送cookie
-          },
-          success: function(resp){
+          xhrFields: { withCredentials: true }, // Send cookies when support cross-domain request.
+          success: function (data) {
             console.info("success");
           },
           error: function(req, status, errmsg){
             console.info(errmsg);
           }
-        });*/
-
-        $.ajax({
-          url: res['data'].redirect_url,   //去请求项目二中的url
-          dataType: "jsonp",
-          type: "get",
-          xhrFields: {
-            withCredentials: true // 跨域调用时，必须设置才会发送cookie
-          },
-          success: function (data) {
-            console.info("success");
-          }
         })
-
-        //window.location.href = res['data'].redirect_url
 
       })
     }
@@ -65,8 +49,8 @@ var cbs = {
       })
     } else {
       this.$store.dispatch('remove_userinfo').then(() => {
-        this.$alert(err.status + ',' + err.msg + '！', '登录错误', {
-          confirmButtonText: '确定',
+        this.$alert(err.status + ',' + err.msg + '！', 'Login Timeout', {
+          confirmButtonText: 'OK',
           callback: action => {
             //this.$router.push('/login')
           }

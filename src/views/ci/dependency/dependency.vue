@@ -12,7 +12,7 @@
 
             <el-form-item style='float:right'>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addDependency()">Add</el-button>
+                <el-button type="primary" @click="addDependency()"> + </el-button>
             </el-form-item>
 
         </el-form>

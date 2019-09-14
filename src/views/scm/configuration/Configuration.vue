@@ -162,7 +162,7 @@
                     </el-table>
                   </template>
                 </div>
-                <el-button type="primary"  @click.native.prevent="addRow()">Append</el-button>
+                <el-button type="primary"  @click.native.prevent="addRow()"> + </el-button>
               </el-form-item>
     
           </el-form>
