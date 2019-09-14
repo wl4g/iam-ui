@@ -1,5 +1,5 @@
 <template>
-    <div id="wrap" style="background:url('/static/images/bg_icon/background.png') no-repeat;background-size: cover;">
+    <div id="wrap" style="background:url('/static/images/bg_icon/background.png') no-repeat;background-size:cover;z-index:8;">
         <div id="top">
             <img id="img_logo" src="static/images/bg_icon/logo.png"/>
         </div>

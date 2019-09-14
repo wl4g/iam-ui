@@ -21,56 +21,44 @@
         </el-col>
         <el-col :span="4" class="userinfo">
           <span class='username'>
-				<el-dropdown trigger="click" @command='setDialogInfo'>
-					<span class="el-dropdown-link">
-						{{this.$store.state.user.userinfo.username}}
-						<i class="el-icon-caret-bottom el-icon--right"></i>
-					</span>
-					<el-col :span="3" class='logo-container' style="width:8%">
-					  <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
-					</el-col>
-					<el-dropdown-menu slot="dropdown">
-						<!-- <el-dropdown-item style="font-size:13px;" command='pass' v-if='$store.state.user.userinfo.is_update_pass'>Your profile</el-dropdown-item> -->
-						<el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
-						<el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
-						<el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
+            <el-dropdown trigger="click" @command='setDialogInfo'>
+              <span class="el-dropdown-link">
+                {{this.$store.state.user.userinfo.username}}
+                <i class="el-icon-caret-bottom el-icon--right"></i>
+              </span>
+              <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
+                <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
+              </el-col>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
+                <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
+                <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </span>
           <i class="fa fa-sign-out logout" @click='logout'></i>
         </el-col>
       </el-row>
     </header>
 
-    <el-dialog size="small" :title="dialog.title"
-               v-model="dialog.show_pass">
+    <el-dialog size="small" :title="dialog.title" v-model="dialog.show_pass">
       <el-form style="margin:20px;width:80%;"
                label-width="100px"
                :model="dialog.user_info"
                :rules="dialog.user_info_rules"
                ref='user_info'>
         <el-form-item class='edit-form'
-                      label="邮箱"
-                      prop='email'>
+                      label="邮箱" prop='email'>
           <el-input v-model="dialog.user_info.email" disabled placeholder='常用邮箱'></el-input>
         </el-form-item>
-        <el-form-item class='edit-form'
-                      label="用户名称"
-                      prop='username'>
+        <el-form-item class='edit-form' label="用户名称" prop='username'>
           <el-input v-model="dialog.user_info.username" disabled placeholder='用户名'></el-input>
         </el-form-item>
-        <el-form-item class='edit-form'
-                      label="当前密码"
-                      prop='old_password'>
-          <el-input
-            type='password'
-            placeholder='当前密码'
-            auto-complete='off'
-            v-model="dialog.user_info.old_password"></el-input>
+        <el-form-item class='edit-form' label="当前密码" prop='old_password'>
+          <el-input type='password' placeholder='当前密码'
+            auto-complete='off' v-model="dialog.user_info.old_password"></el-input>
         </el-form-item>
-        <el-form-item class='edit-form'
-                      label="新密码"
-                      prop='password'>
+        <el-form-item class='edit-form' label="新密码" prop='password'>
           <el-input
             type='password'
             placeholder='新密码'
@@ -92,7 +80,6 @@
                 <el-button type="primary" @click="updUserPass('user_info')">确 定</el-button>
             </span>
     </el-dialog>
-
 
     <el-dialog size="small" :title="dialog.title"
                v-model="dialog.show_set">
