@@ -70,6 +70,7 @@ export default {
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
           // this.$router.push('/login')
+          // TODO using config api
           window.location.href = "http://localhost:14040/iam-server/logout";
         })
       }).catch(() => {
