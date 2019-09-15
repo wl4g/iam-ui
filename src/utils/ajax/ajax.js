@@ -71,9 +71,11 @@ export default function ({
 
   // 发送请求
   Vue.axios(options).then((res) => {
+      console.debug("Response data.code is "+res.data[gbs.api_status_key_field]);
       this.$store.dispatch('hide_loading')
-      //有时候后台返回的是“200” || 200
-      if (res.data[gbs.api_status_key_field] === gbs.api_status_value_field || res.data[gbs.api_status_key_field] == gbs.api_status_value_field) {
+
+      // Backend response status: 200
+      if (res.data[gbs.api_status_key_field] == gbs.api_status_value_field) {
           if (gbs.api_data_field) {
               //fn(res.data[gbs.api_data_field])
               fn(res.data)
@@ -82,13 +84,13 @@ export default function ({
           }
       } else {
           //返回code不是200的时候处理
-          /*if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
+          if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
               gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data)
           } else {
               if (errFn) {
                   errFn.call(this, res.data)
               }
-          }*/
+          }
           if (errFn) {
               errFn.call(this, res.data)
           }

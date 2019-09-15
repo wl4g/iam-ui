@@ -11,21 +11,26 @@ var gbs = {
   api_data_field: 'data',
   api_custom: {
     401: function (res) {
-      console.info("redirect_url==" + res['data'].redirect_url);
+      console.debug("Response 401 for redirect_url: " + res['data'].redirect_url);
+
       this.$store.dispatch('remove_userinfo').then(() => {
         //this.$router.push('/login')
-        //window.location.href = res['data'].redirect_url;
-
+        let serverRedirectUrl = res['data'].redirect_url+"&response_type=json"; // 显示指定相应JSON格式
         $.ajax({
-          url: res['data'].redirect_url,   //去请求项目二中的url
-          dataType: "json",
-          type: "get",
-          xhrFields: { withCredentials: true }, // Send cookies when support cross-domain request.
-          success: function (data) {
-            console.info("success");
+          url: serverRedirectUrl,
+          type: "post",
+          xhrFields: { withCredentials: true }, // 必须要允许带上TGC凭据
+          success: function (res) {
+            console.debug("Redirect iam-server response: "+ JSON.stringify(res));
+ 
+            let clientRedirectUrl = res.data.redirect_url+"&response_type=json";
+            // 此时Client应用无有效的sid, 因此无需指定withCredentials
+            $.post(clientRedirectUrl, function(res1){
+              console.debug("Redirect iam-client response: "+ JSON.stringify(res1));
+            });
           },
           error: function(req, status, errmsg){
-            console.info(errmsg);
+            console.error(errmsg);
           }
         })
 
