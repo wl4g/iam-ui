@@ -69,7 +69,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
-          this.$router.push('/login')
+          // this.$router.push('/login')
+          window.location.href = "http://localhost:14040/iam-server/logout";
         })
       }).catch(() => {
         /*this.$message({

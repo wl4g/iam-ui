@@ -19,14 +19,24 @@ var gbs = {
         $.ajax({
           url: serverRedirectUrl,
           type: "post",
-          xhrFields: { withCredentials: true }, // 必须要允许带上TGC凭据
+          // 设置后跨越请求Client应用才会带上TGC
+          xhrFields: { withCredentials: true },
           success: function (res) {
             console.debug("Redirect iam-server response: "+ JSON.stringify(res));
- 
+
             let clientRedirectUrl = res.data.redirect_url+"&response_type=json";
-            // 此时Client应用无有效的sid, 因此无需指定withCredentials
-            $.post(clientRedirectUrl, function(res1){
-              console.debug("Redirect iam-client response: "+ JSON.stringify(res1));
+            $.ajax({
+              url: clientRedirectUrl,
+              type: "post",
+              // 虽此时Client应用无有效sid(无需指定withCredentials)，
+              // 但设置后响应新生成的sid(client cookie)才会被chrome保存
+              xhrFields: { withCredentials: true },
+              success: function (res1) {
+                console.debug("Redirect iam-client response: "+ JSON.stringify(res1));
+              },
+              error: function(req, status, errmsg){
+                console.error(errmsg);
+              }
             });
           },
           error: function(req, status, errmsg){
