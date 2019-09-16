@@ -47,7 +47,7 @@ export default function ({
       url: p,
       headers: headers && typeof headers === 'object' ? headers : {},
 
-      //withCredentials: true,
+      withCredentials: true,
 
   }
   options[type === 'get' ? 'params' : 'data'] = type === 'json' ? data : this.$qs.stringify(data)
@@ -86,16 +86,13 @@ export default function ({
           //返回code不是200的时候处理
           if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
               gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data)
-          } else {
-              if (errFn) {
-                  errFn.call(this, res.data)
-              }
           }
           if (errFn) {
               errFn.call(this, res.data)
           }
       }
   }).catch(() => {
+      alert("into catch");
       this.$store.dispatch('hide_loading')
       errFn.call(this, null)
   })

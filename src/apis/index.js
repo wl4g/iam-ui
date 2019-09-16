@@ -18,6 +18,7 @@ import track from './track/'
 import ci from './ci/'
 import umc from './umc/'
 import share from './share/'
+import srm from './srm'
 
 export default [{
   module: 'user',
@@ -59,4 +60,8 @@ export default [{
   module: 'share',
   name: '设置管理',
   list: share
+},{
+  module: 'srm',
+  name: '设置管理',
+  list: srm
 }]

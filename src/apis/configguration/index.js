@@ -1,73 +1,65 @@
+import {store} from "../../utils";
+
 /**
  * 用户模块
  * @type {Object}
  */
+let baseUrl = store.get("application_cache");
+if(baseUrl||baseUrl==undefined||baseUrl=="null"||baseUrl==null||baseUrl==''){
+  baseUrl = "http://localhost:14043/scm-server";//
+  console.info("get base url fail ,use default!!!  url="+baseUrl);
+}else{
+  console.info("get base url success !!!  url="+baseUrl);
+}
+
 export default [
   {
     name: '修改版本',
     method: 'update',
-    path: '/scm/configGuration/update',
+    path: baseUrl+'/configGuration/update',
     type: 'post'
   },
   {
     name: '修改配置',
     method: 'updateguration',
-    path: '/scm/configGuration/updateGuration',
+    path: baseUrl+'/configGuration/updateGuration',
     type: 'post'
   },
   {
     name: '删除配置项',
     method: 'deleteVersiondetail',
-    path: '/scm/configGuration/deleteVersionDetail',
+    path: baseUrl+'/configGuration/deleteVersionDetail',
     type: 'post'
   },
   {
     name: '查询版本',
     method: 'select',
-    path: '/scm/configGuration/select',
+    path: baseUrl+'/configGuration/select',
     type: 'post'
   },
   {
     name: '添加版本',
     method: 'configset',
-    path: '/scm/configGuration/config-set.json',
+    path: baseUrl+'/configGuration/config-set.json',
     type: 'json'
   },
   {
     name: '获取版本列表',
     method: 'lists',
-    path: '/scm/configGuration/config-list.json',
-    type: 'post'
-  },
-  {
-    name: '获取分组名称',
-    method: 'grouplists',
-    path: '/share-admin/appGroup/group_list',
+    path: baseUrl+'/configGuration/config-list.json',
     type: 'post'
   },
   {
     name: '获取版本详情',
     method: 'configselect',
-    path: '/scm/configGuration/config-select.json',
+    path: baseUrl+'/configGuration/config-select.json',
     type: 'post'
   },
   {
     name: '校验配置格式',
     method: 'configcheck',
-    path: '/scm/configGuration/config-check.json',
+    path: baseUrl+'/configGuration/config-check.json',
     type: 'post'
   },
-  {
-    name: '获取控制台日志',
-    method: 'getlog',
-    path: '/srm/console/consoleLog',
-    type: 'json',
-    async : false
-  },
-  {
-    name: '根据type获取字典',
-    method: 'getByType',
-    path: '/share-admin/dict/getByType?type=app_ns_type',
-    type: 'json'
-  }
+
 ]

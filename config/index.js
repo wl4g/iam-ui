@@ -30,7 +30,7 @@ module.exports = {
     devtool: 'eval-source-map',
     cacheBusting: false,
     proxyTable: {
-      '/scm-server': {
+      /*'/scm-server': {
         target: 'http://localhost:14043',
         changeOrigin: true,
         pathRewrite: {
@@ -44,28 +44,29 @@ module.exports = {
           '^/ci-server': 'ci-server'
         }
       },
-      '/umc-admin': {
+      '/umc-manager': {
         target: 'http://localhost:14048',
         changeOrigin: true,
         pathRewrite: {
-          '^/umc-admin': 'umc-admin'
+          '^/umc-manager': 'umc-manager'
         }
       },
-      '/share-admin': {
+      '/share-manager': {
         target: 'http://localhost:14051',
         changeOrigin: true,
         pathRewrite: {
-          '^/share-admin': 'share-admin'
+          '^/share-manager': 'share-manager'
         }
       },
       '/srm': {
         target: 'http://localhost:15050',
         changeOrigin: true,
         pathRewrite: {
-          '^/srm': 'srm-admin'
+          '^/srm': 'srm-manager'
         }
-      },
+      },*/
     },
+
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

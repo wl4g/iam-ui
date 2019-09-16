@@ -2,71 +2,74 @@
  * 用户模块
  * @type {Object}
  */
+import {store} from "../../utils";
+let baseUrl = store.get("application_cache");
+if(baseUrl||baseUrl==undefined||baseUrl=="null"||baseUrl==null||baseUrl==''){
+  baseUrl = "http://localhost:14043/scm-server";//
+  console.info("get base url fail ,use default!!!  url="+baseUrl);
+}else{
+  console.info("get base url success !!!  url="+baseUrl);
+}
+
 export default [
   {
     name: '修改版本',
     method: 'update',
-    path: '/scm/configGuration/update',
+    path: baseUrl+'/configGuration/update',
     type: 'post'
   },
   {
     name: '修改配置',
     method: 'updateguration',
-    path: '/scm/configGuration/updateGuration',
+    path: baseUrl+'/configGuration/updateGuration',
     type: 'post'
   },
   {
     name: '删除配置项',
     method: 'deleteVersiondetail',
-    path: '/scm/configGuration/deleteVersionDetail',
+    path: baseUrl+'/configGuration/deleteVersionDetail',
     type: 'post'
   },
   {
     name: '查询版本',
     method: 'select',
-    path: '/scm/configGuration/select',
+    path: baseUrl+'/configGuration/select',
     type: 'post'
   },
   {
     name: '添加版本',
     method: 'configset',
-    path: '/scm/configGuration/config-set.json',
+    path: baseUrl+'/configGuration/config-set.json',
     type: 'json'
   },
   {
     name: '获取版本列表',
     method: 'lists',
-    path: '/scm/configGuration/config-list.json',
-    type: 'post'
-  },
-  {
-    name: '获取分组名称',
-    method: 'grouplists',
-    path: '/share/appGroup/group_list',
+    path: baseUrl+'/configGuration/config-list.json',
     type: 'post'
   },
   {
     name: '获取轨迹列表',
     method: 'releaselist',
-    path: '/scm/history/release-list.json',
+    path: baseUrl+'/history/release-list.json',
     type: 'post'
   },
   {
     name: '删除版本',
     method: 'versiondelete',
-    path: '/scm/history/version_delete',
+    path: baseUrl+'/history/version_delete',
     type: 'json'
   },
   {
     name: '回滚版本',
     method: 'releaseback',
-    path: '/scm/history/release_rollback',
+    path: baseUrl+'/history/release_rollback',
     type: 'post'
   },
   {
     name: '查询详情',
     method: 'reledetailselect',
-    path: '/scm/history/reledetail-select.json',
+    path: baseUrl+'/history/reledetail-select.json',
     type: 'post'
   }
 ]
