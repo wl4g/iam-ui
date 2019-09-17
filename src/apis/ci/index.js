@@ -5,13 +5,16 @@
 import {
     store
 } from '../../utils/'
-
-let baseUrl = store.get("application_cache");
-if(baseUrl||baseUrl==undefined||baseUrl=="null"||baseUrl==null||baseUrl==''){
-    baseUrl = "http://localhost:14046/ci-server";//
-    console.info("get base url fail ,use default!!!  url="+baseUrl);
+let applicationCache = store.get("application_cache");
+let baseUrl = '';
+let hostname = window.location.protocol + "//" + window.location.hostname;
+if(applicationCache && applicationCache != 'null' && applicationCache['ci-server']
+    &&applicationCache['ci-server']['intranetBaseUri']){
+    baseUrl = applicationCache['ci-server']['intranetBaseUri'];
+    console.debug("get base url success !!!  url="+baseUrl);
 }else{
-    console.info("get base url success !!!  url="+baseUrl);
+    baseUrl = hostname+":14046/ci-server";
+    console.debug("get base url fail ,use default!!!  url="+baseUrl);
 }
 
 export default [

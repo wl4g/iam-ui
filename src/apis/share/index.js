@@ -4,13 +4,24 @@
 import {
     store
 } from '../../utils/'
-
-let baseUrl = store.get("application_cache");
-if(baseUrl||baseUrl==undefined||baseUrl=="null"||baseUrl==null||baseUrl==''){
-    baseUrl = "http://localhost:14051/share-manager";
-    console.info("get base url fail ,use default!!!  url="+baseUrl);
+let applicationCache = store.get("application_cache");
+let baseUrl = '';
+let hostname = window.location.protocol + "//" + window.location.hostname;
+if(applicationCache && applicationCache != 'null' && applicationCache['share-manager']
+    &&applicationCache['share-manager']['intranetBaseUri']){
+    baseUrl = applicationCache['share-manager']['intranetBaseUri'];
+    console.debug("get base url success !!!  url="+baseUrl);
 }else{
-    console.info("get base url success !!!  url="+baseUrl);
+    baseUrl = hostname+":14051/share-manager";
+    console.debug("get base url fail ,use default!!!  url="+baseUrl);
+}
+
+let iamBaseURI = store.get("iamBaseURI");
+if(!iamBaseURI || iamBaseURI == "null" || iamBaseURI == null||iamBaseURI==''){
+    iamBaseURI = hostname + ":14040/iam-server";
+    console.debug("get base url fail ,use default!!!  url="+iamBaseURI);
+}else{
+    console.debug("get base url success !!!  url="+iamBaseURI);
 }
 
 export default [
@@ -70,7 +81,7 @@ export default [
     {
         name: '所有application',
         method: 'applicationInfo',
-        path: baseUrl+'/application/info',
+        path: iamBaseURI+'/application/info',
         type: 'post'
     },
 

@@ -30,45 +30,21 @@ export default {
   },
   methods: {
 
-    //after login
-    afterLogin (){
-      let that = this;
-
-      alert("into after login");
-
-      //dict
-      that.$$api_share_dictCache({
-        fn: data => {
-          //console.info(data.data)
-          store.set("dicts_cache",data.data);
-          alert(store.get("dicts_cache"));
-        },
-        errFn: () => {
-          alert("get dict cache fail")
-        },
-      });
-
-      //application
-      that.$$api_share_applicationInfo({
-        fn: data => {
-          //console.info(data.data)
-          store.set("application_cache",data.data.list);
-          alert(store.get("application_cache"));
-        },
-        errFn: () => {
-          alert("get application cache fail")
-        },
-      });
-
-    }
 
   },
   mounted () {
-    let that = this;
-      //var iamBaseURI = "http://passport.anjiancloud.test/sso";
-      //var iamBaseURI = "http://passport.wl4g.com/sso";
-      var iamBaseURI = "http://localhost:14040/iam-server";
-  
+    //var iamBaseURI = "http://passport.anjiancloud.test/sso";
+    //var iamBaseURI = "http://passport.wl4g.com/sso";
+    var iamBaseURI = '';
+    if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1'|| window.location.hostname == '0:0:0:0:0:0:0:1') {
+      iamBaseURI = window.location.protocol + "//" + window.location.hostname + ":14040/iam-server";
+    } else {
+      iamBaseURI = window.location.protocol + "//passport." + window.location.hostname + "/iam-server";
+    }
+    store.set("iamBaseURI",iamBaseURI);
+    //this.GLOBAL.iamBaseUrl = iamBaseURI;
+    //var iamBaseURI = "http://localhost:14040/iam-server";
+
       // 引用IAM SDK插件，处理SNS授权操作
       (function () {
         window.IAM.Core.configure({
@@ -81,7 +57,6 @@ export default {
             input: document.getElementById("captcha_input"), // 验证码input对象（仅jpeg/gif时需要）
             onSuccess: function(verifiedToken) {
               console.debug("Captcha verify successful. verifiedToken is "+ verifiedToken);
-              that.afterLogin();
             },
             onError: function(errmsg) { // 如:申请过于频繁
               console.warn(errmsg);
@@ -98,7 +73,6 @@ export default {
             },
             onSuccess: function (principal, redirectUrl) {
               //console.log("登录成功!");
-              that.afterLogin();
               return true; // 返回false会阻止自动调整
             },
             onError: function (errmsg) {
@@ -119,7 +93,6 @@ export default {
             onSuccess: function(resp){
               $('.err-tip').text('');
               $('.code-write').hide();
-              that.afterLogin();
             },
             onError: function(errmsg){
               console.error(errmsg);
@@ -165,7 +138,6 @@ export default {
                 changeTab('login_scan_panel', 'login_scan_pass');
               }
               // 执行后续逻辑，返回false会阻止继续
-              that.afterLogin();
               return true;
             }
           }

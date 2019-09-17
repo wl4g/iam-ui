@@ -6,7 +6,9 @@ import router from './router'
 import 'register/'
 import store from 'store/'
 import dictutil from './common/dictutil'
+import globalVariable from './common/global_variable.js'
 Vue.prototype.dictutil = dictutil;
+Vue.prototype.GLOBAL = globalVariable;
 
 // element-ui
 import ElementUI from 'element-ui'

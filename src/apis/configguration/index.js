@@ -4,12 +4,16 @@ import {store} from "../../utils";
  * 用户模块
  * @type {Object}
  */
-let baseUrl = store.get("application_cache");
-if(baseUrl||baseUrl==undefined||baseUrl=="null"||baseUrl==null||baseUrl==''){
-  baseUrl = "http://localhost:14043/scm-server";//
-  console.info("get base url fail ,use default!!!  url="+baseUrl);
+let applicationCache = store.get("application_cache");
+let baseUrl = '';
+let hostname = window.location.protocol + "//" + window.location.hostname;
+if(applicationCache && applicationCache != 'null' && applicationCache['scm-server']
+    &&applicationCache['scm-server']['intranetBaseUri']){
+  baseUrl = applicationCache['scm-server']['intranetBaseUri'];
+  console.debug("get base url success !!!  url="+baseUrl);
 }else{
-  console.info("get base url success !!!  url="+baseUrl);
+  baseUrl = hostname+":14043/scm-server";
+  console.debug("get base url fail ,use default!!!  url="+baseUrl);
 }
 
 export default [

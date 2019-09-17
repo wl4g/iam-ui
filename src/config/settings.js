@@ -10,7 +10,7 @@ var gbs = {
   // 存放数据的字段
   api_data_field: 'data',
   api_custom: {
-    401: function (res) {
+    401: function (res,url,success,error) {
       console.debug("Response 401 for redirect_url: " + res['data'].redirect_url);
       checkTGCExpiredRedirectToLoginIfNecessary(res);
 
@@ -34,21 +34,45 @@ var gbs = {
               xhrFields: { withCredentials: true },
               success: function (res2) {
                 console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
+                $.ajax({
+                  url: url,
+                  type: "post",
+                  dataType: "json",
+                  // 此时虽Client应用无有效sid(无需指定withCredentials)，
+                  // 但设置后响应新生成的sid(client cookie)才会被chrome保存
+                  xhrFields: { withCredentials: true },
+                  success: function (res3) {
+                    console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
+                    if(success){
+                      success(res3);
+                    }
+                  },
+                  error: function(req, status, errmsg){
+                    console.error(errmsg);
+                    if(error){
+                      error();
+                    }
+
+                  }
+                });
               },
               error: function(req, status, errmsg){
                 console.error(errmsg);
+                error();
               }
             });
           },
           error: function(req, status, errmsg){
             console.error(errmsg);
+            error();
           }
         })
 
       })
     }
   }
-}
+};
+
 
 /**
  * 获取相应格式为JSON的URL

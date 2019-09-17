@@ -261,7 +261,7 @@ export default {
 
     getlog(start,end,isAppend,queryList,limit){
       let _self = this;
-      this.$$api_configguration_getlog({
+      this.$$api_srm_getlog({
         data: {
           queryList: queryList,
           level: _self.formInline.loglevle,
