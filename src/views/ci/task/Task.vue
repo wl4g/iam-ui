@@ -130,7 +130,7 @@
                 <el-row>
                     <el-col :span="22">
                         <el-form-item label="Instance:" prop="instances">
-                            <el-select v-model="buildForm.instances" multiple placeholder="请选择" style="width: 100%">
+                            <el-select v-model="buildForm.instances"  multiple  placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in instanceData"
                                         :key="item.id"
@@ -184,6 +184,20 @@
                                 <el-input type="textarea" v-model="buildForm.postCommand" :rows="3" placeholder="暂无数据"></el-input>
                             </el-tooltip>
 
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="16">
+                        <el-form-item label="Groups:" prop="contactGroupData">
+                            <el-select v-model="buildForm.contactGroupId" placeholder="请选择" style="width: 100%">
+                                <el-option
+                                        v-for="item in contactGroupData"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
