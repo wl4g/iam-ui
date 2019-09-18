@@ -1,21 +1,6 @@
-/**
- * 用户模块
- * @type {Object}
- */
-import {
-  store
-} from '../../utils/'
-let applicationCache = store.get("application_cache");
-let baseUrl = '';
-let hostname = window.location.protocol + "//" + window.location.hostname;
-if(applicationCache && applicationCache != 'null' && applicationCache['share-manager']
-    &&applicationCache['share-manager']['extranetBaseUri']){
-  baseUrl = applicationCache['share-manager']['extranetBaseUri'];
-  console.debug("get base url success !!!  url="+baseUrl);
-}else{
-  baseUrl = hostname+":14051/share-manager";
-  console.debug("get base url fail ,use default!!!  url="+baseUrl);
-}
+import global from "../../common/global_variable";
+
+let baseUrl = global.getBaseUrl(global.shareBaseUrlKey,global.shareDefaultPath);
 
 export default [
   {
