@@ -29,6 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     devtool: 'eval-source-map',
     cacheBusting: false,
+    // @Deprecated
     proxyTable: {
       /*'/scm-server': {
         target: 'http://localhost:14043',

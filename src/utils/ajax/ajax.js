@@ -43,23 +43,18 @@ export default function ({
   }
   var options = {
       method: type === 'json' ? 'post' : type,
-      //url: 'http://localhost.com' + p,
       url: p,
       headers: headers && typeof headers === 'object' ? headers : {},
-
-      withCredentials: true,
-
+      withCredentials: true, // 实现cors必须设置
   }
-  options[type === 'get' ? 'params' : 'data'] = type === 'json' ? data : this.$qs.stringify(data)
-  //options[type === 'get' ? 'params' : 'data'] = data
+  options[type === 'get' ? 'params' : 'data'] = (type === 'json' ? data : this.$qs.stringify(data))
   // 分发显示加载样式任务
   this.$store.dispatch('show_loading')
-  
+
   if (tokenFlag !== true) {
     // 如果你们的后台不会接受headers里面的参数，打开这个注释，即实现token通过普通参数方式传
     // data.token = this.$store.state.user.userinfo.token;
     options.headers.token = this.$store.state.user.userinfo.token
-    //options.headers.withCredentials = true
   }
 
   // axios内置属性均可写在这里
@@ -71,10 +66,10 @@ export default function ({
 
   // 发送请求
   Vue.axios(options).then((res) => {
-      console.debug("Response data.code is "+res.data[gbs.api_status_key_field]);
+      console.debug("Response data.code: "+ res.data[gbs.api_status_key_field]);
       this.$store.dispatch('hide_loading')
 
-      // Backend response status: 200
+      // Backend response code: 200
       if (res.data[gbs.api_status_key_field] == gbs.api_status_value_field) {
           if (gbs.api_data_field) {
               //fn(res.data[gbs.api_data_field])

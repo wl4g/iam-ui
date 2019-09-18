@@ -23,7 +23,7 @@ var gbs = {
           processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
             console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
             // Request IAM client origin biz API.
-            processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), false, function(res3){
+            processUnauthWithNativeRequest(url, true, function(res3){
               console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
               if(success){
                 success(res3);
@@ -31,7 +31,7 @@ var gbs = {
             }, function(errmsg){
               console.error(errmsg);
               if(error){
-                // error(errmsg);
+                error(errmsg);
               }
             });
           }, function(errmsg){
@@ -49,7 +49,7 @@ var gbs = {
 };
 
 /**
- * 处理未认证统一请求方法.
+ * 处理未认证时，统一请求方法.
  * 
  * @param {*} url 
  * @param {*} successCallback 
@@ -65,8 +65,10 @@ var processUnauthWithNativeRequest = function(url, async, successCallback, error
     // 但设置后响应新生成的sid(client cookie)才会被chrome保存
     xhrFields: { withCredentials: true },
     success: function (res) {
-      if(res.code == 200 || res.code == '200' && successCallback){
-        successCallback(res);
+      if(res.code == 200 || res.code == '200'){
+        if(successCallback){
+          successCallback(res);
+        }
       } else if(errorCallback){
         errorCallback(res.message);
       }
