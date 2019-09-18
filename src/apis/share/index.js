@@ -1,17 +1,8 @@
-/**
- * @type {Object}
- */
-import {
-    store
-} from '../../utils/'
-let applicationCache = store.get("application_cache");
-let hostname = window.location.protocol + "//" + window.location.hostname;
-let baseUrl = hostname+":14051/share-manager";
-if(applicationCache && applicationCache['share-manager'] && applicationCache['share-manager']['extranetBaseUri']){
-    baseUrl = applicationCache['share-manager']['extranetBaseUri'];
-} else {
-    console.warn("Fallback using default history url for : "+baseUrl);
-}
+import global from "../../common/global_variable";
+
+let baseUrl = global.getBaseUrl(global.shareBaseUrlKey,global.shareDefaultPath);
+
+alert(window.IAM.Core.getIamBaseUri());
 
 export default [
     //dict

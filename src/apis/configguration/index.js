@@ -1,20 +1,6 @@
-import {store} from "../../utils";
+import global from "../../common/global_variable";
 
-/**
- * 用户模块
- * @type {Object}
- */
-let applicationCache = store.get("application_cache");
-let baseUrl = '';
-let hostname = window.location.protocol + "//" + window.location.hostname;
-if(applicationCache && applicationCache != 'null' && applicationCache['scm-server']
-    &&applicationCache['scm-server']['extranetBaseUri']){
-  baseUrl = applicationCache['scm-server']['extranetBaseUri'];
-  console.debug("get base url success !!!  url="+baseUrl);
-}else{
-  baseUrl = hostname+":14043/scm-server";
-  console.debug("get base url fail ,use default!!!  url="+baseUrl);
-}
+let baseUrl = global.getBaseUrl(global.scmBaseUrlKey,global.scmDefaultPath);
 
 export default [
   {

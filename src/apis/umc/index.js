@@ -1,23 +1,8 @@
-/**
- * 用户模块
- * @type {Object}
- */
-import {
-    store
-} from '../../utils/'
+import global from "../../common/global_variable";
 
+let baseUrl = global.getBaseUrl(global.umcBaseUrlKey,global.umcDefaultPath);
 
-let applicationCache = store.get("application_cache");
-let baseUrl = '';
-let hostname = window.location.protocol + "//" + window.location.hostname;
-if(applicationCache && applicationCache != 'null' && applicationCache['umc-manager']
-    &&applicationCache['umc-manager']['extranetBaseUri']){
-    baseUrl = applicationCache['umc-manager']['extranetBaseUri'];
-    console.debug("get base url success !!!  url="+baseUrl);
-}else{
-    baseUrl = hostname+":14048/umc-manager";
-    console.debug("get base url fail ,use default!!!  url="+baseUrl);
-}
+alert("umc base url"+baseUrl);
 
 export default [
 
