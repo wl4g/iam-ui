@@ -36,12 +36,10 @@ export default {
       //var iamBaseURI = "http://passport.anjiancloud.test/sso";
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
-      var iamBaseURI = window.IAM.Core.getIamBaseUri();
-
       // 引用IAM SDK插件，处理SNS授权操作
       (function () {
         window.IAM.Core.configure({
-          baseUri: iamBaseURI, // IAM认证服务接口的基础URI
+          // baseUri: iamBaseURI, // Using auto iamBaseUri
           // 定义验证码显示面板配置
           captcha: {
             use: "VerifyWithJigsawGraph", // default by 'VerifyWithGifGraph'
@@ -146,7 +144,7 @@ export default {
 
       // 因SNS授权（如:WeChat）只能刷新页面，因此授权错误消息只能从IAM服务加载
       (function() {
-        var url = iamBaseURI + "/login/errread";	
+        var url = IAM.Core.getIamBaseUri() + "/login/errread";	
         $.ajax({
           url: url,
           success: function (res) {
