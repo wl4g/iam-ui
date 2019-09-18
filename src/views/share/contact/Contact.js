@@ -97,7 +97,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_umc_contactList({
+            this.$$api_share_contactList({
                 data: {
                     name: this.searchParams.name,
                     email: this.searchParams.email,
@@ -159,7 +159,7 @@ export default {
         },
         // 获取列表数据
         groupList() {
-            this.$$api_umc_groupList({
+            this.$$api_share_groupList({
                 data: {
 
                 },
@@ -186,7 +186,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     //this.dialogLoading = true;
-                    this.$$api_umc_saveContact({
+                    this.$$api_share_saveContact({
                         data: {
                             id: this.saveForm.id,
                             name: this.saveForm.name,
@@ -244,7 +244,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_contactDetail({
+            this.$$api_share_contactDetail({
                 data: {
                     id: row.id,
                 },
@@ -275,7 +275,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_delContact({
+            this.$$api_share_delContact({
                 data: {
                     id: row.id,
                 },
@@ -305,7 +305,7 @@ export default {
 
 //=============================group=============================
         getGroupData() {
-            this.$$api_umc_contactGroupList({
+            this.$$api_share_contactGroupList({
                 data: {
                     name: this.searchGroupParams.name,
                     pageNum: this.groupPageNum,
@@ -335,7 +335,7 @@ export default {
             if(!row){
                 return;
             }
-            this.$$api_umc_saveContactGroup({
+            this.$$api_share_saveContactGroup({
                 data: {
                     id: row.id,
                     name: row.name,
@@ -374,7 +374,7 @@ export default {
             if(!row){
                 return;
             }
-            this.$$api_umc_delContactGroup({
+            this.$$api_share_delContactGroup({
                 data: {
                     id: row.id,
                 },

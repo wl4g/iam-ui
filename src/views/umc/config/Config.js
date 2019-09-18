@@ -153,7 +153,7 @@ export default {
         },
 
         allContactGroup() {
-            this.$$api_umc_allContactGroup({
+            this.$$api_share_allContactGroup({
                 data: {
                 },
                 fn: data => {

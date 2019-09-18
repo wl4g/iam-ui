@@ -41,12 +41,6 @@ export default [
         component: Umc.Templat
     },
     {
-        path: 'contact',
-        name: 'Alarm Contact',
-        icon: 'window-restore',
-        component: Umc.Contact
-    },
-    {
         path: 'metrictemplate',
         name: 'Metric Template',
         icon: 'window-restore',

@@ -44,9 +44,9 @@ export default {
                 desc: '',
                 tarType: '',
                 tagOrBranch: '1',
-
                 preCommand: '',
                 postCommand: '',
+                contactGroupId: '',
             },
             dialogVisible: false,
             dialogTitle: '',
@@ -60,6 +60,8 @@ export default {
 
             //列表Data
             tableData: [],
+
+            contactGroupData: [],
 
             // 表单规则
             rules: {
@@ -90,6 +92,7 @@ export default {
     mounted() {
         this.getData();
         this.getGroup();
+        this.groupList();
 
     },
 
@@ -109,6 +112,30 @@ export default {
             //this.loading = true;
             this.pageNum = i;
             this.getData();
+        },
+
+        groupList() {
+            this.$$api_share_groupList({
+                data: {
+
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.contactGroupData = data.data.list;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
         },
 
         // 获取列表数据
@@ -302,6 +329,7 @@ export default {
                             branchType: this.buildForm.tagOrBranch,
                             preCommand: this.buildForm.preCommand,
                             postCommand: this.buildForm.postCommand,
+                            contactGroupId: this.buildForm.contactGroupId,
                         },
                         fn: data => {
                             this.dialogLoading = false;
@@ -346,6 +374,7 @@ export default {
                         this.buildForm.tarType=data.data.task.tarType;
                         this.buildForm.preCommand=data.data.task.preCommand;
                         this.buildForm.postCommand=data.data.task.postCommand;
+                        this.buildForm.contactGroupId=data.data.task.contactGroupId;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -416,6 +445,8 @@ export default {
             this.buildForm.tagOrBranch = '1';
             this.buildForm.preCommand = '';
             this.buildForm.postCommand = '';
+            this.buildForm.contactGroupId='';
+
         },
 
         countInstance(row){

@@ -18,4 +18,10 @@ export default [
         icon: 'window-restore',
         component: Share.Dict
     },
+    {
+        path: 'contact',
+        name: 'Alarm Contact',
+        icon: 'window-restore',
+        component: Share.Contact
+    },
 ]
