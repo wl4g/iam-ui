@@ -211,29 +211,19 @@
 
     </section>
 </template>
-
-
 <script>
     import Task from './Task.js'
-
     export default Task
 </script>
-
-<style scoped>
-
+<style>
     .mytextarea {
         height: 70vh;
         overflow-y: auto;
     }
-
     .mytextarea .el-textarea__inner {
         height: 100%;
         color: #aaa;
         background-color: #333;
         padding: 10px 10px 40px 10px;
-        /* color: #bbb; */
-        /* cursor: not-allowed; */
     }
-
-
 </style>

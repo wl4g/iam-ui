@@ -49,19 +49,22 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
-    z-index:50;
+    z-index:10;
   }
   button{
     position: relative;
     z-index:10;
   }
+  .el-select__tags{
+      z-index:20 !important; // !important指定优先
+  }
   .el-pager{
     position: relative;
-    z-index:50;
+    z-index:10;
   }
   .left-menu{
     position: relative;
-    z-index:50;
+    z-index:10;
   }
   .el-dialog{
     position: relative;
