@@ -228,7 +228,7 @@ export default {
 
 
         convertClassifyValue(value){
-            console.info(value);
+            console.debug("convertClassifyValue"+value);
 
             if (value == 'basic') {
                 return 'basic';
@@ -249,8 +249,7 @@ export default {
         },
 
         convertLevelValue(value){
-            console.info(value);
-
+            console.debug("convertLevelValue:"+value);
             if (value == 1) {
                 return 'warn';
             }

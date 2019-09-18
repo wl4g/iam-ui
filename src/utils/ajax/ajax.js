@@ -86,7 +86,7 @@ export default function ({
           //返回code不是200的时候处理
           if (gbs.api_custom[res.data[gbs.api_status_key_field]]) {
               gbs.api_custom[res.data[gbs.api_status_key_field]].call(this,res.data,p,fn,errFn)
-          }else if (errFn) {
+          } else if (errFn) {
               errFn.call(this, res.data)
           }
       }

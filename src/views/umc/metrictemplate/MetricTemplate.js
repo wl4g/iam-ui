@@ -165,8 +165,7 @@ export default {
         },
 
         convertClassifyValue(value){
-            console.info(value);
-
+            console.debug("convertClassifyValue:"+value);
             if (value == 1) {
                 return 'basic';
             }

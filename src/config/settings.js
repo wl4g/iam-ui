@@ -10,69 +10,74 @@ var gbs = {
   // 存放数据的字段
   api_data_field: 'data',
   api_custom: {
-    401: function (res,url,success,error) {
+    401: function (res, url, success, error) {
       console.debug("Response 401 for redirect_url: " + res['data'].redirect_url);
       checkTGCExpiredRedirectToLoginIfNecessary(res);
 
       this.$store.dispatch('remove_userinfo').then(() => {
-        $.ajax({
-          url: getRespJsonURL(res.data.redirect_url),
-          type: "post",
-          dataType: "json",
-          // 设置后跨越请求Client应用才会带上TGC
-          xhrFields: { withCredentials: true },
-          success: function (res1) {
-            console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
-            checkTGCExpiredRedirectToLoginIfNecessary(res1);
-
-            $.ajax({
-              url: getRespJsonURL(res1.data.redirect_url),
-              type: "post",
-              dataType: "json",
-              // 此时虽Client应用无有效sid(无需指定withCredentials)，
-              // 但设置后响应新生成的sid(client cookie)才会被chrome保存
-              xhrFields: { withCredentials: true },
-              success: function (res2) {
-                console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
-                $.ajax({
-                  url: url,
-                  type: "post",
-                  dataType: "json",
-                  // 此时虽Client应用无有效sid(无需指定withCredentials)，
-                  // 但设置后响应新生成的sid(client cookie)才会被chrome保存
-                  xhrFields: { withCredentials: true },
-                  success: function (res3) {
-                    console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
-                    if(success){
-                      success(res3);
-                    }
-                  },
-                  error: function(req, status, errmsg){
-                    console.error(errmsg);
-                    if(error){
-                      error();
-                    }
-
-                  }
-                });
-              },
-              error: function(req, status, errmsg){
-                console.error(errmsg);
-                error();
+        // Request IAM server authenticator.
+        processUnauthWithNativeRequest(getRespJsonURL(res.data.redirect_url), true, function(res1){
+          console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
+          checkTGCExpiredRedirectToLoginIfNecessary(res1);
+          // Request IAM client authenticator.
+          processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
+            console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
+            // Request IAM client origin biz API.
+            processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), false, function(res3){
+              console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
+              if(success){
+                success(res3);
+              }
+            }, function(errmsg){
+              console.error(errmsg);
+              if(error){
+                // error(errmsg);
               }
             });
-          },
-          error: function(req, status, errmsg){
+          }, function(errmsg){
             console.error(errmsg);
-            error();
-          }
-        })
+            // error(errmsg);
+          });
+        }, function(errmsg){
+          console.error(errmsg);
+          // error(errmsg);
+        });
 
-      })
+      });
     }
   }
 };
 
+/**
+ * 处理未认证统一请求方法.
+ * 
+ * @param {*} url 
+ * @param {*} successCallback 
+ * @param {*} errorCallback 
+ */
+var processUnauthWithNativeRequest = function(url, async, successCallback, errorCallback){
+  $.ajax({
+    url: url,
+    async: async,
+    type: "post",
+    dataType: "json",
+    // 此时虽Client应用无有效sid(无需指定withCredentials)，
+    // 但设置后响应新生成的sid(client cookie)才会被chrome保存
+    xhrFields: { withCredentials: true },
+    success: function (res) {
+      if(res.code == 200 || res.code == '200' && successCallback){
+        successCallback(res);
+      } else if(errorCallback){
+        errorCallback(res.message);
+      }
+    },
+    error: function(req, status, errmsg){
+      if(errorCallback){
+        errorCallback(errmsg);
+      }
+    }
+  });
+};
 
 /**
  * 获取相应格式为JSON的URL
