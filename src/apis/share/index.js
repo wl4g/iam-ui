@@ -2,8 +2,6 @@ import global from "../../common/global_variable";
 
 let baseUrl = global.getBaseUrl(global.shareBaseUrlKey,global.shareDefaultPath);
 
-alert(window.IAM.Core.getIamBaseUri());
-
 export default [
     //dict
     {

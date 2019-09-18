@@ -2,8 +2,6 @@ import global from "../../common/global_variable";
 
 let baseUrl = global.getBaseUrl(global.umcBaseUrlKey,global.umcDefaultPath);
 
-alert("umc base url"+baseUrl);
-
 export default [
 
     //collector
