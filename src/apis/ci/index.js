@@ -9,8 +9,8 @@ let applicationCache = store.get("application_cache");
 let baseUrl = '';
 let hostname = window.location.protocol + "//" + window.location.hostname;
 if(applicationCache && applicationCache != 'null' && applicationCache['ci-server']
-    &&applicationCache['ci-server']['intranetBaseUri']){
-    baseUrl = applicationCache['ci-server']['intranetBaseUri'];
+    &&applicationCache['ci-server']['extranetBaseUri']){
+    baseUrl = applicationCache['ci-server']['extranetBaseUri'];
     console.debug("get base url success !!!  url="+baseUrl);
 }else{
     baseUrl = hostname+":14046/ci-server";

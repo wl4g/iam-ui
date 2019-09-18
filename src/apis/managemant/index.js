@@ -9,8 +9,8 @@ let applicationCache = store.get("application_cache");
 let baseUrl = '';
 let hostname = window.location.protocol + "//" + window.location.hostname;
 if(applicationCache && applicationCache != 'null' && applicationCache['share-manager']
-    &&applicationCache['share-manager']['intranetBaseUri']){
-  baseUrl = applicationCache['share-manager']['intranetBaseUri'];
+    &&applicationCache['share-manager']['extranetBaseUri']){
+  baseUrl = applicationCache['share-manager']['extranetBaseUri'];
   console.debug("get base url success !!!  url="+baseUrl);
 }else{
   baseUrl = hostname+":14051/share-manager";

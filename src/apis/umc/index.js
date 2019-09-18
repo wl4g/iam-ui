@@ -11,8 +11,8 @@ let applicationCache = store.get("application_cache");
 let baseUrl = '';
 let hostname = window.location.protocol + "//" + window.location.hostname;
 if(applicationCache && applicationCache != 'null' && applicationCache['umc-manager']
-    &&applicationCache['umc-manager']['intranetBaseUri']){
-    baseUrl = applicationCache['umc-manager']['intranetBaseUri'];
+    &&applicationCache['umc-manager']['extranetBaseUri']){
+    baseUrl = applicationCache['umc-manager']['extranetBaseUri'];
     console.debug("get base url success !!!  url="+baseUrl);
 }else{
     baseUrl = hostname+":14048/umc-manager";

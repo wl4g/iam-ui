@@ -7,8 +7,8 @@ import {
 let applicationCache = store.get("application_cache");
 let hostname = window.location.protocol + "//" + window.location.hostname;
 let baseUrl = hostname+":14051/share-manager";
-if(applicationCache && applicationCache['share-manager'] && applicationCache['share-manager']['intranetBaseUri']){
-    baseUrl = applicationCache['share-manager']['intranetBaseUri'];
+if(applicationCache && applicationCache['share-manager'] && applicationCache['share-manager']['extranetBaseUri']){
+    baseUrl = applicationCache['share-manager']['extranetBaseUri'];
 } else {
     console.warn("Fallback using default history url for : "+baseUrl);
 }

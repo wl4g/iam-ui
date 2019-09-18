@@ -8,8 +8,8 @@ let applicationCache = store.get("application_cache");
 let baseUrl = '';
 let hostname = window.location.protocol + "//" + window.location.hostname;
 if(applicationCache && applicationCache != 'null' && applicationCache['scm-server']
-    &&applicationCache['scm-server']['intranetBaseUri']){
-  baseUrl = applicationCache['scm-server']['intranetBaseUri'];
+    &&applicationCache['scm-server']['extranetBaseUri']){
+  baseUrl = applicationCache['scm-server']['extranetBaseUri'];
   console.debug("get base url success !!!  url="+baseUrl);
 }else{
   baseUrl = hostname+":14043/scm-server";

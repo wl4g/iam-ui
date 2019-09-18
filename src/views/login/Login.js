@@ -39,7 +39,10 @@ export default {
       // 引用IAM SDK插件，处理SNS授权操作
       (function () {
         window.IAM.Core.configure({
-          // baseUri: iamBaseURI, // Using auto iamBaseUri
+          deploy: {
+            //baseUri: iamBaseURI, // Using auto iamBaseUri
+            defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
+          },
           // 定义验证码显示面板配置
           captcha: {
             use: "VerifyWithJigsawGraph", // default by 'VerifyWithGifGraph'

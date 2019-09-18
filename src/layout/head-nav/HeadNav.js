@@ -70,9 +70,9 @@ export default {
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
           // this.$router.push('/login')
-          // TODO using config api
-          window.location.href = "http://localhost:14040/iam-server/logout";
-        })
+          let applicationCache = store.get("application_cache");
+          window.location.href = applicationCache['iam-server']['extranetBaseUri'] +"/logout";
+        });
       }).catch(() => {
         /*this.$message({
           type: 'info',
