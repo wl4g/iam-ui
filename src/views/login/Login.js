@@ -141,7 +141,9 @@ export default {
       // 监听panelType为pagePanel类型的SNS授权回调
       (function () {
         window.onmessage = function (e) {
-          window.location.href = JSON.parse(e.data).refresh_url;
+          if(e.data) {
+            window.location.href = JSON.parse(e.data).refresh_url;
+          }
         }
       })();
 
