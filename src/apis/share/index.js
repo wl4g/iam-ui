@@ -5,23 +5,12 @@ import {
     store
 } from '../../utils/'
 let applicationCache = store.get("application_cache");
-let baseUrl = '';
 let hostname = window.location.protocol + "//" + window.location.hostname;
-if(applicationCache && applicationCache != 'null' && applicationCache['share-manager']
-    &&applicationCache['share-manager']['intranetBaseUri']){
+let baseUrl = hostname+":14051/share-manager";
+if(applicationCache && applicationCache['share-manager'] && applicationCache['share-manager']['intranetBaseUri']){
     baseUrl = applicationCache['share-manager']['intranetBaseUri'];
-    console.debug("get base url success !!!  url="+baseUrl);
-}else{
-    baseUrl = hostname+":14051/share-manager";
-    console.debug("get base url fail ,use default!!!  url="+baseUrl);
-}
-
-let iamBaseURI = window.IAM.Core.getIamBaseUri();
-if(!iamBaseURI || iamBaseURI == "null" || iamBaseURI == null||iamBaseURI==''){
-    iamBaseURI = hostname + ":14040/iam-server";
-    console.debug("get base url fail ,use default!!!  url="+iamBaseURI);
-}else{
-    console.debug("get base url success !!!  url="+iamBaseURI);
+} else {
+    console.warn("Fallback using default history url for : "+baseUrl);
 }
 
 export default [
@@ -75,13 +64,11 @@ export default [
         path: baseUrl+'/host/all',
         type: 'post'
     },
-
-
-    //application
+    // Application informcation
     {
         name: '所有application',
         method: 'applicationInfo',
-        path: iamBaseURI+'/application/info',
+        path: window.IAM.Core.getIamBaseUri() + '/application/info',
         type: 'post'
     },
 

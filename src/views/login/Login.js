@@ -33,29 +33,10 @@ export default {
 
   },
   mounted () {
-    //var iamBaseURI = "http://passport.anjiancloud.test/sso";
-    //var iamBaseURI = "http://passport.wl4g.com/sso";
-    var iamBaseURI = '';
-
-    function checkip(ip) {
-      var pattern = /^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/;
-      return pattern.test(ip);
-    }
-
-    function getBaseUri() {
-      if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1'|| window.location.hostname == '0:0:0:0:0:0:0:1'|| checkip(window.location.hostname)) {
-        iamBaseURI = window.location.protocol + "//" + window.location.hostname + ":14040/iam-server";
-        alert("Please refer to the readme documentation,Use domain name deployment");
-      } else {
-        iamBaseURI = window.location.protocol + "//passport." + window.location.hostname + "/iam-server";
-      }
-      store.set("iamBaseURI",iamBaseURI);
-    }
-
-    getBaseUri();
-
-    //this.GLOBAL.iamBaseUrl = iamBaseURI;
-    //var iamBaseURI = "http://localhost:14040/iam-server";
+      //var iamBaseURI = "http://passport.anjiancloud.test/sso";
+      //var iamBaseURI = "http://passport.wl4g.com/sso";
+      //var iamBaseURI = "http://localhost:14040/iam-server";
+      var iamBaseURI = window.IAM.Core.getIamBaseUri();
 
       // 引用IAM SDK插件，处理SNS授权操作
       (function () {
