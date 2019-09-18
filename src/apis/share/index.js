@@ -16,7 +16,7 @@ if(applicationCache && applicationCache != 'null' && applicationCache['share-man
     console.debug("get base url fail ,use default!!!  url="+baseUrl);
 }
 
-let iamBaseURI = store.get("iamBaseURI");
+let iamBaseURI = window.IAM.Core.getIamBaseUri();
 if(!iamBaseURI || iamBaseURI == "null" || iamBaseURI == null||iamBaseURI==''){
     iamBaseURI = hostname + ":14040/iam-server";
     console.debug("get base url fail ,use default!!!  url="+iamBaseURI);

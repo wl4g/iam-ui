@@ -42,12 +42,18 @@ export default {
       return pattern.test(ip);
     }
 
-    if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1'|| window.location.hostname == '0:0:0:0:0:0:0:1'|| checkip(window.location.hostname)) {
-      iamBaseURI = window.location.protocol + "//" + window.location.hostname + ":14040/iam-server";
-    } else {
-      iamBaseURI = window.location.protocol + "//passport." + window.location.hostname + "/iam-server";
+    function getBaseUri() {
+      if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1'|| window.location.hostname == '0:0:0:0:0:0:0:1'|| checkip(window.location.hostname)) {
+        iamBaseURI = window.location.protocol + "//" + window.location.hostname + ":14040/iam-server";
+        alert("Please refer to the readme documentation,Use domain name deployment");
+      } else {
+        iamBaseURI = window.location.protocol + "//passport." + window.location.hostname + "/iam-server";
+      }
+      store.set("iamBaseURI",iamBaseURI);
     }
-    store.set("iamBaseURI",iamBaseURI);
+
+    getBaseUri();
+
     //this.GLOBAL.iamBaseUrl = iamBaseURI;
     //var iamBaseURI = "http://localhost:14040/iam-server";
 
