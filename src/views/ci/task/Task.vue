@@ -63,7 +63,7 @@
                     <el-table-column prop="tarType" label="PackType" min-width="80" :formatter="convertTarType"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
                     <el-table-column prop="preCommand" label="PreCmd"></el-table-column>
-                    <el-table-column prop="postCommand" label="PostCmd"></el-table-column>
+                    <el-table-column prop="postCommand" label="PostCmd" :show-overflow-tooltip="true"></el-table-column>
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
