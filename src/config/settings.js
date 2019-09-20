@@ -11,39 +11,39 @@ var gbs = {
   api_data_field: 'data',
   api_custom: {
     401: function (res, url, success, error) {
-      console.debug("Response 401 for redirect_url: " + res['data'].redirect_url);
+      console.debug("Response 401 for redirect_url: " + res.data.redirect_url);
       checkTGCExpiredRedirectToLoginIfNecessary(res);
 
-      this.$store.dispatch('remove_userinfo').then(() => {
-        // Request IAM server authenticator.
-        processUnauthWithNativeRequest(getRespJsonURL(res.data.redirect_url), true, function(res1){
-          console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
-          checkTGCExpiredRedirectToLoginIfNecessary(res1);
-          // Request IAM client authenticator.
-          processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
-            console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
-            // Request IAM client origin biz API.
-            processUnauthWithNativeRequest(url, true, function(res3){
-              console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
-              if(success){
-                success(res3);
-              }
-            }, function(errmsg){
-              console.error(errmsg);
-              if(error){
-                error(errmsg);
-              }
-            });
+      // Request IAM server authenticator.
+      processUnauthWithNativeRequest(getRespJsonURL(res.data.redirect_url), true, function(res1){
+        console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
+        checkTGCExpiredRedirectToLoginIfNecessary(res1);
+
+        // Request IAM client authenticator.
+        processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
+          console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
+
+          // Request IAM client origin biz API.
+          processUnauthWithNativeRequest(url, true, function(res3){
+            console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
+            if(success){
+              success(res3);
+            }
           }, function(errmsg){
             console.error(errmsg);
-            // error(errmsg);
+            if(error){
+              error(errmsg);
+            }
           });
         }, function(errmsg){
           console.error(errmsg);
           // error(errmsg);
         });
-
+      }, function(errmsg){
+        console.error(errmsg);
+        // error(errmsg);
       });
+ 
     }
   }
 };
@@ -65,12 +65,8 @@ var processUnauthWithNativeRequest = function(url, async, successCallback, error
     // 但设置后响应新生成的sid(client cookie)才会被chrome保存
     xhrFields: { withCredentials: true },
     success: function (res) {
-      if(res.code == 200 || res.code == '200'){
-        if(successCallback){
-          successCallback(res);
-        }
-      } else if(errorCallback){
-        errorCallback(res.message);
+      if(successCallback){
+        successCallback(res);
       }
     },
     error: function(req, status, errmsg){
@@ -101,10 +97,13 @@ var getRespJsonURL = function(url){
  */
 var checkTGCExpiredRedirectToLoginIfNecessary = function(res){
   console.debug("TGC过期检查，res:" + JSON.stringify(res));
-  if(res.code == 401 || res.code == '401' || res.data.code == 401 || res.data.code == '401'){
+  if(res.code == 401 || res.code == '401'){
     // IamWithCasAppClient/IamWithCasAppServer
     if(res.data.serviceRole == 'IamWithCasAppServer'){ // TGC过期?
-      window.location.href = res.data.redirect_url;
+      // this.$store.dispatch('remove_userinfo').then(() => {
+        console.debug("TGC过期，redirect to => "+ res.data.redirect_url);
+        window.location.href = res.data.redirect_url;
+      // });
     }
   }
 }
