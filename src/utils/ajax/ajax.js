@@ -51,7 +51,7 @@ export default function ({
   // 分发显示加载样式任务
   this.$store.dispatch('show_loading')
 
-  if (tokenFlag !== true) {
+  if (!tokenFlag) {
     // 如果你们的后台不会接受headers里面的参数，打开这个注释，即实现token通过普通参数方式传
     // data.token = this.$store.state.user.userinfo.token;
     options.headers.token = this.$store.state.user.userinfo.token

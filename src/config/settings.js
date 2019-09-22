@@ -26,7 +26,7 @@ var gbs = {
           // Request IAM client origin biz API.
           processUnauthWithNativeRequest(url, true, function(res3){
             console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
-            if(success){
+            if(success && !(res3.code == 401 || res3.code == '401')){
               success(res3);
             }
           }, function(errmsg){
