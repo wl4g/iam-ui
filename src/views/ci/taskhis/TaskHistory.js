@@ -4,19 +4,16 @@ export default {
     name: 'taskhis',
     data() {
         return {
-
             //查询条件
             searchParams: {
                 groupName: '',
                 projectName: '',
                 branchName: ''
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             //弹窗表单
             buildForm: {
                 group: '',
@@ -51,49 +48,41 @@ export default {
                 taskDetails: [],
                 result: ''
             },
-
         }
     },
-
     mounted() {
         this.getData();
         this.getGroup();
 
         const dic = new Map();
-        dic.set(1, "钩子触发");
-        dic.set(2, "手动部署");
-        dic.set(3, "回滚");
+        dic.set(1, "Hook");
+        dic.set(2, "Manual");
+        dic.set(3, "Rollback");
         this.dictData.set("ci_task_type", dic);
 
         const dic2 = new Map();
-        dic2.set(0, "创建");
-        dic2.set(1, "进行");
-        dic2.set(2, "成功");
-        dic2.set(3, "失败");
-        dic2.set(4, "超时");
+        dic2.set(0, "New");
+        dic2.set(1, "Running");
+        dic2.set(2, "Success");
+        dic2.set(3, "Failed");
+        dic2.set(4, "Timeout");
         this.dictData.set("ci_task_status", dic2);
 
     },
-
     methods: {
-
         onSubmit() {
             //this.loading = true;
-
             this.getData();
         },
-
         create() {
             this.dialogVisible = true;
             this.dialogTitle = '新增';
         },
-
         currentChange(i) {
             //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
-
         // 获取列表数据
         getData() {
             this.$$api_ci_taskHisList({
@@ -123,8 +112,6 @@ export default {
                 }
             })
         },
-
-
         //Dict convert
         getDatagridDict(category, cellValue) {
             var dictGroup = this.dictData.get(category);
@@ -132,35 +119,25 @@ export default {
             //TODO add format tag
             return result;
         },
-
         convertType(row, column, cellValue, index) {
             return this.getDatagridDict("ci_task_type", cellValue);
         },
-
-        /*convertStatus(row, column, cellValue, index) {
-            return this.getDatagridDict("ci_task_status", cellValue);
-        },*/
-
         convertStatusValue(row){
-            console.info()
-            if (row.status == 0) {
-                return '创建';
+            switch(row.status){
+            case 0:
+                return { img: 'static/images/state/gray_normal.png', text: 'New' };
+            case 1:
+                return { img: 'static/images/state/red_run.gif', text: 'Running' };
+            case 2:
+                return { img: 'static/images/state/green_ok.png', text: 'Success' };
+            case 3:
+                return { img: 'static/images/state/red_fail.png', text: 'Failed' };
+            case 4:
+                return { img: 'static/images/state/red_fail.png', text: 'Timeout' };
+            default:
+                return '--';
             }
-            if (row.status == 1) {
-                return '进行';
-            }
-            if (row.status == 2) {
-                return '成功';
-            }
-            if (row.status == 3) {
-                return '失败';
-            }
-            if (row.status == 4) {
-                return '超时';
-            }
-            return '--';
         },
-
         convertStatusType(row){
             if (row.status == 0) {
                 return 'info';
@@ -179,8 +156,6 @@ export default {
             }
             return 'warning';
         },
-
-
         //双击
         doubleClickRow(row, column, event) {
             this.detailVisible = true;
@@ -204,11 +179,9 @@ export default {
                 }
             })
         },
-
         detail(row) {
             this.doubleClickRow(row);
         },
-
         //获取实例名称
         getinstance() {
             var clusterId = this.buildForm.group;
@@ -239,7 +212,6 @@ export default {
                 }
             })
         },
-
         //获取环境名称
         getenvir() {
             this.envirData = [];
@@ -270,7 +242,6 @@ export default {
             })
             this.getBranchs();
         },
-
         // 获取分组名称
         getGroup() {
             this.$$api_instance_grouplist({
@@ -320,8 +291,6 @@ export default {
                 }
             })
         },
-
-
         getBranchs() {
             this.$$api_ci_getBranchs({
                 data: {
@@ -344,14 +313,12 @@ export default {
                 }
             })
         },
-
         cleanBuildForm() {
             this.buildForm.group = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
             this.buildForm.tarType = '';
         },
-
         rollbackTask(row, column, event) {
             this.$confirm('回滚操作, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -389,7 +356,5 @@ export default {
                 });*/
             });
         },
-
-
     }
 }

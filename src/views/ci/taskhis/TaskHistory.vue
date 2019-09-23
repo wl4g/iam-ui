@@ -36,34 +36,28 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width: 100%">
+                <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width:100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="id" label="ID"></el-table-column>
+                    <el-table-column prop="id" label="ID" min-width="30"></el-table-column>
                     <el-table-column prop="groupName" label="Group"></el-table-column>
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="branchName" label="Branch"></el-table-column>
-
                     <el-table-column prop="type" label="Type" min-width="50" :formatter="convertType"></el-table-column>
-
-
                     <el-table-column prop="status" label="Status">
                         <template slot-scope="scope">
-                            <el-tag :type="convertStatusType(scope.row)">{{convertStatusValue(scope.row)}}</el-tag>
+                            <el-tag :type="convertStatusType(scope.row)">
+                                <img v-bind:src="convertStatusValue(scope.row)['img']" />
+                                {{convertStatusValue(scope.row)['text']}}
+                            </el-tag>
                         </template>
                     </el-table-column>
-                    <!--<el-table-column prop="result" label="Result" :show-overflow-tooltip="true"></el-table-column>-->
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-
-                    <!--<el-table-column prop="envRemark" label="Environment" min-width="120"></el-table-column>
-                    <el-table-column prop="host" label="Host"></el-table-column>-->
-
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
                             <el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
                         </template>
                     </el-table-column>
-
                 </el-table>
             </template>
         </div>
@@ -73,7 +67,6 @@
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
             <el-form :inline="true" label-width="80px" size="mini" :model="buildForm" ref="buildForm"
                      class="demo-form-inline">
-
                 <el-row>
                     <el-col :span="11">
                         <el-form-item label="Group:" prop="group">
@@ -105,10 +98,6 @@
                     <el-col :span="11">
                         <el-form-item label="Instance:" prop="instances">
                             <el-select v-model="buildForm.instances" multiple placeholder="请选择">
-
-                                <!--<el-option label="ALL" value=""></el-option>
-                                <el-option label="a" value="1"></el-option>
-                                <el-option label="b" value="2"></el-option>-->
                                 <el-option
                                         v-for="item in instanceData"
                                         :key="item.id"
@@ -128,9 +117,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-
-
                 <el-row>
                     <el-col :span="11">
                         <el-form-item label="Branch Type:" prop="tarOrBranch" >
@@ -143,8 +129,6 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="Branch:" prop="branch">
-                            <!--<el-input v-model="buildForm.branch" placeholder="分支名" style="width: 100%;"></el-input>-->
-
                             <el-select v-model="buildForm.branch" placeholder="branch" style="width: 100%;">
                                 <el-option
                                         v-for="item in branchs"
@@ -153,11 +137,9 @@
                                         :value="item">
                                 </el-option>
                             </el-select>
-
                         </el-form-item>
                     </el-col>
                 </el-row>
-
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="createTask()">Create</el-button>
@@ -165,30 +147,27 @@
           </span>
         </el-dialog>
 
-
         <!--================================detail================================-->
         <el-dialog title="详情" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading'>
             <el-form :inline="true" label-width="80px" size="mini" :model="buildForm" ref="buildForm" class="demo-form-inline">
-
                 <el-form-item label="Group:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>
                 </el-form-item>
-
                 <el-form-item label="Branch:">
                     <el-input v-model="detailForm.branch" :readonly="true"></el-input>
                 </el-form-item>
-
                 <div>
                     <template>
                         <el-table :data="detailForm.taskDetails" style="width: 100%">
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="instanceName" label="Instance"></el-table-column>
-
                             <el-table-column prop="status" label="Status">
                                 <template slot-scope="scope">
-                                    <el-tag :type="convertStatusType(scope.row)">{{convertStatusValue(scope.row)}}</el-tag>
+                                    <el-tag :type="convertStatusType(scope.row)">
+                                        <img v-bind:src="convertStatusValue(scope.row)['img']" />
+                                        {{convertStatusValue(scope.row)['text']}}
+                                    </el-tag>
                                 </template>
-
                             </el-table-column>
                             <el-table-column prop="result" label="Result" min-width="100">
                                 <template slot-scope="scope">
@@ -201,45 +180,32 @@
                         </el-table>
                     </template>
                 </div>
-
                 <div class="log">
                     <template>
                         <el-input type="textarea" :rows="30" placeholder="暂无数据" v-model="detailForm.result" class="mytextarea" :readonly="true">
                         </el-input>
                     </template>
                 </div>
-
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="detailVisible = false;">Close</el-button>
           </span>
         </el-dialog>
-
     </section>
 </template>
-
-
 <script>
     import TaskHistory from './TaskHistory.js'
-
     export default TaskHistory
 </script>
-
 <style scoped>
-
     .mytextarea {
         height: 70vh;
         overflow-y: auto;
     }
-
     .mytextarea .el-textarea__inner {
         height: 100%;
         color: #aaa;
         background-color: #333;
         padding: 10px 10px 40px 10px;
-        /* color: #bbb; */
-        /* cursor: not-allowed; */
     }
-
-
 </style>
