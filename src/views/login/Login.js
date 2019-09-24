@@ -42,6 +42,7 @@ export default {
           deploy: {
             //baseUri: iamBaseURI, // Using auto iamBaseUri
             defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
+            defaultContextPath: "/iam-server" // IAMServer的context-path
           },
           // 定义验证码显示面板配置
           captcha: {
