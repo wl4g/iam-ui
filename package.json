@@ -1,8 +1,8 @@
 {
-  "name": "webpack2-sls-admin",
-  "version": "1.0.0",
-  "description": "sls-admin",
-  "author": "sailengsi <sailengsi@126.com>",
+  "name": "super-devops-view",
+  "version": "v0.1.1",
+  "description": "Super devops view",
+  "author": "<wanglsir@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
