@@ -472,9 +472,21 @@ export default {
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        this.$alert('创建任务成功', '信息', {
+                        /*this.$alert('创建任务成功', '信息', {
                             confirmButtonText: '确定'
+                        });*/
+
+
+                        this.$confirm('创建任务成功, 是否查看任务列表?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            this.$router.push('/ci/taskhis');
+                        }).catch(() => {
+                            //do nothing
                         });
+
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

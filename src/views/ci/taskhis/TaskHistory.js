@@ -51,7 +51,7 @@ export default {
         }
     },
     mounted() {
-        this.getData();
+
         this.getGroup();
 
         const dic = new Map();
@@ -69,6 +69,12 @@ export default {
         this.dictData.set("ci_task_status", dic2);
 
     },
+
+    activated() {
+        //alert("into activated");
+        this.getData();
+    },
+
     methods: {
         onSubmit() {
             //this.loading = true;
