@@ -466,39 +466,51 @@ export default {
             if(!row.id){
                 return;
             }
-            this.$$api_ci_runTask({
-                data: {
-                    taskId: row.id,
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        /*this.$alert('创建任务成功', '信息', {
-                            confirmButtonText: '确定'
-                        });*/
+
+            this.$confirm('Create Task confirm', {
+                confirmButtonText: 'confirm',
+                cancelButtonText: 'cancel',
+                type: 'info'
+            }).then(() => {
+                this.$$api_ci_runTask({
+                    data: {
+                        taskId: row.id,
+                    },
+                    fn: data => {
+                        if (data.code == 200) {
+                            /*this.$alert('创建任务成功', '信息', {
+                                confirmButtonText: '确定'
+                            });*/
 
 
-                        this.$confirm('创建任务成功, 是否查看任务列表?', '提示', {
+                            this.$confirm('Create Task Success,jump to task list?',  {
+                                confirmButtonText: 'Yes',
+                                cancelButtonText: 'No',
+                                type: 'success'
+                            }).then(() => {
+                                this.$router.push('/ci/taskhis');
+                            }).catch(() => {
+                                //do nothing
+                            });
+
+                        } else {
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定'
+                            });
+                        }
+                    },
+                    errFn: () => {
+                        this.$alert('访问失败，请稍后重试！', '错误', {
                             confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning'
-                        }).then(() => {
-                            this.$router.push('/ci/taskhis');
-                        }).catch(() => {
-                            //do nothing
-                        });
-
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
                         });
                     }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
+
+
         }
 
 
