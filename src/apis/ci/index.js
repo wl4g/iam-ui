@@ -72,6 +72,13 @@ export default [
         path: baseUrl+'/taskHis/rollback',
         type: 'post'
     },
+    {
+        name: '获取日志',
+        method: 'taskHisReadLog',
+        path: baseUrl+'/taskHis/readLog',
+        type: 'post'
+    },
+
 
     //project
     {

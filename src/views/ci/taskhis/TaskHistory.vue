@@ -182,13 +182,13 @@
                 </div>
                 <div class="log">
                     <template>
-                        <el-input type="textarea" :rows="30" placeholder="暂无数据" v-model="detailForm.result" class="mytextarea" :readonly="true">
+                        <el-input type="textarea" :rows="30" placeholder="暂无数据" v-model="detailForm.result" class="mytextarea mytextarea2" :readonly="true">
                         </el-input>
                     </template>
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="detailVisible = false;">Close</el-button>
+                <el-button @click="detailVisible = false;stopReadLogTask();">Close</el-button>
           </span>
         </el-dialog>
     </section>

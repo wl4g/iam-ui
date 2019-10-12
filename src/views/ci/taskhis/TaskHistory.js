@@ -48,8 +48,12 @@ export default {
                 taskDetails: [],
                 result: ''
             },
+
+            logIndex: 0,
+            logThread: 0,
         }
     },
+
     mounted() {
 
         this.getGroup();
@@ -165,13 +169,25 @@ export default {
         //双击
         doubleClickRow(row, column, event) {
             this.detailVisible = true;
+            let that = this;
             this.$$api_ci_taskHisDetail({
                 data: {
                     taskId: row.id,
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        this.detailForm = data.data;
+                        this.detailForm.group = data.data.group;
+                        this.detailForm.branch = data.data.branch;
+                        this.detailForm.taskDetails = data.data.taskDetails;
+                        if(data.data.result){
+                            this.detailForm.result = data.data.result;
+                        }else{
+                            this.detailForm.result = '';
+                        }
+
+                        if(!data.data.result){
+                            that.readLogTask(row);
+                        }
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -188,6 +204,69 @@ export default {
         detail(row) {
             this.doubleClickRow(row);
         },
+
+        //log part
+        readLogTask(row){
+            let that = this;
+            this.stopReadLogTask();
+            console.info(this.detailForm.result);
+            this.detailForm.result = '';
+            this.logIndex = 0;
+            this.logThread = self.setInterval(function () {
+                that.readLog(row.id);
+            }, 1 * 1000);
+
+        },
+
+        stopReadLogTask(){
+            console.info("stop read log task");
+            window.clearInterval(this.logThread);
+        },
+
+        readLog(taskHisId){
+            console.debug("read log taskHisId="+taskHisId+" index="+this.logIndex);
+            var that = this;
+            this.$$api_ci_taskHisReadLog({
+                data: {
+                    taskHisId: taskHisId,
+                    index: that.logIndex,
+                    size:100,
+                },
+                fn: data => {
+                    if (data.code == 200) {
+                        let logs = data.data.data;
+                        console.debug(logs);
+                        for(let i in logs) {
+                            that.logIndex = that.logIndex+1;
+                            //console.log(logs[i]);
+                            that.detailForm.result = that.detailForm.result+logs[i]+"\n";
+                            that.scroll();
+                        };
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        //滚动
+        scroll() {
+            this.$nextTick(() => {
+                console.info("into scroll");
+                let div = document.querySelector(".mytextarea2 .el-textarea__inner");
+                console.info(div);
+                div.scrollTop = div.scrollHeight;
+            })
+        },
+
+
         //获取实例名称
         getinstance() {
             var clusterId = this.buildForm.group;
@@ -362,5 +441,14 @@ export default {
                 });*/
             });
         },
-    }
+    },
+
+    //离开前清除定时任务
+    beforeRouteLeave(to,from,next){
+        console.info("leave , stop the thread");
+        this.stopReadLogTask();
+        next();
+    },
+
+
 }
