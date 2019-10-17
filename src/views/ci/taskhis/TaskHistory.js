@@ -230,18 +230,22 @@ export default {
                 data: {
                     taskHisId: taskHisId,
                     index: that.logIndex,
-                    size:100,
+                    size:1000,
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        let logs = data.data.data;
+                        let logs = data.data.data.lines;
+                        if(data.data.data.isEnd==true){
+                            stopReadLogTask();
+                        }
                         console.debug(logs);
                         for(let i in logs) {
-                            that.logIndex = that.logIndex+1;
+                            //that.logIndex = that.logIndex+1;
                             //console.log(logs[i]);
-                            that.detailForm.result = that.detailForm.result+logs[i]+"\n";
+                            that.detailForm.result = that.detailForm.result+logs[i];
                             that.scroll();
                         };
+                        that.logIndex = data.data.data.pointer;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

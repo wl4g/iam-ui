@@ -19,9 +19,11 @@
             <el-form-item label="PackType:">
                 <el-select v-model="searchParams.tarType" placeholder="Pack" style="width:75px;">
                     <el-option label="All" value=""></el-option>
-                    <el-option label="tar" :value="1"></el-option>
-                    <el-option disabled label="jar" :value="2"></el-option>
-                    <el-option disabled label="docker" :value="3"></el-option>
+                    <el-option label="PipeWithMvnAssTar" value="PipeWithMvnAssTar"></el-option>
+                    <el-option label="PipeWithVue" value="PipeWithVue"></el-option>
+                    <el-option disabled label="PipeWithDjangoStd" value="PipeWithDjangoStd"></el-option>
+                    <el-option disabled label="PipeWithDockerNat" value="PipeWithDockerNat"></el-option>
+                    <el-option disabled label="PipeWithSpringExecJar" value="PipeWithSpringExecJar"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="Create Date:">
@@ -38,8 +40,18 @@
         <div class="query">
             <div class="line"></div>
             <div class="">Total： <span class="number">{{total}}</span>
-                <el-button style='float:right;margin-right:20px' type="primary" @click="add()">+</el-button>
-                <!--<el-button style='float:right;margin:5px' type="primary" @click="create()">+</el-button>-->
+                <!--<el-button style='float:right;margin-right:20px' type="primary" @click="add()">+</el-button>-->
+                <el-dropdown style='float:right;margin-right:20px' @command="add">
+                    <el-button type="primary" >+</el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="PipeWithMvnAssTar">PipeWithMvnAssTar</el-dropdown-item>
+                        <el-dropdown-item command="PipeWithVue">PipeWithVue</el-dropdown-item>
+                        <el-dropdown-item disabled command="PipeWithDjangoStd">PipeWithDjangoStd</el-dropdown-item>
+                        <el-dropdown-item disabled command="PipeWithDockerNat">PipeWithDockerNat</el-dropdown-item>
+                        <el-dropdown-item disabled command="PipeWithSpringExecJar">PipeWithSpringExecJar</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
             </div>
         </div>
         <!-- 查询结果表格 -->
@@ -60,9 +72,10 @@
                     </el-table-column>
                     <el-table-column prop="branchName" label="Branch" min-width="58"></el-table-column>
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
-                    <el-table-column prop="tarType" label="PackType" min-width="80" :formatter="convertTarType"></el-table-column>
+                    <el-table-column prop="tarType" label="PackType" min-width="80"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-                    <el-table-column prop="preCommand" label="PreCmd"></el-table-column>
+                    <el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="preCommand" label="PreCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="postCommand" label="PostCmd" :show-overflow-tooltip="true"></el-table-column>
 
                     <el-table-column label="Operation" min-width="100">
@@ -80,8 +93,8 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================add build taskhis================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible"  width="60%" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="buildForm" ref="buildForm" :rules="rules"
+        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="full"  v-loading='dialogLoading'>
+            <el-form label-width="80px"  :model="buildForm" ref="buildForm" :rules="rules"
                      class="demo-form-inline">
 
                 <el-row>
@@ -92,7 +105,7 @@
                     </el-col>
                     <el-col :span="11">
                         <el-form-item label="Group:" prop="group">
-                            <el-select v-model="buildForm.group" @change="getenvir()" placeholder="Please group" style="width: 100%">
+                            <el-select v-model="buildForm.group" @change="getenvir()" :disabled="isEdit" placeholder="Please group" style="width: 100%">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"
@@ -116,15 +129,16 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="11">
+                    <!--<el-col :span="11">
                         <el-form-item label="PackType:" prop="tarType">
                             <el-select v-model="buildForm.tarType" placeholder="打包类型" style="width: 100%;">
                                 <el-option label="tar" :value="1"></el-option>
+                                <el-option label="vue" :value="4"></el-option>
                                 <el-option disabled label="jar" :value="2"></el-option>
                                 <el-option disabled label="docker" :value="3"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
+                    </el-col>-->
                 </el-row>
 
                 <el-row>
@@ -169,6 +183,18 @@
 
                 <el-row>
                     <el-col :span="22">
+                        <el-form-item label="BuildCommand:" prop="buildCommand">
+                            <el-tooltip class="item" effect="dark" placement="right-start">
+                                <div slot="content">tip:command can use this placeholder, example:<br/>#{projectPath} ==> /home/ci/myproject</div>
+                                <el-input type="textarea" v-model="buildForm.buildCommand" :rows="3" placeholder="暂无数据"></el-input>
+                            </el-tooltip>
+                        </el-form-item>
+
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="22">
                         <el-form-item label="PreCommand:" prop="preCommand">
                             <el-input type="textarea" v-model="buildForm.preCommand" :rows="3" placeholder="暂无数据"></el-input>
                         </el-form-item>
@@ -201,6 +227,48 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col :span="3">
+                        <el-form-item label="Custom:" prop="custom">
+                            <el-switch
+                                v-model="buildForm.commandOnOff"
+                                on-text=""
+                                off-text="">
+                        </el-switch>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row v-if="buildForm.commandOnOff">
+                    <el-col :span="22">
+                        <el-form-item label="Commands：" prop="commands">
+                            <template>
+                                <el-table :data="buildForm.taskBuildCommands" style="width: 100%" >
+                                    <el-table-column prop="projectId" label="Id" min-width="10">
+                                        <template scope="scope">
+                                            {{scope.row.projectId}}
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column prop="projectName" label="Name" min-width="30">
+                                        <template scope="scope">
+                                            {{scope.row.projectName}}
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column prop="command" label="Command" min-width="120">
+                                        <template scope="scope">
+                                            <!--<el-input  v-model="scope.row.command"></el-input>-->
+                                            <el-input type="textarea" v-model="scope.row.command" :rows="2" ></el-input>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                            <!--<el-button type="primary"  @click.native.prevent="addRow()">+</el-button>-->
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
 
             </el-form>
             <span slot="footer" class="dialog-footer">

@@ -15,7 +15,7 @@ export default [
         name: '保存任务',
         method: 'saveTask',
         path: baseUrl+'/task/save',
-        type: 'post'
+        type: 'json'
     },
     {
         name: '任务详情',
@@ -39,6 +39,13 @@ export default [
         name: '创建任务',
         method: 'runTask',
         path: baseUrl+'/task/create',
+        type: 'post'
+    },
+
+    {
+        name: '获取依赖',
+        method: 'getTaskBuildCommands',
+        path: baseUrl+'/task/getDependencys',
         type: 'post'
     },
 

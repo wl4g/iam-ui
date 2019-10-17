@@ -1,4 +1,5 @@
 import {transDate, getDay} from 'utils/'
+import fa from "element-ui/src/locale/lang/fa";
 
 export default {
     name: 'task',
@@ -33,6 +34,7 @@ export default {
             pageNum: 1,
             pageSize: 10,
 
+            isEdit: false,
             //弹窗表单
             buildForm: {
                 id: '',
@@ -44,9 +46,13 @@ export default {
                 desc: '',
                 tarType: '',
                 tagOrBranch: '1',
+                buildCommand: '',
                 preCommand: '',
                 postCommand: '',
                 contactGroupId: '',
+                taskBuildCommands: [],
+
+                commandOnOff:false,
             },
             dialogVisible: false,
             dialogTitle: '',
@@ -102,10 +108,23 @@ export default {
             this.getData();
         },
 
-        add() {
+        add(command) {
+            this.isEdit = false;
             this.cleanBuildForm();
-            this.dialogVisible = true;
-            this.dialogTitle = '新增';
+
+            if(command==''){
+                this.dialogVisible = true;
+                this.dialogTitle = '新增';
+            }else if (command==''){
+                this.dialogVisible = true;
+                this.dialogTitle = '新增';
+            }else{
+                this.dialogVisible = true;
+                this.dialogTitle = '新增';
+            }
+            //TODO ......
+            this.buildForm.tarType = command;
+
         },
 
         currentChange(i) {
@@ -195,21 +214,6 @@ export default {
         },
 
 
-        //Dict convert
-
-
-        convertTarType(row, column, cellValue, index) {
-            if(cellValue=="1"){
-                return "tar";
-            }else if(cellValue=="2"){
-                return "jar";
-            }else if(cellValue=="3"){
-                return "docker";
-            }else{
-
-            }
-        },
-
         //获取实例名称
         getinstance() {
             var clusterId = this.buildForm.group;
@@ -290,8 +294,9 @@ export default {
                         confirmButtonText: '确定',
                     });
                 }
-            })
+            });
             this.getBranchs();
+            this.getTaskBuildCommands();
         },
 
         // 获取分组名称
@@ -324,12 +329,16 @@ export default {
                             taskName: this.buildForm.taskName,
                             appClusterId: this.buildForm.group,
                             branchName: this.buildForm.branch,
-                            instance: this.buildForm.instances.toString(),
+                            instance: this.buildForm.instances,
                             tarType: this.buildForm.tarType,
                             branchType: this.buildForm.tagOrBranch,
+                            buildCommand: this.buildForm.buildCommand,
                             preCommand: this.buildForm.preCommand,
                             postCommand: this.buildForm.postCommand,
                             contactGroupId: this.buildForm.contactGroupId,
+                            taskBuildCommands: this.buildForm.taskBuildCommands,
+
+
                         },
                         fn: data => {
                             this.dialogLoading = false;
@@ -358,6 +367,7 @@ export default {
         },
 
         taskDetail(row){
+            this.isEdit = true;
             this.dialogVisible=true;
             this.$$api_ci_taskDetail({
                 data: {
@@ -372,9 +382,13 @@ export default {
                         this.buildForm.instances=data.data.instances;
                         this.buildForm.branch=data.data.task.branchName;
                         this.buildForm.tarType=data.data.task.tarType;
+                        this.buildForm.buildCommand=data.data.task.buildCommand;
                         this.buildForm.preCommand=data.data.task.preCommand;
                         this.buildForm.postCommand=data.data.task.postCommand;
                         this.buildForm.contactGroupId=data.data.task.contactGroupId;
+                        this.buildForm.taskBuildCommands=data.data.taskBuildCommands;
+
+                        this.buildForm.commandOnOff=true;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -403,6 +417,26 @@ export default {
                 },
                 fn: data => {
                     this.branchs=data.data.branchNames;
+                },
+                errFn: (data) => {
+                    this.$alert(data.message, '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        getTaskBuildCommands(){
+            if(this.isEdit){
+                return;
+            }
+            console.info(this.buildForm.group);
+            this.$$api_ci_getTaskBuildCommands({
+                data: {
+                    appClusterId: this.buildForm.group,
+                },
+                fn: data => {
+                    this.buildForm.taskBuildCommands=data.data.list;
                 },
                 errFn: (data) => {
                     this.$alert(data.message, '错误', {
@@ -443,10 +477,12 @@ export default {
             this.buildForm.branch = '';
             this.buildForm.tarType = '';
             this.buildForm.tagOrBranch = '1';
+            this.buildForm.buildCommand = '';
             this.buildForm.preCommand = '';
             this.buildForm.postCommand = '';
             this.buildForm.contactGroupId='';
-
+            this.buildForm.taskBuildCommands=[];
+            this.buildForm.commandOnOff = false;
         },
 
         countInstance(row){
