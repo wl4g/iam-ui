@@ -85,6 +85,12 @@ export default [
         path: baseUrl+'/taskHis/readLog',
         type: 'post'
     },
+    {
+        name: '停止任务',
+        method: 'stopTask',
+        path: baseUrl+'/taskHis/stopTask',
+        type: 'post'
+    },
 
 
     //project

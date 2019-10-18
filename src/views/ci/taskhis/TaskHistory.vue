@@ -56,6 +56,7 @@
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
                             <el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
+                            <el-button type="text" size="small" @click="stopTask(scope.row.id)">Stop</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

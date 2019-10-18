@@ -144,6 +144,8 @@ export default {
                 return { img: 'static/images/state/red_fail.png', text: 'Failed' };
             case 4:
                 return { img: 'static/images/state/red_fail.png', text: 'Timeout' };
+            case 5:
+                return { img: 'static/images/state/red_fail.png', text: 'Stop' };
             default:
                 return '--';
             }
@@ -162,6 +164,9 @@ export default {
                 return 'danger';
             }
             if (row.status == 4) {
+                return 'danger';
+            }
+            if (row.status == 5) {
                 return 'danger';
             }
             return 'warning';
@@ -268,6 +273,39 @@ export default {
                 console.info(div);
                 div.scrollTop = div.scrollHeight;
             })
+        },
+
+        stopTask(id){
+            if(!id){
+                return;
+            }
+            this.$confirm('Stop task confirm', {
+                confirmButtonText: 'ok',
+                cancelButtonText: 'cancel',
+                type: 'info'
+            }).then(() => {
+                this.$$api_ci_stopTask({
+                    data: {
+                        taskHisId: id,
+                    },
+                    fn: data => {
+                        if (data.code == 200) {
+                            this.getData();
+                        } else {
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定'
+                            });
+                        }
+                    },
+                    errFn: () => {
+                        this.$alert('访问失败，请稍后重试！', '错误', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
+            }).catch(() => {
+                //do nothing
+            });
         },
 
 
