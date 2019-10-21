@@ -45,7 +45,7 @@
                     <el-button type="primary" >+</el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="PipeWithMvnAssTar">PipeWithMvnAssTar</el-dropdown-item>
-                        <el-dropdown-item command="PipeWithVue">PipeWithVue</el-dropdown-item>
+                        <el-dropdown-item command="PipeWithNpm">PipeWithNpm</el-dropdown-item>
                         <el-dropdown-item disabled command="PipeWithDjangoStd">PipeWithDjangoStd</el-dropdown-item>
                         <el-dropdown-item disabled command="PipeWithDockerNat">PipeWithDockerNat</el-dropdown-item>
                         <el-dropdown-item disabled command="PipeWithSpringExecJar">PipeWithSpringExecJar</el-dropdown-item>

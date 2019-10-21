@@ -8,7 +8,7 @@ export default [
     {
         path: 'configuration',
         name: 'Configurations',
-        icon: 'bar-chart',
+        icon: 'window-restore',
         component: Scm.Configuration
     },{
         path: 'historic',
