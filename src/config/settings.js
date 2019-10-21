@@ -1,4 +1,5 @@
 import fa from "element-ui/src/locale/lang/fa";
+import da from "element-ui/src/locale/lang/da";
 
 var gbs = {
 //  host: '/srm', // 接口根地址。本地代理到slsadmin.api.sls.com,线上使用的是Nginx代理
@@ -10,7 +11,7 @@ var gbs = {
   // 存放数据的字段
   api_data_field: 'data',
   api_custom: {
-    401: function (res, url, success, error) {
+    401: function (res, url, success, error,data) {
       console.debug("Response 401 for redirect_url: " + res.data.redirect_url);
       checkTGCExpiredRedirectToLoginIfNecessary(res);
 
@@ -24,6 +25,7 @@ var gbs = {
           console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
 
           // Request IAM client origin biz API.
+          console.info(data);
           processUnauthWithNativeRequest(url, true, function(res3){
             console.debug("Redirect origin biz response: "+ JSON.stringify(res3));
             if(success && !(res3.code == 401 || res3.code == '401')){
@@ -34,15 +36,15 @@ var gbs = {
             if(error){
               error(errmsg);
             }
-          });
+          },data);
         }, function(errmsg){
           console.error(errmsg);
           // error(errmsg);
-        });
+        },null);
       }, function(errmsg){
         console.error(errmsg);
         // error(errmsg);
-      });
+      },null);
  
     }
   }
@@ -55,11 +57,12 @@ var gbs = {
  * @param {*} successCallback 
  * @param {*} errorCallback 
  */
-var processUnauthWithNativeRequest = function(url, async, successCallback, errorCallback){
+var processUnauthWithNativeRequest = function(url, async, successCallback, errorCallback,data){
   $.ajax({
     url: url,
     async: async,
     type: "post",
+    data: data,
     dataType: "json",
     // 此时虽Client应用无有效sid(无需指定withCredentials)，
     // 但设置后响应新生成的sid(client cookie)才会被chrome保存

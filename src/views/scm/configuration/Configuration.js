@@ -370,6 +370,9 @@ export default {
         // 在字典获取配置文件名
         getNamespace() {
           this.$$api_share_getDictByType({
+            data: {
+              type: 'app_ns_type',
+            },
             fn: data => {
               console.info(data)
               if(data.code == 200){
