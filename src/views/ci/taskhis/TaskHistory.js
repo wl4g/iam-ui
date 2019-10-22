@@ -241,13 +241,17 @@ export default {
                     if (data.code == 200) {
                         let logs = data.data.data.lines;
                         if(data.data.data.isEnd==true){
-                            stopReadLogTask();
+                            console.info("into stop log task");
+                            this.stopReadLogTask();
                         }
                         console.debug(logs);
                         for(let i in logs) {
                             //that.logIndex = that.logIndex+1;
                             //console.log(logs[i]);
-                            that.detailForm.result = that.detailForm.result+logs[i];
+                            that.detailForm.result = that.detailForm.result+logs[i]+"\n";
+                            if(logs[i].indexOf("[EOF]>") != -1){
+                                this.stopReadLogTask();
+                            }
                             that.scroll();
                         };
                         that.logIndex = data.data.data.pointer;
@@ -268,9 +272,9 @@ export default {
         //滚动
         scroll() {
             this.$nextTick(() => {
-                console.info("into scroll");
+                //console.info("into scroll");
                 let div = document.querySelector(".mytextarea2 .el-textarea__inner");
-                console.info(div);
+                //console.info(div);
                 div.scrollTop = div.scrollHeight;
             })
         },
