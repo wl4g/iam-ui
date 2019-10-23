@@ -256,15 +256,15 @@ export default {
                         };
                         that.logIndex = data.data.data.pointer;
                     } else {
-                        this.$alert(data.message, '错误', {
+                        /*this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
-                        });
+                        });*/
                     }
                 },
                 errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
+                    /*this.$alert('访问失败，请稍后重试！', '错误', {
                         confirmButtonText: '确定',
-                    });
+                    });*/
                 }
             })
         },
