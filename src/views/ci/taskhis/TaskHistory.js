@@ -254,7 +254,7 @@ export default {
                             }
                             that.scroll();
                         };
-                        that.logIndex = data.data.data.pointer;
+                        that.logIndex = data.data.data.endPos;
                     } else {
                         /*this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
