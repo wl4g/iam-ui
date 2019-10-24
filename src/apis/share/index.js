@@ -121,4 +121,34 @@ export default [
         type: 'post'
     },
 
+    //cluster
+    {
+        name: '集群列表',
+        method: 'clusterList',
+        path: baseUrl+'/cluster/list',
+        type: 'post'
+    },
+    {
+        name: '保存集群',
+        method: 'saveCluster',
+        path: baseUrl+'/cluster/save',
+        type: 'json'
+    },
+    {
+        name: '逻辑删除集群',
+        method: 'delCluster',
+        path: baseUrl+'/cluster/del',
+        type: 'post'
+    },
+    {
+        name: '集群详情',
+        method: 'clusterDetail',
+        path: baseUrl+'/cluster/detail',
+        type: 'post'
+    },
+
+
+
+
+
 ]

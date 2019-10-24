@@ -4,6 +4,11 @@
 import { Share } from 'views/'
 export default [
     {
+        path: 'cluster',
+        name: 'ClusterNew',
+        icon: 'window-restore',
+        component: Share.Cluster
+    }, {
         path: 'managemant',
         name: 'Cluster',
         icon: 'window-restore',
