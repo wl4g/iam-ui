@@ -234,7 +234,7 @@ export default {
                 data: {
                     taskHisId: taskHisId,
                     index: that.logIndex,
-                    size:1000,
+                    size:10000,
                 },
                 fn: data => {
                     if (data.code == 200) {
