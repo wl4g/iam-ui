@@ -211,10 +211,10 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_instance_grouplist({
+            this.$$api_share_clusters({
                 fn: data => {
                     if (data.code == 200) {
-                        this.groupData = data.data.grouplist;
+                        this.groupData = data.data.clusters;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

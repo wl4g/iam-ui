@@ -43,7 +43,7 @@
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="Group:" prop="group">
-                            <el-select v-model="saveForm.group" @change="getenvir()" placeholder="Please group" style="width: 100%">
+                            <el-select v-model="saveForm.group" @change="getinstance()" placeholder="Please group" style="width: 100%">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"
@@ -58,10 +58,10 @@
                         <el-form-item label="Env:" >
                             <el-select v-model="saveForm.environment" @change="getinstance()" placeholder="Please Env" style="width: 100%">
                                 <el-option
-                                        v-for="item in envirData"
-                                        :key="item.id"
-                                        :label="item.remark"
-                                        :value="item.id">
+                                        v-for="item in dictutil.getDictListByType('app_ns_type')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>

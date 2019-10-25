@@ -1,6 +1,6 @@
 
 export default {
-  name: 'track',
+  name: 'Track',
   data () {
     return {
       formInline: {
@@ -149,14 +149,14 @@ export default {
       if(environmentId==""||clusterId==""){
         return;
       }
-      this.$$api_instance_instancelist({
+      this.$$api_share_instances({
         data: {
-          appClusterId: clusterId,
-          envId: environmentId
+          clusterId: clusterId,
+          envType: environmentId
         },
         fn: data => {
           if(data.code == 200){
-            this.instanceFormData = data.data.instancelist;
+            this.instanceFormData = data.data.instances;
           }else{
             this.$alert(data.message, '错误', {
               confirmButtonText: '确定'
@@ -171,10 +171,10 @@ export default {
       })
     },
     getGroup() {
-      this.$$api_instance_grouplist({
+      this.$$api_share_clusters({
         fn: data => {
           if(data.code == 200){
-            this.groupData = data.data.grouplist;
+            this.groupData = data.data.clusters;
           }else{
             this.$alert(data.message, '错误', {
               confirmButtonText: '确定'
@@ -188,34 +188,7 @@ export default {
         }
       })
     },
-    getenvir(){
-      this.envirFormData=[];
-      this.formInline.environment="";
-      var clusterId=this.formInline.group;
-      if(clusterId==""){
-        return;
-      }
-      this.$$api_instance_envirlist({
-        data: {
-          clusterId: clusterId
-        },
-        fn: data => {
-          if(data.code == 200){
-            this.instanceFormData = [];
-            this.envirFormData = data.data.envlist;
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
-        },
-        errFn: () => {
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
-        }
-      })
-    },
+
     filterTag(value, row) {
       return row.tag === value;
     },

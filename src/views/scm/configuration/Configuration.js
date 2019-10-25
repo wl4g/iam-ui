@@ -37,7 +37,7 @@ export default {
           {type:'number', required: true, message: '请选择分组', trigger: 'change' },
         ],
         environment: [
-          {type:'number', required: true, message: '请选择环境', trigger: 'change' }
+          {required: true, message: '请选择环境', trigger: 'change' }
         ],
         remark: [
           { required: true, message: '描述内容不能为空', trigger: 'blur' },
@@ -268,28 +268,28 @@ export default {
             this.ruleForm.instance="";
             clusterId=this.ruleForm.group;
             environmentId = this.ruleForm.environment;
-            if(clusterId==""){
+            if(clusterId==""||environmentId==""){
               return;
             }
           }
-          this.$$api_instance_instancelist({
+          this.$$api_share_instances({
             data: {
-              appClusterId: clusterId,
-              envId: environmentId
+              clusterId: clusterId,
+              envType: environmentId
             },
             fn: data => {
               if(data.code == 200){
                 if(flag==0){
-                  this.instanceData = data.data.instancelist;
+                  this.instanceData = data.data.instances;
                 }else{
                   var title = this.dialogTitle;
-                  var length = this.instancelist.length;
-                  if(environmentId!="" && length==0 && title != "编辑"){
-                    for(let rowData of data.data.instancelist){
+                  //var length = this.instancelist.length;
+                  if(environmentId!="" && title != "编辑"){
+                    for(let rowData of data.data.instances){
                       this.instancelist.push(rowData.id);
                     }
-                    this.instanceFormData = data.data.instancelist;
                   }
+                  this.instanceFormData = data.data.instances;
                 }
               }else{
                 this.$alert(data.message, '错误', {
@@ -304,55 +304,13 @@ export default {
             }
           })
         },
-        getenvir(flag){
-          var clusterId;
-          if(flag==0){
-            this.envirData=[];
-            this.formInline.environment="";
-            clusterId=this.formInline.group;
-            if(clusterId==""){
-              return;
-            }
-          }else{
-            this.envirFormData=[];
-            this.ruleForm.environment="";
-            clusterId=this.ruleForm.group
-            if(clusterId==""){
-              return;
-            }
-          }
-          this.$$api_instance_envirlist({
-            data: {
-              clusterId: clusterId
-            },
-            fn: data => {
-              if(data.code == 200){
-                if(flag==0){
-                  this.instanceData = [];
-                  this.envirData = data.data.envlist;
-                }else{
-                  this.instanceFormData = [];
-                  this.envirFormData = data.data.envlist;
-                }
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-            },
-            errFn: () => {
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
-            }
-          })
-        },
+
         // 获取分组名称
         getGroup() {
-          this.$$api_instance_grouplist({
+          this.$$api_share_clusters({
             fn: data => {
               if(data.code == 200){
-                this.groupData = data.data.grouplist;
+                this.groupData = data.data.clusters;
               }else{
                 this.$alert(data.message, '错误', {
                   confirmButtonText: '确定'

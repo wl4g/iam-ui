@@ -5,7 +5,7 @@
         <el-input  v-model="formInline.user" placeholder="版本ID"></el-input>
       </el-form-item> -->
        <el-form-item label="Group:">
-        <el-select v-model="formInline.group"  @change="getenvir()" placeholder="Please group" >
+        <el-select v-model="formInline.group"  @change="getinstance()" placeholder="Please group" >
           <el-option label="ALL" value=""></el-option>
           <el-option
               v-for="item in groupData"
@@ -18,12 +18,12 @@
       <el-form-item label="Environment:">
         <el-select v-model="formInline.environment" @change="getinstance()" placeholder="Please environment" >
           <el-option label="ALL" value=""></el-option>
-          <el-option
-          v-for="item in envirFormData"
-          :key="item.id"
-          :label="item.remark"
-          :value="item.id">
-          </el-option>
+            <el-option
+                    v-for="item in dictutil.getDictListByType('app_ns_type')"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+            </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="  Node :">

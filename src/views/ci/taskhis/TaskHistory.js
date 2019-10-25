@@ -56,7 +56,6 @@ export default {
 
     mounted() {
 
-        this.getGroup();
 
         const dic = new Map();
         dic.set(1, "Hook");
@@ -313,85 +312,7 @@ export default {
         },
 
 
-        //获取实例名称
-        getinstance() {
-            var clusterId = this.buildForm.group;
-            var environmentId = this.buildForm.environment;
-            this.instanceData = [];
-            this.buildForm.instances = [];
-            if (environmentId == "" || clusterId == "") {
-                return;
-            }
-            this.$$api_instance_instancelist({
-                data: {
-                    clusterId: clusterId,
-                    envId: environmentId
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.instanceData = data.data.instancelist;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-        },
-        //获取环境名称
-        getenvir() {
-            this.envirData = [];
-            this.buildForm.environment = "";
-            var clusterId = this.buildForm.group;
-            if (clusterId == "") {
-                return;
-            }
-            this.$$api_instance_envirlist({
-                data: {
-                    clusterId: clusterId
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.instanceData = [];
-                        this.envirData = data.data.envlist;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-            this.getBranchs();
-        },
-        // 获取分组名称
-        getGroup() {
-            this.$$api_instance_grouplist({
-                fn: data => {
-                    if (data.code == 200) {
-                        this.groupData = data.data.grouplist;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-        },
+
 
         createTask() {
             this.dialogLoading = true;
@@ -422,28 +343,7 @@ export default {
                 }
             })
         },
-        getBranchs() {
-            this.$$api_ci_getBranchs({
-                data: {
-                    appClusterId: this.buildForm.group,
-                    tarOrBranch: this.buildForm.tagOrBranch,
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.branchs=data.data.branchNames;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-        },
+
         cleanBuildForm() {
             this.buildForm.group = '';
             this.buildForm.instances = [];

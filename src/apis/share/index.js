@@ -148,6 +148,21 @@ export default [
     },
 
 
+    {
+        name: '所有集群',
+        method: 'clusters',
+        path: baseUrl+'/cluster/clusters',
+        type: 'post'
+    },
+    {
+        name: '实例列表',
+        method: 'instances',
+        path: baseUrl+'/cluster/instances',
+        type: 'post'
+    },
+
+
+
 
 
 

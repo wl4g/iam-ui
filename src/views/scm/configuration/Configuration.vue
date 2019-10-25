@@ -8,7 +8,7 @@
           <el-option label="sso" value="sso"></el-option>
           <el-option label="portal" value="portal"></el-option>
         </el-select>-->
-        <el-select v-model="formInline.group"  @change="getenvir(0)" placeholder="请选择分组：" >
+        <el-select v-model="formInline.group" @change="getinstance(0)"  placeholder="请选择分组：" >
             <el-option label="ALL" value=""></el-option>
             <el-option
                 v-for="item in groupData"
@@ -22,12 +22,12 @@
       <el-form-item label="Environment:">
         <el-select v-model="formInline.environment" @change="getinstance(0)" placeholder="请选择环境：">
           <el-option label="ALL" value=""></el-option>
-          <el-option
-                v-for="item in envirData"
-                :key="item.id"
-                :label="item.remark"
-                :value="item.id">
-          </el-option>
+            <el-option
+                    v-for="item in dictutil.getDictListByType('app_ns_type')"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+            </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="Instance:">
@@ -59,7 +59,7 @@
             >
           <el-form :inline="true" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-form-inline">
             <el-form-item label="Group:" prop="group" style="padding-bottom: 10px;">
-              <el-select v-model="ruleForm.group"  @change="getenvir(1)" placeholder="Please group" v-bind:disabled="isedit">
+              <el-select v-model="ruleForm.group"  @change="getinstance(1)" placeholder="Please group" v-bind:disabled="isedit">
                 <el-option
                     v-for="item in groupData"
                     :key="item.id"
@@ -70,12 +70,12 @@
             </el-form-item>
             <el-form-item label="Env:" prop="environment">
               <el-select v-model="ruleForm.environment" @change="getinstance(1)" placeholder="Please environment" v-bind:disabled="isedit">
-                <el-option
-                v-for="item in envirFormData"
-                :key="item.id"
-                :label="item.remark"
-                :value="item.id">
-                </el-option>
+                  <el-option
+                          v-for="item in dictutil.getDictListByType('app_ns_type')"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                  </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="  Node :" prop="instance" style="margin-left:10px;">

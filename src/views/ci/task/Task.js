@@ -216,23 +216,22 @@ export default {
 
         //获取实例名称
         getinstance() {
-            var clusterId = this.buildForm.group;
-            var environmentId = this.buildForm.environment;
+            let clusterId = this.buildForm.group;
+            let envType = this.buildForm.environment;
             this.instanceData = [];
-
-            if (environmentId == "" || clusterId == "") {
+            if (!envType||envType == "" || !clusterId||clusterId == "") {
                 return;
             }
-            this.$$api_instance_instancelist({
+            this.$$api_share_instances({
                 data: {
-                    appClusterId: clusterId,
-                    envId: environmentId
+                    clusterId: clusterId,
+                    envType: envType
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        this.instanceData = data.data.instancelist;
+                        this.instanceData = data.data.instances;
                         //判断要不要清空选中
-                        var needClean = true;
+                        let needClean = true;
                         for (let i = 0; i < this.instanceData.length; i++) {
                             if (this.instanceData[i].id == this.buildForm.instances[0]) {
                                 needClean = false;
@@ -257,54 +256,18 @@ export default {
         },
 
         //获取环境名称
-        getenvir() {
-            this.envirData = [];
-            var clusterId = this.buildForm.group;
-            if (clusterId == "") {
-                return;
-            }
-            this.$$api_instance_envirlist({
-                data: {
-                    clusterId: clusterId
-                },
-                fn: data => {
-                    if (data.code == 200) {
-                        this.instanceData = [];
-                        this.envirData = data.data.envlist;
-                        //判断要不要清空选中
-                        var needClean = true;
-                        for (let i = 0; i < this.envirData.length; i++) {
-                            if (this.envirData[i].id == this.buildForm.environment) {
-                                needClean = false;
-                                break;
-                            }
-                        }
-                        if (needClean) {
-                            this.buildForm.environment = "";
-                            this.buildForm.instances = [];
-                        }
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            });
+        onChangeCluster() {
             this.getBranchs();
             this.getTaskBuildCommands();
+            this.getinstance();
         },
 
         // 获取分组名称
         getGroup() {
-            this.$$api_instance_grouplist({
+            this.$$api_share_clusters({
                 fn: data => {
                     if (data.code == 200) {
-                        this.groupData = data.data.grouplist;
+                        this.groupData = data.data.clusters;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
