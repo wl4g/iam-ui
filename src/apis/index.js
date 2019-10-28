@@ -10,9 +10,7 @@
  */
 import user from './user/'
 import system from './system/'
-import managemant from './managemant/'
 import configguration from './configguration/'
-import instance from './instance/'
 import historic from './historic/'
 import track from './track/'
 import ci from './ci/'
@@ -29,17 +27,9 @@ export default [{
   name: '系统设置',
   list: system
 }, {
-  module: 'managemant',
-  name: '节点',
-  list: managemant
-}, {
   module: 'configguration',
   name: '版本管理',
   list: configguration
-},{
-  module: 'instance',
-  name: '版本管理',
-  list: instance
 },{
   module: 'historic',
   name: '版本管理',

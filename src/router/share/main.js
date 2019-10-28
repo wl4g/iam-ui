@@ -1,29 +1,21 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import { Share } from 'views/'
+import {Share} from 'views/'
+
 export default [
     {
         path: 'cluster',
-        name: 'ClusterNew',
-        icon: 'window-restore',
-        component: Share.Cluster
-    }, {
-        path: 'managemant',
         name: 'Cluster',
         icon: 'window-restore',
-        component: Share.Managemant
+        component: Share.Cluster
+
     }, {
-        path: 'instance',
-        name: 'Instance',
-        icon: 'window-restore',
-        component: Share.Instance
-    },{	path: 'dict',
+        path: 'dict',
         name: 'Dictionaries',
         icon: 'window-restore',
         component: Share.Dict
-    },
-    {
+    }, {
         path: 'contact',
         name: 'Alarm Contact',
         icon: 'window-restore',
