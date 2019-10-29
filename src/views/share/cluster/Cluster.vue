@@ -50,13 +50,13 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="Name:" prop="name">
-                            <el-input :disabled="isEdit" v-model="saveForm.name" placeholder="Name"></el-input>
+                            <el-input :disabled="isEdit" v-model="saveForm.name" placeholder="e.g:sso"></el-input>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="18">
                         <el-form-item label="Remark:" prop="remark">
-                            <el-input v-model="saveForm.remark" placeholder="Name"></el-input>
+                            <el-input v-model="saveForm.remark" placeholder="remark"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -64,7 +64,7 @@
                 <!-- instances -->
                 <el-row >
                     <el-col :span="24">
-                        <el-form-item label="Tags:">
+                        <el-form-item label="Instances:">
                             <template>
                                 <el-table :data="saveForm.instances" style="width: 100%">
 
