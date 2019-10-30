@@ -127,7 +127,7 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()">Save</el-button>
+                        <el-button type="primary" @click="save()">Save</el-button>
                         <el-button @click="dialogVisible = false;">Cancel</el-button>
                     </span>
         </el-dialog>

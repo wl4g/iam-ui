@@ -29,6 +29,13 @@ export default [
         type: 'post'
     },
 
+    {
+        name: 'loginCheck',
+        method: 'loginCheck',
+        path: baseUrl+'/login/check',
+        type: 'post'
+    },
+
 
 
 

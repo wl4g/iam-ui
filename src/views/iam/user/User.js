@@ -19,6 +19,7 @@ export default {
             saveForm: {
                 displayName: '',
                 userName: '',
+                oldPassword:'',
                 password: '',
                 email: '',
                 phone: '',
@@ -161,6 +162,7 @@ export default {
             this.saveForm = {
                 displayName: '',
                 userName: '',
+                oldPassword:'',
                 password: '',
                 email: '',
                 phone: '',
@@ -171,8 +173,41 @@ export default {
             };
         },
 
-        saveData() {
+
+        save() {
+            if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
+                this.saveDataWithPassword();
+            }else{//needn't update password
+                this.saveData();
+            }
+        },
+
+        saveDataWithPassword(){
+            let loginAccount = this.saveForm.userName;
+            this.$$api_iam_loginCheck({
+                data: {
+                    principal: loginAccount,
+                    verifyType: 'VerifyWithSimpleGraph',
+                },
+                fn: data => {
+                    if (data.data&&data.data.checkGeneral&&data.data.checkGeneral.secret) {
+                        let secret = data.data.checkGeneral.secret;
+                        let password = window.IAM.Crypto.rivestShamirAdleman(secret,this.saveForm.password);
+                        this.saveData(password);
+                    }
+                },
+                errFn: data => {
+                    this.dialogLoading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            });
+        },
+
+        saveData(password) {
             //this.dialogLoading = true;
+            this.saveForm.password = password;
             this.$$api_iam_saveUser({
                 data: this.saveForm,
                 fn: data => {
@@ -198,6 +233,7 @@ export default {
 
 
         editData(row) {
+            this.cleanSaveForm();
             this.isEdit = true;
             if (!row.id) {
                 return;
@@ -211,6 +247,7 @@ export default {
                     if (data.code == 200) {
                         console.info(data.data.data);
                         this.saveForm = data.data.data;
+                        this.saveForm.oldPassword = this.saveForm.password;
 
                         if(this.$refs.modulesTree && this.saveForm.groupIds instanceof Array){
                             this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds);
@@ -240,9 +277,9 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_share_delCluster({
+            this.$$api_iam_delUser({
                 data: {
-                    clusterId: row.id,
+                    userId: row.id,
                 },
                 fn: data => {
                     //this.loading = false;
