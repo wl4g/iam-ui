@@ -17,6 +17,7 @@ import ci from './ci/'
 import umc from './umc/'
 import share from './share/'
 import srm from './srm'
+import iam from './iam/'
 
 export default [{
   module: 'user',
@@ -48,10 +49,14 @@ export default [{
   list: umc
 },{
   module: 'share',
-  name: '设置管理',
+  name: '公共管理',
   list: share
 },{
   module: 'srm',
   name: '设置管理',
   list: srm
+},{
+  module: 'iam',
+  name: '权限管理',
+  list: iam
 }]

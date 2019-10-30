@@ -7,12 +7,14 @@ export default {
     srmBaseUrlKey:'srm-manager',
     umcBaseUrlKey:'umc-manager',
     shareBaseUrlKey:'share-manager',
+    iamBaseUrlKey:'iam-server',
 
     ciDefaultPath:':14046/ci-server',
     scmDefaultPath:':14043/scm-server',
     srmDefaultPath:':15050/srm-manager',
     umcDefaultPath:':14048/umc-manager',
     shareDefaultPath:':14051/share-manager',
+    iamDefaultPath:':14040/iam-server',
 
     getBaseUrl: function (key,defaultPath) {
         let applicationCache = store.get("application_cache");

@@ -7,11 +7,16 @@ import { Iam } from 'views/'
 export default [
     {
         path: 'online',
-        name: 'online',
+        name: 'Online',
         icon: 'window-restore',
         component: Iam.Online
     },
-
+    {
+        path: 'user',
+        name: 'User',
+        icon: 'window-restore',
+        component: Iam.User
+    },
 
 
 
