@@ -17,6 +17,25 @@ export default [
         icon: 'window-restore',
         component: Iam.User
     },
+    {
+        path: 'menu',
+        name: 'Menu',
+        icon: 'window-restore',
+        component: Iam.Menu
+    },
+    {
+        path: 'group',
+        name: 'Group',
+        icon: 'window-restore',
+        component: Iam.Group
+    },
+    {
+        path: 'role',
+        name: 'Role',
+        icon: 'window-restore',
+        component: Iam.Role
+    },
+
 
 
 

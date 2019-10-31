@@ -86,7 +86,10 @@ export default function ({
           }
       }
   }).catch(() => {
-      this.$store.dispatch('hide_loading')
-      errFn.call(this, null)
+      this.$store.dispatch('hide_loading');
+      if(errFn){
+          errFn.call(this, null);
+      }
+
   })
 };
