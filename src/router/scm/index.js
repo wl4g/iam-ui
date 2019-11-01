@@ -12,4 +12,5 @@ export default {
   component: Home,Content,
   redirect: '/scm/configuration',
   children:Main,
+  permission: 'scm',
 }

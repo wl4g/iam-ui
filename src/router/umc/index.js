@@ -12,4 +12,5 @@ export default {
   component: Home,Content,
   redirect: '/umc/sbamonitor',
   children:Main,
+  permission: 'umc',
 }

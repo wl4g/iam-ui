@@ -12,4 +12,6 @@ export default {
   component: Home,Content,
   redirect: '/iam/online',
   children:Main,
+  permission: 'iam',
+
 }

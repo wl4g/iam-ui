@@ -55,6 +55,12 @@ export default [
         path: baseUrl+'/menu/del',
         type: 'post'
     },
+    {
+        name: '获取用户menu列表',
+        method: 'getMenuList',
+        path: baseUrl+'/menu/getMenuList',
+        type: 'post'
+    },
 
 
 

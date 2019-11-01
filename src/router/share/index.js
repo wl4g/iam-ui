@@ -12,4 +12,5 @@ export default {
   component: Home,Content,
   redirect: '/share/dict',
   children:Main,
+  permission: 'share',
 }

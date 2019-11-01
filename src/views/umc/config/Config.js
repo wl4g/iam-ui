@@ -45,8 +45,6 @@ export default {
 
     mounted() {
 
-        this.afterLogin();
-
         this.getGroup();
         this.getData();
         this.allContactGroup();
@@ -55,59 +53,6 @@ export default {
     },
 
     methods: {
-        //after login
-        afterLogin (){
-            let that = this;
-
-            //application
-            that.$$api_share_applicationInfo({
-                fn: data => {
-                    //console.info(data.data)
-                    store.set("application_cache",data.data.map);
-                    console.info(store.get("application_cache"));
-                    console.info(store.get("application_cache")['umc-manager']);
-                },
-                errFn: () => {
-                    //console.info("get application cache fail");
-                    //try again
-                    that.$$api_share_applicationInfo({
-                        fn: data => {
-                            //console.info(data.data)
-                            store.set("application_cache",data.data.list);
-                            console.info(store.get("application_cache"));
-                        },
-                        errFn: () => {
-                            console.error("get application cache fail")
-                        },
-                    });
-                },
-            });
-
-            //dict
-            that.$$api_share_dictCache({
-                fn: data => {
-                    //console.info(data.data)
-                    store.set("dicts_cache",data.data);
-                    console.info(store.get("dicts_cache"));
-                },
-                errFn: () => {
-                    //console.info("get dict cache fail");
-                    //try again
-                    that.$$api_share_dictCache({
-                        fn: data => {
-                            //console.info(data.data)
-                            store.set("dicts_cache",data.data);
-                            console.info(store.get("dicts_cache"));
-                        },
-                        errFn: () => {
-                            console.error("get dict cache fail")
-                        },
-                    });
-                },
-            })
-
-        },
-
 
         onSubmit() {
             this.getData();

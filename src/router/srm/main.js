@@ -9,13 +9,9 @@ export default [
         path: 'console',
         name: 'Log Console',
         icon: 'window-restore',
-        component: Srm.Console
+        component: Srm.Console,
+        permission: 'srm:console',
     },
-    /*{
-        path: 'statistics',
-        name: 'Log Analysis',
-        icon: 'window-restore',
-        component: Srm.Statistics
-    },*/
+
 
 ]

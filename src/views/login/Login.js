@@ -1,6 +1,8 @@
 import {
   store
 } from '../../utils/'
+import da from "element-ui/src/locale/lang/da";
+import promise from './promise'
 /**
  * Created by sailengsi on 2017/5/11.
  */
@@ -30,9 +32,94 @@ export default {
   },
   methods: {
 
+    afterLogin(){
+      this.getCache();
+
+      this.$$api_iam_getMenuList({
+        data: {},
+        fn: data => {
+          console.info(data);
+          store.set("menu_cache",data.data.data);
+          promise.buildRoleRoute(this);
+
+          let routList = this.$router.options.routes
+          //jump to first not hidden page
+          for(let i = 0; i<routList.length;i++){
+            if(routList[i].hidden!=true){
+              let children = routList[i].children;
+              if(children){
+                for(let j = 0; j<children.length;j++){
+                  if(children[j].hidden!=true) {
+                    this.$router.push(routList[i].path+'/'+children[j].path);
+                    return;
+                  }
+                }
+              }
+            }
+          }
+
+        },
+        errFn: () => {
+          this.$message.error('get mune fail');
+        }
+      })
+    },
+
+    getCache (){
+      let that = this;
+
+      //application
+      that.$$api_share_applicationInfo({
+        fn: data => {
+          //console.info(data.data)
+          store.set("application_cache",data.data.map);
+          console.info(store.get("application_cache"));
+          console.info(store.get("application_cache")['umc-manager']);
+        },
+        errFn: () => {
+          //console.info("get application cache fail");
+          //try again
+          that.$$api_share_applicationInfo({
+            fn: data => {
+              //console.info(data.data)
+              store.set("application_cache",data.data.list);
+              console.info(store.get("application_cache"));
+            },
+            errFn: () => {
+              console.error("get application cache fail")
+            },
+          });
+        },
+      });
+
+      //dict
+      that.$$api_share_dictCache({
+        fn: data => {
+          //console.info(data.data)
+          store.set("dicts_cache",data.data);
+          console.info(store.get("dicts_cache"));
+        },
+        errFn: () => {
+          //console.info("get dict cache fail");
+          //try again
+          that.$$api_share_dictCache({
+            fn: data => {
+              //console.info(data.data)
+              store.set("dicts_cache",data.data);
+              console.info(store.get("dicts_cache"));
+            },
+            errFn: () => {
+              console.error("get dict cache fail")
+            },
+          });
+        },
+      })
+    },
+
 
   },
   mounted () {
+    var that = this;
       //var iamBaseURI = "http://passport.anjiancloud.test/sso";
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
@@ -67,8 +154,9 @@ export default {
               return true;
             },
             onSuccess: function (principal, redirectUrl) {
+              that.afterLogin();
               //console.log("登录成功!");
-              return true; // 返回false会阻止自动调整
+              return false; // 返回false会阻止自动调整
             },
             onError: function (errmsg) {
               console.error("登录失败. " + errmsg);

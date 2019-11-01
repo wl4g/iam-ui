@@ -9,25 +9,29 @@ export default [
         path: 'task',
         name: 'Pipeline',
         icon: 'window-restore',
-        component: Ci.Task
+        component: Ci.Task,
+        permission: 'ci:task',
     },
     {
         path: 'trigger',
         name: 'Schedule',
         icon: 'window-restore',
-        component: Ci.Trigger
+        component: Ci.Trigger,
+        permission: 'ci:trigger',
     },
     {
         path: 'taskhis',
         name: 'Changes',
         icon: 'window-restore',
-        component: Ci.TaskHistory
+        component: Ci.TaskHistory,
+        permission: 'ci:taskhis',
     },
     {
         path: 'project',
         name: 'Projects',
         icon: 'window-restore',
-        component: Ci.Project
+        component: Ci.Project,
+        permission: 'ci:project',
     },
 
 

@@ -10,6 +10,7 @@ export default {
   name: 'CI/CD',
   icon: 'inbox',
   component: Home,Content,
-  redirect: '/ci/taskhis',
+  redirect: '/ci/task',
   children:Main,
+  permission: 'ci'
 }

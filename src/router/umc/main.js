@@ -8,13 +8,15 @@ export default [
         path: 'sbamonitor',
         name: 'SBA Monitor',
         icon: 'window-restore',
-        component: Umc.Sbamonitor
+        component: Umc.Sbamonitor,
+        permission: 'umc:sbamonitor',
     },
     {
         path: 'biztraffic',
         name: 'Biz Traffic',
         icon: 'window-restore',
-        component: Umc.Biztraffic
+        component: Umc.Biztraffic,
+        permission: 'umc:biztraffic',
     },
 /*    {
         path: 'notification',
@@ -26,24 +28,28 @@ export default [
         path: 'record',
         name: 'Alarm Logs',
         icon: 'window-restore',
-        component: Umc.Record
+        component: Umc.Record,
+        permission: 'umc:record',
     },
     {
         path: 'config',
         name: 'Alarm Config',
         icon: 'window-restore',
-        component: Umc.Config
+        component: Umc.Config,
+        permission: 'umc:config',
     },
     {
         path: 'templat',
         name: 'Alarm Template',
         icon: 'window-restore',
-        component: Umc.Templat
+        component: Umc.Templat,
+        permission: 'umc:templat',
     },
     {
         path: 'metrictemplate',
         name: 'Metric Template',
         icon: 'window-restore',
-        component: Umc.MetricTemplate
+        component: Umc.MetricTemplate,
+        permission: 'umc:metrictemplate',
     },
 ]

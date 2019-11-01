@@ -12,4 +12,5 @@ export default {
   component: Home,Content,
   redirect: '/srm/console',
   children:Main,
+  permission: 'srm',
 }
