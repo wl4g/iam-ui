@@ -69,12 +69,12 @@ export default [
     {
         name: '角色列表',
         method: 'getRoles',
-        path: baseUrl+'/role/getRoles',
+        path: baseUrl+'/role/getRolesByUserGroups',
         type: 'post'
     },
     {
         name: '角色列表',
-        method: 'list',
+        method: 'roleList',
         path: baseUrl+'/role/list',
         type: 'post'
     },
@@ -82,7 +82,7 @@ export default [
         name: '保存角色',
         method: 'saveRole',
         path: baseUrl+'/role/save',
-        type: 'post'
+        type: 'json'
     },
     {
         name: '删除角色',

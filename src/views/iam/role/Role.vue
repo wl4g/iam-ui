@@ -65,7 +65,7 @@
                 <el-row>
                     <el-col :span="20">
                         <el-form-item  label="Role："   prop="role">
-                            <el-input type="textarea" rows="1" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
+                            <el-input type="textarea"  class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     style="max-height: 240px;overflow: scroll"
                                     v-show="treeShow"
@@ -85,7 +85,7 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="save()">Save</el-button>
+                        <el-button type="primary" @click="saveData()">Save</el-button>
                         <el-button @click="dialogVisible = false;">Cancel</el-button>
                     </span>
         </el-dialog>

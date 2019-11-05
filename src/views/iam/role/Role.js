@@ -32,7 +32,8 @@ export default {
             tableData: [],
 
             //rolesData
-            menuData:[],
+            menuData:[],//tree
+            menuDataList:[],//list
 
             defaultProps: {
                 children: 'children',
@@ -73,6 +74,7 @@ export default {
                     //this.loading = false;
                     if (data.code == 200) {
                         this.menuData = data.data.data;
+                        this.menuDataList = data.data.data2;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -98,7 +100,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_iam_list({
+            this.$$api_iam_roleList({
                 data: {
                     name: this.searchParams.name,
                     displayName: this.searchParams.displayName,
@@ -135,41 +137,8 @@ export default {
         },
 
 
-        save() {
-            if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
-                this.saveDataWithPassword();
-            }else{//needn't update password
-                this.saveData();
-            }
-        },
-
-        saveDataWithPassword(){
-            let loginAccount = this.saveForm.userName;
-            this.$$api_iam_loginCheck({
-                data: {
-                    principal: loginAccount,
-                    verifyType: 'VerifyWithSimpleGraph',
-                },
-                fn: data => {
-                    if (data.data&&data.data.checkGeneral&&data.data.checkGeneral.secret) {
-                        let secret = data.data.checkGeneral.secret;
-                        let password = window.IAM.Crypto.rivestShamirAdleman(secret,this.saveForm.password);
-                        this.saveData(password);
-                    }
-                },
-                errFn: data => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            });
-        },
-
-        saveData(password) {
-            //this.dialogLoading = true;
-            this.saveForm.password = password;
-            this.$$api_iam_saveUser({
+        saveData() {
+            this.$$api_iam_saveRole({
                 data: this.saveForm,
                 fn: data => {
                     this.dialogLoading = false;
@@ -199,19 +168,18 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_iam_userDetail({
+            this.$$api_iam_roleDetail({
                 data: {
-                    userId: row.id,
+                    id: row.id,
                 },
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
                         console.info(data.data.data);
                         this.saveForm = data.data.data;
-                        this.saveForm.oldPassword = this.saveForm.password;
 
-                        if(this.$refs.modulesTree && this.saveForm.groupIds instanceof Array){
-                            this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds);
+                        if(this.$refs.modulesTree && this.saveForm.menuIds instanceof Array){
+                            this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
                             this.checkChange();
                         }
 
@@ -238,7 +206,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_iam_delUser({
+            this.$$api_iam_delRole({
                 data: {
                     userId: row.id,
                 },
@@ -280,19 +248,83 @@ export default {
             })
         },
 
+
+
+        getChild(node,list){
+            if(node&&node['children']){
+                let children = node['children'];
+                for(let i = 0; i<children.length;i++){
+                    list.push(children[i]['id']);
+                    this.getChild(children[i],list);
+                }
+            }
+            return list;
+        },
+
         //模块权限树选择
         checkChange(node, selfChecked, childChecked) {
-            var checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-            var checkedNodes = this.$refs.modulesTree.getCheckedNodes();
+
+            let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
+
+            if(selfChecked){
+
+                let parentList = this.getParent(this.menuDataList, node.parentId, []);
+                checkedKeys = checkedKeys.concat(parentList)
+                this.$refs.modulesTree.setCheckedKeys(checkedKeys)
+            }else{
+                let childList = this.getChild( node, []);
+                checkedKeys = checkedKeys.filter(v => {
+                    let flag = true;
+                    for (var i = 0; i < childList.length; i++) {
+                        if(v == childList[i]){
+                            flag = false
+                        }
+                    }
+                    return flag
+                });
+                this.$refs.modulesTree.setCheckedKeys(checkedKeys)
+
+            }
+
+
+
+
+
+            //let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
+            let checkedNodes = this.$refs.modulesTree.getCheckedNodes();
 
             let moduleNameList = [];
             checkedNodes.forEach(function(item){
                 moduleNameList.push(item.displayName)
             });
+
             this.saveForm.menuIds = checkedKeys;
+            console.info(this.saveForm.menuIds);
             this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
 
         },
+
+
+        getParent(list, parentId, parentList) {
+            if (parentId == '0') return;
+            for (let i = 0; i < list.length; i++) {
+                if (parentId == list[i].id) {
+                    parentList.push(list[i].id);
+                    this.getParent(list, list[i].parentId, parentList)
+                }
+            }
+            return parentList
+        },
+
+        /*getChild(list, id, childList) {
+            for (let i = 0; i < list.length; i++) {
+                if (id == list[i].parentId) {
+                    childList.push(list[i].id)
+                    getChild(list, list[i].id, childList)
+                }
+            }
+            return childList
+        },*/
 
 
     }

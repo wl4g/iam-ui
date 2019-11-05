@@ -46,7 +46,14 @@ var gbs = {
         // error(errmsg);
       },null);
  
-    }
+    },
+    403: function (res, url, success, error,data) {
+      if(res&&res.message){
+        this.$message.error(res.message);
+      }
+    },
+
+
   }
 };
 

@@ -120,7 +120,6 @@ export default {
   },
   mounted () {
     var that = this;
-      //var iamBaseURI = "http://passport.anjiancloud.test/sso";
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
       // 引用IAM SDK插件，处理SNS授权操作
