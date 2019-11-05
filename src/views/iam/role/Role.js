@@ -21,6 +21,8 @@ export default {
                 name: '',
                 menuIds: [],
                 menuNameStrs: '',
+                groupIds: [],
+                groupNameStrs: '',
             },
 
             isEdit: false,
@@ -41,6 +43,8 @@ export default {
             },
             treeShow: false,
 
+            groupTreeShow: false,
+            groupsTreeData:[],
 
 
         }
@@ -49,6 +53,7 @@ export default {
     mounted() {
         this.getData();
         this.getMenus();
+        this.getGroupsTree();
 
     },
 
@@ -75,6 +80,30 @@ export default {
                     if (data.code == 200) {
                         this.menuData = data.data.data;
                         this.menuDataList = data.data.data2;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        getGroupsTree(){
+            this.$$api_iam_getGroupsTree({
+                data: {
+
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.groupsTreeData = data.data.data;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -133,6 +162,8 @@ export default {
                 name: '',
                 menuIds: [],
                 menuNameStrs: '',
+                groupIds: [],
+                groupNameStrs: '',
             };
         },
 
@@ -181,6 +212,11 @@ export default {
                         if(this.$refs.modulesTree && this.saveForm.menuIds instanceof Array){
                             this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
                             this.checkChange();
+                        }
+
+                        if(this.$refs.modulesTree2 && this.saveForm.groupIds instanceof Array){
+                            this.$refs.modulesTree2.setCheckedKeys(this.saveForm.groupIds);
+                            this.checkChange2();
                         }
 
                     } else {
@@ -248,8 +284,6 @@ export default {
             })
         },
 
-
-
         getChild(node,list){
             if(node&&node['children']){
                 let children = node['children'];
@@ -263,11 +297,8 @@ export default {
 
         //模块权限树选择
         checkChange(node, selfChecked, childChecked) {
-
             let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-
             if(selfChecked){
-
                 let parentList = this.getParent(this.menuDataList, node.parentId, []);
                 checkedKeys = checkedKeys.concat(parentList)
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys)
@@ -285,25 +316,15 @@ export default {
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys)
 
             }
-
-
-
-
-
-            //let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
             let checkedNodes = this.$refs.modulesTree.getCheckedNodes();
-
             let moduleNameList = [];
             checkedNodes.forEach(function(item){
                 moduleNameList.push(item.displayName)
             });
-
             this.saveForm.menuIds = checkedKeys;
             console.info(this.saveForm.menuIds);
             this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
-
         },
-
 
         getParent(list, parentId, parentList) {
             if (parentId == '0') return;
@@ -316,15 +337,37 @@ export default {
             return parentList
         },
 
-        /*getChild(list, id, childList) {
-            for (let i = 0; i < list.length; i++) {
-                if (id == list[i].parentId) {
-                    childList.push(list[i].id)
-                    getChild(list, list[i].id, childList)
+
+        //模块权限树展示
+        focusDo2() {
+            if(this.$refs.modulesTree2 && this.saveForm.groupIds instanceof Array) this.$refs.modulesTree2.setCheckedKeys(this.saveForm.groupIds)
+            this.groupTreeShow = !this.groupTreeShow;
+            let _self = this;
+            this.$$lib_$(document).bind("click",function(e){
+                let target  = _self.$$lib_$(e.target);
+                if(target.closest(".noHide").length == 0 && _self.groupTreeShow){
+                    _self.groupTreeShow = false;
                 }
-            }
-            return childList
-        },*/
+                e.stopPropagation();
+            })
+        },
+
+        //模块权限树选择
+        checkChange2(node, selfChecked, childChecked) {
+            var checkedKeys = this.$refs.modulesTree2.getCheckedKeys();
+            var checkedNodes = this.$refs.modulesTree2.getCheckedNodes();
+
+            let moduleNameList = [];
+            checkedNodes.forEach(function(item){
+                moduleNameList.push(item.displayName)
+            });
+            this.saveForm.groupIds = checkedKeys;
+            //this.saveForm.groupNameStrs = moduleNameList.join(',');
+            this.$set(this.saveForm,'groupNameStrs',moduleNameList.join(','))
+
+        },
+
+
 
 
     }

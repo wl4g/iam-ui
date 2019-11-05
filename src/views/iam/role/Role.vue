@@ -30,6 +30,7 @@
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="displayName" label="DisplayName"></el-table-column>
                     <el-table-column prop="name" label="Name"></el-table-column>
+                    <el-table-column prop="groupDisplayName" label="Group"></el-table-column>
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
@@ -64,7 +65,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  label="Role："   prop="role">
+                        <el-form-item  label="Menu："   prop="menu">s
                             <el-input type="textarea"  class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     style="max-height: 240px;overflow: scroll"
@@ -76,6 +77,26 @@
                                     node-key="id"
                                     :check-strictly="true"
                                     @check-change = "checkChange"
+                                    :props="defaultProps">
+                            </el-tree>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+
+                <el-row>
+                    <el-col :span="20">
+                        <el-form-item  label="Group："   prop="groupNames">
+                            <el-input type="textarea"  class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo2()'></el-input>
+                            <el-tree
+                                    v-show="groupTreeShow"
+                                    default-expand-all
+                                    :data="groupsTreeData"
+                                    ref="modulesTree2"
+                                    show-checkbox
+                                    node-key="id"
+                                    :check-strictly="true"
+                                    @check-change = "checkChange2"
                                     :props="defaultProps">
                             </el-tree>
                         </el-form-item>
