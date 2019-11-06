@@ -125,6 +125,20 @@ export default [
     },
 
 
+    //online
+    {
+        name: 'onlineList',
+        method: 'onlineList',
+        path: baseUrl+'/mgr/v1/getSessions',
+        type: 'post'
+    },
+    {
+        name: 'getIamServer',
+        method: 'getIamServer',
+        path: baseUrl+'/mgr/v1/getIamServer',
+        type: 'post'
+    },
+
 
 
 ]
