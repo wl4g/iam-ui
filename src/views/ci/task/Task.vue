@@ -80,7 +80,7 @@
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="runTask(scope.row)">Build</el-button>
+                            <el-button type="text" size="small" @click="beforeRunTask(scope.row)">Build</el-button>
                             <el-button type="text" size="small" @click="taskDetail(scope.row)">Edit</el-button>
                             <el-button type="text" size="small" @click="delTask(scope.row)">Del</el-button>
                             <!--<el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>-->
@@ -274,6 +274,38 @@
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="save()">Save</el-button>
                 <el-button @click="dialogVisible = false;">Cancel</el-button>
+          </span>
+        </el-dialog>
+
+
+
+        <el-dialog title="Create Task Confirm" :visible.sync="confirmDialog" size="small">
+            <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline">
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="trackId:" prop="trackId">
+                            <el-input v-model="confirmForm.trackId" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="trackType:" prop="trackType">
+                            <el-input  v-model="confirmForm.trackType"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="remark:" prop="remark">
+                            <el-input type="textarea" v-model="confirmForm.remark" :rows="2"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="runTask()">Ok</el-button>
+                <el-button @click="confirmDialog = false;cleanConfirm();">Cancel</el-button>
           </span>
         </el-dialog>
 

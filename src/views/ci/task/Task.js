@@ -91,6 +91,17 @@ export default {
 
             postCommandTip: '<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && ',
 
+            //before create Build Task
+            confirmDialog: false,
+
+            confirmForm:{
+                taskId: '',
+                trackId: '',
+                trackType: '',
+                remark: '',
+            },
+
+
 
         }
     },
@@ -461,27 +472,30 @@ export default {
             return result;
         },
 
-        runTask(row){
+
+        beforeRunTask(row){
+            this.cleanConfirm();
             if(!row.id){
                 return;
             }
+            this.confirmForm.taskId = row.id;
+            this.confirmDialog = true;
+        },
 
-            this.$confirm('Create Task confirm', {
-                confirmButtonText: 'confirm',
-                cancelButtonText: 'cancel',
-                type: 'info'
-            }).then(() => {
+        cleanConfirm() {
+            this.confirmForm = {
+                taskId: '',
+                trackId: '',
+                trackType: '',
+                remark: '',
+            };
+        },
+
+        runTask(){
                 this.$$api_ci_runTask({
-                    data: {
-                        taskId: row.id,
-                    },
+                    data: this.confirmForm,
                     fn: data => {
                         if (data.code == 200) {
-                            /*this.$alert('创建任务成功', '信息', {
-                                confirmButtonText: '确定'
-                            });*/
-
-
                             this.$confirm('Create Task Success,jump to task list?',  {
                                 confirmButtonText: 'Yes',
                                 cancelButtonText: 'No',
@@ -504,9 +518,7 @@ export default {
                         });
                     }
                 })
-            }).catch(() => {
-                //do nothing
-            });
+
 
 
 

@@ -135,9 +135,19 @@ export default [
     {
         name: 'getIamServer',
         method: 'getIamServer',
-        path: baseUrl+'/mgr/v1/getIamServer',
+        path: baseUrl+'/mgr/v1/findIamServers',
         type: 'post'
     },
+    {
+        name: 'destroySessions',
+        method: 'destroySessions',
+        path: baseUrl+'/mgr/v1/destroySessions',
+        type: 'post'
+    },
+
+
+
+
 
 
 

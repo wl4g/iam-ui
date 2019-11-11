@@ -62,7 +62,7 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Group:" prop="appClusterId">
+                        <el-form-item label="Cluster:" prop="appClusterId">
                             <el-select v-model="saveForm.appClusterId" placeholder="Please group">
                                 <el-option
                                         v-for="item in groupData"
@@ -80,20 +80,27 @@
                     </el-col>
                 </el-row>
 
+                <el-form-item label="VcsType:" prop="vcsType">
+                    <el-select v-model="saveForm.vcsType">
+                        <el-option
+                                v-for="item in dictutil.getDictListByType('ci_vcs_type')"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item label="Git:" prop="gitUrl">
                     <el-input v-model="saveForm.gitUrl" placeholder="git地址"></el-input>
                 </el-form-item>
 
-                <el-form-item label="TarPath:" prop="tarPath">
-                    <el-input v-model="saveForm.tarPath" placeholder="tar地址"></el-input>
+                <el-form-item label="assetsPath:" prop="assetsPath">
+                    <el-input v-model="saveForm.assetsPath" placeholder="tar地址"></el-input>
                 </el-form-item>
 
                 <el-form-item label="AppHome:" prop="parentAppHome">
                     <el-input v-model="saveForm.parentAppHome" placeholder="项目存放路径"></el-input>
-                </el-form-item>
-
-                <el-form-item label="LinkHome:" prop="linkAppHome">
-                    <el-input v-model="saveForm.linkAppHome" placeholder="link地址"></el-input>
                 </el-form-item>
 
                 <el-form-item label="remark:" prop="remark">
@@ -113,7 +120,7 @@
                     </el-popover>
                 </el-form-item>-->
 
-                <el-form-item label="Dependencys：" prop="dependencies">
+                <el-form-item label="Dependencies：" prop="dependencies">
                     <!-- 查询结果表格 -->
                     <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
                         <template>

@@ -76,7 +76,6 @@ export default {
         },
 
         getIamServer(){
-            console.info("into");
             this.$$api_iam_getIamServer({
                 data: {
 
@@ -84,7 +83,35 @@ export default {
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        this.iamServers = data.data.data;
+                        this.iamServers = data.data;
+                    } else {
+                        this.$alert(data.message, '错误', {
+                            confirmButtonText: '确定'
+                        });
+                    }
+                },
+                errFn: () => {
+                    //this.loading = false;
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        destroySessions(row){
+            this.$$api_iam_destroySessions({
+                data: {
+                    sessionIds : row.id
+                },
+                fn: data => {
+                    //this.loading = false;
+                    if (data.code == 200) {
+                        this.$message({
+                            message: 'destroy seccess',
+                            type: 'success'
+                        });
+                        this.getData();
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

@@ -41,7 +41,7 @@
                     <el-table-column prop="authenticated" label="authenticated"></el-table-column>
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
+                            <el-button type="text" size="small" @click="destroySessions(scope.row)">destroy</el-button>
                         </template>
                     </el-table-column>
 
@@ -49,8 +49,6 @@
             </template>
         </div>
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
-
-
     </section>
 </template>
 

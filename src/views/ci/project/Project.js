@@ -24,12 +24,12 @@ export default {
                 appClusterId: '',
                 projectName: '',
                 gitUrl: '',
-                tarPath: '',
+                assetsPath: '',
                 parentAppHome: '',
-                linkAppHome: '',
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
+                vcsType: '',
             },
 
             dialogVisible: false,
@@ -66,16 +66,12 @@ export default {
                     { required: true, message: 'Please Input Git Url', trigger: 'change' },
                     { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
-                tarPath: [
-                    { required: true, message: 'Please Input Tar Path', trigger: 'change' },
+                assetsPath: [
+                    { required: true, message: 'Please Input assets Path', trigger: 'change' },
                     { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
                 parentAppHome: [
                     { required: true, message: 'Please Input App Home', trigger: 'change' },
-                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
-                ],
-                linkAppHome: [
-                    { required: true, message: 'Please Input Link App Home', trigger: 'change' },
                     { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
 
@@ -239,10 +235,10 @@ export default {
                             appClusterId: this.saveForm.appClusterId,
                             projectName: this.saveForm.projectName,
                             gitUrl: this.saveForm.gitUrl,
-                            tarPath: this.saveForm.tarPath,
+                            vcsType: this.saveForm.vcsType,
+                            assetsPath: this.saveForm.assetsPath,
                             parentAppHome: this.saveForm.parentAppHome,
                             restartCommand: this.saveForm.restartCommand,
-                            linkAppHome: this.saveForm.linkAppHome,
                             remark: this.saveForm.remark,
                             dependencies: this.saveForm.dependencies,
                         },
@@ -277,10 +273,10 @@ export default {
             this.saveForm.appClusterId = '';
             this.saveForm.projectName = '';
             this.saveForm.gitUrl = '';
-            this.saveForm.tarPath = '';
+            this.saveForm.vcsType = '',
+            this.saveForm.assetsPath = '';
             this.saveForm.parentAppHome = '';
             this.saveForm.restartCommand = '',
-            this.saveForm.linkAppHome = '';
             this.saveForm.remark = '';
         },
 
