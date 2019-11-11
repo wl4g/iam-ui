@@ -7,6 +7,7 @@ export default {
             //查询条件
             searchParams: {
                 id: '',
+                principal: '',
             },
 
             //分页信息
@@ -54,6 +55,7 @@ export default {
             this.$$api_iam_onlineList({
                 data: {
                     id: this.searchParams.id,
+                    principal: this.searchParams.principal,
                 },
                 fn: data => {
                     //this.loading = false;
@@ -102,7 +104,9 @@ export default {
         destroySessions(row){
             this.$$api_iam_destroySessions({
                 data: {
-                    sessionIds : row.id
+                    id: this.searchParams.id,
+                    sessionId: row.id,
+                    //principal: row.principal,
                 },
                 fn: data => {
                     //this.loading = false;
@@ -125,6 +129,22 @@ export default {
                     });
                 }
             })
+        },
+
+
+        convertType(row, column, cellValue, index) {
+            if(cellValue){
+                return "true";
+            }else{
+                return "false";
+            }
+        },
+
+        subStr(str){
+            if(str.length>10){
+                str = str.substring(0,10)+"...";
+            }
+            return str;
         },
 
 
