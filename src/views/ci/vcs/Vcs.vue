@@ -24,6 +24,7 @@
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
+                    <el-table-column prop="name" label="name"></el-table-column>
                     <el-table-column prop="provider" label="provider">
                         <template slot-scope="scope">
                             <el-tag :type="dictutil.getDictThemesByTypeAndValue('vcs_provider',scope.row.provider)">{{dictutil.getDictLabelByTypeAndValue('vcs_provider',scope.row.provider)}}</el-tag>
@@ -54,6 +55,13 @@
         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
 
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="name:" prop="name">
+                            <el-input v-model="saveForm.name"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="provider:">

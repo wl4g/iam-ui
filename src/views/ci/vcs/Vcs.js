@@ -17,6 +17,7 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
+                name: '',
                 provider: '',
                 authType: '',
                 baseUri: '',
@@ -91,6 +92,7 @@ export default {
         cleanSaveForm() {
             this.saveForm = {
                 id: '',
+                name: '',
                 provider: '',
                 authType: '',
                 baseUri: '',
@@ -140,6 +142,7 @@ export default {
                     if (data.code == 200) {
                         this.saveForm = {
                             id: data.data.id,
+                            name: data.data.name,
                             provider: data.data.provider.toString(),
                             authType: data.data.authType.toString(),
                             baseUri: data.data.baseUri,
