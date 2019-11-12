@@ -196,4 +196,31 @@ export default [
         type: 'post'
     },
 
+
+    //vcs
+    {
+        name: 'vcs列表',
+        method: 'vcsList',
+        path: baseUrl+'/vcs/list',
+        type: 'post'
+    },
+    {
+        name: '保存vcs',
+        method: 'saveVcs',
+        path: baseUrl+'/vcs/save',
+        type: 'post'
+    },
+    {
+        name: 'vcs详情',
+        method: 'vcsDetail',
+        path: baseUrl+'/vcs/detail',
+        type: 'post'
+    },
+    {
+        name: '删除vcs',
+        method: 'delVcs',
+        path: baseUrl+'/vcs/del',
+        type: 'post'
+    },
+
 ]

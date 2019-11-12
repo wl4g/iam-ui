@@ -33,6 +33,13 @@ export default [
         component: Ci.Project,
         permission: 'ci:project',
     },
+    {
+        path: 'vcs',
+        name: 'Vcs',
+        icon: 'window-restore',
+        component: Ci.Vcs,
+        permission: 'ci:vcs',
+    },
 
 
 ]

@@ -3,6 +3,7 @@ import TaskHistory from './taskhis/'
 import Project from './project/'
 import Dependency from './dependency/'
 import Trigger from './trigger/'
+import Vcs from './vcs/'
 
 
 export default {
@@ -10,5 +11,6 @@ export default {
     TaskHistory,
     Project,
     Dependency,
-    Trigger
+    Trigger,
+    Vcs,
 }
