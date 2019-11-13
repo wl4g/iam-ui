@@ -283,13 +283,20 @@
             <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline">
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="trackId:" prop="trackId">
-                            <el-input v-model="confirmForm.trackId" ></el-input>
+                        <el-form-item label="trackType:" prop="trackType">
+                            <el-select v-model="confirmForm.trackType">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('ci_track_type')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="trackType:" prop="trackType">
-                            <el-input  v-model="confirmForm.trackType"></el-input>
+                        <el-form-item label="trackId:" prop="trackId">
+                            <el-input v-model="confirmForm.trackId" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

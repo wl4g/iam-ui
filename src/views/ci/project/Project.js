@@ -1,4 +1,5 @@
 import {transDate, getDay} from 'utils/'
+import fa from "element-ui/src/locale/lang/fa";
 
 export default {
     name: 'project',
@@ -23,18 +24,21 @@ export default {
                 id: '',
                 appClusterId: '',
                 projectName: '',
-                gitUrl: '',
+                httpUrl: '',
+                sshUrl: '',
                 assetsPath: '',
                 parentAppHome: '',
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
-                vcsType: '',
+                vcsId: '',
             },
 
             dialogVisible: false,
             dialogTitle: '',
             dialogLoading: false,
+
+            searchProjectLoading: false,
 
             //create内的下拉数据
             groupData: [],
@@ -42,9 +46,13 @@ export default {
             //create内的下拉数据
             ProjectData: [],
 
+            //vcs数据
+            vcsData: [],
+
             //列表Data
             tableData: [],
 
+            vcsProjectData: [],
 
             //详情
             detailVisible: false,
@@ -62,10 +70,7 @@ export default {
                     {required: true, message: 'Please Input projectName', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
-                gitUrl: [
-                    { required: true, message: 'Please Input Git Url', trigger: 'change' },
-                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
-                ],
+
                 assetsPath: [
                     { required: true, message: 'Please Input assets Path', trigger: 'change' },
                     { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
@@ -87,7 +92,7 @@ export default {
     mounted() {
         this.getData();
         this.getGroup();
-
+        this.getVcs();
         this.getProject();
 
     },
@@ -104,6 +109,21 @@ export default {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
+        },
+
+
+        // 获取分组名称
+        getVcs() {
+            this.$$api_ci_vcsAll({
+                fn: data => {
+                    this.vcsData = data.data;
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
         },
 
         // 获取分组名称
@@ -234,8 +254,9 @@ export default {
                             id: this.saveForm.id,
                             appClusterId: this.saveForm.appClusterId,
                             projectName: this.saveForm.projectName,
-                            gitUrl: this.saveForm.gitUrl,
-                            vcsType: this.saveForm.vcsType,
+                            httpUrl: this.saveForm.httpUrl,
+                            sshUrl: this.saveForm.sshUrl,
+                            vcsId: this.saveForm.vcsId,
                             assetsPath: this.saveForm.assetsPath,
                             parentAppHome: this.saveForm.parentAppHome,
                             restartCommand: this.saveForm.restartCommand,
@@ -269,15 +290,19 @@ export default {
         },
 
         cleanSaveForm() {
-            this.saveForm.id = '';
-            this.saveForm.appClusterId = '';
-            this.saveForm.projectName = '';
-            this.saveForm.gitUrl = '';
-            this.saveForm.vcsType = '',
-            this.saveForm.assetsPath = '';
-            this.saveForm.parentAppHome = '';
-            this.saveForm.restartCommand = '',
-            this.saveForm.remark = '';
+            this.saveForm = {
+                id: '',
+                appClusterId: '',
+                projectName: '',
+                httpUrl: '',
+                sshUrl: '',
+                assetsPath: '',
+                parentAppHome: '',
+                remark: '',
+                restartCommand: '',
+                dependencies: [],
+                vcsId: '',
+            }
         },
 
         delProject(row) {
@@ -362,9 +387,62 @@ export default {
                     message: '已取消删除'
                 });*/
             });
+        },
+
+        changeVcs(){
+            if(!this.saveForm.vcsId){
+                return;
+            }
+            this.$$api_ci_vcsProjects({
+                data: {
+                    vcsId: this.saveForm.vcsId,
+                },
+                fn: data => {
+                    this.vcsProjectData = data.data;
+                },
+                errFn: () => {
+                    this.$alert('访问失败，请稍后重试！', '错误', {
+                        confirmButtonText: '确定',
+                    });
+                }
+            })
+        },
+
+        remoteMethod(query) {
+            this.searchProjectLoading = true;
+            this.$$api_ci_vcsProjects({
+                data: {
+                    vcsId: this.saveForm.vcsId,
+                    projectName: query,
+                },
+                fn: data => {
+                    this.vcsProjectData = data.data;
+                    this.searchProjectLoading = false;
+                },
+                errFn: () => {
+                    this.searchProjectLoading = false;
+                }
+            })
 
 
+        },
+
+        changeProject(){
+            let remoteProject = this.getProjectByName(this.saveForm.projectName);
+            this.saveForm.httpUrl = remoteProject.httpUrl
+            this.saveForm.sshUrl = remoteProject.sshUrl
+        },
+
+
+        getProjectByName(name){
+            for(let i = 0;i<this.vcsProjectData.length;i++){
+                if(this.vcsProjectData[i].name==name){
+                    return this.vcsProjectData[i];
+                }
+            }
         }
+
+
 
 
     }

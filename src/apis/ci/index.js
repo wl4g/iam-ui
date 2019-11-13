@@ -222,5 +222,17 @@ export default [
         path: baseUrl+'/vcs/del',
         type: 'post'
     },
+    {
+        name: '所有vcs',
+        method: 'vcsAll',
+        path: baseUrl+'/vcs/all',
+        type: 'post'
+    },
+    {
+        name: 'vcsProjects',
+        method: 'vcsProjects',
+        path: baseUrl+'/project/vcsProjects',
+        type: 'post'
+    },
 
 ]

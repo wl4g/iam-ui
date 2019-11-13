@@ -73,52 +73,74 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                </el-row>
+
+                <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Project:" prop="projectName">
-                            <el-input v-model="saveForm.projectName" placeholder="项目名"></el-input>
+                        <el-form-item label="Vcs:" prop="vcs">
+                            <el-select v-model="saveForm.vcsId" @change="changeVcs">
+                                <el-option
+                                        v-for="item in vcsData"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="Project:" prop="project">
+                            <!--<el-select v-model="saveForm.projectName" @change="changeProject">
+                                <el-option
+                                        v-for="item in vcsProjectData"
+                                        :key="item.name"
+                                        :label="item.name"
+                                        :value="item.name">
+                                </el-option>
+                            </el-select>-->
+
+                            <el-select
+                                    v-model="saveForm.projectName"
+                                    @change="changeProject"
+                                    filterable
+                                    remote
+                                    :clearable="true"
+                                    placeholder="请输入关键词"
+                                    :remote-method="remoteMethod"
+                                    :loading="searchProjectLoading">
+                                <el-option
+                                        v-for="item in vcsProjectData"
+                                        :key="item.name"
+                                        :label="item.name"
+                                        :value="item.name">
+                                </el-option>
+                            </el-select>
+
+
                         </el-form-item>
                     </el-col>
                 </el-row>
 
-                <el-form-item label="VcsType:" prop="vcsType">
-                    <el-select v-model="saveForm.vcsType">
-                        <el-option
-                                v-for="item in dictutil.getDictListByType('ci_vcs_type')"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+                <el-form-item label="httpUrl:" prop="httpUrl">
+                    <el-input v-model="saveForm.httpUrl" placeholder="http url" :disabled="true"></el-input>
                 </el-form-item>
 
-                <el-form-item label="Git:" prop="gitUrl">
-                    <el-input v-model="saveForm.gitUrl" placeholder="git地址"></el-input>
+                <el-form-item label="sshUrl:" prop="sshUrl">
+                    <el-input v-model="saveForm.sshUrl" placeholder="ssh url" :disabled="true"></el-input>
                 </el-form-item>
 
                 <el-form-item label="assetsPath:" prop="assetsPath">
-                    <el-input v-model="saveForm.assetsPath" placeholder="tar地址"></el-input>
+                    <el-input v-model="saveForm.assetsPath" placeholder="tar path"></el-input>
                 </el-form-item>
 
                 <el-form-item label="AppHome:" prop="parentAppHome">
-                    <el-input v-model="saveForm.parentAppHome" placeholder="项目存放路径"></el-input>
+                    <el-input v-model="saveForm.parentAppHome" placeholder="install directory"></el-input>
                 </el-form-item>
 
                 <el-form-item label="remark:" prop="remark">
-                    <el-input v-model="saveForm.remark" placeholder="备注"></el-input>
+                    <el-input v-model="saveForm.remark" placeholder="desciption"></el-input>
                 </el-form-item>
 
-                <!--<el-form-item label="restart:" prop="restartCommand">
-                    <el-input type="textarea" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
-                </el-form-item>-->
-
-                <!--<el-form-item label="restart:" prop="restartCommand">
-                    &lt;!&ndash;<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>&ndash;&gt;
-                    <el-popover placement="right" width="200" trigger="focus" title="占位提示:">
-                        <el-input type="textarea" :rows="5" :readonly="true" value="#{alias}=>sso<br>#{project}">
-                        </el-input>
-                        <el-input type="textarea" slot="reference" v-model="saveForm.restartCommand" placeholder="自定义重启命令"></el-input>
-                    </el-popover>
-                </el-form-item>-->
 
                 <el-form-item label="Dependencies：" prop="dependencies">
                     <!-- 查询结果表格 -->
