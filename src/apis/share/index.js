@@ -53,11 +53,11 @@ export default [
         path: baseUrl+'/host/list',
         type: 'post'
     },
-    // Application informcation
+    // Cluster Config Informcation
     {
         name: '所有application',
-        method: 'applicationInfo',
-        path: window.IAM.Core.getIamBaseUri() + '/application/info',
+        method: 'clusterConfigInfo',//applicationInfo ==> clusterConfigInfo
+        path: window.IAM.Core.getIamBaseUri() + '/clusterConfig/info',
         type: 'post'
     },
 

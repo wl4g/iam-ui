@@ -105,8 +105,8 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Group:" prop="group">
-                            <el-select v-model="saveForm.group" @change="getTasksByAppClusterId()" placeholder="Please group" style="width: 100%;">
+                        <el-form-item label="Cluster:" prop="cluster">
+                            <el-select v-model="saveForm.group" @change="getTasksByAppClusterId()" placeholder="Please Cluster" style="width: 100%;">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"

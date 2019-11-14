@@ -69,7 +69,7 @@ export default {
       let that = this;
 
       //application
-      that.$$api_share_applicationInfo({
+      that.$$api_share_clusterConfigInfo({
         fn: data => {
           //console.info(data.data)
           store.set("application_cache",data.data);
@@ -79,7 +79,7 @@ export default {
         errFn: () => {
           //console.info("get application cache fail");
           //try again
-          that.$$api_share_applicationInfo({
+          that.$$api_share_clusterConfigInfo({
             fn: data => {
               //console.info(data.data)
               store.set("application_cache",data.data.list);

@@ -104,8 +104,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="11">
-                        <el-form-item label="Group:" prop="group">
-                            <el-select v-model="buildForm.group" @change="onChangeCluster()" :disabled="isEdit" placeholder="Please group" style="width: 100%">
+                        <el-form-item label="Cluster:" prop="cluster">
+                            <el-select v-model="buildForm.group" @change="onChangeCluster()" :disabled="isEdit" style="width: 100%">
                                 <el-option
                                         v-for="item in groupData"
                                         :key="item.id"
@@ -215,7 +215,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="16">
-                        <el-form-item label="Groups:" prop="contactGroupData">
+                        <el-form-item label="ContactGroup:" prop="contactGroupData">
                             <el-select v-model="buildForm.contactGroupId" placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in contactGroupData"
