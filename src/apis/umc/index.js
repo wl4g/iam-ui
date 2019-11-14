@@ -4,32 +4,6 @@ let baseUrl = global.getBaseUrl(global.umcBaseUrlKey,global.umcDefaultPath);
 
 export default [
 
-    //collector
-    {
-        name: '采集点列表',
-        method: 'collectorList',
-        path: baseUrl+'/collector/list',
-        type: 'post'
-    },
-    {
-        name: '保存采集点',
-        method: 'saveCollector',
-        path: baseUrl+'/collector/save',
-        type: 'post'
-    },
-    {
-        name: '保存采集点',
-        method: 'collectorDetail',
-        path: baseUrl+'/collector/detail',
-        type: 'post'
-    },
-    {
-        name: '删除采集点',
-        method: 'delCollector',
-        path: baseUrl+'/collector/del',
-        type: 'post'
-    },
-
     //template
     {
         name: '模版列表',

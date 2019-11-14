@@ -72,7 +72,7 @@ export default {
       that.$$api_share_applicationInfo({
         fn: data => {
           //console.info(data.data)
-          store.set("application_cache",data.data.map);
+          store.set("application_cache",data.data);
           console.info(store.get("application_cache"));
           console.info(store.get("application_cache")['umc-manager']);
         },
@@ -229,7 +229,7 @@ export default {
       // 监听panelType为pagePanel类型的SNS授权回调
       (function () {
         window.onmessage = function (e) {
-          if(e.data) {
+          if(e.data && e.data['code']) {//vue框架加载页面时也会触发event
             window.location.href = JSON.parse(e.data).refresh_url;
           }
         }

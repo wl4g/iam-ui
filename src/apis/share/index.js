@@ -43,14 +43,14 @@ export default [
     {
         name: '获取字典缓存',
         method: 'dictCache',
-        path: baseUrl+'/dict/cache',
+        path: baseUrl+'/dict/getInit',
         type: 'post'
     },
     //host
     {
         name: '所有host',
-        method: 'allHost',
-        path: baseUrl+'/host/all',
+        method: 'hostList',
+        path: baseUrl+'/host/list',
         type: 'post'
     },
     // Application informcation
@@ -76,12 +76,6 @@ export default [
         type: 'json'
     },
     {
-        name: '分组列表',
-        method: 'groupList',
-        path: baseUrl+'/contact/groupList',
-        type: 'post'
-    },
-    {
         name: '联系人详情',
         method: 'contactDetail',
         path: baseUrl+'/contact/detail',
@@ -103,6 +97,12 @@ export default [
         type: 'post'
     },
     {
+        name: '所有分组列表',
+        method: 'groupList',
+        path: baseUrl+'/contactGroup/groupList',
+        type: 'post'
+    },
+    {
         name: '保存联系人分组',
         method: 'saveContactGroup',
         path: baseUrl+'/contactGroup/save',
@@ -112,12 +112,6 @@ export default [
         name: '删除联系人分组',
         method: 'delContactGroup',
         path: baseUrl+'/contactGroup/del',
-        type: 'post'
-    },
-    {
-        name: '所有联系人分组',
-        method: 'allContactGroup',
-        path: baseUrl+'/contactGroup/all',
         type: 'post'
     },
 

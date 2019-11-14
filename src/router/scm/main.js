@@ -7,7 +7,7 @@ import { Scm } from 'views/'
 export default [
     {
         path: 'configuration',
-        name: 'Configurations',
+        name: 'Configuration',
         icon: 'window-restore',
         component: Scm.Configuration,
         permission: 'scm:configuration',

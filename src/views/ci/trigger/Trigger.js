@@ -119,17 +119,15 @@ export default {
                 },
                 fn: data => {
                     if (data.code == 200) {
-                        this.saveForm.id = data.data.trigger.id;
-                        this.saveForm.taskId = data.data.trigger.taskId;
-                        this.saveForm.name = data.data.trigger.name;
-                        this.saveForm.remark = data.data.trigger.remark;
-                        this.saveForm.enable = data.data.trigger.enable;
-                        this.saveForm.type = data.data.trigger.type;
-                        this.saveForm.cron = data.data.trigger.cron;
+                        this.saveForm.id = data.data.id;
+                        this.saveForm.taskId = data.data.taskId;
+                        this.saveForm.name = data.data.name;
+                        this.saveForm.remark = data.data.remark;
+                        this.saveForm.enable = data.data.enable;
+                        this.saveForm.type = data.data.type;
+                        this.saveForm.cron = data.data.cron;
 
                         this.saveForm.group = data.data.appClusterId;
-
-
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -175,8 +173,8 @@ export default {
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        this.total = data.data.page.total;
-                        this.tableData = data.data.list;
+                        this.total = data.data.total;
+                        this.tableData = data.data.records;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -363,15 +361,7 @@ export default {
                     appClusterId: this.saveForm.group,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        //delete success
-                        this.tasksData = data.data.tasks;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.tasksData = data.data;
                 },
                 errFn: () => {
                     //this.loading = false;

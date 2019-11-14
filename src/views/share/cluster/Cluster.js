@@ -56,10 +56,10 @@ export default {
 
         //获取主机列表
         getAllHost() {
-            this.$$api_share_allHost({
+            this.$$api_share_hostList({
                 fn: data => {
                     if(data.code == 200){
-                        this.allHost = data.data.list;
+                        this.allHost = data.data;
                     }else{
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

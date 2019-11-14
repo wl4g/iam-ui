@@ -40,7 +40,7 @@ export default [
     {
         name: 'menu树列表',
         method: 'getMenuTree',
-        path: baseUrl+'/menu/getMenuTree',
+        path: baseUrl+'/menu/tree',
         type: 'post'
     },
     {
@@ -58,7 +58,7 @@ export default [
     {
         name: '获取用户menu列表',
         method: 'getMenuList',
-        path: baseUrl+'/menu/getMenuList',
+        path: baseUrl+'/menu/list',
         type: 'post'
     },
 
