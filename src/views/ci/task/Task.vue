@@ -44,11 +44,10 @@
                 <el-dropdown style='float:right;margin-right:20px' @command="add">
                     <el-button type="primary" >+</el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="PipeWithMvnAssTar">PipeWithMvnAssTar</el-dropdown-item>
-                        <el-dropdown-item command="PipeWithNpm">PipeWithNpm</el-dropdown-item>
-                        <el-dropdown-item disabled command="PipeWithDjangoStd">PipeWithDjangoStd</el-dropdown-item>
-                        <el-dropdown-item disabled command="PipeWithDockerNat">PipeWithDockerNat</el-dropdown-item>
-                        <el-dropdown-item disabled command="PipeWithSpringExecJar">PipeWithSpringExecJar</el-dropdown-item>
+                        <el-dropdown-item
+                                v-for="item in dictutil.getDictListByType('ci_tar_type')"
+                                :command="item.value">{{item.label}}
+                        </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
 

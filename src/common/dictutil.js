@@ -2,10 +2,14 @@ import {
     store as stor
 } from 'utils/'
 
+//config
+let defaultLabel = "- -";
+let defaultTheme = "primary";
+
 export default {
 
-    //==========字典共用方法==========
 
+    //==========字典共用方法==========
     getDictListByType: function (type) {
         if (!type) {//type can not be null
             return [];
@@ -21,38 +25,39 @@ export default {
 
     getDictLabelByTypeAndValue: function (type, value) {
         if (!type || !value) {//type can not be null
-            return 'default';
+            return defaultLabel;
         }
         let dicts_cache = stor.get("dicts_cache");
         if (!dicts_cache) {
-            return 'default';
+            return defaultLabel;
         }
         let dictGroup = dicts_cache.dictMap[type];
         if (!dictGroup) {
-            return 'default';
+            return defaultLabel;
         }
         let dict = dictGroup[value];
         if (!dict) {
-            return 'default';
+            return defaultLabel;
         }
         return dict.label;
     },
 
     getDictThemesByTypeAndValue: function (type, value) {
+        //defalut return primary theme , because the default theme is ugly
         if (!type || !value) {//type can not be null
-            return ;
+            return defaultTheme;
         }
         let dicts_cache = stor.get("dicts_cache");
         if (!dicts_cache) {
-            return;
+            return defaultTheme;
         }
         let dictGroup = dicts_cache.dictMap[type];
         if (!dictGroup) {
-            return;
+            return defaultTheme;
         }
         let dict = dictGroup[value];
         if (!dict) {
-            return;
+            return defaultTheme;
         }
         return dict.themes;
     },

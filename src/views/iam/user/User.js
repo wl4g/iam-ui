@@ -141,8 +141,8 @@ export default {
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        this.total = data.data.page.total;
-                        this.tableData = data.data.list;
+                        this.total = data.data.total;
+                        this.tableData = data.data.records;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'

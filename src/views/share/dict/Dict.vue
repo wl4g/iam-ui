@@ -42,7 +42,7 @@
                     <el-table-column prop="sort" label="Sort" width=68></el-table-column>
                     <el-table-column prop="themes" label="Themes" width=95>
                         <template slot-scope="scope">
-                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('theme_type',scope.row.themes)">{{dictutil.getDictLabelByTypeAndValue('theme_type',scope.row.themes)}}</el-tag>
+                            <el-tag v-if="scope.row.themes" :type="dictutil.getDictThemesByTypeAndValue('theme_type',scope.row.themes)">{{dictutil.getDictLabelByTypeAndValue('theme_type',scope.row.themes)}}</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="remark" label="Remark" :show-overflow-tooltip="true" width=140></el-table-column>
