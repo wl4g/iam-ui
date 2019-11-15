@@ -10,6 +10,10 @@ export default {
         environment: '',
         instance: ''
       },
+
+      pageNum: 1,
+      pageSize: 10,
+
       options: [{
         value: 1,
         label: '成功'
