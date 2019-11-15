@@ -1,38 +1,60 @@
 import global from "../../common/global_variable";
 
-let baseUrl = global.getBaseUrl(global.iamBaseUrlKey,global.iamDefaultPath);
+/*let baseUrl = getIamUrl();
+
+function getIamUrl() {
+    var hostname = location.hostname;
+    var protocol = location.protocol;
+    var contextPath = '/iam-server';
+    if (hostname == 'localhost' || hostname == '127.0.0.1'|| hostname == '0:0:0:0:0:0:0:1') {
+        var iamBaseUrl = protocol + "//" +hostname+ ":14040" + contextPath;
+        return iamBaseUrl;
+    } else {
+        var topDomainName = hostname.split('.').slice(-2).join('.');
+        if(hostname.indexOf("com.cn") > 0){
+            topDomainName = hostname.split('.').slice(-3).join('.');
+        }
+        var iamBaseUrl = protocol +"//iam" +"."+ topDomainName + contextPath;
+        return iamBaseUrl;
+    }
+}*/
 
 export default [
     //user
     {
         name: '用户列表',
         method: 'userList',
-        path: baseUrl+'/user/list',
-        type: 'post'
+        path: '/user/list',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '保存用户',
         method: 'saveUser',
-        path: baseUrl+'/user/save',
-        type: 'json'
+        path: '/user/save',
+        type: 'json',
+        sys: global.iam
     },
     {
         name: '用户详情',
         method: 'userDetail',
-        path: baseUrl+'/user/detail',
-        type: 'post'
+        path: '/user/detail',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '删除用户',
         method: 'delUser',
-        path: baseUrl+'/user/del',
-        type: 'post'
+        path: '/user/del',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: 'loginCheck',
         method: 'loginCheck',
-        path: baseUrl+'/login/check',
-        type: 'post'
+        path: '/login/check',
+        type: 'post',
+        sys: global.iam
     },
 
 
@@ -40,26 +62,30 @@ export default [
     {
         name: 'menu树列表',
         method: 'getMenuTree',
-        path: baseUrl+'/menu/tree',
-        type: 'post'
+        path: '/menu/tree',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '保存menu',
         method: 'saveMenu',
-        path: baseUrl+'/menu/save',
-        type: 'json'
+        path: '/menu/save',
+        type: 'json',
+        sys: global.iam
     },
     {
         name: '删除menu',
         method: 'delMenu',
-        path: baseUrl+'/menu/del',
-        type: 'post'
+        path: '/menu/del',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '获取用户menu列表',
         method: 'getMenuList',
-        path: baseUrl+'/menu/list',
-        type: 'post'
+        path: '/menu/list',
+        type: 'post',
+        sys: global.iam
     },
 
 
@@ -69,32 +95,37 @@ export default [
     {
         name: '角色列表',
         method: 'getRoles',
-        path: baseUrl+'/role/getRolesByUserGroups',
-        type: 'post'
+        path: '/role/getRolesByUserGroups',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '角色列表',
         method: 'roleList',
-        path: baseUrl+'/role/list',
-        type: 'post'
+        path: '/role/list',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '保存角色',
         method: 'saveRole',
-        path: baseUrl+'/role/save',
-        type: 'json'
+        path: '/role/save',
+        type: 'json',
+        sys: global.iam
     },
     {
         name: '删除角色',
         method: 'delRole',
-        path: baseUrl+'/role/del',
-        type: 'post'
+        path: '/role/del',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '角色详情',
         method: 'roleDetail',
-        path: baseUrl+'/role/detail',
-        type: 'post'
+        path: '/role/detail',
+        type: 'post',
+        sys: global.iam
     },
 
 
@@ -102,26 +133,30 @@ export default [
     {
         name: '获取分组树',
         method: 'getGroupsTree',
-        path: baseUrl+'/group/getGroupsTree',
-        type: 'post'
+        path: '/group/getGroupsTree',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: '保存Group',
         method: 'saveGroup',
-        path: baseUrl+'/group/save',
-        type: 'json'
+        path: '/group/save',
+        type: 'json',
+        sys: global.iam
     },
     {
         name: '删除Group',
         method: 'delGroup',
-        path: baseUrl+'/group/del',
-        type: 'post'
+        path: '/group/del',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: 'Group详情',
         method: 'groupDetail',
-        path: baseUrl+'/group/detail',
-        type: 'post'
+        path: '/group/detail',
+        type: 'post',
+        sys: global.iam
     },
 
 
@@ -129,20 +164,32 @@ export default [
     {
         name: 'onlineList',
         method: 'onlineList',
-        path: baseUrl+'/mgr/v1/getSessions',
-        type: 'post'
+        path: '/mgr/v1/getSessions',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: 'getIamServer',
         method: 'getIamServer',
-        path: baseUrl+'/mgr/v1/findIamServers',
-        type: 'post'
+        path: '/mgr/v1/findIamServers',
+        type: 'post',
+        sys: global.iam
     },
     {
         name: 'destroySessions',
         method: 'destroySessions',
-        path: baseUrl+'/mgr/v1/destroySessions',
-        type: 'post'
+        path: '/mgr/v1/destroySessions',
+        type: 'post',
+        sys: global.iam
+    },
+
+    // Cluster Config Informcation
+    {
+        name: '所有application',
+        method: 'clusterConfigInfo',//applicationInfo ==> clusterConfigInfo
+        path: '/clusterConfig/info',
+        type: 'post',
+        sys: global.iam
     },
 
 

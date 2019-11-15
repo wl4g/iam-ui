@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import qs from 'qs'
+import global from "../../common/global_variable";
 Vue.prototype.$qs = qs
 
 Vue.use(VueAxios, axios)
@@ -35,9 +36,15 @@ export default function ({
                            errFn,
                            tokenFlag,
                            headers,
-                           opts
+                           opts,
+                            sys,
                          } = {}) {
-  var p = path
+
+    //TODO 11-15 modify 根据sys获取baseUrl
+    console.info(sys);
+    var baseUrl = global.getBaseUrl(sys);
+
+  var p = baseUrl + path;
   if (typeof path === 'function') {
     p = path(pathParams || {})
   }

@@ -1,52 +1,57 @@
 import global from '../../common/global_variable.js'
 
-let baseUrl = global.getBaseUrl(global.ciBaseUrlKey,global.ciDefaultPath);
-
 export default [
 
     //task
     {
         name: '任务列表',
         method: 'taskList',
-        path: baseUrl+'/task/list',
-        type: 'post'
+        path: '/task/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '保存任务',
         method: 'saveTask',
-        path: baseUrl+'/task/save',
-        type: 'json'
+        path: '/task/save',
+        type: 'json',
+        sys: global.ci
     },
     {
         name: '任务详情',
         method: 'taskDetail',
-        path: baseUrl+'/task/detail',
-        type: 'post'
+        path: '/task/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '删除任务',
         method: 'delTask',
-        path: baseUrl+'/task/del',
-        type: 'post'
+        path: '/task/del',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '根据appClusterId获取任务',
         method: 'getTasksByAppClusterId',
-        path: baseUrl+'/task/getListByAppClusterId',
-        type: 'post'
+        path: '/task/getListByAppClusterId',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '创建任务',
         method: 'runTask',
-        path: baseUrl+'/task/create',
-        type: 'post'
+        path: '/task/create',
+        type: 'post',
+        sys: global.ci
     },
 
     {
         name: '获取依赖',
         method: 'getTaskBuildCommands',
-        path: baseUrl+'/task/getDependencys',
-        type: 'post'
+        path: '/task/getDependencys',
+        type: 'post',
+        sys: global.ci
     },
 
 
@@ -58,38 +63,44 @@ export default [
     {
         name: '任务列表',
         method: 'taskHisList',
-        path: baseUrl+'/taskHis/list',
-        type: 'post'
+        path: '/taskHis/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '创建任务',
         method: 'createTaskHis',
-        path: baseUrl+'/taskHis/create',
-        type: 'post'
+        path: '/taskHis/create',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '任务详情',
         method: 'taskHisDetail',
-        path: baseUrl+'/taskHis/detail',
-        type: 'post'
+        path: '/taskHis/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '回滚',
         method: 'rollbackTaskHis',
-        path: baseUrl+'/taskHis/rollback',
-        type: 'post'
+        path: '/taskHis/rollback',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '获取日志',
         method: 'taskHisReadLog',
-        path: baseUrl+'/taskHis/readLog',
-        type: 'post'
+        path: '/taskHis/readLog',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '停止任务',
         method: 'stopTask',
-        path: baseUrl+'/taskHis/stopTask',
-        type: 'post'
+        path: '/taskHis/stopTask',
+        type: 'post',
+        sys: global.ci
     },
 
 
@@ -97,44 +108,51 @@ export default [
     {
         name: '项目列表',
         method: 'projectList',
-        path: baseUrl+'/project/list',
-        type: 'post'
+        path: '/project/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '保存项目',
         method: 'saveProject',
-        path: baseUrl+'/project/save',
-        type: 'json'
+        path: '/project/save',
+        type: 'json',
+        sys: global.ci
     },
     {
         name: '项目详情',
         method: 'projectDetail',
-        path: baseUrl+'/project/detail',
-        type: 'post'
+        path: '/project/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '删除项目',
         method: 'delProject',
-        path: baseUrl+'/project/del',
-        type: 'post'
+        path: '/project/del',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '所有项目',
         method: 'allProject',
-        path: baseUrl+'/project/all',
-        type: 'post'
+        path: '/project/all',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '解锁项目',
         method: 'unlock',
-        path: baseUrl+'/project/unlock',
-        type: 'post'
+        path: '/project/unlock',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '获取分支列表',
         method: 'getBranchs',
-        path: baseUrl+'/project/getBranchs',
-        type: 'post'
+        path: '/project/getBranchs',
+        type: 'post',
+        sys: global.ci
     },
 
 
@@ -142,58 +160,67 @@ export default [
     {
         name: '依赖列表',
         method: 'dependencyList',
-        path: baseUrl+'/dependency/list',
-        type: 'post'
+        path: '/dependency/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '保存依赖',
         method: 'saveDependency',
-        path: baseUrl+'/dependency/save',
-        type: 'post'
+        path: '/dependency/save',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '依赖详情',
         method: 'dependencyDetail',
-        path: baseUrl+'/dependency/detail',
-        type: 'post'
+        path: '/dependency/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '删除依赖',
         method: 'delDependency',
-        path: baseUrl+'/dependency/del',
-        type: 'post'
+        path: '/dependency/del',
+        type: 'post',
+        sys: global.ci
     },
 
     //trigger
     {
         name: '触发器列表',
         method: 'triggerList',
-        path: baseUrl+'/trigger/list',
-        type: 'post'
+        path: '/trigger/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '保存触发器',
         method: 'saveTrigger',
-        path: baseUrl+'/trigger/save',
-        type: 'post'
+        path: '/trigger/save',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '触发器详情',
         method: 'triggerDetail',
-        path: baseUrl+'/trigger/detail',
-        type: 'post'
+        path: '/trigger/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '删除触发器',
         method: 'delTrigger',
-        path: baseUrl+'/trigger/del',
-        type: 'post'
+        path: '/trigger/del',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '校验cron',
         method: 'checkCron',
-        path: baseUrl+'/trigger/cronNextExecTime',
-        type: 'post'
+        path: '/trigger/cronNextExecTime',
+        type: 'post',
+        sys: global.ci
     },
 
 
@@ -201,38 +228,44 @@ export default [
     {
         name: 'vcs列表',
         method: 'vcsList',
-        path: baseUrl+'/vcs/list',
-        type: 'post'
+        path: '/vcs/list',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '保存vcs',
         method: 'saveVcs',
-        path: baseUrl+'/vcs/save',
-        type: 'post'
+        path: '/vcs/save',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: 'vcs详情',
         method: 'vcsDetail',
-        path: baseUrl+'/vcs/detail',
-        type: 'post'
+        path: '/vcs/detail',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '删除vcs',
         method: 'delVcs',
-        path: baseUrl+'/vcs/del',
-        type: 'post'
+        path: '/vcs/del',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: '所有vcs',
         method: 'vcsAll',
-        path: baseUrl+'/vcs/all',
-        type: 'post'
+        path: '/vcs/all',
+        type: 'post',
+        sys: global.ci
     },
     {
         name: 'vcsProjects',
         method: 'vcsProjects',
-        path: baseUrl+'/project/vcsProjects',
-        type: 'post'
+        path: '/project/vcsProjects',
+        type: 'post',
+        sys: global.ci
     },
 
 ]

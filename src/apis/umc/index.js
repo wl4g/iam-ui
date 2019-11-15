@@ -1,6 +1,6 @@
 import global from "../../common/global_variable";
 
-let baseUrl = global.getBaseUrl(global.umcBaseUrlKey,global.umcDefaultPath);
+//let baseUrl = global.getBaseUrl(global.umcBaseUrlKey,global.umcDefaultPath);
 
 export default [
 
@@ -8,32 +8,37 @@ export default [
     {
         name: '模版列表',
         method: 'templatList',
-        path: baseUrl+'/template/list',
-        type: 'post'
+        path: '/template/list',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '保存模板',
         method: 'saveTemplat',
-        path: baseUrl+'/template/save',
-        type: 'json'
+        path: '/template/save',
+        type: 'json',
+        sys: global.umc
     },
     {
         name: '模版详情',
         method: 'templatDetail',
-        path: baseUrl+'/template/detail',
-        type: 'post'
+        path: '/template/detail',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '删除模板',
         method: 'delTemplat',
-        path: baseUrl+'/template/del',
-        type: 'post'
+        path: '/template/del',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '根据类别获取列表',
         method: 'getTemplateByClassify',
-        path: baseUrl+'/template/getByClassify',
-        type: 'post'
+        path: '/template/getByClassify',
+        type: 'post',
+        sys: global.umc
     },
 
 
@@ -41,14 +46,16 @@ export default [
     {
         name: '记录列表',
         method: 'recordList',
-        path: baseUrl+'/record/list',
-        type: 'post'
+        path: '/record/list',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '记录详情',
         method: 'recordDetail',
-        path: baseUrl+'/record/detail',
-        type: 'post'
+        path: '/record/detail',
+        type: 'post',
+        sys: global.umc
     },
 
 
@@ -56,71 +63,82 @@ export default [
     {
         name: '模版列表',
         method: 'metricList',
-        path: baseUrl+'/metric/list',
-        type: 'post'
+        path: '/metric/list',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '保存模板',
         method: 'saveMetric',
-        path: baseUrl+'/metric/save',
-        type: 'json'
+        path: '/metric/save',
+        type: 'json',
+        sys: global.umc
     },
     {
         name: '模版详情',
         method: 'metricDetail',
-        path: baseUrl+'/metric/detail',
-        type: 'post'
+        path: '/metric/detail',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '删除模板',
         method: 'delMetric',
-        path: baseUrl+'/metric/del',
-        type: 'post'
+        path: '/metric/del',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '模版列表',
         method: 'getMetricByClassify',
-        path: baseUrl+'/metric/getByClassify',
-        type: 'post'
+        path: '/metric/getByClassify',
+        type: 'post',
+        sys: global.umc
     },
 
     {
         name: '记录列表',
         method: 'notificationList',
-        path: baseUrl+'/notification/list',
-        type: 'post'
+        path: '/notification/list',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '记录详情',
         method: 'notificationDetail',
-        path: baseUrl+'/notification/detail',
-        type: 'post'
+        path: '/notification/detail',
+        type: 'post',
+        sys: global.umc
     },
 
     //config
     {
         name: '模版列表',
         method: 'configList',
-        path: baseUrl+'/config/list',
-        type: 'post'
+        path: '/config/list',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '保存模板',
         method: 'saveConfig',
-        path: baseUrl+'/config/save',
-        type: 'json'
+        path: '/config/save',
+        type: 'json',
+        sys: global.umc
     },
     {
         name: '模版详情',
         method: 'configDetail',
-        path: baseUrl+'/config/detail',
-        type: 'post'
+        path: '/config/detail',
+        type: 'post',
+        sys: global.umc
     },
     {
         name: '删除模板',
         method: 'delConfig',
-        path: baseUrl+'/config/del',
-        type: 'post'
+        path: '/config/del',
+        type: 'post',
+        sys: global.umc
     },
 
 
