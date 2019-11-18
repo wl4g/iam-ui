@@ -57,7 +57,7 @@
 
                     <el-col :span="12">
                         <el-form-item label="Account:" prop="userName">
-                            <el-input v-model="saveForm.userName" placeholder="e.g zhangsan"></el-input>
+                            <el-input v-model="saveForm.userName" :disabled="true" placeholder="e.g zhangsan"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

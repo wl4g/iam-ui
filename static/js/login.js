@@ -16,8 +16,8 @@ function myBrowser() {
     var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
     var isChrome = userAgent.indexOf("Chrome") > -1 &&
         userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
-    if (!isChrome) {
-        window.location.href = "./upgrade.html";
+    if (!isChrome) {//TODO
+        //window.location.href = "./upgrade.html";
     }
 }
 

@@ -82,7 +82,7 @@ export default {
      * 点击删除按钮
      */
     onClickBtnDelete(opts) {
-      this.$confirm('请小心！！！子菜单会连同一起删除，是否继续？', '确认删除？').then(() => {
+      this.$confirm('Be Careful！！！Children group will be del(Logical), and the relationship with user/role/menu will not be del', 'Yes？').then(() => {
         this.$$api_iam_delGroup({
           data: {id : opts.data.id},
           fn: data => {

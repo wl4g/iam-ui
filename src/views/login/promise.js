@@ -29,13 +29,15 @@ function  getName(list, permission){
 
 function setMenu(rout,menu_cache){
     let permission = rout['permission'];
-    if(!permission){
+    if(!permission||!menu_cache){
         //TODO
         rout.hidden = true;
         return;
     }
     if(!menuExist(menu_cache,permission)){
         rout.hidden = true;
+    }else{
+        rout.hidden = false;
     }
 
     let name = getName(menu_cache,permission);
@@ -48,22 +50,22 @@ function setMenu(rout,menu_cache){
         rout.icon = icon;
     }
 }
-   
-let promise = {
-    buildRoleRoute : function (_this) {
-        console.info("into");
-      let routList = _this.$router.options.routes
-      let menu_cache = store.get("menu_cache");
-      for(let i = 0;i< routList.length;i++){
-        setMenu(routList[i],menu_cache);
 
-          let children = routList[i].children;
-          if(children){
-              for(let j = 0;j< children.length;j++){
-                  setMenu(children[j],menu_cache);
-              }
-          }
-      }
+let promise = {
+    buildRoleRoute: function (_this) {
+        console.info("start build Role Route");
+        let routList = _this.$router.options.routes;
+        let menu_cache = store.get("menu_cache");
+        for (let i = 0; i < routList.length; i++) {
+            setMenu(routList[i], menu_cache);
+
+            let children = routList[i].children;
+            if (children) {
+                for (let j = 0; j < children.length; j++) {
+                    setMenu(children[j], menu_cache);
+                }
+            }
+        }
     }
 };
 

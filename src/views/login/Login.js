@@ -59,7 +59,9 @@ export default {
           }
 
         },
-        errFn: () => {
+        errFn: (a,b) => {
+          console.info(a);
+          console.info(b);
           this.$message.error('get mune fail');
         }
       })
