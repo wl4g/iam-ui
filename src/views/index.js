@@ -3,6 +3,7 @@
  */
 
 import Login from './login/'
+import Init from './init/'
 import Components from './components/'
 import Umc from './umc'
 import Scm from './scm/'
@@ -12,12 +13,13 @@ import Iam from './iam'
 import Share from './share'
 
 export {
-  Login,
-  Components,
-  Scm,
-  Srm,
-  Ci,
-  Umc,
-  Iam,
-  Share,
+    Login,
+    Init,
+    Components,
+    Scm,
+    Srm,
+    Ci,
+    Umc,
+    Iam,
+    Share,
 }

@@ -33,6 +33,10 @@ export default {
   methods: {
 
     afterLogin(){
+      this.$router.push('/init');
+    },
+
+    afterLogin2(){
       this.getCache();
 
       this.$$api_iam_getMenuList({

@@ -7,6 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import { Login } from 'views/'
+import { Init } from 'views/'
 import Umc from './umc/'
 import Scm from './scm/'
 import Ci from './ci/'
@@ -28,6 +29,11 @@ export default new Router({
       name: '登录',
       hidden: true,
       component: Login
+    },{
+      path: '/init',
+      name: '初始化',
+      hidden: true,
+      component: Init
     },
     //Function,
     Umc,
