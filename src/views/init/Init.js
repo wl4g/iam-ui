@@ -5,7 +5,7 @@ export default {
     name: 'Init',
     data() {
         return {
-            //fullscreenLoading: false,
+            fullscreenLoading: false,
 
         }
     },
@@ -20,7 +20,7 @@ export default {
             //Do nothing , just wait 3 second
             this.afterLogin();
         }, 3000);*/
-
+        this.fullscreenLoading = true;
         this.afterLogin();
 
     },
@@ -37,7 +37,7 @@ export default {
                     store.set("menu_cache",data.data.data);
                     promise.buildRoleRoute(this);
 
-                    let routList = this.$router.options.routes
+                    let routList = this.$router.options.routes;
                     //jump to first not hidden page
                     for(let i = 0; i<routList.length;i++){
                         if(routList[i].hidden!=true){
@@ -46,6 +46,7 @@ export default {
                                 for(let j = 0; j<children.length;j++){
                                     if(children[j].hidden!=true) {
                                         this.$router.push(routList[i].path+'/'+children[j].path);
+                                        this.fullscreenLoading = false;
                                         return;
                                     }
                                 }
@@ -54,10 +55,13 @@ export default {
                     }
 
                 },
-                errFn: (a,b) => {
-                    console.info(a);
-                    console.info(b);
-                    this.$message.error('get mune fail');
+                errFn: (data) => {
+                    if(data&&data.message){
+                        this.$message.error(data.message);
+                    }else{
+                        this.$message.error('get mune fail');
+                    }
+                    this.fullscreenLoading = false;
                 }
             })
         },
@@ -84,8 +88,12 @@ export default {
                             //console.info(store.get("application_cache"));
                             console.info("get cluster config success");
                         },
-                        errFn: () => {
-                            console.error("get application cache fail")
+                        errFn: (data) => {
+                            if(data&&data.message){
+                                this.$message.error(data.message);
+                            }else{
+                                this.$message.error('get application cache fail');
+                            }
                         },
                     });
                 },
@@ -109,8 +117,12 @@ export default {
                             //console.info(store.get("dicts_cache"));
                             console.info("get dict success");
                         },
-                        errFn: () => {
-                            console.error("get dict cache fail")
+                        errFn: (data) => {
+                            if(data&&data.message){
+                                this.$message.error(data.message);
+                            }else{
+                                this.$message.error('get dict cache fail');
+                            }
                         },
                     });
                 },

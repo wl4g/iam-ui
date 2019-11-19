@@ -1,7 +1,7 @@
 <template>
-    <!--<div v-loading.fullscreen.lock="fullscreenLoading"></div>-->
+    <div v-loading.fullscreen.lock="fullscreenLoading"></div>
 
-    <div id="logo"/>
+    <!--<div id="logo"/>-->
 </template>
 
 <script>
@@ -9,7 +9,7 @@
     export default Init
 </script>
 
-<style scoped>
+<!--<style scoped>
     #logo{
         background: url("~@/../static/images/loading/3.gif");
         background-size: 100% 100%;
@@ -17,4 +17,4 @@
         position: fixed;
         width: 100%
     }
-</style>
+</style>-->
