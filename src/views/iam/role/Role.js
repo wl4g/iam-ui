@@ -6,7 +6,7 @@ export default {
         return {
             //查询条件
             searchParams: {
-                name: '',
+                roleCode: '',
                 displayName: '',
             },
 
@@ -131,7 +131,7 @@ export default {
         getData() {
             this.$$api_iam_roleList({
                 data: {
-                    name: this.searchParams.name,
+                    name: this.searchParams.roleCode,
                     displayName: this.searchParams.displayName,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,

@@ -68,6 +68,92 @@
               </el-col>
           </el-row>
 
+          <el-row>
+              <el-col :span="8">
+                  <el-form-item label="type:" prop="type">
+                      <el-select v-model="saveForm.type" :disabled="isEdit">
+                          <el-option
+                                  v-for="item in dictutil.getDictListByType('sys_group_type')"
+                                  :key="parseInt(item.value)"
+                                  :label="item.label"
+                                  :value="parseInt(item.value)">
+                          </el-option>
+                      </el-select>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+
+          <!-- park -->
+          <el-row v-if="saveForm.type==1">
+              <el-col :span="8">
+                  <el-form-item label="displayName:" prop="displayName">
+                      <el-input v-model="saveForm.groupExt.displayName"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contact:" prop="contact">
+                      <el-input v-model="saveForm.groupExt.contact"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contactPhone:" prop="contactPhone">
+                      <el-input v-model="saveForm.groupExt.contactPhone"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+          <el-row v-if="saveForm.type==1">
+              <el-col :span="24">
+                  <el-form-item label="address:" prop="address">
+                      <el-input v-model="saveForm.groupExt.address"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+
+          <!-- company -->
+          <el-row v-if="saveForm.type==2">
+              <el-col :span="8">
+                  <el-form-item label="displayName:" prop="displayName">
+                      <el-input v-model="saveForm.groupExt.displayName"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contact:" prop="contact">
+                      <el-input v-model="saveForm.groupExt.contact"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contactPhone:" prop="contactPhone">
+                      <el-input v-model="saveForm.groupExt.contactPhone"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+          <el-row v-if="saveForm.type==2">
+              <el-col :span="24">
+                  <el-form-item label="address:" prop="address">
+                      <el-input v-model="saveForm.groupExt.address"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+
+          <!-- department -->
+          <el-row v-if="saveForm.type==3">
+              <el-col :span="8">
+                  <el-form-item label="displayName:" prop="displayName">
+                      <el-input v-model="saveForm.groupExt.displayName"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contact:" prop="contact">
+                      <el-input v-model="saveForm.groupExt.contact"></el-input>
+                  </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="contactPhone:" prop="contactPhone">
+                      <el-input v-model="saveForm.groupExt.contactPhone"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+
      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button :loading="dialogSubmitBtnSwith" type="primary" @click="save">确 定</el-button>

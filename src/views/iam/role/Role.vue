@@ -2,12 +2,12 @@
 
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-            <el-form-item label="DisplayName:">
+            <!--<el-form-item label="DisplayName:">
                 <el-input v-model="searchParams.displayName" placeholder="e.g 开发者"></el-input>
             </el-form-item>
             <el-form-item label="Name:">
-                <el-input v-model="searchParams.name" placeholder="e.g coder"></el-input>
-            </el-form-item>
+                <el-input v-model="searchParams.roleCode" placeholder="e.g coder"></el-input>
+            </el-form-item>-->
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
@@ -29,7 +29,7 @@
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="displayName" label="DisplayName"></el-table-column>
-                    <el-table-column prop="name" label="Name"></el-table-column>
+                    <el-table-column prop="roleCode" label="RoleCode"></el-table-column>
                     <el-table-column prop="groupDisplayName" label="Group"></el-table-column>
 
                     <el-table-column label="Operation" min-width="100">

@@ -27,6 +27,7 @@ new Vue({
     store,
     template: '<App/>',
     components: {App},
+
     beforeCreate () {
         console.debug('根组件：beforeCreate')
     },
@@ -44,7 +45,7 @@ new Vue({
 
 
 router.beforeEach((to, from, next) => {
-    console.info('路由全局勾子：beforeEach')
+    console.debug('路由全局勾子：beforeEach')
     next()
 })
 

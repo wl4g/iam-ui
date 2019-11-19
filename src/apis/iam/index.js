@@ -1,24 +1,5 @@
 import global from "../../common/global_variable";
 
-/*let baseUrl = getIamUrl();
-
-function getIamUrl() {
-    var hostname = location.hostname;
-    var protocol = location.protocol;
-    var contextPath = '/iam-server';
-    if (hostname == 'localhost' || hostname == '127.0.0.1'|| hostname == '0:0:0:0:0:0:0:1') {
-        var iamBaseUrl = protocol + "//" +hostname+ ":14040" + contextPath;
-        return iamBaseUrl;
-    } else {
-        var topDomainName = hostname.split('.').slice(-2).join('.');
-        if(hostname.indexOf("com.cn") > 0){
-            topDomainName = hostname.split('.').slice(-3).join('.');
-        }
-        var iamBaseUrl = protocol +"//iam" +"."+ topDomainName + contextPath;
-        return iamBaseUrl;
-    }
-}*/
-
 export default [
     //user
     {

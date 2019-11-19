@@ -1,3 +1,5 @@
+import fa from "element-ui/src/locale/lang/fa";
+
 export default {
   name: 'manage-group',
   components: {  },
@@ -20,7 +22,7 @@ export default {
       btn_info: {
         width: 280,
         add_text: 'add lower level',
-        update_text: 'modify',
+        update_text: 'edit',
         delete_text: 'del',
       },
 
@@ -30,11 +32,19 @@ export default {
         name: '',
         displayName: '',
         parentId: '',
-
+        type: '',
         menuIds: [],
         menuNameStrs: '',
         roleIds: [],
+        groupExt:{
+          id: '',
+          displayName: '',
+          contact: '',
+          contactPhone: '',
+          address: '',
+        },
       },
+      isEdit: false,
 
       //验证
       rules: {
@@ -99,6 +109,7 @@ export default {
       this.windowTitle = '添加['+opts.data.displayName+']的下级菜单';
       this.dialogVisible = true;
       this.saveForm.parentId = opts.data.id;
+      this.isEdit = false;
     },
     /**
      * 修改按钮
@@ -108,13 +119,13 @@ export default {
       console.info(opts);
       this.windowTitle = '修改['+opts.data.displayName+']菜单';
       this.dialogVisible = true;
+      this.isEdit = true;
       this.$$api_iam_groupDetail({
         data: {
           id: opts.data.id,
         },
         fn: data => {
           this.saveForm = data.data.data;
-
           if(this.$refs.modulesTree && this.saveForm.menuIds instanceof Array){
             this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
             this.checkChange();
@@ -133,14 +144,23 @@ export default {
       if(this.$refs['groupForm']) {
         this.$refs['groupForm'].resetFields();
       }
+      this.isEdit = false;
       this.saveForm = {
         id: '',
         name: '',
         displayName: '',
         parentId: '',
+        type: '',
         menuIds: [],
         menuNameStrs: '',
         roleIds: [],
+        groupExt:{
+          id: '',
+          displayName: '',
+          contact: '',
+          contactPhone: '',
+          address: '',
+        },
       };
     },
     /**
@@ -151,6 +171,7 @@ export default {
       this.dialogVisible = true;
       this.windowTitle = '添加顶级菜单';
       this.saveForm.parentid = 0;
+      this.isEdit = false;
     },
     /**
      * 添加或者保存
