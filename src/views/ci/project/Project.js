@@ -59,7 +59,7 @@ export default {
             detailForm: {
                 group: '',
                 branch: '',
-                taskDetails: [],
+                taskInstances: [],
                 result: ''
             },
 

@@ -76,7 +76,7 @@
                 </el-form-item>
                 <div>
                     <template>
-                        <el-table :data="detailForm.taskDetails" style="width: 100%">
+                        <el-table :data="detailForm.taskInstances" style="width: 100%">
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="instanceName" label="Instance"></el-table-column>
                             <el-table-column prop="status" label="Status">

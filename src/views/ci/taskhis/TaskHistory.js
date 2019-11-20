@@ -45,7 +45,7 @@ export default {
             detailForm: {
                 group: '',
                 branch: '',
-                taskDetails: [],
+                taskInstances: [],
                 result: ''
             },
 
@@ -182,7 +182,7 @@ export default {
                     if (data.code == 200) {
                         this.detailForm.group = data.data.group;
                         this.detailForm.branch = data.data.branch;
-                        this.detailForm.taskDetails = data.data.taskDetails;
+                        this.detailForm.taskInstances = data.data.taskInstances;
                         if(data.data.result){
                             this.detailForm.result = data.data.result;
                         }else{
