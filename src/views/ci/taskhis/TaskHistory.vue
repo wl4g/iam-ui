@@ -66,8 +66,8 @@
 
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :close-on-click-modal="false" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading'>
-            <el-form :inline="true" label-width="80px" size="mini" :model="buildForm" ref="buildForm" class="demo-form-inline">
+        <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' :close="stopReadLogTask">
+            <el-form :inline="true" label-width="80px"  :model="buildForm" ref="buildForm" class="demo-form-inline">
                 <el-form-item label="Group:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>
                 </el-form-item>

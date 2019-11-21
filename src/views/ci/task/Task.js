@@ -501,27 +501,30 @@ export default {
                 this.$$api_ci_runTask({
                     data: this.confirmForm,
                     fn: data => {
-                        if (data.code == 200) {
-                            this.$confirm('Create Task Success,jump to task list?',  {
-                                confirmButtonText: 'Yes',
-                                cancelButtonText: 'No',
-                                type: 'success'
-                            }).then(() => {
-                                this.$router.push('/ci/taskhis');
-                            }).catch(() => {
-                                //do nothing
-                            });
+                        this.confirmDialog = false;
+                        this.$confirm('Create Task Success,jump to task list?',  {
+                            confirmButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            type: 'success'
+                        }).then(() => {
+                            this.$router.push('/ci/taskhis');
+                        }).catch(() => {
+                            //do nothing
+                        });
 
-                        } else {
+                    },
+                    errFn: (data) => {
+                        this.confirmDialog = false;
+                        if(data&&data.message){
                             this.$alert(data.message, '错误', {
-                                confirmButtonText: '确定'
+                                confirmButtonText: '确定',
+                            });
+                        }else{
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
                             });
                         }
-                    },
-                    errFn: () => {
-                        this.$alert('访问失败，请稍后重试！', '错误', {
-                            confirmButtonText: '确定',
-                        });
+
                     }
                 })
 
