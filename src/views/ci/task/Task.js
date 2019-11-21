@@ -4,7 +4,6 @@ import fa from "element-ui/src/locale/lang/fa";
 export default {
     name: 'task',
     data() {
-
         var validateInstances = (rule, value, callback) => {
             console.info(value.length);
             if (value.length<=0) {
@@ -12,11 +11,8 @@ export default {
             } else {
                 callback();
             }
-
         };
-
         return {
-
             //查询条件
             searchParams: {
                 id: '',
@@ -28,12 +24,10 @@ export default {
                 startDate:'',
                 endDate:'',
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             isEdit: false,
             //弹窗表单
             buildForm: {
@@ -51,7 +45,6 @@ export default {
                 postCommand: '',
                 contactGroupId: '',
                 taskBuildCommands: [],
-
                 commandOnOff:false,
             },
             dialogVisible: false,
@@ -182,21 +175,16 @@ export default {
             if(this.searchParams.endDate!=''){
                 end = this.getDate(this.searchParams.endDate);
             }
-
             this.$$api_ci_taskList({
                 data: {
-
                     id: this.searchParams.id,
                     taskName: this.searchParams.taskName,
-
                     groupName: this.searchParams.groupName,
                     projectName: this.searchParams.projectName,
                     branchName: this.searchParams.branchName,
-
                     tarType: this.searchParams.tarType,
                     startDate: start,
                     endDate: end,
-
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },

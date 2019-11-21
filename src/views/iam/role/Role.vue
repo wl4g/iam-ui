@@ -19,7 +19,7 @@
             <div class="line"></div>
             <div class="">Result Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + </el-button>
+                <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + New Role </el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->

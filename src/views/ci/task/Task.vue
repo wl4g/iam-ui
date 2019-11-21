@@ -4,20 +4,20 @@
             <!--<el-form-item label="ID:">
                 <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width: 80px;"></el-input>
             </el-form-item>-->
-            <el-form-item label="Name:">
+            <el-form-item label="PipeName:">
                 <el-input v-model="searchParams.taskName" placeholder="e.g. TaskProtalDev" style="width:150px;"></el-input>
             </el-form-item>
             <el-form-item label="Cluster:">
                 <el-input v-model="searchParams.groupName" placeholder="e.g. portal" style="width:110px;"></el-input>
             </el-form-item>
-            <!--<el-form-item label="Project:">
-                <el-input v-model="searchParams.projectName" placeholder="项目名" style="width:120px;"></el-input>
-            </el-form-item>-->
-            <el-form-item label="Branch:">
-                <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
+            <el-form-item label="Project:">
+                <el-input v-model="searchParams.projectName" placeholder="e.g. portal-web" style="width:120px;"></el-input>
             </el-form-item>
-            <el-form-item label="PackType:">
-                <el-select v-model="searchParams.tarType" placeholder="Pack" style="width:75px;">
+            <!--<el-form-item label="Branch:">
+                <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
+            </el-form-item>-->
+            <el-form-item label="PipeKind:">
+                <el-select v-model="searchParams.tarType" placeholder="Pack" style="width:70px;">
                     <el-option label="All" value=""></el-option>
                     <el-option label="PipeWithMvnAssTar" value="PipeWithMvnAssTar"></el-option>
                     <el-option label="PipeWithVue" value="PipeWithVue"></el-option>
@@ -26,7 +26,7 @@
                     <el-option disabled label="PipeWithSpringExecJar" value="PipeWithSpringExecJar"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Create Date:">
+            <el-form-item label="CreateDate:">
                 <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
                 <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
             </el-form-item>
@@ -40,9 +40,8 @@
         <div class="query">
             <div class="line"></div>
             <div class="">Total： <span class="number">{{total}}</span>
-                <!--<el-button style='float:right;margin-right:20px' type="primary" @click="add()">+</el-button>-->
                 <el-dropdown style='float:right;margin-right:20px' @command="add">
-                    <el-button type="primary" >+</el-button>
+                    <el-button type="primary" >+ New Pipeline</el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item
                                 v-for="item in dictutil.getDictListByType('ci_tar_type')"
@@ -50,7 +49,6 @@
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-
             </div>
         </div>
         <!-- 查询结果表格 -->
@@ -64,14 +62,14 @@
                     <el-table-column prop="instances" label="Instances" min-width="70">
                         <template slot-scope="scope">
                             <el-popover placement="right" width="200" trigger="hover">
-                                <el-input type="textarea" :rows="3" placeholder="暂无数据" :readonly="true" :value="instances2Str(scope.row)"></el-input>
+                                <el-input type="textarea" :rows="3" placeholder="No data row" :readonly="true" :value="instances2Str(scope.row)"></el-input>
                                 <el-button slot="reference">{{countInstance(scope.row)}}</el-button>
                             </el-popover>
                         </template>
                     </el-table-column>
                     <el-table-column prop="branchName" label="Branch" min-width="58"></el-table-column>
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
-                    <el-table-column prop="tarType" label="PackType" min-width="80"></el-table-column>
+                    <el-table-column prop="tarType" label="PipeKind" min-width="80"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
                     <!--<el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="preCommand" label="PreCmd" :show-overflow-tooltip="true"></el-table-column>

@@ -38,7 +38,7 @@
             <template>
                 <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width:100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="id" label="ID" min-width="30"></el-table-column>
+                    <el-table-column width="100" prop="id" label="ID" min-width="30"></el-table-column>
                     <el-table-column prop="groupName" label="Group"></el-table-column>
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="branchName" label="Branch"></el-table-column>

@@ -57,7 +57,7 @@ export default {
         addData() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add VCS information';
         },
 
         // 获取列表数据
@@ -86,9 +86,6 @@ export default {
                 }
             })
         },
-
-
-
         cleanSaveForm() {
             this.saveForm = {
                 id: '',
@@ -169,7 +166,7 @@ export default {
             });
 
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Configure VCS information';
         },
 
 
@@ -190,7 +187,7 @@ export default {
                 },
                 errFn: () => {
                     this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+                        confirmButtonText: 'OK',
                     });
                 }
             })

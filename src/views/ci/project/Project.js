@@ -111,7 +111,7 @@ export default {
 
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'New Project information';
         },
 
 
@@ -193,7 +193,7 @@ export default {
 
 
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Configuer Project information';
         },
 
         currentChange(i) {

@@ -3,7 +3,7 @@
  */
 <template>
   <div class="">
-    <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">AddTopLevel</el-button>
+    <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">Add Root</el-button>
       <el-button class="top-level-btn" type="primary" @click="onGetList()">Refresh</el-button>
    <tree-table
       border

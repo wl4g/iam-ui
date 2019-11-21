@@ -8,11 +8,11 @@ export default {
       //tree-table 标题列数据
       columns: [
         {
-          text: 'name',
+          text: 'GroupCode',
           value: 'name',
         },
         {
-          text: 'displayName',
+          text: 'DisplayName',
           value: 'displayName',
         },
       ],
@@ -21,9 +21,9 @@ export default {
       // 列表按钮配置
       btn_info: {
         width: 350,
-        add_text: 'add lower level',
-        update_text: 'edit',
-        delete_text: 'del',
+        add_text: 'Add Child',
+        update_text: 'Edit',
+        delete_text: 'Del',
       },
 
       //form 属性

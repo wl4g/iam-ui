@@ -36,7 +36,7 @@
             <div class="line"></div>
             <div class="">Total： <span class="number">{{total}}</span>
                 <!-- 新增按钮 -->
-                <el-button type="primary" @click="addTrigger()" style='float:right;margin-right:20px'>+</el-button>
+                <el-button type="primary" @click="addTrigger()" style='float:right;margin-right:20px'>+ Task Schedule </el-button>
             </div>
         </div>
         <!-- 查询结果表格 -->

@@ -6,11 +6,11 @@ export default {
       //tree-table 标题列数据
       columns: [
         {
-          text: 'name',
+          text: 'nameEn',
           value: 'name',
         },
         {
-          text: 'displayName',
+          text: 'nameCN',
           value: 'displayName',
           width: 250,
         },
@@ -19,18 +19,16 @@ export default {
           value: 'permission',
           width: 250,
         }
-
       ],
       //tree-table 行数据
       data: [],
       // 列表按钮配置
       btn_info: {
         width: 370,
-        add_text: 'add lower level',
-        update_text: 'modify',
-        delete_text: 'del',
+        add_text: 'Add Child',
+        update_text: 'Edit',
+        delete_text: 'Del',
       },
-
       //form 属性
       formFields: {
         id: '',
@@ -46,7 +44,7 @@ export default {
       //验证
       rules: {
         moduleName: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        aliasName: [{ required: true, message: '请输入别名', trigger: 'blur' }],
+        aliasName: [{ required: true, message: '请输入菜单唯一标识', trigger: 'blur' }],
         belongTo: [{required: true, message: '请选择所属系统', trigger: 'blur' }],
         moduleOrder: [{required: true, name:'排序', validator: this.$validate_isPositiveInteger, trigger: 'blur'}]
       },

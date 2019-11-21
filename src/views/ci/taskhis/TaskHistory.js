@@ -55,8 +55,6 @@ export default {
     },
 
     mounted() {
-
-
         const dic = new Map();
         dic.set(1, "Hook");
         dic.set(2, "Manual");
@@ -70,7 +68,6 @@ export default {
         dic2.set(3, "Failed");
         dic2.set(4, "Timeout");
         this.dictData.set("ci_task_status", dic2);
-
     },
 
     activated() {
@@ -151,19 +148,19 @@ export default {
         },
         convertStatusType(row){
             if (row.status == 0) {
-                return '#608adc';
+                return '#75a2f9';
             }
             if (row.status == 1) {
                 return '#50bfff';
             }
             if (row.status == 2) {
-                return '#7fdcba';
+                return '#6ade73';
             }
             if (row.status == 4) {
                 return '#dc9417';
             }
             if (row.status == 5) {
-                return '#dc847e';
+                return '#f77171';
             }
             return '#DC143C';
         },
