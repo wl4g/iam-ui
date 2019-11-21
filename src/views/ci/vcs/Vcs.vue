@@ -42,7 +42,7 @@
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
                             <el-button type="info" icon='edit' size="small" @click="editData(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' @click="delData(scope.row)">Del</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
 

@@ -151,24 +151,21 @@ export default {
         },
         convertStatusType(row){
             if (row.status == 0) {
-                return 'info';
+                return '#608adc';
             }
             if (row.status == 1) {
-                return '';
+                return '#50bfff';
             }
             if (row.status == 2) {
-                return 'success';
-            }
-            if (row.status == 3) {
-                return 'danger';
+                return '#7fdcba';
             }
             if (row.status == 4) {
-                return 'danger';
+                return '#dc9417';
             }
             if (row.status == 5) {
-                return 'danger';
+                return '#dc847e';
             }
-            return 'warning';
+            return '#DC143C';
         },
         //双击
         doubleClickRow(row, column, event) {
