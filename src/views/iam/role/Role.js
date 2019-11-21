@@ -121,6 +121,9 @@ export default {
 
 
         addData() {
+            this.getMenus();
+            this.getGroupsTree();
+
             this.isEdit = false;
             this.cleanSaveForm();
             this.dialogVisible = true;
@@ -194,6 +197,9 @@ export default {
 
 
         editData(row) {
+            this.getMenus();
+            this.getGroupsTree();
+
             this.cleanSaveForm();
             this.isEdit = true;
             if (!row.id) {

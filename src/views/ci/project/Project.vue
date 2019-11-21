@@ -90,15 +90,6 @@
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="Project:" prop="project">
-                            <!--<el-select v-model="saveForm.projectName" @change="changeProject">
-                                <el-option
-                                        v-for="item in vcsProjectData"
-                                        :key="item.name"
-                                        :label="item.name"
-                                        :value="item.name">
-                                </el-option>
-                            </el-select>-->
-
                             <el-select
                                     v-model="saveForm.projectName"
                                     @change="changeProject"

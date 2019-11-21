@@ -101,6 +101,9 @@ export default {
 
         //add
         addTrigger() {
+            this.getProject();
+            this.getGroup();
+
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
@@ -108,6 +111,8 @@ export default {
 
         //edit
         editTrigger(row) {
+            this.getProject();
+            this.getGroup();
             if (!row.id) {
                 return;
             }

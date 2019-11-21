@@ -123,6 +123,9 @@ export default {
 
 
         addData() {
+            this.getRoles();
+            this.getGroupsTree();
+
             this.isEdit = false;
             this.cleanSaveForm();
             this.dialogVisible = true;
@@ -233,6 +236,9 @@ export default {
 
 
         editData(row) {
+            this.getRoles();
+            this.getGroupsTree();
+
             this.cleanSaveForm();
             this.isEdit = true;
             if (!row.id) {

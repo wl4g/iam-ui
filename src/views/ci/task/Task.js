@@ -120,6 +120,9 @@ export default {
         },
 
         add(command) {
+            this.getGroup();
+            this.groupList();
+
             this.isEdit = false;
             this.cleanBuildForm();
 
@@ -341,6 +344,9 @@ export default {
         },
 
         taskDetail(row){
+            this.getGroup();
+            this.groupList();
+
             this.isEdit = true;
             this.dialogVisible=true;
             this.$$api_ci_taskDetail({

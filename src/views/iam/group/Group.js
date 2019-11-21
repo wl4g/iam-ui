@@ -105,6 +105,10 @@ export default {
      * 添加下级菜单按钮
      */
     onClickBtnAdd(opts) {
+      //refresh
+      this.getRoles();
+      this.getMenus();
+
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
       this.windowTitle = '添加['+opts.data.displayName+']的下级菜单';
       this.dialogVisible = true;
@@ -115,6 +119,10 @@ export default {
      * 修改按钮
      */
     onClickBtnUpdate(opts) {
+      //refresh
+      this.getRoles();
+      this.getMenus();
+
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
       console.info(opts);
       this.windowTitle = '修改['+opts.data.displayName+']菜单';
@@ -139,7 +147,7 @@ export default {
     },
     /**
      * 清空所有的绑定属性，用于切换form的时候
-     */    
+     */
     emptyFormFieldsAndEnableDialogSubmitBtn(){
       if(this.$refs['groupForm']) {
         this.$refs['groupForm'].resetFields();
@@ -165,8 +173,12 @@ export default {
     },
     /**
      * 添加顶级菜单
-     */    
+     */
     addTopLevelModule(){
+      //refresh
+      this.getRoles();
+      this.getMenus();
+
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
       this.dialogVisible = true;
       this.windowTitle = '添加顶级菜单';
@@ -175,7 +187,7 @@ export default {
     },
     /**
      * 添加或者保存
-     */     
+     */
     save(){
       this.$$api_iam_saveGroup({
         data: this.saveForm,

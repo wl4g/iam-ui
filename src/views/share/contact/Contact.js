@@ -153,6 +153,8 @@ export default {
             this.saveForm.groups = [];
         },
         addContact() {
+            this.groupList();
+
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = 'Add notification contacts';
@@ -241,6 +243,7 @@ export default {
         },
 
         editContact(row) {
+            this.groupList();
             if (!row.id) {
                 return;
             }

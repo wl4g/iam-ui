@@ -75,6 +75,8 @@ export default {
         },
 
         addData() {
+            this.getAllHost();
+
             this.isEdit = false;
             this.cleanSaveForm();
             this.dialogVisible = true;
@@ -160,6 +162,7 @@ export default {
 
 
         editData(row) {
+            this.getAllHost();
             this.isEdit = true;
             if (!row.id) {
                 return;

@@ -106,6 +106,10 @@ export default {
 
         //add
         addPriject() {
+            this.getGroup();
+            this.getVcs();
+            this.getProject();
+
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
@@ -159,6 +163,10 @@ export default {
 
         //edit
         editPriject(row) {
+            this.getGroup();
+            this.getVcs();
+            this.getProject();
+
             if (!row.id) {
                 return;
             }

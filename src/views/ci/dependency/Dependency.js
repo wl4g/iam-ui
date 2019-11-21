@@ -63,6 +63,7 @@ export default {
 
         //add
         addDependency() {
+            this.getProject();
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
@@ -70,6 +71,7 @@ export default {
 
         //edit
         editDependency(row) {
+            this.getProject();
             if (!row.id) {
                 return;
             }
