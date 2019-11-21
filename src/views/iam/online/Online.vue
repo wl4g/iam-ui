@@ -53,7 +53,7 @@
                     <el-table-column prop="authenticated" label="authenticated" :formatter="convertType"></el-table-column>
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="destroySessions(scope.row)">destroy</el-button>
+                            <el-button type="danger" class="el-icon-circle-close" size="small" @click="destroySessions(scope.row)">destroy</el-button>
                         </template>
                     </el-table-column>
 

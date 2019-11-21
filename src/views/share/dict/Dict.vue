@@ -34,11 +34,11 @@
             <template>
                 <el-table :data="tableData" style="width:100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column prop="key" label="Key" width=200></el-table-column>
-                    <el-table-column prop="value" label="Value" width=110></el-table-column>
-                    <el-table-column prop="type" label="Type" width=150></el-table-column>
-                    <el-table-column prop="label" label="Label" :show-overflow-tooltip="true" width=90></el-table-column>
-                    <el-table-column prop="labelEn" label="LabelEn" :show-overflow-tooltip="true" width=90></el-table-column>
+                    <el-table-column prop="key" label="Key" ></el-table-column>
+                    <el-table-column prop="value" label="Value"></el-table-column>
+                    <el-table-column prop="type" label="Type"></el-table-column>
+                    <el-table-column prop="label" label="Label" :show-overflow-tooltip="true" width=120></el-table-column>
+                    <el-table-column prop="labelEn" label="LabelEn" :show-overflow-tooltip="true" width=120></el-table-column>
                     <el-table-column prop="sort" label="Sort" width=68></el-table-column>
                     <el-table-column prop="themes" label="Themes" width=95>
                         <template slot-scope="scope">
@@ -46,10 +46,10 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="remark" label="Remark" :show-overflow-tooltip="true" width=140></el-table-column>
-					<el-table-column label="Oper">
+					<el-table-column label="Oper" width="200">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="dataDetail(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="dataDetail(scope.row)">Edit</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -58,7 +58,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
 
                 <el-row>

@@ -52,11 +52,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column label="Operation" min-width="150">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="detail(scope.row)">Detail</el-button>
-                            <el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
-                            <el-button type="text" size="small" @click="stopTask(scope.row.id)">Stop</el-button>
+                            <el-button type="info" size="small" @click="detail(scope.row)">Detail</el-button>
+                            <el-button type="warning" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
+                            <el-button type="danger"  size="small" @click="stopTask(scope.row.id)">Stop</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -66,7 +66,7 @@
 
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading'>
+        <el-dialog title="详情" :close-on-click-modal="false" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading'>
             <el-form :inline="true" label-width="80px" size="mini" :model="buildForm" ref="buildForm" class="demo-form-inline">
                 <el-form-item label="Group:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>

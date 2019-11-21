@@ -34,8 +34,8 @@
                     <el-table-column prop="groupNameStrs" label="Group" show-overflow-tooltip ></el-table-column>
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="editData(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="editData(scope.row)">Edit</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
 
@@ -45,7 +45,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
 
                 <el-row>
@@ -108,7 +108,7 @@
                 <el-row>
                     <el-col :span="20">
                         <el-form-item  label="Group："   prop="groupNames">
-                            <el-input type="textarea"  class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo()'></el-input>
+                            <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     v-show="treeShow"
                                     default-expand-all

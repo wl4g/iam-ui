@@ -45,8 +45,8 @@
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="editPriject(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delProject(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="editPriject(scope.row)">Edit</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delProject(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
 
@@ -56,7 +56,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" width="60%" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :rules="rules" :model="saveForm" ref="saveForm"
                      class="demo-form-inline">
 

@@ -16,7 +16,7 @@
     >
     </tree-table>
 
-    <el-dialog :title="windowTitle" :visible.sync="dialogVisible" width="100%">
+    <el-dialog :close-on-click-modal="false" :title="windowTitle" :visible.sync="dialogVisible" width="100%">
       <el-form ref="menuForm" :label-position="labelPosition" :model="formFields" label-width="100px">
 
           <el-row>

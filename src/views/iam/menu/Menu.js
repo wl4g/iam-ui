@@ -12,21 +12,20 @@ export default {
         {
           text: 'displayName',
           value: 'displayName',
+          width: 250,
         },
         {
           text: 'permission',
           value: 'permission',
-        },
-        {
-          text: 'accessUri',
-          value: 'accessUri',
-        },
+          width: 250,
+        }
+
       ],
       //tree-table 行数据
       data: [],
       // 列表按钮配置
       btn_info: {
-        width: 280,
+        width: 370,
         add_text: 'add lower level',
         update_text: 'modify',
         delete_text: 'del',
@@ -57,8 +56,8 @@ export default {
       //用于锁定确认按钮，避免重复提交
       dialogSubmitBtnSwith: false,
       //窗口标题
-      windowTitle: '',    
-      //弹窗定位    
+      windowTitle: '',
+      //弹窗定位
       labelPosition: 'right',
 
     }
@@ -118,7 +117,7 @@ export default {
     },
     /**
      * 清空所有的绑定属性，用于切换form的时候
-     */    
+     */
     emptyFormFieldsAndEnableDialogSubmitBtn(){
       if(this.$refs['menuForm']) {
         this.$refs['menuForm'].resetFields();
@@ -136,7 +135,7 @@ export default {
     },
     /**
      * 添加顶级菜单
-     */    
+     */
     addTopLevelModule(){
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
       this.dialogVisible = true;
@@ -145,7 +144,7 @@ export default {
     },
     /**
      * 添加或者保存
-     */     
+     */
     save(){
       this.$$api_iam_saveMenu({
         data: this.formFields,
@@ -165,7 +164,7 @@ export default {
 
     /**
      * 菜单树节点选中事件
-     */      
+     */
     /*checkChange(node){
       this.formFields.parentModuleId = node.moduleId
       this.formFields.parentModuleName = node.moduleName + ' / ' + node.levelLabel

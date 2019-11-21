@@ -71,8 +71,8 @@
 
                     <el-table-column label="Operation" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="editTemplat(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delTemplat(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="editTemplat(scope.row)">Edit</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delTemplat(scope.row)">Del</el-button>
                         </template>
                     </el-table-column>
 
@@ -82,7 +82,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="large" v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="large" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
 
                 <el-row>

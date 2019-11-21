@@ -16,7 +16,7 @@
     >
     </tree-table>
 
-    <el-dialog :title="windowTitle" :visible.sync="dialogVisible" width="100%">
+    <el-dialog :close-on-click-modal="false" :title="windowTitle" :visible.sync="dialogVisible" width="100%">
       <el-form ref="groupForm" label-position="right" :model="saveForm" label-width="100px">
 
           <el-row>
@@ -51,7 +51,7 @@
           <el-row>
               <el-col :span="20">
                   <el-form-item  label="Menu："   prop="menu">
-                      <el-input type="textarea"  class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
+                      <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                       <el-tree
                               style="max-height: 240px;overflow: scroll"
                               v-show="treeShow"

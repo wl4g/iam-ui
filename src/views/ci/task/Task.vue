@@ -73,15 +73,15 @@
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
                     <el-table-column prop="tarType" label="PackType" min-width="80"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-                    <el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
+                    <!--<el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="preCommand" label="PreCmd" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="postCommand" label="PostCmd" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="postCommand" label="PostCmd" :show-overflow-tooltip="true"></el-table-column>-->
 
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column label="Operation" min-width="150">
                         <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="beforeRunTask(scope.row)">Build</el-button>
-                            <el-button type="text" size="small" @click="taskDetail(scope.row)">Edit</el-button>
-                            <el-button type="text" size="small" @click="delTask(scope.row)">Del</el-button>
+                            <el-button type="warning" class='el-icon-upload' size="small"  @click="beforeRunTask(scope.row)">Build</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="taskDetail(scope.row)">Edit</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delTask(scope.row)">Del</el-button>
                             <!--<el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>-->
                         </template>
                     </el-table-column>
@@ -92,7 +92,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================add build taskhis================================-->
-        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" size="full"  v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="full"  v-loading='dialogLoading'>
             <el-form label-width="80px"  :model="buildForm" ref="buildForm" :rules="rules"
                      class="demo-form-inline">
 

@@ -107,7 +107,6 @@ export default {
         //add
         addPriject() {
             this.getGroup();
-            this.getVcs();
             this.getProject();
 
             this.cleanSaveForm();
@@ -164,7 +163,6 @@ export default {
         //edit
         editPriject(row) {
             this.getGroup();
-            this.getVcs();
             this.getProject();
 
             if (!row.id) {
@@ -437,8 +435,10 @@ export default {
 
         changeProject(){
             let remoteProject = this.getProjectByName(this.saveForm.projectName);
-            this.saveForm.httpUrl = remoteProject.httpUrl
-            this.saveForm.sshUrl = remoteProject.sshUrl
+            if(remoteProject){
+                this.saveForm.httpUrl = remoteProject.httpUrl
+                this.saveForm.sshUrl = remoteProject.sshUrl
+            }
         },
 
 

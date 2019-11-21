@@ -20,7 +20,7 @@ export default {
       data: [],
       // 列表按钮配置
       btn_info: {
-        width: 280,
+        width: 350,
         add_text: 'add lower level',
         update_text: 'edit',
         delete_text: 'del',
