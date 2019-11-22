@@ -139,6 +139,7 @@ export default {
           // 初始相关配置(Event)
           init: {
             onPostCheck: function(res) {
+              console.debug("onPostCheck... "+res);
               // 因SNS授权（如:WeChat）只能刷新页面，因此授权错误消息只能从IAM服务加载
               var url = IAM.Core.getIamBaseUri() +"/login/errread";	
               $.ajax({
@@ -259,21 +260,6 @@ export default {
             window.location.href = JSON.parse(e.data).refresh_url;
           }
         }
-      })();
-
-      // 因SNS授权（如:WeChat）只能刷新页面，因此授权错误消息只能从IAM服务加载
-      (function() {
-        var url = IAM.Core.getIamBaseUri() + "/login/errread";	
-        $.ajax({
-          url: url,
-          success: function (res) {
-            //console.log(res);
-            var errmsg = res.data["errorTipsInfo"];
-            if (errmsg != null && errmsg.length > 0) {
-              $("#err_tip").text(errmsg).show().delay(8000).hide(100);
-            }
-          }
-        });
       })();
 
   },
