@@ -154,7 +154,7 @@ export default {
                 return '#50bfff';
             }
             if (row.status == 2) {
-                return '#6ade73';
+                return '#13ce66';
             }
             if (row.status == 4) {
                 return '#dc9417';

@@ -92,14 +92,18 @@ export default {
      * 点击删除按钮
      */
     onClickBtnDelete(opts) {
-      this.$confirm('Be Careful！！！Children group will be del(Logical), and the relationship with user/role/menu will not be del', 'Yes？').then(() => {
+      this.$confirm('Be Careful！！！Children group will be del(Logical), and the relationship with user/role/menu will not be del', 'Warning', {
+        type: 'warning'
+      }).then(() => {
         this.$$api_iam_delGroup({
           data: {id : opts.data.id},
           fn: data => {
             this.onGetList();
           }
         })
-      })
+      }).catch(() => {
+
+      });
     },
     /**
      * 添加下级菜单按钮

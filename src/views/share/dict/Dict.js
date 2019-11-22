@@ -224,31 +224,32 @@ export default {
             if (!row.key) {
                 return;
             }
-            this.$$api_share_delDict({
-                data: {
-                    key: row.key,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Delete Confirm', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_share_delDict({
+                    data: {
+                        key: row.key,
+                    },
+                    fn: data => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
+                    },
+                    errFn: () => {
+                        //this.loading = false;
+                        this.$alert('访问失败，请稍后重试！', '错误', {
+                            confirmButtonText: '确定',
                         });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+
+            });
         },
 
         //dict
