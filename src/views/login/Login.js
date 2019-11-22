@@ -136,6 +136,26 @@ export default {
             defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
             defaultContextPath: "/iam-server" // IAMServer的context-path
           },
+          // 初始相关配置(Event)
+          init: {
+            onPostCheck: function(res) {
+              // 因SNS授权（如:WeChat）只能刷新页面，因此授权错误消息只能从IAM服务加载
+              var url = IAM.Core.getIamBaseUri() +"/login/errread";	
+              $.ajax({
+                url: url,
+                success: function (res) {
+                  //console.log(res);
+                  var errmsg = res.data["errorTipsInfo"];
+                  if (errmsg != null && errmsg.length > 0) {
+                    $("#err_tip").text(errmsg).show().delay(8000).hide(100);
+                  }
+                }
+              });
+            },
+            onError: function(req, status, errmsg){
+             console.error("初始化失败... "+ errmsg);
+            }
+          },
           // 定义验证码显示面板配置
           captcha: {
             use: "VerifyWithJigsawGraph", // default by 'VerifyWithGifGraph'
