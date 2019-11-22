@@ -10,7 +10,8 @@ export default {
   },
   methods: {
     setSize () {
-      this.win_size.height = (this.$$lib_$(window).height() - 50) + 'px'
+      //this.win_size.height = (this.$$lib_$(window).height()) + 'px'
+      this.win_size.height = '100%'
     },
     toggleMenu () {
       this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open')
@@ -47,7 +48,7 @@ export default {
     this.updateCurMenu();
   },
   mounted () {
-    
+
   },
   watch: {
     $route (to, from) {
