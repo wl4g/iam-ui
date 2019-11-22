@@ -8,7 +8,7 @@ export default [
     {
         path: 'console',
         name: 'Log Console',
-        icon: 'window-restore',
+        icon: '',
         component: Srm.Console,
         permission: 'srm:console',
     },

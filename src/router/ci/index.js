@@ -8,7 +8,7 @@ import Main  from './main'
 export default {
   path: '/ci',
   name: 'CI/CD',
-  icon: '/static/images/menu/CI_on.png',
+  icon: '',
   component: Home,Content,
   redirect: '/ci/task',
   children:Main,

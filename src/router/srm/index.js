@@ -8,7 +8,7 @@ import Main  from './main'
 export default {
   path: '/srm',
   name: 'SRM',
-  icon: '/static/images/menu/SRM_on.png',
+  icon: '',
   component: Home,Content,
   redirect: '/srm/console',
   children:Main,

@@ -8,7 +8,7 @@ import Main  from './main'
 export default {
   path: '/umc',
   name: 'UMC',
-  icon: '/static/images/menu/UMC_on.png',
+  icon: '',
   component: Home,Content,
   redirect: '/umc/sbamonitor',
   children:Main,

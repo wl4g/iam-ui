@@ -7,20 +7,20 @@ export default [
     {
         path: 'cluster',
         name: 'Cluster',
-        icon: 'window-restore',
+        icon: '',
         component: Share.Cluster,
         permission: 'share:cluster',
 
     }, {
         path: 'dict',
         name: 'Dictionaries',
-        icon: 'window-restore',
+        icon: '',
         component: Share.Dict,
         permission: 'share:dict',
     }, {
         path: 'contact',
         name: 'Alarm Contact',
-        icon: 'window-restore',
+        icon: '',
         component: Share.Contact,
         permission: 'share:contact',
     },

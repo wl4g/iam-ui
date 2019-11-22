@@ -8,19 +8,19 @@ export default [
     {
         path: 'configuration',
         name: 'Configuration',
-        icon: 'window-restore',
+        icon: '',
         component: Scm.Configuration,
         permission: 'scm:configuration',
     },{
         path: 'historic',
         name: 'Historical Versions',
-        icon: 'window-restore',
+        icon: '',
         component: Scm.Historic,
         permission: 'scm:historic',
     }, {
         path: 'track',
         name: 'Push Tracks',
-        icon: 'window-restore',
+        icon: '',
         component: Scm.Track,
         permission: 'scm:track',
     },

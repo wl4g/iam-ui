@@ -8,7 +8,7 @@ import Main  from './main'
 export default {
   path: '/iam',
   name: 'IAM',
-  icon: '/static/images/menu/IAM_on.png',
+  icon: '',
   component: Home,Content,
   redirect: '/iam/online',
   children:Main,

@@ -8,7 +8,7 @@ import Main  from './main'
 export default {
   path: '/scm',
   name: 'SCM',
-  icon: '/static/images/menu/IM_on.png',
+  icon: '',
   component: Home,Content,
   redirect: '/scm/configuration',
   children:Main,
