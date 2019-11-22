@@ -78,8 +78,8 @@
 		//网上说7/8/9是不支持的，本人没有试验，
 		//当然加上是没有错的
 		i = i || window.event;
-		mouse.x = i.clientX;
-		mouse.y = i.clientY;
+		mouse.x = i.clientX*(1-document.body.style.zoom+1);
+		mouse.y = i.clientY*(1-document.body.style.zoom+1);
 	}
 	//鼠标移出窗口后，消除鼠标小方块
 	window.onmouseout = function() {
@@ -137,7 +137,7 @@
 						context.moveTo(i.x, i.y);
 						//使画笔的笔触移动到x小方块
 						context.lineTo(x.x, x.y);
-						//完成画线的绘制，即绘制连接小方块的线 
+						//完成画线的绘制，即绘制连接小方块的线
 						context.stroke();
 					}
 				}
