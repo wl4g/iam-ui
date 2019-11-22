@@ -15,6 +15,8 @@
               :index="item.path"
               :key='item.path'
               v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
+              <!--<img src="/static/images/menu/CI_on.png" />-->
+              <img :src="item.icon"/>
                {{item.name}}<!--{{item.path}}-->
              </el-menu-item>
           </el-menu>

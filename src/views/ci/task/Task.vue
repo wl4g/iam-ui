@@ -17,13 +17,15 @@
                 <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
             </el-form-item>-->
             <el-form-item label="PipeKind:">
-                <el-select v-model="searchParams.tarType" placeholder="Pack" style="width:70px;">
-                    <el-option label="All" value=""></el-option>
-                    <el-option label="PipeWithMvnAssTar" value="PipeWithMvnAssTar"></el-option>
-                    <el-option label="PipeWithVue" value="PipeWithVue"></el-option>
-                    <el-option disabled label="PipeWithDjangoStd" value="PipeWithDjangoStd"></el-option>
-                    <el-option disabled label="PipeWithDockerNat" value="PipeWithDockerNat"></el-option>
-                    <el-option disabled label="PipeWithSpringExecJar" value="PipeWithSpringExecJar"></el-option>
+                <el-select :clearable="true" v-model="searchParams.tarType" placeholder="PipeKind" style="width:70px;">
+                    <el-option
+                            v-for="item in dictutil.getDictListByType('ci_tar_type')"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+
+
                 </el-select>
             </el-form-item>
             <el-form-item label="CreateDate:">
@@ -91,7 +93,7 @@
 
         <!--================================add build taskhis================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="full"  v-loading='dialogLoading'>
-            <el-form label-width="80px"  :model="buildForm" ref="buildForm" :rules="rules"
+            <el-form label-width="165px"  :model="buildForm" ref="buildForm" :rules="rules"
                      class="demo-form-inline">
 
                 <el-row>
