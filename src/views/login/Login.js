@@ -144,6 +144,7 @@ export default {
               var url = IAM.Core.getIamBaseUri() +"/login/errread";	
               $.ajax({
                 url: url,
+                xhrFields: { withCredentials: true }, // Send cookies when support cross-domain request.
                 success: function (res) {
                   //console.log(res);
                   var errmsg = res.data["errorTipsInfo"];
