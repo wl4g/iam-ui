@@ -169,9 +169,9 @@
                     <el-col :span="12">
                         <el-form-item label="Cron:" prop="cron" v-if="saveForm.type==4">
                             <!--<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>-->
-                            <el-popover placement="right" width="200" trigger="focus" title="最近5次运行时间:">
-                                <el-input type="textarea" :rows="10" placeholder="暂无数据" :readonly="true" v-model="checkResult"></el-input>
-                                <el-input slot="reference" v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>
+                            <el-popover placement="right" width="200" trigger="focus" title="Last 5 run times:">
+                                <el-input type="textarea" :rows="10" :readonly="true" v-model="checkResult"></el-input>
+                                <el-input slot="reference" v-model="saveForm.cron" placeholder="e.g. 0/5 30 * * * ?" @change="checkCron"></el-input>
                             </el-popover>
 
                         </el-form-item>

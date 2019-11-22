@@ -51,6 +51,7 @@ export default {
 
             logIndex: 0,
             logThread: 0,
+            refreshListThread: 0,
         }
     },
 
@@ -73,6 +74,7 @@ export default {
     activated() {
         //alert("into activated");
         this.getData();
+        this.startRefreshList();
     },
 
     methods: {
@@ -89,6 +91,20 @@ export default {
             this.pageNum = i;
             this.getData();
         },
+
+        startRefreshList(){
+            this.stopRefreshList();
+            let that = this;
+            this.refreshListThread = self.setInterval(function () {
+                that.getData();
+            }, 1 * 4000);
+        },
+
+        stopRefreshList(){
+            window.clearInterval(this.refreshListThread);
+        },
+
+
         // 获取列表数据
         getData() {
             this.$$api_ci_taskHisList({
@@ -386,6 +402,7 @@ export default {
     //离开前清除定时任务
     beforeRouteLeave(to,from,next){
         console.info("leave , stop the thread");
+        this.stopRefreshList();
         this.stopReadLogTask();
         next();
     },
