@@ -86,47 +86,45 @@
 					<div style="text-align: center;color: #4e619c;">打开&nbsp;&nbsp;
                     <b style="color: #fff;">微信’扫一扫’</b>&nbsp;&nbsp;扫描二维码</div>
 				</div>
-                <div id="login_phone">
-                    <div>
-                        <i class="icon-phone"></i>
-                        <select class="select-area">
-                            <option value="+086">大陆+086</option>
-                            <option value="+852">香港+852</option>
-                            <option value="+853">澳门+853</option>
-                            <option value="+084">越南+084</option>
-                            <option value="+092">巴基斯坦+092</option>
-                            <option value="+065">新加坡+065</option>
-                            <option value="+358">法国+358</option>
-                            <option value="+066">泰国+066</option>
-                        </select>
-                        <input id="user_phone" class="text1" name="phone" placeholder="请输入手机号"
-                               style="box-sizing:border-box;width:240px;color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:125px;border-radius:2px 2px 2px 2px;"
-                               maxlength="11" onkeypress="return event.keyCode>=48&amp;&amp;event.keyCode<=57"
-                               onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
-                    </div>
-                    <p class="err-info phone-err">请输入正确的手机号</p>
-                    <div class="pass-word code-number">
-                        <i class="icon-codeNumber"></i>
-                        <input placeholder="请输入短信动态码" id="codeNumber" class="text1 text2"
-                               style="box-sizing:border-box;width:240px;color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:40px;border-radius:2px 2px 2px 2px;"
-                               name="codeNumber" type="text" maxlength=6>
-                        <button type="button" id="code-get">获取</button>
-                    </div>
-                    <p class="err-info pass-err">请输入短信验证码</p>
-                    <br>
-                    <input id="phone_submit" type="button" style="cursor:pointer;" value="登录">
-                    <div id="code-write" class="code-write">
-                        <p> <span class="err-tip"></span>
-                            <span class="code-close">x</span> </p>
-                        <p> <span>图文验证码</span> </p>
-                        <div style="margin: 10px 10px 0 10px;">
-                            <i class="icon-codecode"></i>
-                            <input id="user_code" class="text1" name="code" placeholder="请输入验证码"
-                                   style="width:100px;color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:40px;border-radius:2px 2px 2px 2px;"
-                                   maxlength=40>
-                            <img class="code-image" src="" alt="图片">
-                        </div>
-                        <br>
+			<div id="login_phone">
+				<div>
+					<i class="icon-phone"></i>
+					<select class="select-area">
+						<option value="+086">大陆+086</option>
+						<option value="+852">香港+852</option>
+						<option value="+853">澳门+853</option>
+						<option value="+084">越南+084</option>
+						<option value="+092">巴基斯坦+092</option>
+						<option value="+065">新加坡+065</option>
+						<option value="+358">法国+358</option>
+						<option value="+066">泰国+066</option>
+					</select>
+					<input id="user_phone" class="text1" name="phone" placeholder="请输入手机号"
+						style="box-sizing:border-box;color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:125px;border-radius:2px 2px 2px 2px;"
+						maxlength="11" onkeypress="return event.keyCode>=48&amp;&amp;event.keyCode<=57"
+						onkeyup="value=value.replace(/[^\d]/g,'')">
+				</div>
+				<p class="err-info phone-err">请输入正确的手机号</p>
+				<div class="pass-word code-number">
+					<i class="icon-codeNumber"></i>
+					<input placeholder="请输入短信动态码" id="codeNumber" class="text1 text2"
+						style="box-sizing:border-box;color:#fff;border:1px solid #80c1fb;background:#253667;padding-left:40px;border-radius:2px 2px 2px 2px;"
+						name="codeNumber" type="text" maxlength=6>
+					<button type="button" id="code-get">获取</button>
+				</div>
+				<p class="err-info pass-err">请输入短信验证码</p>
+				<br>
+				<input id="phone_submit" type="button" style="cursor:pointer;" value="登录">
+				<div id="code-write" class="code-write">
+					<p><span class="err-tip"></span>
+						<span class="code-close">x</span></p>
+					<p><span>图文验证码</span></p>
+					<div style="margin: 10px 10px 0 10px;">
+						<input id="user_code" class="text1" name="code" placeholder="请输入验证码"
+							style="width:100px;color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:40px;border-radius:2px 2px 2px 2px;"
+							maxlength=40>
+						<img class="code-image" src=""  alt="图片">
+					</div><br>
                         <div style="text-align: center">
                             <input id="code_submit" type="button" style="cursor:pointer;width:90%;" value="确定">
                         </div>
