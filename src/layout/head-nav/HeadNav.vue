@@ -21,7 +21,7 @@
              </el-menu-item>
           </el-menu>
         </el-col>
-        <el-col :span="4" class="userinfo">
+        <el-col :span="4" style="text-align: right;" >
           <span class='username'>
             <el-dropdown trigger="click" @command='setDialogInfo'>
               <span class="el-dropdown-link">
@@ -39,6 +39,22 @@
             </el-dropdown>
           </span>
         </el-col>
+
+
+        <!--<el-col :span="4" style="text-align: right;">
+          <el-dropdown trigger="click" style="height: 60px;line-height: 60px;cursor: pointer">
+            <span class="el-dropdown-link" style="color: #FFF">
+              <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 50px;">
+              {{getUsername()}}<i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
+              <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
+              <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>-->
+
       </el-row>
     </header>
 
@@ -165,9 +181,6 @@
 
   }
 
-  .userinfo {
-    text-align: right;
-  }
 
   .username {
     height: 60px;

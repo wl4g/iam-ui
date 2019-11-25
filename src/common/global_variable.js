@@ -51,8 +51,8 @@ export default {
             baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
             console.debug("user cache Url , url = "+ baseUrl);
         }else{//user default
-            let isIP = lwindow.Common.Util.isIpv4(hostname);
-            if (hostname == 'localhost' || hostname == '127.0.0.1'|| hostname == '0:0:0:0:0:0:0:1') {//if localhost
+            let isIp = window.Common.Util.isIp(hostname);
+            if (hostname == 'localhost' || isIp) {//if localhost
                 baseUrl = protocol + "//" +hostname+":"+ app.defaultPort + app.defaultContextPath;
                 console.debug("user localhost Url , url = "+ baseUrl);
             } else {
