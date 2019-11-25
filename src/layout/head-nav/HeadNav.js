@@ -1,3 +1,7 @@
+import {
+  store
+} from '../../utils/'
+
 export default {
   name: 'head-nav',
   data () {
@@ -62,6 +66,12 @@ export default {
     // this.onGetSetting();
   },
   methods: {
+
+    getUsername(){
+      return store.get('userinfo.username')
+    },
+
+
     logout () {
       this.$confirm('你确定退出登录么?', '确认退出', {
         confirmButtonText: '确定',

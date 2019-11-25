@@ -32,96 +32,11 @@ export default {
   },
   methods: {
 
-    afterLogin(){
+    afterLogin(principal){
+      //that.$store.state.username = principal;
+      store.set('userinfo.username',principal);
       this.$router.push('/init');
     },
-
-    afterLogin2(){
-      this.getCache();
-
-      this.$$api_iam_getMenuList({
-        data: {},
-        fn: data => {
-          console.info(data);
-          store.set("menu_cache",data.data.data);
-          promise.buildRoleRoute(this);
-
-          let routList = this.$router.options.routes
-          //jump to first not hidden page
-          for(let i = 0; i<routList.length;i++){
-            if(routList[i].hidden!=true){
-              let children = routList[i].children;
-              if(children){
-                for(let j = 0; j<children.length;j++){
-                  if(children[j].hidden!=true) {
-                    this.$router.push(routList[i].path+'/'+children[j].path);
-                    return;
-                  }
-                }
-              }
-            }
-          }
-
-        },
-        errFn: (a,b) => {
-          console.info(a);
-          console.info(b);
-          this.$message.error('get mune fail');
-        }
-      })
-    },
-
-    getCache (){
-      let that = this;
-
-      //application
-      that.$$api_iam_clusterConfigInfo({
-        fn: data => {
-          //console.info(data.data)
-          store.set("application_cache",data.data);
-          console.info(store.get("application_cache"));
-          console.info(store.get("application_cache")['umc-manager']);
-        },
-        errFn: () => {
-          //console.info("get application cache fail");
-          //try again
-          that.$$api_iam_clusterConfigInfo({
-            fn: data => {
-              //console.info(data.data)
-              store.set("application_cache",data.data.list);
-              console.info(store.get("application_cache"));
-            },
-            errFn: () => {
-              console.error("get application cache fail")
-            },
-          });
-        },
-      });
-
-      //dict
-      that.$$api_share_dictCache({
-        fn: data => {
-          //console.info(data.data)
-          store.set("dicts_cache",data.data);
-          console.info(store.get("dicts_cache"));
-        },
-        errFn: () => {
-          //console.info("get dict cache fail");
-          //try again
-          that.$$api_share_dictCache({
-            fn: data => {
-              //console.info(data.data)
-              store.set("dicts_cache",data.data);
-              console.info(store.get("dicts_cache"));
-            },
-            errFn: () => {
-              console.error("get dict cache fail")
-            },
-          });
-        },
-      })
-    },
-
 
   },
   mounted () {
@@ -181,7 +96,7 @@ export default {
               return true;
             },
             onSuccess: function (principal, redirectUrl) {
-              that.afterLogin();
+              that.afterLogin(principal);
               //console.log("登录成功!");
               return false; // 返回false会阻止自动调整
             },

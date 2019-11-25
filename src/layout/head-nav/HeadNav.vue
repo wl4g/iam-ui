@@ -25,7 +25,7 @@
           <span class='username'>
             <el-dropdown trigger="click" @command='setDialogInfo'>
               <span class="el-dropdown-link">
-                {{this.$store.state.user.userinfo.username}}
+                {{getUsername()}}
                 <i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
               <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
@@ -38,7 +38,7 @@
               </el-dropdown-menu>
             </el-dropdown>
           </span>
-          <i class="fa fa-sign-out logout" @click='logout'></i>
+          <!--<i class="fa fa-sign-out logout" @click='logout'></i>-->
         </el-col>
       </el-row>
     </header>
