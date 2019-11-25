@@ -1,4 +1,7 @@
 import {transDate, getDay} from 'utils/'
+import { Terminal } from 'xterm';
+import 'xterm/css/xterm.css'
+import { FitAddon } from 'xterm-addon-fit';
 
 export default {
     name: 'taskhis',
@@ -49,9 +52,11 @@ export default {
                 result: ''
             },
 
-            logIndex: 0,
+            startPos: 0,
             logThread: 0,
             refreshListThread: 0,
+
+            term: null,
         }
     },
 
@@ -69,6 +74,8 @@ export default {
         dic2.set(3, "Failed");
         dic2.set(4, "Timeout");
         this.dictData.set("ci_task_status", dic2);
+
+
     },
 
     activated() {
@@ -221,54 +228,52 @@ export default {
 
         //log part
         readLogTask(row){
-            let that = this;
             this.stopReadLogTask();
+
+            if(this.term){
+                this.term.dispose();
+            }
+            this.term = new Terminal({});
+            const fitAddon = new FitAddon();
+            this.term.loadAddon(fitAddon);
+            this.term.open(document.getElementById('terminal'));
+            fitAddon.fit();
+            //=============================================
+
+            let that = this;
             console.info(this.detailForm.result);
             this.detailForm.result = '';
-            this.logIndex = 0;
-            this.logThread = self.setInterval(function () {
-                that.readLog(row.id);
-            }, 1 * 1000);
-
+            this.startPos = 0;
+            this.readLog(row.id);
         },
 
         stopReadLogTask(){
-            console.info("stop read log task");
-            window.clearInterval(this.logThread);
+            console.debug("stop read log task");
+            window.clearTimeout(this.logThread);
         },
 
         readLog(taskHisId){
-            console.debug("read log taskHisId="+taskHisId+" index="+this.logIndex);
+            console.debug("read log taskHisId="+taskHisId+" taskHisReadLog="+this.startPos);
             var that = this;
             this.$$api_ci_taskHisReadLog({
                 data: {
                     taskHisId: taskHisId,
-                    index: that.logIndex,
+                    startPos: that.startPos,
                     size:10000,
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        let logs = data.data.data.lines;
-                        if(data.data.data.isEnd==true){
-                            console.info("into stop log task");
-                            this.stopReadLogTask();
-                        }
-                        console.debug(logs);
-                        for(let i in logs) {
-                            //that.logIndex = that.logIndex+1;
-                            //console.log(logs[i]);
-                            that.detailForm.result = that.detailForm.result+logs[i]+"\n";
-                            if(logs[i].indexOf("[EOF]>") != -1){
-                                this.stopReadLogTask();
-                            }
-                            that.scroll();
-                        };
-                        that.logIndex = data.data.data.endPos;
-                    } else {
-                        /*this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });*/
+                    let logs = data.data.data.lines;
+                    if (!data.data.data.hasNext) {
+                        this.stopReadLogTask();
                     }
+                    for (let i in logs) {
+                        this.term.writeln(logs[i]);
+                    }
+                    that.startPos = data.data.data.endPos;
+                    //console.debug(that.startPos);
+                    this.logThread = self.setTimeout(function () {
+                        that.readLog(taskHisId);
+                    }, 1 * 1000);
                 },
                 errFn: () => {
                     /*this.$alert('访问失败，请稍后重试！', '错误', {

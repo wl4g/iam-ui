@@ -49,19 +49,19 @@ export default {
         let applicationCache = store.get("application_cache");
         if(applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
             baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
-            console.debug("user cache Url , url = "+ baseUrl);
+            //console.debug("user cache Url , url = "+ baseUrl);
         }else{//user default
             let isIp = window.Common.Util.isIp(hostname);
             if (hostname == 'localhost' || isIp) {//if localhost
                 baseUrl = protocol + "//" +hostname+":"+ app.defaultPort + app.defaultContextPath;
-                console.debug("user localhost Url , url = "+ baseUrl);
+                //console.debug("user localhost Url , url = "+ baseUrl);
             } else {
                 var topDomainName = hostname.split('.').slice(-2).join('.');
                 if(hostname.indexOf("com.cn") > 0){
                     topDomainName = hostname.split('.').slice(-3).join('.');
                 }
                 baseUrl = protocol +"//"+app.twoDomain +"."+ topDomainName + app.defaultContextPath;
-                console.debug("user default Url , url = "+ baseUrl);
+                //console.debug("user default Url , url = "+ baseUrl);
             }
         }
         return baseUrl;

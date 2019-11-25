@@ -41,7 +41,7 @@ export default function ({
                          } = {}) {
 
     //TODO 11-15 modify 根据sys获取baseUrl
-    console.info(sys);
+    //console.info(sys);
     var baseUrl = global.getBaseUrl(sys);
 
   var p = baseUrl + path;
@@ -73,7 +73,7 @@ export default function ({
 
   // 发送请求
   Vue.axios(options).then((res) => {
-      console.debug("Response data.code: "+ res.data[gbs.api_status_key_field]);
+      //console.debug("Response data.code: "+ res.data[gbs.api_status_key_field]);
       this.$store.dispatch('hide_loading')
 
       // Backend response code: 200

@@ -66,7 +66,7 @@
 
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' :close="stopReadLogTask">
+        <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' @close="stopReadLogTask">
             <el-form :inline="true" label-width="80px"  :model="buildForm" ref="buildForm" class="demo-form-inline">
                 <el-form-item label="Group:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>
@@ -98,12 +98,13 @@
                         </el-table>
                     </template>
                 </div>
-                <div class="log">
+                <div id="terminal"></div>
+                <!--<div class="log">
                     <template>
                         <el-input type="textarea" :rows="30" placeholder="暂无数据" v-model="detailForm.result" class="mytextarea mytextarea2" :readonly="true">
                         </el-input>
                     </template>
-                </div>
+                </div>-->
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="detailVisible = false;stopReadLogTask();">Close</el-button>
