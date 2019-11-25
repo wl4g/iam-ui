@@ -7,7 +7,7 @@
 			<img data-v-12af00ba="" src="../../assets/logo.png" alt="" style="width:160px;" class="logo">
 			<!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
         </el-col>
-        <el-col :span="16" style="width:69%">
+        <el-col :span="16" style="width:66%">
             <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo" mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
             <el-menu-item
@@ -38,7 +38,6 @@
               </el-dropdown-menu>
             </el-dropdown>
           </span>
-          <!--<i class="fa fa-sign-out logout" @click='logout'></i>-->
         </el-col>
       </el-row>
     </header>

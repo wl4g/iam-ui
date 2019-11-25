@@ -38,8 +38,8 @@ export default {
         defaultPort: '14040',
     },
 
-    getBaseUrl: function(sys) {
-        if(!sys){
+    getBaseUrl: function(app) {
+        if(!app){
             return;
         }
         let hostname = location.hostname;
@@ -47,19 +47,20 @@ export default {
         let baseUrl = '';
         //get from store , if found , user it
         let applicationCache = store.get("application_cache");
-        if(applicationCache && applicationCache != 'null' && applicationCache[sys.cluster] &&applicationCache[sys.cluster]['extranetBaseUri']){//found from store
-            baseUrl = applicationCache[sys.cluster]['extranetBaseUri'];
+        if(applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
+            baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
             console.debug("user cache Url , url = "+ baseUrl);
         }else{//user default
+            let isIP = lwindow.Common.Util.isIpv4(hostname);
             if (hostname == 'localhost' || hostname == '127.0.0.1'|| hostname == '0:0:0:0:0:0:0:1') {//if localhost
-                baseUrl = protocol + "//" +hostname+":"+ sys.defaultPort + sys.defaultContextPath;
+                baseUrl = protocol + "//" +hostname+":"+ app.defaultPort + app.defaultContextPath;
                 console.debug("user localhost Url , url = "+ baseUrl);
             } else {
                 var topDomainName = hostname.split('.').slice(-2).join('.');
                 if(hostname.indexOf("com.cn") > 0){
                     topDomainName = hostname.split('.').slice(-3).join('.');
                 }
-                baseUrl = protocol +"//"+sys.twoDomain +"."+ topDomainName + sys.defaultContextPath;
+                baseUrl = protocol +"//"+app.twoDomain +"."+ topDomainName + app.defaultContextPath;
                 console.debug("user default Url , url = "+ baseUrl);
             }
         }
