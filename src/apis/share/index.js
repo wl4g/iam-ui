@@ -56,6 +56,13 @@ export default [
     //host
     {
         name: '所有host',
+        method: 'allHost',
+        path: '/host/allHost',
+        type: 'post',
+        sys: global.share
+    },
+    {
+        name: 'hostList',
         method: 'hostList',
         path: '/host/list',
         type: 'post',

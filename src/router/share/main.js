@@ -23,5 +23,12 @@ export default [
         icon: '',
         component: Share.Contact,
         permission: 'share:contact',
-    },
+    },{
+        path: 'host',
+        name: 'Host',
+        icon: '',
+        component: Share.Host,
+        permission: 'share:host',
+
+    }
 ]

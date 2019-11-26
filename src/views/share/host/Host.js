@@ -1,12 +1,13 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'cluster',
+    name: 'host',
     data() {
         return {
             //查询条件
             searchParams: {
-                clusterName: '',
+                name: '',
+                hostname: '',
             },
 
             //分页信息
@@ -18,11 +19,8 @@ export default {
             saveForm: {
                 id: '',
                 name: '',
-                remark: '',
-                instances: [],
+                hostname: '',
             },
-
-            isEdit: false,
 
             dialogVisible: false,
             dialogTitle: '',
@@ -30,11 +28,26 @@ export default {
 
             tableData: [],
 
-            //allHost
-            allHost: [],
 
+            // 表单规则
             rules: {
-                name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+
+                name: [
+                    {required: true, message: 'Please Input name', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                provider: [
+                    { required: true, message: 'Please Input provider', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                authType: [
+                    { required: true, message: 'Please select authType', trigger: 'change' },
+                ],
+                baseUri: [
+                    { required: true, message: 'Please select baseUri', trigger: 'change' },
+                    { min: 1, max: 255, message: 'length between 1 to 255', trigger: 'blur' }
+                ],
+
             },
 
         }
@@ -42,13 +55,12 @@ export default {
 
     mounted() {
         this.getData();
-        this.getAllHost();
+
     },
 
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
@@ -58,48 +70,26 @@ export default {
             this.getData();
         },
 
-        //获取主机列表
-        getAllHost() {
-            this.$$api_share_allHost({
-                fn: data => {
-                    if(data.code == 200){
-                        this.allHost = data.data;
-                    }else{
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-        },
-
         addData() {
-            this.getAllHost();
-
-            this.isEdit = false;
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add VCS information';
         },
 
         // 获取列表数据
         getData() {
-            this.$$api_share_clusterList({
+            this.$$api_share_hostList({
                 data: {
-                    clusterName: this.searchParams.clusterName,
+                    name: this.searchParams.name,
+                    hostname: this.searchParams.hostname,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        this.total = data.data.page.total;
-                        this.tableData = data.data.list;
+                        this.total = data.data.total;
+                        this.tableData = data.data.records;
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -114,35 +104,26 @@ export default {
                 }
             })
         },
-
         cleanSaveForm() {
-            this.saveForm.id= '';
-            this.saveForm.name= '';
-            this.saveForm.remark= '';
-            this.saveForm.instances= [];
-        },
-
-        deleteRow(index) {
-            this.saveForm.instances.splice(index, 1);
-        },
-
-        addRow() {
-            this.saveForm.instances.push({
-
-                envType: '',
-                hostId: '',
-                endpoint: '',
-                sshUser: '',
+            this.saveForm = {
+                id: '',
+                name: '',
+                provider: '',
+                authType: '',
+                baseUri: '',
+                sshKeyPub: '',
                 sshKey: '',
-                remark: '',
+                token: '',
+                username: '',
+                password: '',
+            };
 
-            })
         },
 
         saveData() {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_share_saveCluster({
+                    this.$$api_ci_saveVcs({
                         data: this.saveForm,
                         fn: data => {
                             this.dialogLoading = false;
@@ -164,25 +145,34 @@ export default {
                         }
                     });
                 }
-            })
+            });
         },
 
-
         editData(row) {
-            this.getAllHost();
-            this.isEdit = true;
             if (!row.id) {
                 return;
             }
-            this.$$api_share_clusterDetail({
+            this.$$api_ci_vcsDetail({
                 data: {
-                    clusterId: row.id,
+                    id: row.id,
                 },
                 fn: data => {
                     //this.loading = false;
                     if (data.code == 200) {
-                        console.info(data.data.data);
-                        this.saveForm = data.data.data;
+                        this.saveForm = {
+                            id: data.data.id,
+                            name: data.data.name,
+                            provider: data.data.provider.toString(),
+                            authType: data.data.authType.toString(),
+                            baseUri: data.data.baseUri,
+                            sshKeyPub: data.data.sshKeyPub,
+                            sshKey: data.data.sshKey,
+                            token: data.data.token,
+                            username: data.data.username,
+                            password: data.data.password,
+                        };
+
+
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
@@ -195,10 +185,10 @@ export default {
                         confirmButtonText: '确定',
                     });
                 }
-            })
+            });
 
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Configure VCS information';
         },
 
 
@@ -206,31 +196,25 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_share_delCluster({
+            this.$$api_ci_delVcs({
                 data: {
-                    clusterId: row.id,
+                    id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.$message({
-                            message: 'del success',
-                            type: 'success'
-                        });
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    });
+                    this.getData();
                 },
                 errFn: () => {
-                    //this.loading = false;
                     this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+                        confirmButtonText: 'OK',
                     });
                 }
             })
         },
+
+
     }
 }
