@@ -48,10 +48,11 @@ export default {
 
       //验证
       rules: {
-        moduleName: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        aliasName: [{ required: true, message: '请输入别名', trigger: 'blur' }],
-        belongTo: [{required: true, message: '请选择所属系统', trigger: 'blur' }],
-        moduleOrder: [{required: true, name:'排序', validator: this.$validate_isPositiveInteger, trigger: 'blur'}]
+        name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+        displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+        role: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorRules }],
+        menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
+
       },
 
       //弹窗控制
@@ -104,6 +105,26 @@ export default {
       }).catch(() => {
 
       });
+    },
+
+
+    validatorRules(rule, value, callback){
+      console.info(this.saveForm.roleIds);
+      if (this.saveForm.roleIds.length<=0) {
+        callback(new Error('roles is Empty'));
+      } else {
+        callback();
+      }
+    },
+
+
+    validatorMenus(rule, value, callback){
+      console.info(rule);
+      if (this.saveForm.menuIds.length<=0) {
+        callback(new Error('menuIds is Empty'));
+      } else {
+        callback();
+      }
     },
     /**
      * 添加下级菜单按钮

@@ -99,6 +99,7 @@
                     </template>
                 </div>
                 <div id="terminal"></div>
+                <!--<el-button @click="test()">test</el-button>-->
                 <!--<div class="log">
                     <template>
                         <el-input type="textarea" :rows="30" placeholder="暂无数据" v-model="detailForm.result" class="mytextarea mytextarea2" :readonly="true">

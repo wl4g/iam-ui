@@ -69,16 +69,28 @@ export default {
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
                 group: [
-                    {type:'number', required: true, message: 'Plese select Group', trigger: 'change' },
+                    {type:'number', required: true, message: 'Please select Group', trigger: 'change' },
                 ],
                 tarType: [
-                    {type:'number', required: true, message: 'Plese select tar type', trigger: 'change' },
+                    {type:'number', required: true, message: 'Please select tar type', trigger: 'change' },
                 ],
                 instances: [
                     { validator: validateInstances,required: true, trigger: 'change' },
                 ],
                 branch: [
-                    {required: true, message: 'Plese select branch', trigger: 'change' },
+                    {required: true, message: 'Please select branch', trigger: 'change' },
+                ],
+            },
+
+            buildRules:{
+                trackType: [
+                    {required: true, message: 'Please select trackType', trigger: 'change' },
+                ],
+                trackId: [
+                    {required: true, message: 'Please input trackId', trigger: 'change' },
+                ],
+                remark: [
+                    {required: true, message: 'Please input remark', trigger: 'change' },
                 ],
             },
 
@@ -485,42 +497,40 @@ export default {
             };
         },
 
-        runTask(){
-                this.$$api_ci_runTask({
-                    data: this.confirmForm,
-                    fn: data => {
-                        this.confirmDialog = false;
-                        this.$confirm('Create Task Success,jump to task list?',  {
-                            confirmButtonText: 'Yes',
-                            cancelButtonText: 'No',
-                            type: 'success'
-                        }).then(() => {
-                            this.$router.push('/ci/taskhis');
-                        }).catch(() => {
-                            //do nothing
-                        });
+        runTask() {
+            this.$refs['confirmForm'].validate((valid) => {
+                if (valid) {
+                    this.$$api_ci_runTask({
+                        data: this.confirmForm,
+                        fn: data => {
+                            this.confirmDialog = false;
+                            this.$confirm('Create Task Success,jump to task list?', {
+                                confirmButtonText: 'Yes',
+                                cancelButtonText: 'No',
+                                type: 'success'
+                            }).then(() => {
+                                this.$router.push('/ci/taskhis');
+                            }).catch(() => {
+                                //do nothing
+                            });
 
-                    },
-                    errFn: (data) => {
-                        this.confirmDialog = false;
-                        if(data&&data.message){
-                            this.$alert(data.message, '错误', {
-                                confirmButtonText: '确定',
-                            });
-                        }else{
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                        },
+                        errFn: (data) => {
+                            this.confirmDialog = false;
+                            if (data && data.message) {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定',
+                                });
+                            } else {
+                                this.$alert('访问失败，请稍后重试！', '错误', {
+                                    confirmButtonText: '确定',
+                                });
+                            }
                         }
-
-                    }
-                })
-
-
-
-
+                    })
+                }
+            });
         }
-
 
     }
 }

@@ -8,6 +8,7 @@ Vue.use(Router)
 
 import { Login } from 'views/'
 import { Init } from 'views/'
+import Home from './home/'
 import Umc from './umc/'
 import Scm from './scm/'
 import Ci from './ci/'
@@ -21,21 +22,22 @@ export default new Router({
       path: '/',
       name: 'Login',
       hidden: true,
-      redirect (to) {
+      redirect(to) {
         return 'login'
-    }
+      }
     }, {
       path: '/login',
       name: '登录',
       hidden: true,
       component: Login
-    },{
+    }, {
       path: '/init',
       name: '初始化',
       hidden: true,
       component: Init
     },
     //Function,
+    Home,
     Umc,
     Srm,
     Ci,
