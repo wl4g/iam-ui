@@ -170,7 +170,8 @@ export default [
         method: 'clusterConfigInfo',//applicationInfo ==> clusterConfigInfo
         path: '/clusterConfig/info',
         type: 'post',
-        sys: global.iam
+        sys: global.iam,
+        usedefault: true,
     },
 
 
