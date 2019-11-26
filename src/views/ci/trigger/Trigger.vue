@@ -7,7 +7,7 @@
             <!-- <el-form-item label="Name:">
                 <el-input v-model="searchParams.name" placeholder="e.g. TaskPortalDev"></el-input>
             </el-form-item> -->
-            <el-form-item label="Task:">
+            <el-form-item label="Pipeline:">
                 <el-input v-model="searchParams.taskId" placeholder="e.g. TaskPortalDev" style="width:155px"></el-input>
             </el-form-item>
             <el-form-item label="Status:">
@@ -18,16 +18,13 @@
                     <el-option label="Disable" value="0"></el-option>
                 </el-select>
             </el-form-item>
-
-            <el-form-item label="Create Date:">
+            <el-form-item label="CreateDate:">
                 <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
                 <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
             </el-form-item>
-
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
-
         </el-form>
 
         <!--================================table================================-->
@@ -101,7 +98,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>-->
-
 
                 <el-row>
                     <el-col :span="12">

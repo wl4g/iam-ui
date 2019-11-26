@@ -2,14 +2,12 @@
   margin-right: 8px;
 }
 .left-fixed-right-auto {
-  padding-top: 60px;
+  padding-top:60px;
 }
 .left {
   position: fixed;
   float: left;
-  /*width:190px;
-  margin-right:-190px;*/
-  top: 60px;
+  top:50px;
 }
 .right-content {
   float: right;
@@ -29,13 +27,12 @@
   background: #1f2f3d;
   position: absolute;
   top: 0px;
-  /*left: 190px;*/
   z-index: 1000;
   cursor: pointer;
   line-height: 40px;
   text-align: center;
   color: #fff;
-  font-size: 14px;
+  font-size: 12 px;
   opacity: 0.2;
   transition: opacity 0.3s ease-out;
 }

@@ -10,22 +10,20 @@
             <el-form-item label="Cluster:">
                 <el-input v-model="searchParams.groupName" placeholder="e.g. portal" style="width:110px;"></el-input>
             </el-form-item>
-            <el-form-item label="Project:">
+            <!--<el-form-item label="Project:">
                 <el-input v-model="searchParams.projectName" placeholder="e.g. portal-web" style="width:120px;"></el-input>
-            </el-form-item>
+            </el-form-item>-->
             <!--<el-form-item label="Branch:">
                 <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
             </el-form-item>-->
             <el-form-item label="PipeKind:">
-                <el-select :clearable="true" v-model="searchParams.tarType" placeholder="PipeKind" style="width:70px;">
+                <el-select :clearable="true" v-model="searchParams.tarType" placeholder="PipeKind" style="width:105px;">
                     <el-option
                             v-for="item in dictutil.getDictListByType('ci_tar_type')"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
                     </el-option>
-
-
                 </el-select>
             </el-form-item>
             <el-form-item label="CreateDate:">
@@ -59,8 +57,8 @@
                 <el-table :data="tableData"  style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID" min-width="40"></el-table-column>
-                    <el-table-column prop="taskName" label="Name" min-width="70"></el-table-column>
-                    <el-table-column prop="groupName" label="Group" min-width="60"></el-table-column>
+                    <el-table-column prop="taskName" label="PipeName" min-width="70"></el-table-column>
+                    <el-table-column prop="groupName" label="Cluster" min-width="60"></el-table-column>
                     <el-table-column prop="instances" label="Instances" min-width="70">
                         <template slot-scope="scope">
                             <el-popover placement="right" width="200" trigger="hover">

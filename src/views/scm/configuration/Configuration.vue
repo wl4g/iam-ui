@@ -350,7 +350,7 @@
 .mytc .el-dialog__body {
   padding: 10px 10px;
   color: #48576a;
-  font-size: 14px;
+  font-size: 12px;
 }
 .el-input--small .el-input__inner {
   height: 30px;

@@ -7,8 +7,8 @@
 			<img data-v-12af00ba="" src="../../assets/logo.png" alt="" style="width:160px;" class="logo">
 			<!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
         </el-col>
-        <el-col :span="16" style="width:66%">
-            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo" mode="horizontal" unique-opened router>
+        <el-col :span="16" style="width:66%;">
+            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:50px" class="el-menu-demo" mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
             <el-menu-item
               v-for='(item,index) in $router.options.routes'
@@ -21,9 +21,9 @@
              </el-menu-item>
           </el-menu>
         </el-col>
-        <el-col :span="4" style="text-align: right;" >
+        <el-col :span="4" style="text-align: right;">
           <span class='username'>
-            <el-dropdown trigger="click" @command='setDialogInfo'>
+            <el-dropdown trigger="hover" @command='setDialogInfo'>
               <span class="el-dropdown-link">
                 {{getUsername()}}
                 <i class="el-icon-caret-bottom el-icon--right"></i>
@@ -40,9 +40,8 @@
           </span>
         </el-col>
 
-
         <!--<el-col :span="4" style="text-align: right;">
-          <el-dropdown trigger="click" style="height: 60px;line-height: 60px;cursor: pointer">
+          <el-dropdown trigger="click" style="height:50px;line-height:50px;cursor: pointer">
             <span class="el-dropdown-link" style="color: #FFF">
               <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 50px;">
               {{getUsername()}}<i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
@@ -58,7 +57,7 @@
       </el-row>
     </header>
 
-    <el-dialog size="small" :title="dialog.title" v-model="dialog.show_pass">
+    <el-dialog size="small" :title="dialog.title" v-model="dialog.show_pass" :close-on-click-modal="false">
       <el-form style="margin:20px;width:80%;"
                label-width="100px"
                :model="dialog.user_info"
@@ -137,31 +136,27 @@
 
 <script>
   import HeadNavJs from './HeadNav.js'
-
   export default HeadNavJs
 </script>
 
 <style scoped lang='less'>
   .logo-container {
-    height: 60px;
+    height: 50px;
   }
-
   .logo {
     height: 50px;
     width: auto;
     margin-left: 10px;
     margin-top: 5px;
   }
-
   .fa-user {
     position: relative;
     top: -2px;
     margin-right: 4px;
   }
-
   .head-nav {
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: #324057;
     position: fixed;
     top: 0px;
@@ -169,27 +164,26 @@
     z-index: 99;
     color: #FFF;
     border-bottom: 1px solid #1F2D3D;
-
-    .logout {
+  .logout {
       width: 60px;
-      height: 60px;
-      line-height: 60px;
+      height: 50px;
+      line-height: 50px;
       text-align: center;
       float: right;
       cursor: pointer;
     }
-
   }
-
-
   .username {
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     cursor: pointer;
-
     .el-dropdown {
       color: #FFF;
     }
-
+  }
+  .el-menu-item {
+    height:50px !important;
+    padding-left:18px !important;
+    line-height: 50px !important;
   }
 </style>

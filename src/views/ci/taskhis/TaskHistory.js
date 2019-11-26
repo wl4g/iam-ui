@@ -164,7 +164,7 @@ export default {
             case 4:
                 return { img: 'static/images/state/red_fail.png', text: 'Timeout' };
             case 5:
-                return { img: 'static/images/state/red_fail.png', text: 'Stop' };
+                return { img: 'static/images/state/red_fail.png', text: 'Stopped' };
             default:
                 return '--';
             }
@@ -177,7 +177,7 @@ export default {
                 return '#50bfff';
             }
             if (row.status == 2) {
-                return '#13ce66';
+                return '#44e88d';
             }
             if (row.status == 4) {
                 return '#dc9417';

@@ -39,7 +39,7 @@
                 <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width:100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID" min-width="30"></el-table-column>
-                    <el-table-column prop="groupName" label="Group"></el-table-column>
+                    <el-table-column prop="groupName" label="Cluster"></el-table-column>
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="branchName" label="Branch"></el-table-column>
                     <el-table-column prop="type" label="Type" min-width="50" :formatter="convertType"></el-table-column>
@@ -68,7 +68,7 @@
         <!--================================detail================================-->
         <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' @close="stopReadLogTask">
             <el-form :inline="true" label-width="80px"  :model="buildForm" ref="buildForm" class="demo-form-inline">
-                <el-form-item label="Group:">
+                <el-form-item label="Cluster:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>
                 </el-form-item>
                 <el-form-item label="Branch:">

@@ -31,15 +31,25 @@ export default {
     }
   },
   methods: {
-
     afterLogin(principal){
       //that.$store.state.username = principal;
       store.set('userinfo.username',principal);
       this.$router.push('/init');
     },
-
   },
   mounted () {
+    // 只有放<body>之后（内容元素之前）最合适，否则会出现缩放闪屏（但使用如VUE框架则没有此问题，可放在</body>之前）
+    let w = window.screen.width;
+    if (w >= 1500) {
+        $("#wrap").css({"zoom": "1"});
+    } else if (w >= 1400) {
+        $("#wrap").css({"zoom": "0.9"});
+    } else if (w >= 1250) {
+        $("#wrap").css({"zoom": "0.8"});
+    } else {
+        $("#wrap").css({"zoom": "0.7"});
+    }
+
     var that = this;
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
