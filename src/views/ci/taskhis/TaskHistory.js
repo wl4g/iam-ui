@@ -2,6 +2,7 @@ import {transDate, getDay} from 'utils/'
 import { Terminal } from 'xterm';
 import 'xterm/css/xterm.css'
 import { FitAddon } from 'xterm-addon-fit';
+import { SearchAddon } from 'xterm-addon-search';
 
 export default {
     name: 'taskhis',
@@ -57,6 +58,9 @@ export default {
             refreshListThread: 0,
 
             term: null,
+
+            //searchAddon: null,
+
         }
     },
 
@@ -236,6 +240,12 @@ export default {
             this.term = new Terminal({});
             const fitAddon = new FitAddon();
             this.term.loadAddon(fitAddon);
+
+            //TODO search
+            /*this.searchAddon = new SearchAddon();
+            this.term.loadAddon(this.searchAddon);*/
+
+
             this.term.open(document.getElementById('terminal'));
             fitAddon.fit();
             //=============================================
@@ -245,7 +255,14 @@ export default {
             this.detailForm.result = '';
             this.startPos = 0;
             this.readLog(row.id);
+
+
         },
+
+        /*test(){
+            //this.searchAddon.activate(this.term);
+            this.searchAddon.findNext('SUCCESS');
+        },*/
 
         stopReadLogTask(){
             console.debug("stop read log task");
