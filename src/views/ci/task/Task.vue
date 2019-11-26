@@ -279,7 +279,7 @@
 
 
         <el-dialog title="Create Task Confirm" :visible.sync="confirmDialog" size="small">
-            <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline">
+            <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline" :rules="buildRules">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="trackType:" prop="trackType">
