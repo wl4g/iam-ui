@@ -4,6 +4,7 @@
 
 import Login from './login/'
 import Init from './init/'
+import Home from './home/'
 import Components from './components/'
 import Umc from './umc'
 import Scm from './scm/'
@@ -15,6 +16,7 @@ import Share from './share'
 export {
     Login,
     Init,
+    Home,
     Components,
     Scm,
     Srm,
