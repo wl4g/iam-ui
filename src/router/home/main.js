@@ -6,11 +6,11 @@ import { Home } from 'views/'
 
 export default [
     {
-        path: 'home',
-        name: 'Home',
+        path: 'overview',
+        name: 'Overview',
         icon: '',
-        component: Home.Home,
-        permission: 'home:home',
+        component: Home.Overview,
+        permission: 'home:overview',
     },
 
 

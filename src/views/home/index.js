@@ -1,7 +1,7 @@
-import Home from './home/'
+import Overview from './overview/'
 
 
 
 export default {
-    Home,
+    Overview,
 }

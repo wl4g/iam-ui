@@ -1,7 +1,7 @@
 <template>
 
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
             <!--<el-form-item label="DisplayName:">
                 <el-input v-model="searchParams.displayName" placeholder="e.g 开发者"></el-input>
             </el-form-item>

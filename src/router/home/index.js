@@ -10,7 +10,7 @@ export default {
   name: 'HOME',
   icon: '',
   component: Home,Content,
-  redirect: '/home/home',
+  redirect: '/home/overview',
   children:Main,
   permission: 'home'
 }

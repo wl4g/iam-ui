@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
             <!--<el-form-item label="ID:">
                 <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width: 80px;"></el-input>
             </el-form-item>-->
@@ -41,11 +41,13 @@
             <div class="line"></div>
             <div class="">Total： <span class="number">{{total}}</span>
                 <el-dropdown style='float:right;margin-right:20px' @command="add">
-                    <el-button type="primary" >+ New Pipeline</el-button>
+                    <el-button type="primary">+ New Pipeline</el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item
                                 v-for="item in dictutil.getDictListByType('ci_tar_type')"
-                                :command="item.value">{{item.label}}
+                                :command="item.value"
+                                :disabled="item.enable!=1">
+                            {{item.label}}
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>

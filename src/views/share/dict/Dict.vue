@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline" style="margin-left:10px">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" style="margin-left:10px" @keyup.enter.native="onSubmit()">
             <el-form-item label="Key:">
                 <el-input v-model="searchParams.key" placeholder="e.g. app_ns_type@dev" style="width:165px"></el-input>
             </el-form-item>
