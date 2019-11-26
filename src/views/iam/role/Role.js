@@ -278,31 +278,37 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_iam_delRole({
-                data: {
-                    userId: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.$message({
-                            message: 'del success',
-                            type: 'success'
-                        });
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+            this.$confirm('Delete Option, Be Careful', 'Warning', {
+                type: 'warning'
+            }).then(() => {
+                this.$$api_iam_delRole({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+                            this.$message({
+                                message: 'del success',
+                                type: 'success'
+                            });
+                            this.getData();
+
+                    },
+                    errFn: (data) => {
+                        //this.loading = false;
+                        if(data&&data.message){
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }else{
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+
+            });
         },
 
 
