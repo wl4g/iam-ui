@@ -2,7 +2,7 @@
     <el-tabs type="border-card">
         <el-tab-pane label="Contact">
             <section id="configuration" class="configuration">
-                <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+                <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
                     <el-form-item label="Name:">
                         <el-input v-model="searchParams.name" placeholder="名字"></el-input>
                     </el-form-item>
@@ -50,7 +50,7 @@
 
                 <!--================================save dialog================================-->
                 <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-                    <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+                    <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                         <el-row>
                             <el-col :span="12">

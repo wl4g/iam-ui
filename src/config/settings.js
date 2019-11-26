@@ -13,12 +13,12 @@ var gbs = {
   api_custom: {
     401: function (res, url, success, error,data) {
       console.debug("Response 401 for redirect_url: " + res.data.redirect_url);
-      checkTGCExpiredRedirectToLoginIfNecessary(res);
+      checkTGCExpiredRedirectToLoginIfNecessary(res,this);
 
       // Request IAM server authenticator.
       processUnauthWithNativeRequest(getRespJsonURL(res.data.redirect_url), true, function(res1){
         console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
-        checkTGCExpiredRedirectToLoginIfNecessary(res1);
+        checkTGCExpiredRedirectToLoginIfNecessary(res1,this);
 
         // Request IAM client authenticator.
         processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
@@ -45,7 +45,7 @@ var gbs = {
         console.error(errmsg);
         // error(errmsg);
       },null);
- 
+
     },
     403: function (res, url, success, error,data) {
       if(res&&res.message){
@@ -59,10 +59,10 @@ var gbs = {
 
 /**
  * 处理未认证时，统一请求方法.
- * 
- * @param {*} url 
- * @param {*} successCallback 
- * @param {*} errorCallback 
+ *
+ * @param {*} url
+ * @param {*} successCallback
+ * @param {*} errorCallback
  */
 var processUnauthWithNativeRequest = function(url, async, successCallback, errorCallback,data){
   $.ajax({
@@ -89,7 +89,7 @@ var processUnauthWithNativeRequest = function(url, async, successCallback, error
 
 /**
  * 获取相应格式为JSON的URL
- * @param {*} url 
+ * @param {*} url
  */
 var getRespJsonURL = function(url){
   if(url.indexOf("?")>0){
@@ -103,9 +103,9 @@ var getRespJsonURL = function(url){
 /**
  * 检查返回未登录(code=401)时是否跳转登录页，
  * (仅当TGC过期(真正过期)是才跳转登录页，iam-client过期无需跳转登陆页)
- * @param {*} res 
+ * @param {*} res
  */
-var checkTGCExpiredRedirectToLoginIfNecessary = function(res){
+var checkTGCExpiredRedirectToLoginIfNecessary = function(res,that){
   console.debug("TGC过期检查，res:" + JSON.stringify(res));
   if(res.code == 401 || res.code == '401'){
     // IamWithCasAppClient/IamWithCasAppServer
@@ -113,6 +113,7 @@ var checkTGCExpiredRedirectToLoginIfNecessary = function(res){
       // this.$store.dispatch('remove_userinfo').then(() => {
         console.debug("TGC过期，redirect to => "+ res.data.redirect_url);
         window.location.href = res.data.redirect_url;
+        //that.$router.push('/login');
       // });
     }
   }

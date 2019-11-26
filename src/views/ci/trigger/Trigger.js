@@ -24,7 +24,7 @@ export default {
             saveForm: {
                 id: '',
                 taskId: '',
-                tarType: '',
+                providerKind: '',
                 remark: '',
                 enable: '1',
                 type: '',

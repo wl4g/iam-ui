@@ -214,20 +214,24 @@ export default {
      * 添加或者保存
      */
     save(){
-      this.$$api_iam_saveGroup({
-        data: this.saveForm,
-        fn: data => {
-          this.$message({
-            message: 'save success',
-            type: 'success'
-          });
-          this.dialogVisible = false;
-          this.onGetList();
-        },
-        errFn: () => {
-          this.$message.error('save fail');
+      this.$refs['groupForm'].validate((valid) => {
+        if (valid) {
+          this.$$api_iam_saveGroup({
+            data: this.saveForm,
+            fn: data => {
+              this.$message({
+                message: 'save success',
+                type: 'success'
+              });
+              this.dialogVisible = false;
+              this.onGetList();
+            },
+            errFn: () => {
+              this.$message.error('save fail');
+            }
+          })
         }
-      })
+      });
     },
 
     getRoles(){

@@ -1,5 +1,5 @@
 export default {
-    name: 'Home',
+    name: 'Overview',
     data() {
         return {
 

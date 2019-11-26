@@ -10,7 +10,7 @@ export default {
   name: 'SETTING',
   icon: '',
   component: Home,Content,
-  redirect: '/share/dict',
+  redirect: '/share/cluster',
   children:Main,
   permission: 'share',
 }

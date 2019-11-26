@@ -64,6 +64,11 @@ export default {
                 name: '',
             },
 
+            rules: {
+                name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+                email: [{ required: true, message: 'Please input email', trigger: 'blur' }],
+            },
+
         }
     },
 

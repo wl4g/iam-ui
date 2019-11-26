@@ -43,10 +43,9 @@ export default {
 
       //验证
       rules: {
-        moduleName: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-        aliasName: [{ required: true, message: '请输入菜单唯一标识', trigger: 'blur' }],
-        belongTo: [{required: true, message: '请选择所属系统', trigger: 'blur' }],
-        moduleOrder: [{required: true, name:'排序', validator: this.$validate_isPositiveInteger, trigger: 'blur'}]
+        name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+        displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+        permission: [{required: true, message: 'Please input permission', trigger: 'blur' }],
       },
 
       //弹窗控制
@@ -144,20 +143,24 @@ export default {
      * 添加或者保存
      */
     save(){
-      this.$$api_iam_saveMenu({
-        data: this.formFields,
-        fn: data => {
-          this.$message({
-            message: 'save success',
-            type: 'success'
-          });
-          this.dialogVisible = false;
-          this.onGetList();
-        },
-        errFn: () => {
-          this.$message.error('save fail');
+      this.$refs['menuForm'].validate((valid) => {
+        if (valid) {
+          this.$$api_iam_saveMenu({
+            data: this.formFields,
+            fn: data => {
+              this.$message({
+                message: 'save success',
+                type: 'success'
+              });
+              this.dialogVisible = false;
+              this.onGetList();
+            },
+            errFn: () => {
+              this.$message.error('save fail');
+            }
+          })
         }
-      })
+      });
     },
 
     /**

@@ -20,7 +20,7 @@ export default {
                 groupName: '',
                 projectName: '',
                 branchName: '',
-                tarType:'',
+                providerKind:'',
                 startDate:'',
                 endDate:'',
             },
@@ -38,7 +38,7 @@ export default {
                 instances: [],
                 branch: '',
                 desc: '',
-                tarType: '',
+                providerKind: '',
                 tagOrBranch: '1',
                 buildCommand: '',
                 preCommand: '',
@@ -71,7 +71,7 @@ export default {
                 group: [
                     {type:'number', required: true, message: 'Please select Group', trigger: 'change' },
                 ],
-                tarType: [
+                providerKind: [
                     {type:'number', required: true, message: 'Please select tar type', trigger: 'change' },
                 ],
                 instances: [
@@ -142,7 +142,7 @@ export default {
                 this.dialogTitle = '新增';
             }
             //TODO ......
-            this.buildForm.tarType = command;
+            this.buildForm.providerKind = command;
 
         },
 
@@ -194,7 +194,7 @@ export default {
                     groupName: this.searchParams.groupName,
                     projectName: this.searchParams.projectName,
                     branchName: this.searchParams.branchName,
-                    tarType: this.searchParams.tarType,
+                    providerKind: this.searchParams.providerKind,
                     startDate: start,
                     endDate: end,
                     pageNum: this.pageNum,
@@ -307,7 +307,7 @@ export default {
                             appClusterId: this.buildForm.group,
                             branchName: this.buildForm.branch,
                             instance: this.buildForm.instances,
-                            tarType: this.buildForm.tarType,
+                            providerKind: this.buildForm.providerKind,
                             branchType: this.buildForm.tagOrBranch,
                             buildCommand: this.buildForm.buildCommand,
                             preCommand: this.buildForm.preCommand,
@@ -361,7 +361,7 @@ export default {
                         this.buildForm.environment=data.data.envId;
                         this.buildForm.instances=data.data.instances;
                         this.buildForm.branch=data.data.task.branchName;
-                        this.buildForm.tarType=data.data.task.tarType;
+                        this.buildForm.providerKind=data.data.task.providerKind;
                         this.buildForm.buildCommand=data.data.task.buildCommand;
                         this.buildForm.preCommand=data.data.task.preCommand;
                         this.buildForm.postCommand=data.data.task.postCommand;
@@ -455,7 +455,7 @@ export default {
             this.buildForm.environment = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
-            this.buildForm.tarType = '';
+            this.buildForm.providerKind = '';
             this.buildForm.tagOrBranch = '1';
             this.buildForm.buildCommand = '';
             this.buildForm.preCommand = '';

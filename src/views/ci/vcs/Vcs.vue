@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
@@ -46,17 +46,17 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-            <el-form label-width="165px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+            <el-form label-width="165px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Name:" prop="VCS Name">
+                        <el-form-item label="Name:" prop="name">
                             <el-input v-model="saveForm.name"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Provider:">
+                        <el-form-item label="Provider:" prop="provider">
                             <el-select v-model="saveForm.provider">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('vcs_provider')"
@@ -68,7 +68,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="AuthType:">
+                        <el-form-item label="AuthType:" prop="authType">
                             <el-select v-model="saveForm.authType">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('vcs_auth_type')"
@@ -83,7 +83,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label="Repo BaseURI:" prop="baseUri">
-                            <el-input style="width:590px;" v-model="saveForm.baseUri"></el-input>
+                            <el-input v-model="saveForm.baseUri"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
             <el-form-item label="ID:">
                 <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width:80px"></el-input>
             </el-form-item>
@@ -177,8 +177,8 @@
 
                 <el-row>
                     <!--<el-col :span="12">
-                        <el-form-item label="PackType:" prop="tarType">
-                            <el-select v-model="saveForm.tarType" placeholder="打包类型" style="width: 100%;">
+                        <el-form-item label="PackType:" prop="providerKind">
+                            <el-select v-model="saveForm.providerKind" placeholder="打包类型" style="width: 100%;">
                                 <el-option label="tar" :value="1"></el-option>
                                 <el-option disabled label="jar" :value="2"></el-option>
                                 <el-option label="docker" :value="3"></el-option>

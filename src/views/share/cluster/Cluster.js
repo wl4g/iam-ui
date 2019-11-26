@@ -33,6 +33,10 @@ export default {
             //allHost
             allHost: [],
 
+            rules: {
+                name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+            },
+
         }
     },
 
@@ -136,28 +140,31 @@ export default {
         },
 
         saveData() {
-            //this.dialogLoading = true;
-            this.$$api_share_saveCluster({
-                data: this.saveForm,
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        this.cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    this.$$api_share_saveCluster({
+                        data: this.saveForm,
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                this.cleanSaveForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     });
                 }
-            });
+            })
         },
 
 

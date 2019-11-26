@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline" style="margin-left:10px">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" style="margin-left:10px" @keyup.enter.native="onSubmit()">
             <el-form-item label="Key:">
                 <el-input v-model="searchParams.key" placeholder="e.g. app_ns_type@dev" style="width:165px"></el-input>
             </el-form-item>
@@ -59,7 +59,7 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                 <el-row>
                     <el-col :span="12">

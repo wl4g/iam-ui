@@ -1,6 +1,6 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline">
+        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
 
             <el-form-item label="Create Date Range:">
                 <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy - MM - dd " ></el-date-picker>

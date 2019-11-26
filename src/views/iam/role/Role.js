@@ -46,6 +46,14 @@ export default {
             groupTreeShow: false,
             groupsTreeData:[],
 
+            rules: {
+                name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+                displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+                groups: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorGroups }],
+                menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
+
+            },
+
 
         }
     },
@@ -68,6 +76,23 @@ export default {
             //this.loading = true;
             this.pageNum = i;
             this.getData();
+        },
+
+        validatorGroups(rule, value, callback){
+            if (this.saveForm.groupIds.length<=0) {
+                callback(new Error('roles is Empty'));
+            } else {
+                callback();
+            }
+        },
+
+
+        validatorMenus(rule, value, callback){
+            if (this.saveForm.menuIds.length<=0) {
+                callback(new Error('menuIds is Empty'));
+            } else {
+                callback();
+            }
         },
 
         getMenus(){
@@ -172,27 +197,32 @@ export default {
 
 
         saveData() {
-            this.$$api_iam_saveRole({
-                data: this.saveForm,
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        this.cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    this.$$api_iam_saveRole({
+                        data: this.saveForm,
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                this.cleanSaveForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     });
                 }
             });
+
         },
 
 
@@ -248,31 +278,37 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_iam_delRole({
-                data: {
-                    userId: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.$message({
-                            message: 'del success',
-                            type: 'success'
-                        });
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+            this.$confirm('Delete Option, Be Careful', 'Warning', {
+                type: 'warning'
+            }).then(() => {
+                this.$$api_iam_delRole({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+                            this.$message({
+                                message: 'del success',
+                                type: 'success'
+                            });
+                            this.getData();
+
+                    },
+                    errFn: (data) => {
+                        //this.loading = false;
+                        if(data&&data.message){
+                            this.$alert(data.message, '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }else{
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+
+            });
         },
 
 

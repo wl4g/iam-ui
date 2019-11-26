@@ -38,7 +38,7 @@ export default {
         defaultPort: '14040',
     },
 
-    getBaseUrl: function(app) {
+    getBaseUrl: function(app,usedefault) {
         if(!app){
             return;
         }
@@ -47,7 +47,7 @@ export default {
         let baseUrl = '';
         //get from store , if found , user it
         let applicationCache = store.get("application_cache");
-        if(applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
+        if(!usedefault&&applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
             baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
             //console.debug("user cache Url , url = "+ baseUrl);
         }else{//user default

@@ -19,7 +19,7 @@ export default {
             return [];
         }
         let dictGroup = dicts_cache.dictList[type];
-        //console.info(dictGroup);
+        console.info(dictGroup);
         return dictGroup;
     },
 

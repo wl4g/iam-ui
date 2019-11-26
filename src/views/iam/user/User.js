@@ -50,6 +50,12 @@ export default {
             treeShow: false,
 
 
+            //验证
+            rules: {
+                userName: [{ required: true, message: 'Please input userName', trigger: 'blur' }],
+                displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+                password: [{required: true, message: 'Please input password', trigger: 'blur' }],
+            },
 
         }
     },
@@ -178,11 +184,16 @@ export default {
 
 
         save() {
-            if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
-                this.saveDataWithPassword();
-            }else{//needn't update password
-                this.saveData();
-            }
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
+                        this.saveDataWithPassword();
+                    }else{//needn't update password
+                        this.saveData();
+                    }
+                }
+            })
+
         },
 
         saveDataWithPassword(){

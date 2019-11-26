@@ -46,6 +46,15 @@ export default {
             dictDataMap: new Map(),
             //cache -- map<List<map>>
             dictDataList: [],
+
+            rules: {
+                key: [{ required: true, message: 'Please input key', trigger: 'blur' }],
+                type: [{ required: true, message: 'Please input type', trigger: 'blur' }],
+                value: [{ required: true, message: 'Please input value', trigger: 'blur' }],
+                label: [{ required: true, message: 'Please input label', trigger: 'blur' }],
+                labelEn: [{ required: true, message: 'Please input labelEn', trigger: 'blur' }],
+            },
+
         }
     },
 
