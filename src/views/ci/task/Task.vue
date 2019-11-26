@@ -17,9 +17,9 @@
                 <el-input v-model="searchParams.branchName" placeholder="e.g. 1.0.1-rc1" style="width:115px;"></el-input>
             </el-form-item>-->
             <el-form-item label="PipeKind:">
-                <el-select :clearable="true" v-model="searchParams.tarType" placeholder="PipeKind" style="width:105px;">
+                <el-select :clearable="true" v-model="searchParams.providerKind" placeholder="PipeKind" style="width:105px;">
                     <el-option
-                            v-for="item in dictutil.getDictListByType('ci_tar_type')"
+                            v-for="item in dictutil.getDictListByType('ci_provider_kind')"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -44,7 +44,7 @@
                     <el-button type="primary">+ New Pipeline</el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item
-                                v-for="item in dictutil.getDictListByType('ci_tar_type')"
+                                v-for="item in dictutil.getDictListByType('ci_provider_kind')"
                                 :command="item.value"
                                 :disabled="item.enable!=1">
                             {{item.label}}
@@ -71,7 +71,7 @@
                     </el-table-column>
                     <el-table-column prop="branchName" label="Branch" min-width="58"></el-table-column>
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
-                    <el-table-column prop="tarType" label="PipeKind" min-width="80"></el-table-column>
+                    <el-table-column prop="providerKind" label="PipeKind" min-width="80"></el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
                     <!--<el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="preCommand" label="PreCmd" :show-overflow-tooltip="true"></el-table-column>
@@ -129,8 +129,8 @@
                         </el-form-item>
                     </el-col>
                     <!--<el-col :span="11">
-                        <el-form-item label="PackType:" prop="tarType">
-                            <el-select v-model="buildForm.tarType" placeholder="打包类型" style="width: 100%;">
+                        <el-form-item label="PackType:" prop="providerKind">
+                            <el-select v-model="buildForm.providerKind" placeholder="打包类型" style="width: 100%;">
                                 <el-option label="tar" :value="1"></el-option>
                                 <el-option label="vue" :value="4"></el-option>
                                 <el-option disabled label="jar" :value="2"></el-option>

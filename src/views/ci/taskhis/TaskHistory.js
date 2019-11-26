@@ -25,7 +25,7 @@ export default {
                 instances: [],
                 branch: '',
                 desc: '',
-                tarType: '',
+                providerKind: '',
                 tagOrBranch: '1',
             },
             dialogVisible: false,
@@ -353,7 +353,7 @@ export default {
                     appClusterId: this.buildForm.group,
                     branchName: this.buildForm.branch,
                     instances: this.buildForm.instances.toString(),
-                    tarType: this.buildForm.tarType,
+                    providerKind: this.buildForm.providerKind,
                 },
                 fn: data => {
                     this.dialogLoading = false;
@@ -380,7 +380,7 @@ export default {
             this.buildForm.group = '';
             this.buildForm.instances = [];
             this.buildForm.branch = '';
-            this.buildForm.tarType = '';
+            this.buildForm.providerKind = '';
         },
         rollbackTask(row, column, event) {
             this.$confirm('回滚操作, 是否继续?', '提示', {
