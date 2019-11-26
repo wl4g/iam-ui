@@ -46,7 +46,7 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                 <el-row>
                     <el-col :span="12">
@@ -65,7 +65,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  label="Menu："   prop="menu">s
+                        <el-form-item  label="Menu："   prop="menu">
                             <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     style="max-height: 240px;overflow: scroll"
@@ -86,7 +86,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  label="Group："   prop="groupNames">
+                        <el-form-item  label="Group："   prop="groups">
                             <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo2()'></el-input>
                             <el-tree
                                     v-show="groupTreeShow"

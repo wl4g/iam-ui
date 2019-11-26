@@ -46,7 +46,7 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                 <el-row>
                     <el-col :span="12">
@@ -57,7 +57,7 @@
 
                     <el-col :span="12">
                         <el-form-item label="Account:" prop="userName">
-                            <el-input v-model="saveForm.userName" :disabled="true" placeholder="e.g zhangsan"></el-input>
+                            <el-input v-model="saveForm.userName" :disabled="isEdit" placeholder="e.g zhangsan"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

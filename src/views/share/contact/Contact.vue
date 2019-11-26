@@ -50,7 +50,7 @@
 
                 <!--================================save dialog================================-->
                 <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-                    <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+                    <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                         <el-row>
                             <el-col :span="12">

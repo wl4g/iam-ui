@@ -34,6 +34,28 @@ export default {
 
             tableData: [],
 
+
+            // 表单规则
+            rules: {
+
+                name: [
+                    {required: true, message: 'Please Input name', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                provider: [
+                    { required: true, message: 'Please Input provider', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                authType: [
+                    { required: true, message: 'Please select authType', trigger: 'change' },
+                ],
+                baseUri: [
+                    { required: true, message: 'Please select baseUri', trigger: 'change' },
+                    { min: 1, max: 255, message: 'length between 1 to 255', trigger: 'blur' }
+                ],
+
+            },
+
         }
     },
 
@@ -103,24 +125,28 @@ export default {
         },
 
         saveData() {
-            this.$$api_ci_saveVcs({
-                data: this.saveForm,
-                fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        this.cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+            this.$refs['saveForm'].validate((valid) => {
+                if (valid) {
+                    this.$$api_ci_saveVcs({
+                        data: this.saveForm,
+                        fn: data => {
+                            this.dialogLoading = false;
+                            if (data.code == 200) {
+                                this.dialogVisible = false;
+                                this.getData();
+                                this.cleanSaveForm();
+                            } else {
+                                this.$alert(data.message, '错误', {
+                                    confirmButtonText: '确定'
+                                });
+                            }
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                            this.$alert('访问失败，请稍后重试！', '错误', {
+                                confirmButtonText: '确定',
+                            });
+                        }
                     });
                 }
             });
