@@ -56,7 +56,7 @@
 								style="color: #fff;border: 1px solid #80c1fb;background:#253667;padding-left:40px;border-radius:2px 2px 2px 2px;"
 								name="password" type="password" maxlength=35 autocapitalize=off autocomplete=off>
 						</div>
-                        <div id="jigsaw" class="jigsaw" style="display:none"></div>
+                        <div id="jigsaw" class="jigsaw" style="width:270px"></div>
 						<div id="captcha_panel">
 							<input id="captcha_input" class="text4" name="captcha"
 								style="border:1px solid #dad2d2;padding-left:10px;border-radius:2px 2px 2px 2px;display:none;">
@@ -139,12 +139,12 @@
 				</label>
 			</a>
 		</div>
-		<!-- <div class="main-right">
+		<div class="main-right">
 			<div class="rightimageBox">
 				<div id="qrcode-title">微信扫码关注</div>
 				<img class="rightImage" src="static/images/qrcode.jpg">
 			</div>
-		</div> -->
+		</div>
         <div class="gb_box" style="z-index:20"></div>
     </div>
 </template>
