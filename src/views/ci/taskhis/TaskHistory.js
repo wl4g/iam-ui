@@ -85,7 +85,7 @@ export default {
     activated() {
         //alert("into activated");
         this.getData();
-        this.startRefreshList();
+        //this.startRefreshList();
     },
 
     methods: {
@@ -104,15 +104,34 @@ export default {
         },
 
         startRefreshList(){
-            this.stopRefreshList();
+            //this.stopRefreshList();
             let that = this;
-            this.refreshListThread = self.setInterval(function () {
+            /*this.refreshListThread = self.setInterval(function () {
                 that.getData();
-            }, 1 * 4000);
+            }, 1 * 4000);*/
+            if(this.checkExistRunningTask()){
+                this.refreshListThread = self.setTimeout(function () {
+                    that.getData();
+                }, 1 * 3000);
+            }
+        },
+
+        checkExistRunningTask(){
+            console.info("into check");
+            if(this.tableData){
+                for (var i in this.tableData) {
+                    let taskHis = this.tableData[i];
+                    if(taskHis['status']==0||taskHis['status']==1){//status is create or running
+                        return true;
+                    }
+                }
+            }
+            return false;
         },
 
         stopRefreshList(){
-            window.clearInterval(this.refreshListThread);
+            //window.clearInterval(this.refreshListThread);
+            window.clearTimeout(this.refreshListThread);
         },
 
 
@@ -131,6 +150,7 @@ export default {
                     if (data.code == 200) {
                         this.total = data.data.total;
                         this.tableData = data.data.records;
+                        this.startRefreshList();
                     } else {
                         this.$alert(data.message, '错误', {
                             confirmButtonText: '确定'
