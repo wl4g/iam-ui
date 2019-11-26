@@ -17,7 +17,7 @@
     </tree-table>
 
     <el-dialog :close-on-click-modal="false" :title="windowTitle" :visible.sync="dialogVisible" width="100%">
-      <el-form ref="groupForm" label-position="right" :model="saveForm" label-width="100px">
+      <el-form ref="groupForm" label-position="right" :model="saveForm" label-width="100px" :rules="rules">
 
           <el-row>
               <el-col :span="12">
