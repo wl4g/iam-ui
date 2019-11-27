@@ -20,8 +20,9 @@
           <i v-if="!scope.row._expanded" class="el-icon-plus"/>
           <i v-else class="el-icon-minus"/>
         </span>
+
         <span v-if="column.icon">
-          <img :src="scope.row['icon']" onerror="this.src=''"/>
+          <img :src="scope.row['icon']" onerror="this.style.display='none'"/>
         </span>
         {{ scope.row[column.value] }}
       </template>
