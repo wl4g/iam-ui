@@ -21,12 +21,13 @@
              </el-menu-item>
           </el-menu>
         </el-col>
-        <el-col :span="4" style="text-align: right;">
+
+        <!--<el-col :span="4" style="text-align: right;">
           <span class='username'>
             <el-dropdown trigger="hover" @command='setDialogInfo'>
               <span class="el-dropdown-link">
                 {{getUsername()}}
-                <i class="el-icon-caret-bottom el-icon--right"></i>
+                <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
               </span>
               <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
                 <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
@@ -38,13 +39,13 @@
               </el-dropdown-menu>
             </el-dropdown>
           </span>
-        </el-col>
+        </el-col>-->
 
-        <!--<el-col :span="4" style="text-align: right;">
-          <el-dropdown trigger="click" style="height:50px;line-height:50px;cursor: pointer">
-            <span class="el-dropdown-link" style="color: #FFF">
-              <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 50px;">
-              {{getUsername()}}<i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
+        <el-col :span="4" style="text-align: right;">
+          <el-dropdown trigger="click" style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
+            <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
+              <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
+              {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
@@ -52,7 +53,7 @@
               <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </el-col>-->
+        </el-col>
 
       </el-row>
     </header>
