@@ -81,15 +81,17 @@ export default {
      * 点击删除按钮
      */
     onClickBtnDelete(opts) {
-      this.$confirm('请小心！！！子菜单会连同一起删除，是否继续？', '确认删除？').then(() => {
-        this.$$api_iam_delMenu({
-          data: {id : opts.data.id},
-          fn: data => {
-            this.onGetList();
-          }
-        })
-      })
-    },
+       this.$confirm('请小心！！！子菜单会连同一起删除，是否继续？', '确认删除？').then(() => {
+         this.$$api_iam_delMenu({
+           data: {id: opts.data.id},
+           fn: data => {
+             this.onGetList();
+           }
+         })
+       }).catch(() => {
+         //do nothing
+       })
+     },
     /**
      * 添加下级菜单按钮
      */
@@ -161,9 +163,6 @@ export default {
               this.dialogVisible = false;
               this.onGetList();
             },
-            errFn: () => {
-              this.$message.error('save fail');
-            }
           })
         }
       });

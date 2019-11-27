@@ -164,10 +164,6 @@ export default {
             this.checkChange();
           }
         },
-        errFn: () => {
-          this.$message.error('get group fail');
-          this.dialogVisible = false;
-        }
       });
     },
     /**
@@ -226,9 +222,6 @@ export default {
               this.dialogVisible = false;
               this.onGetList();
             },
-            errFn: () => {
-              this.$message.error('save fail');
-            }
           })
         }
       });
@@ -240,45 +233,18 @@ export default {
 
         },
         fn: data => {
-          //this.loading = false;
-          if (data.code == 200) {
             this.rolesData = data.data.data;
-          } else {
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
-        errFn: () => {
-          //this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
-        }
       })
     },
 
     getMenus(){
       this.$$api_iam_getMenuTree({
         data: {
-
         },
         fn: data => {
-          //this.loading = false;
-          if (data.code == 200) {
             this.menuData = data.data.data;
             this.menuDataList = data.data.data2;
-          } else {
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
-        },
-        errFn: () => {
-          //this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
         }
       })
     },

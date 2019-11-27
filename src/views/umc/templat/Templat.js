@@ -74,21 +74,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -136,24 +123,10 @@ export default {
                     //this.dialogLoading = true;
                     this.$$api_umc_saveTemplat({
                         data: this.saveForm,
-
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     });
                 } else {
@@ -172,21 +145,7 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        console.info(data.data.alarmTemplate);
-                        this.saveForm = data.data.alarmTemplate;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = data.data.alarmTemplate;
                 }
             })
 
@@ -199,31 +158,27 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_delTemplat({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_umc_delTemplat({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
 
 
@@ -289,20 +244,7 @@ export default {
                     classify: this.searchParams.classify,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.metricList = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.metricList = data.data.list;
                 }
             })
         },
@@ -313,20 +255,7 @@ export default {
                     classify: this.saveForm.classify,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.metricList2 = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.metricList2 = data.data.list;
                 }
             })
         }

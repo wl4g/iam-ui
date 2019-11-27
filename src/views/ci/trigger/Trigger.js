@@ -123,26 +123,14 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        this.saveForm.id = data.data.id;
-                        this.saveForm.taskId = data.data.taskId;
-                        this.saveForm.name = data.data.name;
-                        this.saveForm.remark = data.data.remark;
-                        this.saveForm.enable = data.data.enable;
-                        this.saveForm.type = data.data.type;
-                        this.saveForm.cron = data.data.cron;
-
-                        this.saveForm.group = data.data.appClusterId;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm.id = data.data.id;
+                    this.saveForm.taskId = data.data.taskId;
+                    this.saveForm.name = data.data.name;
+                    this.saveForm.remark = data.data.remark;
+                    this.saveForm.enable = data.data.enable;
+                    this.saveForm.type = data.data.type;
+                    this.saveForm.cron = data.data.cron;
+                    this.saveForm.group = data.data.appClusterId;
                 }
             })
         },
@@ -177,20 +165,8 @@ export default {
                 },
                 fn: data => {
                     //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -206,18 +182,7 @@ export default {
         getProject() {
             this.$$api_ci_allProject({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.ProjectData = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.ProjectData = data.data.list;
                 }
             })
         },
@@ -239,21 +204,9 @@ export default {
                         },
                         fn: data => {
                             this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！2', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     })
                 } else {
@@ -281,46 +234,30 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_delTrigger({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        //delete success
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_ci_delTrigger({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
 
         // 获取分组名称
         getGroup() {
             this.$$api_share_clusters({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.groupData = data.data.clusters;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.groupData = data.data.clusters;
                 }
             })
         },
@@ -333,25 +270,11 @@ export default {
                     numTimes: 5,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        //delete success
-                        if (data.data.validExpression) {
-                            this.checkResult = data.data.nextExecTime;
-                        } else {
-                            this.checkResult = 'Expression unvalid';
-                        }
+                    if (data.data.validExpression) {
+                        this.checkResult = data.data.nextExecTime;
                     } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+                        this.checkResult = 'Expression unvalid';
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
                 }
             })
         },
@@ -368,12 +291,6 @@ export default {
                 fn: data => {
                     this.tasksData = data.data;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 

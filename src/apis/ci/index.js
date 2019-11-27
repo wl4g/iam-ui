@@ -155,37 +155,6 @@ export default [
         sys: global.ci
     },
 
-
-    //dependency
-    {
-        name: '依赖列表',
-        method: 'dependencyList',
-        path: '/dependency/list',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '保存依赖',
-        method: 'saveDependency',
-        path: '/dependency/save',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '依赖详情',
-        method: 'dependencyDetail',
-        path: '/dependency/detail',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '删除依赖',
-        method: 'delDependency',
-        path: '/dependency/del',
-        type: 'post',
-        sys: global.ci
-    },
-
     //trigger
     {
         name: '触发器列表',

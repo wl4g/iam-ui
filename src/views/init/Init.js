@@ -88,13 +88,6 @@ export default {
                             //console.info(store.get("application_cache"));
                             console.info("get cluster config success");
                         },
-                        errFn: (data) => {
-                            if(data&&data.message){
-                                this.$message.error(data.message);
-                            }else{
-                                this.$message.error('get application cache fail');
-                            }
-                        },
                     });
                 },
             });
@@ -116,13 +109,6 @@ export default {
                             store.set("dicts_cache",data.data);
                             //console.info(store.get("dicts_cache"));
                             console.info("get dict success");
-                        },
-                        errFn: (data) => {
-                            if(data&&data.message){
-                                this.$message.error(data.message);
-                            }else{
-                                this.$message.error('get dict cache fail');
-                            }
                         },
                     });
                 },

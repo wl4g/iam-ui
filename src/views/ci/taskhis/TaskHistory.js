@@ -146,23 +146,10 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                        this.startRefreshList();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
+                    this.startRefreshList();
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
         //Dict convert
@@ -220,29 +207,19 @@ export default {
                     taskId: row.id,
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        this.detailForm.group = data.data.group;
-                        this.detailForm.branch = data.data.branch;
-                        this.detailForm.taskInstances = data.data.taskInstances;
-                        if(data.data.result){
-                            this.detailForm.result = data.data.result;
-                        }else{
-                            this.detailForm.result = '';
-                        }
 
-                        if(!data.data.result){
-                            that.readLogTask(row);
-                        }
+                    this.detailForm.group = data.data.group;
+                    this.detailForm.branch = data.data.branch;
+                    this.detailForm.taskInstances = data.data.taskInstances;
+                    if (data.data.result) {
+                        this.detailForm.result = data.data.result;
                     } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+                        this.detailForm.result = '';
                     }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+
+                    if (!data.data.result) {
+                        that.readLogTask(row);
+                    }
                 }
             })
         },
@@ -294,7 +271,9 @@ export default {
         destoryReadLogTask(){
             console.debug("stop read log task");
             window.clearTimeout(this.logThread);
-            this.term.dispose();
+            if(this.term){
+                this.term.dispose();
+            }
         },
 
         readLog(taskHisId){
@@ -321,9 +300,7 @@ export default {
                     }, 1 * 1000);
                 },
                 errFn: () => {
-                    /*this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });*/
+                    //do nothing
                 }
             })
         },
@@ -352,26 +329,13 @@ export default {
                         taskHisId: id,
                     },
                     fn: data => {
-                        if (data.code == 200) {
-                            this.getData();
-                        } else {
-                            this.$alert(data.message, '错误', {
-                                confirmButtonText: '确定'
-                            });
-                        }
+                        this.getData();
                     },
-                    errFn: () => {
-                        this.$alert('访问失败，请稍后重试！', '错误', {
-                            confirmButtonText: '确定',
-                        });
-                    }
                 })
             }).catch(() => {
                 //do nothing
             });
         },
-
-
 
 
         createTask() {
@@ -385,21 +349,9 @@ export default {
                 },
                 fn: data => {
                     this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        cleanBuildForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.dialogVisible = false;
+                    this.getData();
+                    cleanBuildForm();
                 }
             })
         },
@@ -422,29 +374,15 @@ export default {
                         taskId: row.id,
                     },
                     fn: data => {
-                        if (data.code == 200) {
-                            this.$message({
-                                type: 'success',
-                                message: '操作成功!'
-                            });
-                            this.getData();
-                        } else {
-                            this.$alert(data.message, '错误', {
-                                confirmButtonText: '确定'
-                            });
-                        }
-                    },
-                    errFn: () => {
-                        this.$alert('访问失败，请稍后重试！', '错误', {
-                            confirmButtonText: '确定',
+                        this.$message({
+                            type: 'success',
+                            message: '操作成功!'
                         });
+                        this.getData();
                     }
                 })
             }).catch(() => {
-                /*this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });*/
+
             });
         },
     },
@@ -453,7 +391,7 @@ export default {
     beforeRouteLeave(to,from,next){
         console.info("leave , stop the thread");
         this.stopRefreshList();
-        this.stopReadLogTask();
+        this.destoryReadLogTask();
         next();
     },
 

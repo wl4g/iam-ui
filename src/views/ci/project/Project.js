@@ -121,11 +121,6 @@ export default {
                 fn: data => {
                     this.vcsData = data.data;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -133,19 +128,8 @@ export default {
         getProject() {
             this.$$api_ci_allProject({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.ProjectData = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.ProjectData = data.data.list;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -168,30 +152,15 @@ export default {
             if (!row.id) {
                 return;
             }
-
             this.$$api_ci_projectDetail({
                 data: {
                     id: row.id,
                 },
                 fn: data => {
                     //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = data.data.project;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.saveForm = data.data.project;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
-
-
+            });
             this.dialogVisible = true;
             this.dialogTitle = 'Configuer Project information';
         },
@@ -213,21 +182,9 @@ export default {
                 },
                 fn: data => {
                     //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -235,19 +192,8 @@ export default {
         getGroup() {
             this.$$api_share_clusters({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.groupData = data.data.clusters;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.groupData = data.data.clusters;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -271,22 +217,10 @@ export default {
                         },
                         fn: data => {
                             this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试2！', '错误', {
-                                confirmButtonText: '确定',
-                            });
-                        }
                     });
                 } else {
                     console.log('error submit!!');
@@ -315,28 +249,23 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_delProject({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        //delete success
+
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_ci_delProject({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
         },
 
         convertLockStatus(row) {
@@ -359,9 +288,9 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$confirm('解锁操作, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('Confirm?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
                 this.$$api_ci_unlock({
@@ -369,23 +298,12 @@ export default {
                         id: row.id,
                     },
                     fn: data => {
-                        if (data.code == 200) {
-                            this.$message({
-                                type: 'success',
-                                message: '操作成功!'
-                            });
-                            this.getData();
-                        } else {
-                            this.$alert(data.message, '错误', {
-                                confirmButtonText: '确定'
-                            });
-                        }
-                    },
-                    errFn: () => {
-                        this.$alert('访问失败，请稍后重试！', '错误', {
-                            confirmButtonText: '确定',
+                        this.$message({
+                            type: 'success',
+                            message: '操作成功!'
                         });
-                    }
+                        this.getData();
+                    },
                 })
             }).catch(() => {
                 /*this.$message({
@@ -406,11 +324,6 @@ export default {
                 fn: data => {
                     this.vcsProjectData = data.data;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -425,9 +338,6 @@ export default {
                     this.vcsProjectData = data.data;
                     this.searchProjectLoading = false;
                 },
-                errFn: () => {
-                    this.searchProjectLoading = false;
-                }
             })
 
 

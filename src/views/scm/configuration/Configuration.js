@@ -20,7 +20,7 @@ export default {
       dialogLoading:true,
       dialogTitle: '',
       logtitle: '',
-      
+
        //两个弹窗表单
        ruleForm: {
         nodeIdList: [],
@@ -51,7 +51,7 @@ export default {
           { required: true, message: '配置内容不能为空', trigger: 'blur' },
           { min: 1, max: 5000, message: '长度在 1 到 5000 个字符', trigger: 'blur' }
         ],
-        
+
       },
       // 默认显示一条空数据
       tableData1:[],
@@ -118,16 +118,10 @@ export default {
           content: this.insidecontent
         },
         fn: data => {
-          if(data.code == 200){
             this.checkfalg = true;
-          }else{
-            this.checkfalg = false;
-          }
         },
         errFn: () => {
-          this.$alert('校验异常！', '错误', {
-            confirmButtonText: '确定',
-          });
+          this.checkfalg = false;
         }
       });
     },
@@ -153,9 +147,6 @@ export default {
           fn: data => {
             this.ruleForm.tableData2.splice(index, 1);
           },
-          errFn: () => {
-            
-          }
         })
       }
       // }
@@ -278,7 +269,7 @@ export default {
               envType: environmentId
             },
             fn: data => {
-              if(data.code == 200){
+
                 if(flag==0){
                   this.instanceData = data.data.instances;
                 }else{
@@ -291,16 +282,6 @@ export default {
                   }
                   this.instanceFormData = data.data.instances;
                 }
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-            },
-            errFn: () => {
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
             }
           })
         },
@@ -309,18 +290,7 @@ export default {
         getGroup() {
           this.$$api_share_clusters({
             fn: data => {
-              if(data.code == 200){
                 this.groupData = data.data.clusters;
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-            },
-            errFn: () => {
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
             }
           })
         },
@@ -332,20 +302,7 @@ export default {
               type: 'app_ns_type',
             },
             fn: data => {
-              console.info(data)
-              if(data.code == 200){
                 this.namespaces = data.data.list;
-                console.info(this.namespaces);
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-            },
-            errFn: () => {
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
             }
           })
         },
@@ -361,20 +318,8 @@ export default {
             },
             fn: data => {
               this.loading = false;
-              if(data.code == 200){
                 this.total = data.data.page.total;
                 this.tableData = data.data.list;
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-            },
-            errFn: () => {
-              this.loading = false;
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
             }
           })
         },
@@ -402,21 +347,14 @@ export default {
             },
             fn: data => {
               this.loading = false;
-              if(data.code == 200){
-                this.dialogLoading = false;
-                this.propertiesData = data.data.configVersions;
-                this.ruleForm.tableData2 = data.data.configVersions;
-                if(!falg){
-                  if(this.propertiesData.length>0){
-                    this.propertiesid = this.propertiesData[0].id;
-                    this.content = this.propertiesData[0].content;
-                  }
+              this.dialogLoading = false;
+              this.propertiesData = data.data.configVersions;
+              this.ruleForm.tableData2 = data.data.configVersions;
+              if (!falg) {
+                if (this.propertiesData.length > 0) {
+                  this.propertiesid = this.propertiesData[0].id;
+                  this.content = this.propertiesData[0].content;
                 }
-              }else{
-                this.dialogLoading = false;
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
               }
             },
             errFn: () => {
@@ -426,7 +364,7 @@ export default {
                 confirmButtonText: '确定',
               });
             }
-          })      
+          })
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
@@ -467,11 +405,11 @@ export default {
             _this.$alert('请选择同一环境和分组下的节点！', '提示', {
               confirmButtonText: '确定',
             });
-          } 
+          }
           if(_this.instancelist.length == 0){
             _this.envId = "";
             _this.clusterId = "";
-          }          
+          }
         },
         submit(){
           this.selectdisabled = false;
@@ -501,25 +439,13 @@ export default {
               appClusterId: this.ruleForm.group
             },
             fn: data => {
-              if(data.code == 200){
                 this.dialogVisible = false;
                 this.instancelist = [];
                 this.getData();
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
-              
-            },
-            errFn: () => {
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
             }
           })
         },
       },
-     
+
 
 }

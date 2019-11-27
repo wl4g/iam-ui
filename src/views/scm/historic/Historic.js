@@ -43,7 +43,7 @@ export default {
       }],
 
       // 动态标签JS
- 
+
 
       // 日期值
       value1: '',
@@ -60,9 +60,9 @@ export default {
   },
   mounted () {
     this.$nextTick(()=>{
-      this.getData();      
+      this.getData();
     })
-   
+
   },
   methods: {
     details(row){
@@ -79,7 +79,6 @@ export default {
         },
         fn: data => {
           this.loading = false;
-          if(data.code == 200){
             this.propertiesData = data.data.configVersions;
             if(!falg){
               if(this.propertiesData.length>0){
@@ -87,11 +86,6 @@ export default {
                 this.content = this.propertiesData[0].content;
               }
             }
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
         errFn: () => {
           this.loading = false;
@@ -99,7 +93,7 @@ export default {
             confirmButtonText: '确定',
           });
         }
-      })      
+      })
     },
     submitflsh() {
       if(this.propertiesData.length == 0){
@@ -144,14 +138,8 @@ export default {
         },
         fn: data => {
           this.loading = false;
-          if(data.code == 200){
             this.total = data.data.total;
             this.tableData = data.data.records;
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
         errFn: () => {
           this.loading = false;
@@ -164,7 +152,7 @@ export default {
     getDate(startDate){
       let Y = startDate.getFullYear() + '-';
       let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
-      let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();  
+      let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();
       return Y+M+D;
     },
     handleClose(tag) {
@@ -177,7 +165,7 @@ export default {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
-    
+
     updateVersion(row) {
       this.$confirm('是否修改标签?', '提示', {
         confirmButtonText: '确定',
@@ -191,19 +179,12 @@ export default {
           },
           fn: data => {
             this.loading = false;
-            if(data.code == 200){
+
               this.getData();
               this.$message({
                 type: 'success',
                 message: '修改成功!'
               });
-            }else{
-              this.getData();
-              this.$message({
-                type: 'success',
-                message: '修改失败!'
-              });
-            }
           },
           errFn: () => {
             this.loading = false;
@@ -218,7 +199,7 @@ export default {
         this.$message({
           type: 'info',
           message: '已取消操作'
-        });          
+        });
       });
     },
     currentChange(i) {
@@ -239,17 +220,12 @@ export default {
           },
           fn: data => {
             this.loading = false;
-            if(data.code == 200){
+
               this.$message({
                 type: 'success',
                 message: '删除成功!'
               });
               this.getData();
-            }else{
-              this.$alert(data.message, '错误', {
-                confirmButtonText: '确定'
-              });
-            }
           },
           errFn: () => {
             this.loading = false;
@@ -263,9 +239,8 @@ export default {
         this.$message({
           type: 'info',
           message: '已取消操作'
-        });          
+        });
       });
-   
     },
     deleteVersion(id) {
       this.$$api_historic_versiondelete({
@@ -274,13 +249,7 @@ export default {
         },
         fn: data => {
           this.loading = false;
-          if(data.code == 200){
             this.getData();
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
         errFn: () => {
           this.loading = false;

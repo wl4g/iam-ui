@@ -90,21 +90,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -130,22 +117,9 @@ export default {
                     this.$$api_ci_saveVcs({
                         data: this.saveForm,
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     });
                 }
@@ -161,36 +135,20 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = {
-                            id: data.data.id,
-                            name: data.data.name,
-                            provider: data.data.provider.toString(),
-                            authType: data.data.authType.toString(),
-                            baseUri: data.data.baseUri,
-                            sshKeyPub: data.data.sshKeyPub,
-                            sshKey: data.data.sshKey,
-                            token: data.data.token,
-                            username: data.data.username,
-                            password: data.data.password,
-                        };
-
-
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = {
+                        id: data.data.id,
+                        name: data.data.name,
+                        provider: data.data.provider.toString(),
+                        authType: data.data.authType.toString(),
+                        baseUri: data.data.baseUri,
+                        sshKeyPub: data.data.sshKeyPub,
+                        sshKey: data.data.sshKey,
+                        token: data.data.token,
+                        username: data.data.username,
+                        password: data.data.password,
+                    };
                 }
             });
-
             this.dialogVisible = true;
             this.dialogTitle = 'Configure VCS information';
         },
@@ -200,23 +158,26 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_delVcs({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    this.$message({
-                        message: '删除成功',
-                        type: 'success'
-                    });
-                    this.getData();
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: 'OK',
-                    });
-                }
-            })
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_ci_delVcs({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
+                        this.getData();
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
         },
 
 

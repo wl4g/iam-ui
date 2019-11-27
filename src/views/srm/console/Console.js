@@ -81,18 +81,7 @@ export default {
     getGroup() {
       this.$$api_share_clusters({
         fn: data => {
-          if (data.code == 200) {
             this.groupData = data.data.clusters;
-          } else {
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
-        },
-        errFn: () => {
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
         }
       })
     },
@@ -271,8 +260,6 @@ export default {
           limit: limit,
         },
         fn: data => {
-          console.info(data);
-          if (data.code == 200) {
             let list = data.data.data;
             if (!isAppend) {
               _self.textarea = "";
@@ -291,16 +278,6 @@ export default {
             for(let i = 0;i<list.length;i++){
               _self.textarea = _self.textarea + "\r\n" + list[i];
             }
-          } else {
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
-        },
-        errFn: () => {
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
         }
       })
     },

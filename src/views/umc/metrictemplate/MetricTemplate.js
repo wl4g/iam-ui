@@ -70,21 +70,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -92,24 +79,9 @@ export default {
         // 获取列表数据
         getAllHost() {
             this.$$api_share_allHost({
-                data: {
-
-                },
+                data: {},
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.allHost = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.allHost = data.data;
                 }
             })
         },
@@ -137,29 +109,12 @@ export default {
                     //this.dialogLoading = true;
                     this.$$api_umc_saveMetric({
                         data: this.saveForm,
-
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     });
-                } else {
-                    console.log('error submit!!');
-                    return false;
                 }
             });
         },
@@ -193,22 +148,9 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = data.data;
                 }
-            })
+            });
 
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
@@ -219,31 +161,27 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_delMetric({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_umc_delMetric({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
                         this.$message({
-                            message: '删除成功',
+                            message: 'Success',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
 
     }

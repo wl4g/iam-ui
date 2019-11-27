@@ -91,12 +91,18 @@ export default function ({
               gbs.api_custom[res.data[gbs.api_status_key_field]].call(this, res.data, p, fn, errFn,data)
           } else if (errFn) {
               errFn.call(this, res.data)
+          }else if(res.data&&res.data.message){
+              this.$message.error(res.data.message);
+          }else{
+              this.$message.error("unknow error");
           }
       }
-  }).catch(() => {
+  }).catch((error) => {
       this.$store.dispatch('hide_loading');
       if(errFn){
           errFn.call(this, null);
+      }else{
+          console.error(error);
       }
 
   })

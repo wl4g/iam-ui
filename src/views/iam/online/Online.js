@@ -58,50 +58,21 @@ export default {
                     principal: this.searchParams.principal,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        //this.total = data.data.page.total;
-                        this.tableData = data.data.sessions;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.tableData = data.data.sessions;
                 }
             })
         },
 
         getIamServer(){
             this.$$api_iam_getIamServer({
-                data: {
-
-                },
+                data: {},
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.iamServers = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.iamServers = data.data;
                 }
             })
         },
 
-        destroySessions(row){
+        destroySessions(row) {
             this.$$api_iam_destroySessions({
                 data: {
                     id: this.searchParams.id,
@@ -109,24 +80,11 @@ export default {
                     //principal: row.principal,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.$message({
-                            message: 'destroy seccess',
-                            type: 'success'
-                        });
-                        this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
+                    this.$message({
+                        message: 'destroy seccess',
+                        type: 'success'
                     });
+                    this.getData();
                 }
             })
         },

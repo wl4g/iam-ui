@@ -79,50 +79,20 @@ export default {
             this.getData();
         },
 
-        getRoles(){
+        getRoles() {
             this.$$api_iam_getRoles({
-                data: {
-
-                },
+                data: {},
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.rolesData = data.data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.rolesData = data.data.data;
                 }
             })
         },
 
-        getGroupsTree(){
+        getGroupsTree() {
             this.$$api_iam_getGroupsTree({
-                data: {
-
-                },
+                data: {},
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.groupsTreeData = data.data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.groupsTreeData = data.data.data;
                 }
             })
         },
@@ -148,21 +118,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -210,12 +167,6 @@ export default {
                         this.saveData(password);
                     }
                 },
-                errFn: data => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             });
         },
 
@@ -225,22 +176,9 @@ export default {
             this.$$api_iam_saveUser({
                 data: this.saveForm,
                 fn: data => {
-                    this.dialogLoading = false;
-                    if (data.code == 200) {
-                        this.dialogVisible = false;
-                        this.getData();
-                        this.cleanSaveForm();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.dialogVisible = false;
+                    this.getData();
+                    this.cleanSaveForm();
                 }
             });
         },
@@ -260,31 +198,14 @@ export default {
                     userId: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        console.info(data.data.data);
-                        this.saveForm = data.data.data;
-                        this.saveForm.oldPassword = this.saveForm.password;
-
-                        if(this.$refs.modulesTree && this.saveForm.groupIds instanceof Array){
-                            this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds);
-                            this.checkChange();
-                        }
-
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+                    this.saveForm = data.data.data;
+                    this.saveForm.oldPassword = this.saveForm.password;
+                    if (this.$refs.modulesTree && this.saveForm.groupIds instanceof Array) {
+                        this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds);
+                        this.checkChange();
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
                 }
-            })
-
+            });
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
         },
@@ -294,31 +215,26 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_iam_delUser({
-                data: {
-                    userId: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_iam_delUser({
+                    data: {
+                        userId: row.id,
+                    },
+                    fn: data => {
                         this.$message({
                             message: 'del success',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
         },
 
 

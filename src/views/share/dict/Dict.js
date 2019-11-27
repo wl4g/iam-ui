@@ -1,5 +1,6 @@
 import {transDate, getDay} from 'utils/'
 import dictutil from "../../../common/dictutil";
+import {store} from "../../../utils";
 
 export default {
     name: 'dict',
@@ -89,21 +90,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -111,22 +99,9 @@ export default {
         // 获取列表数据
         allDictType() {
             this.$$api_share_allDictType({
-                data: {
-                },
+                data: {},
                 fn: data => {
-                    if (data.code == 200) {
-                        this.allType = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.allType = data.data.list;
                 }
             })
         },
@@ -156,7 +131,6 @@ export default {
         saveData() {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    //this.dialogLoading = true;
                     this.$$api_share_saveDict({
                         data: {
                             key: this.saveForm.key,
@@ -168,26 +142,16 @@ export default {
                             themes: this.saveForm.themes,
                             icon: this.saveForm.icon,
                             sort: this.saveForm.sort,
-
                             isEdit: this.diseditable,
                         },
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
+                            this.$$api_share_dictCache({
+                                fn: data => {
+                                    store.set("dicts_cache",data.data);
+                                    this.getData();
+                                },
                             });
+                            this.cleanSaveForm();
                         }
                     });
                 } else {
@@ -206,23 +170,9 @@ export default {
                     key: row.key,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = data.data;
                 }
-            })
-
+            });
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
             this.diseditable = true;
@@ -233,9 +183,9 @@ export default {
             if (!row.key) {
                 return;
             }
-            this.$confirm('Delete Confirm', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('Delete Confirm', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
                 this.$$api_share_delDict({
@@ -249,12 +199,6 @@ export default {
                         });
                         this.getData();
                     },
-                    errFn: () => {
-                        //this.loading = false;
-                        this.$alert('访问失败，请稍后重试！', '错误', {
-                            confirmButtonText: '确定',
-                        });
-                    }
                 })
             }).catch(() => {
 
@@ -297,7 +241,7 @@ export default {
         },
 
         getDictByTypeFromServer(type){
-            if(!type){
+            if (!type) {
                 return;
             }
             this.$$api_share_getDictByType({
@@ -305,20 +249,7 @@ export default {
                     type: type,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        return data.data.dict;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    return data.data.dict;
                 }
             })
         },

@@ -76,21 +76,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
@@ -113,12 +100,6 @@ export default {
                             this.getData();
                             this.cleanSaveForm();
                         },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
-                        }
                     });
                 }
             });
@@ -135,12 +116,6 @@ export default {
                 fn: data => {
                     this.saveForm = data.data;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             });
             this.dialogVisible = true;
             this.dialogTitle = 'Configure Host';
@@ -151,23 +126,26 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_share_delHost({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    this.$message({
-                        message: 'Success',
-                        type: 'success'
-                    });
-                    this.getData();
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: 'OK',
-                    });
-                }
-            })
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_share_delHost({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getData();
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
         },
 
 

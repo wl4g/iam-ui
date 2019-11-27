@@ -158,21 +158,8 @@ export default {
 
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.contactGroupData = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.contactGroupData = data.data;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -202,21 +189,9 @@ export default {
                 },
                 fn: data => {
                     //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -233,7 +208,7 @@ export default {
             let clusterId = this.buildForm.group;
             let envType = this.buildForm.environment;
             this.instanceData = [];
-            if (!envType||envType == "" || !clusterId||clusterId == "") {
+            if (!envType || envType == "" || !clusterId || clusterId == "") {
                 return;
             }
             this.$$api_share_instances({
@@ -242,30 +217,19 @@ export default {
                     envType: envType
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        this.instanceData = data.data.instances;
-                        //判断要不要清空选中
-                        let needClean = true;
-                        for (let i = 0; i < this.instanceData.length; i++) {
-                            if (this.instanceData[i].id == this.buildForm.instances[0]) {
-                                needClean = false;
-                                break;
-                            }
+                    this.instanceData = data.data.instances;
+                    //判断要不要清空选中
+                    let needClean = true;
+                    for (let i = 0; i < this.instanceData.length; i++) {
+                        if (this.instanceData[i].id == this.buildForm.instances[0]) {
+                            needClean = false;
+                            break;
                         }
-                        if (needClean) {
-                            this.buildForm.instances = [];
-                        }
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
+                    }
+                    if (needClean) {
+                        this.buildForm.instances = [];
                     }
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -280,19 +244,8 @@ export default {
         getGroup() {
             this.$$api_share_clusters({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.groupData = data.data.clusters;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.groupData = data.data.clusters;
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -314,27 +267,14 @@ export default {
                             postCommand: this.buildForm.postCommand,
                             contactGroupId: this.buildForm.contactGroupId,
                             taskBuildCommands: this.buildForm.taskBuildCommands,
-
-
                         },
                         fn: data => {
                             this.dialogLoading = false;
-                            if (data.code == 200) {
+
                                 this.dialogVisible = false;
                                 this.getData();
                                 this.cleanBuildForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
                         },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
-                        }
                     })
                 } else {
                     console.log('error submit!!');
@@ -354,7 +294,6 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    if (data.code == 200) {
                         this.buildForm.id=data.data.task.id;
                         this.buildForm.taskName=data.data.task.taskName;
                         this.buildForm.group=data.data.task.appClusterId;
@@ -367,19 +306,8 @@ export default {
                         this.buildForm.postCommand=data.data.task.postCommand;
                         this.buildForm.contactGroupId=data.data.task.contactGroupId;
                         this.buildForm.taskBuildCommands=data.data.taskBuildCommands;
-
                         this.buildForm.commandOnOff=true;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
                 },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
 
         },
@@ -398,11 +326,6 @@ export default {
                 fn: data => {
                     this.branchs=data.data.branchNames;
                 },
-                errFn: (data) => {
-                    this.$alert(data.message, '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
@@ -418,34 +341,27 @@ export default {
                 fn: data => {
                     this.buildForm.taskBuildCommands=data.data.list;
                 },
-                errFn: (data) => {
-                    this.$alert(data.message, '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
             })
         },
 
         delTask(row) {
-            this.$$api_ci_delTask({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_ci_delTask({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
 
         cleanBuildForm() {
@@ -513,20 +429,7 @@ export default {
                             }).catch(() => {
                                 //do nothing
                             });
-
                         },
-                        errFn: (data) => {
-                            this.confirmDialog = false;
-                            if (data && data.message) {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定',
-                                });
-                            } else {
-                                this.$alert('访问失败，请稍后重试！', '错误', {
-                                    confirmButtonText: '确定',
-                                });
-                            }
-                        }
                     })
                 }
             });

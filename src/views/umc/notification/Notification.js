@@ -75,21 +75,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.page.total;
-                        this.tableData = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.page.total;
+                    this.tableData = data.data.list;
                 }
             })
         },
@@ -114,23 +101,8 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        console.info(data.data.notification);
-                        console.info(data.data.notificationContacts);
-                        this.saveForm = data.data.notification;
-                        this.saveForm.contacts = data.data.notificationContacts;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = data.data.notification;
+                    this.saveForm.contacts = data.data.notificationContacts;
                 }
             })
             this.dialogVisible = true;

@@ -78,44 +78,17 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.total;
-                        this.tableData = data.data.records;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.total;
+                    this.tableData = data.data.records;
                 }
             })
         },
 
         allContactGroup() {
             this.$$api_share_groupList({
-                data: {
-                },
+                data: {},
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.contactGroups = data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.contactGroups = data.data;
                 }
             })
         },
@@ -126,21 +99,7 @@ export default {
                     classify: this.saveForm.classify
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.templates = data.data.list;
-                        console.info(this.templates);
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.templates = data.data.list;
                 }
             })
         },
@@ -164,27 +123,11 @@ export default {
                     this.$$api_umc_saveConfig({
                         data: this.saveForm,
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     });
-                } else {
-                    console.log('error submit!!');
-                    return false;
                 }
             });
         },
@@ -198,23 +141,9 @@ export default {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = data.data.alarmConfig;
-
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.saveForm = data.data.alarmConfig;
                 }
-            })
+            });
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
         },
@@ -234,29 +163,18 @@ export default {
                     envType: environmentId
                 },
                 fn: data => {
-                    if (data.code == 200) {
-                        this.instanceData = data.data.instances;
-                        //判断要不要清空选中
-                        var needClean = true;
-                        for (let i = 0; i < this.instanceData.length; i++) {
-                            if (this.instanceData[i].id == this.saveForm.collectId) {
-                                needClean = false;
-                                break;
-                            }
+                    this.instanceData = data.data.instances;
+                    //判断要不要清空选中
+                    var needClean = true;
+                    for (let i = 0; i < this.instanceData.length; i++) {
+                        if (this.instanceData[i].id == this.saveForm.collectId) {
+                            needClean = false;
+                            break;
                         }
-                        if (needClean) {
-                            this.saveForm.collectId = '';
-                        }
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    if (needClean) {
+                        this.saveForm.collectId = '';
+                    }
                 }
             })
         },
@@ -265,18 +183,7 @@ export default {
         getGroup() {
             this.$$api_share_clusters({
                 fn: data => {
-                    if (data.code == 200) {
-                        this.groupData = data.data.clusters;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.groupData = data.data.clusters;
                 }
             })
         },
@@ -285,31 +192,28 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_delConfig({
-                data: {
-                    id: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_umc_delConfig({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: data => {
+
                         this.$message({
                             message: '删除成功',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
 
 

@@ -62,18 +62,7 @@ export default {
         getAllHost() {
             this.$$api_share_allHost({
                 fn: data => {
-                    if(data.code == 200){
-                        this.allHost = data.data;
-                    }else{
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.allHost = data.data;
                 }
             })
         },
@@ -96,21 +85,8 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.total = data.data.page.total;
-                        this.tableData = data.data.list;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    this.total = data.data.page.total;
+                    this.tableData = data.data.list;
                 }
             })
         },
@@ -145,22 +121,9 @@ export default {
                     this.$$api_share_saveCluster({
                         data: this.saveForm,
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
-                        },
-                        errFn: () => {
-                            this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         }
                     });
                 }
@@ -179,24 +142,10 @@ export default {
                     clusterId: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        console.info(data.data.data);
-                        this.saveForm = data.data.data;
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
+                    console.info(data.data.data);
+                    this.saveForm = data.data.data;
                 }
-            })
-
+            });
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
         },
@@ -206,31 +155,27 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_share_delCluster({
-                data: {
-                    clusterId: row.id,
-                },
-                fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_share_delCluster({
+                    data: {
+                        clusterId: row.id,
+                    },
+                    fn: data => {
                         this.$message({
                             message: 'del success',
                             type: 'success'
                         });
                         this.getData();
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
                     }
-                },
-                errFn: () => {
-                    //this.loading = false;
-                    this.$alert('访问失败，请稍后重试！', '错误', {
-                        confirmButtonText: '确定',
-                    });
-                }
-            })
+                })
+            }).catch(() => {
+                //do nothing
+            });
+
         },
     }
 }

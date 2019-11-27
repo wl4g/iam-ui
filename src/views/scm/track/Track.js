@@ -82,17 +82,12 @@ export default {
               },
               fn: data => {
                 this.loading = false;
-                if(data.code == 200){
+
                   this.$message({
                     type: 'success',
                     message: '删除成功!'
                   });
                   this.getData();
-                }else{
-                  this.$alert(data.message, '错误', {
-                    confirmButtonText: '确定'
-                  });
-                }
               },
               errFn: () => {
                 this.loading = false;
@@ -106,7 +101,7 @@ export default {
             this.$message({
               type: 'info',
               message: '已取消操作'
-            });          
+            });
           });
         },
         onSubmit(){
@@ -128,14 +123,8 @@ export default {
             },
             fn: data => {
               this.loading = false;
-              if(data.code == 200){
                 this.total = parseInt(data.data.page.total);
                 this.tableData = data.data.list;
-              }else{
-                this.$alert(data.message, '错误', {
-                  confirmButtonText: '确定'
-                });
-              }
             },
             errFn: () => {
               this.loading = false;
@@ -159,13 +148,7 @@ export default {
           envType: environmentId
         },
         fn: data => {
-          if(data.code == 200){
             this.instanceFormData = data.data.instances;
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
         errFn: () => {
           this.$alert('访问失败，请稍后重试！', '错误', {
@@ -177,19 +160,8 @@ export default {
     getGroup() {
       this.$$api_share_clusters({
         fn: data => {
-          if(data.code == 200){
             this.groupData = data.data.clusters;
-          }else{
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
-        errFn: () => {
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
-        }
       })
     },
 
@@ -213,15 +185,8 @@ export default {
           releaseId: releaseId
         },
         fn: data => {
-          if(data.code == 200){
             this.dialogLoading = false;
             this.detail = data.data.detail;
-          }else{
-            this.dialogLoading = false;
-            this.$alert(data.message, '错误', {
-              confirmButtonText: '确定'
-            });
-          }
         },
         errFn: () => {
           this.dialogLoading = false;
@@ -230,7 +195,7 @@ export default {
             confirmButtonText: '确定',
           });
         }
-      })   
+      })
     },
   }
 }
