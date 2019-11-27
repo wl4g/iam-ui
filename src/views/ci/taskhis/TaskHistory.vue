@@ -66,7 +66,7 @@
 
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' @close="stopReadLogTask">
+        <el-dialog title="详情" :close-on-click-modal="false" size="full" :visible.sync="detailVisible" width="60%" v-loading='dialogLoading' @close="destoryReadLogTask">
             <el-form :inline="true" label-width="80px"  :model="buildForm" ref="buildForm" class="demo-form-inline">
                 <el-form-item label="Cluster:">
                     <el-input v-model="detailForm.group" :readonly="true"></el-input>
@@ -108,7 +108,7 @@
                 </div>-->
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="detailVisible = false;stopReadLogTask();">Close</el-button>
+                <el-button @click="detailVisible = false;destoryReadLogTask();">Close</el-button>
           </span>
         </el-dialog>
     </section>
