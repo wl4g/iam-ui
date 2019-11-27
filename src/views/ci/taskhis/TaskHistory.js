@@ -252,12 +252,19 @@ export default {
 
         //log part
         readLogTask(row){
-            this.stopReadLogTask();
+            this.destoryReadLogTask();
 
             if(this.term){
                 this.term.dispose();
             }
-            this.term = new Terminal({});
+            this.term = new Terminal({
+                logLevel: 'debug',
+                allowTransparency: true,
+                fontSize: 12,
+                fontFamily: 'courier-new,courier,monospace',
+                //letterSpacing: 0,//文字间隔（px）
+                theme: { background: '#121319'}
+            });
             const fitAddon = new FitAddon();
             this.term.loadAddon(fitAddon);
 
@@ -284,9 +291,10 @@ export default {
             this.searchAddon.findNext('SUCCESS');
         },*/
 
-        stopReadLogTask(){
+        destoryReadLogTask(){
             console.debug("stop read log task");
             window.clearTimeout(this.logThread);
+            this.term.dispose();
         },
 
         readLog(taskHisId){
@@ -301,7 +309,7 @@ export default {
                 fn: data => {
                     let logs = data.data.data.lines;
                     if (!data.data.data.hasNext) {
-                        this.stopReadLogTask();
+                        window.clearTimeout(this.logThread);
                     }
                     for (let i in logs) {
                         this.term.writeln(logs[i]);
