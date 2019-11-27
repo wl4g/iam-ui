@@ -8,6 +8,7 @@ export default {
         {
           text: 'nameEn',
           value: 'name',
+          icon: true,
         },
         {
           text: 'nameCN',
@@ -18,6 +19,11 @@ export default {
           text: 'permission',
           value: 'permission',
           width: 250,
+        },
+        {
+          text: 'icon',
+          value: 'icon',
+
         }
       ],
       //tree-table 行数据

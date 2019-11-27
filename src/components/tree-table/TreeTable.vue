@@ -12,14 +12,16 @@
     </el-table-column>
 
 
-    <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text" 
+    <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text"
     :width="column.width" >
       <template slot-scope="scope">
-       
         <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
         <span v-if="iconShow(index,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
           <i v-if="!scope.row._expanded" class="el-icon-plus"/>
           <i v-else class="el-icon-minus"/>
+        </span>
+        <span v-if="column.icon">
+          <img :src="scope.row['icon']" onerror="this.src=''"/>
         </span>
         {{ scope.row[column.value] }}
       </template>
@@ -50,7 +52,7 @@
           </span>
           <el-button
                 v-if='btn_info.list && (!btn_info.list_position || btn_info.list_position==="after") && ((!btn.condition || typeof btn.condition!=="function") || (typeof btn.condition==="function" && btn.condition({list:list,data:scope.row,dataIndex:scope.$index,btnIndex:index,btn:btn})===true))'
-                v-for='(btn,index) in btn_info.list' 
+                v-for='(btn,index) in btn_info.list'
                 :key='index'
                 :type="btn.type || 'info'"
                 size="mini"
@@ -154,7 +156,7 @@ export default {
      * 自定义按钮事件
      * @param opts
      */
-    onCustomBtnEvent (opts) { 
+    onCustomBtnEvent (opts) {
       if (opts.btn.fn) {
         if(opts.btn.callBack){
           this.$emit(opts.btn.callBack.funName, Object.assign(opts, opts.btn.callBack.params))
