@@ -55,7 +55,7 @@ export default [
     },
     //host
     {
-        name: '所有host',
+        name: 'allHost',
         method: 'allHost',
         path: '/host/allHost',
         type: 'post',
@@ -68,6 +68,34 @@ export default [
         type: 'post',
         sys: global.share
     },
+    {
+        name: 'saveHost',
+        method: 'saveHost',
+        path: '/host/save',
+        type: 'post',
+        sys: global.share
+    },
+    {
+        name: 'hostDetail',
+        method: 'hostDetail',
+        path: '/host/detail',
+        type: 'post',
+        sys: global.share
+    },
+    {
+        name: 'delHost',
+        method: 'delHost',
+        path: '/host/del',
+        type: 'post',
+        sys: global.share
+    },
+
+
+
+
+
+
+
 
     //contact
     {

@@ -31,25 +31,15 @@ export default {
 
             // 表单规则
             rules: {
-
                 name: [
-                    {required: true, message: 'Please Input name', trigger: 'change' },
+                    {required: true, message: 'Please Input name', trigger: 'blur' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
-                provider: [
-                    { required: true, message: 'Please Input provider', trigger: 'change' },
-                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                hostname: [
+                    { required: true, message: 'Please Input hostname', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
-                authType: [
-                    { required: true, message: 'Please select authType', trigger: 'change' },
-                ],
-                baseUri: [
-                    { required: true, message: 'Please select baseUri', trigger: 'change' },
-                    { min: 1, max: 255, message: 'length between 1 to 255', trigger: 'blur' }
-                ],
-
             },
-
         }
     },
 
@@ -104,38 +94,24 @@ export default {
                 }
             })
         },
+
         cleanSaveForm() {
             this.saveForm = {
                 id: '',
                 name: '',
-                provider: '',
-                authType: '',
-                baseUri: '',
-                sshKeyPub: '',
-                sshKey: '',
-                token: '',
-                username: '',
-                password: '',
+                hostname: '',
             };
-
         },
 
         saveData() {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_saveVcs({
+                    this.$$api_share_saveHost({
                         data: this.saveForm,
                         fn: data => {
-                            this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
+                            this.dialogVisible = false;
+                            this.getData();
+                            this.cleanSaveForm();
                         },
                         errFn: () => {
                             this.dialogLoading = false;
@@ -152,32 +128,12 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_vcsDetail({
+            this.$$api_share_hostDetail({
                 data: {
                     id: row.id,
                 },
                 fn: data => {
-                    //this.loading = false;
-                    if (data.code == 200) {
-                        this.saveForm = {
-                            id: data.data.id,
-                            name: data.data.name,
-                            provider: data.data.provider.toString(),
-                            authType: data.data.authType.toString(),
-                            baseUri: data.data.baseUri,
-                            sshKeyPub: data.data.sshKeyPub,
-                            sshKey: data.data.sshKey,
-                            token: data.data.token,
-                            username: data.data.username,
-                            password: data.data.password,
-                        };
-
-
-                    } else {
-                        this.$alert(data.message, '错误', {
-                            confirmButtonText: '确定'
-                        });
-                    }
+                    this.saveForm = data.data;
                 },
                 errFn: () => {
                     //this.loading = false;
@@ -186,9 +142,8 @@ export default {
                     });
                 }
             });
-
             this.dialogVisible = true;
-            this.dialogTitle = 'Configure VCS information';
+            this.dialogTitle = 'Configure Host';
         },
 
 
@@ -196,13 +151,13 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_delVcs({
+            this.$$api_share_delHost({
                 data: {
                     id: row.id,
                 },
                 fn: data => {
                     this.$message({
-                        message: '删除成功',
+                        message: 'Success',
                         type: 'success'
                     });
                     this.getData();

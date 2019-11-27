@@ -42,77 +42,16 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
-            <el-form label-width="165px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="Name:" prop="name">
                             <el-input v-model="saveForm.name"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Provider:" prop="provider">
-                            <el-select v-model="saveForm.provider">
-                                <el-option
-                                        v-for="item in dictutil.getDictListByType('vcs_provider')"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="AuthType:" prop="authType">
-                            <el-select v-model="saveForm.authType">
-                                <el-option
-                                        v-for="item in dictutil.getDictListByType('vcs_auth_type')"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item label="Repo BaseURI:" prop="baseUri">
-                            <el-input v-model="saveForm.baseUri"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row v-if="saveForm.authType==1">
-                    <el-col :span="12">
-                        <el-form-item label="Username:" prop="username">
-                            <el-input v-model="saveForm.username"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="Password:" prop="password">
-                            <el-input v-model="saveForm.password"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row v-if="saveForm.authType!=1">
-                    <el-col :span="24">
-                        <el-form-item label="SshKey:" prop="sshKey">
-                            <el-input v-model="saveForm.sshKey"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row v-if="saveForm.authType!=1">
-                    <el-col :span="24">
-                        <el-form-item label="SshKey Pub:" prop="sshKeyPub">
-                            <el-input v-model="saveForm.sshKeyPub"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item label="Access Token:" prop="token">
-                            <el-input v-model="saveForm.token"></el-input>
+                        <el-form-item label="Hostname:" prop="hostname">
+                            <el-input v-model="saveForm.hostname"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
