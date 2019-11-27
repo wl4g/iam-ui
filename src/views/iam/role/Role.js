@@ -18,7 +18,7 @@ export default {
             //弹窗表单
             saveForm: {
                 displayName: '',
-                name: '',
+                roleCode: '',
                 menuIds: [],
                 menuNameStrs: '',
                 groupIds: [],
@@ -47,7 +47,7 @@ export default {
             groupsTreeData:[],
 
             rules: {
-                name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+                roleCode: [{ required: true, message: 'Please input roleCode', trigger: 'blur' }],
                 displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
                 groups: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorGroups }],
                 menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
@@ -129,7 +129,7 @@ export default {
         getData() {
             this.$$api_iam_roleList({
                 data: {
-                    name: this.searchParams.roleCode,
+                    roleCode: this.searchParams.roleCode,
                     displayName: this.searchParams.displayName,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
@@ -144,7 +144,7 @@ export default {
         cleanSaveForm() {
             this.saveForm = {
                 displayName: '',
-                name: '',
+                roleCode: '',
                 menuIds: [],
                 menuNameStrs: '',
                 groupIds: [],

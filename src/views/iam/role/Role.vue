@@ -50,14 +50,13 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="displayName:" prop="displayName">
-                            <el-input v-model="saveForm.displayName" placeholder="e.g:开发者"></el-input>
+                        <el-form-item label="code:" prop="roleCode">
+                            <el-input v-model="saveForm.roleCode" placeholder="e.g coder"></el-input>
                         </el-form-item>
                     </el-col>
-
                     <el-col :span="12">
-                        <el-form-item label="Name:" prop="name">
-                            <el-input v-model="saveForm.name" placeholder="e.g coder"></el-input>
+                        <el-form-item label="displayName:" prop="displayName">
+                            <el-input v-model="saveForm.displayName" placeholder="e.g:开发者"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
