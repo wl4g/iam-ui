@@ -200,7 +200,10 @@ export default {
         },
         //双击
         doubleClickRow(row, column, event) {
-            this.detailVisible = true;
+
+            this.$router.push({path:'/ci/taskhisdetail',query: {id:row.id}})
+
+            /*this.detailVisible = true;
             let that = this;
             this.$$api_ci_taskHisDetail({
                 data: {
@@ -221,7 +224,7 @@ export default {
                         that.readLogTask(row);
                     }
                 }
-            })
+            })*/
         },
         detail(row) {
             this.doubleClickRow(row);

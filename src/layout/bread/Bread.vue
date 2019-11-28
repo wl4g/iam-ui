@@ -5,7 +5,7 @@
     </strong> -->
     <el-breadcrumb separator="/" class='el-bread'>
       <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-      <el-breadcrumb-item
+      <el-breadcrumb-item :to="{ path: item.path }"
         v-for='(item,index) in $route.matched'
         :key='index'>{{item.name}}
       </el-breadcrumb-item>

@@ -42,4 +42,12 @@ export default [
     },
 
 
+    {
+        path: 'taskhisdetail',
+        name: 'TaskHisDetail',
+        icon: '',
+        component: Ci.TaskHisDetail,
+    },
+
+
 ]
