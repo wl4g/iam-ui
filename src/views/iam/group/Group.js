@@ -50,7 +50,7 @@ export default {
       rules: {
         name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
         displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
-        role: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorRules }],
+        //role: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorRules }],
         menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
 
       },
@@ -109,7 +109,6 @@ export default {
 
 
     validatorRules(rule, value, callback){
-      console.info(this.saveForm.roleIds);
       if (this.saveForm.roleIds.length<=0) {
         callback(new Error('roles is Empty'));
       } else {
@@ -119,7 +118,6 @@ export default {
 
 
     validatorMenus(rule, value, callback){
-      console.info(rule);
       if (this.saveForm.menuIds.length<=0) {
         callback(new Error('menuIds is Empty'));
       } else {

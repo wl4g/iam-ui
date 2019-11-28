@@ -33,7 +33,7 @@
               </el-col>
           </el-row>
 
-          <el-row>
+          <!--<el-row>
               <el-col :span="20">
                   <el-form-item label="Role:" prop="role">
                       <el-select v-model="saveForm.roleIds"  multiple  placeholder="请选择" style="width: 100%">
@@ -46,7 +46,7 @@
                       </el-select>
                   </el-form-item>
               </el-col>
-          </el-row>
+          </el-row>-->
 
           <el-row>
               <el-col :span="20">
