@@ -18,8 +18,12 @@ export default {
 
             startPos: 0,
             logThread: 0,
-            refreshListThread: 0,
             term: null,
+
+            detailVisible: false,
+            startPos2: 0,
+            logThread2: 0,
+            term2: null,
         }
     },
 
@@ -28,10 +32,15 @@ export default {
     },
 
     activated() {
-        this.detail(this.$route.query.id);
+        this.taskHisId = this.$route.query.id;
+        this.detail(this.taskHisId);
     },
 
     methods: {
+
+        backToChanges(){
+            this.$router.push({path:'/ci/taskhis'})
+        },
 
         convertStatusType(row){
             if (row.status == 0) {
@@ -72,7 +81,6 @@ export default {
         },
 
         detail(id) {
-            this.detailVisible = true;
             let that = this;
             this.$$api_ci_taskHisDetail({
                 data: {
@@ -122,12 +130,9 @@ export default {
             fitAddon.fit();
             //=============================================
 
-            let that = this;
-            console.info(this.detailForm.result);
             this.detailForm.result = '';
             this.startPos = 0;
             this.readLog(id);
-
 
         },
 
@@ -146,7 +151,7 @@ export default {
 
         readLog(taskHisId){
             console.debug("read log taskHisId="+taskHisId+" taskHisReadLog="+this.startPos);
-            var that = this;
+            let that = this;
             this.$$api_ci_taskHisReadLog({
                 data: {
                     taskHisId: taskHisId,
@@ -155,11 +160,12 @@ export default {
                 },
                 fn: data => {
                     let logs = data.data.data.lines;
-                    if (!data.data.data.hasNext) {
-                        window.clearTimeout(this.logThread);
-                    }
                     for (let i in logs) {
-                        this.term.writeln(logs[i]);
+                        that.term.writeln(logs[i]);
+                    }
+                    if (!data.data.data.hasNext) {
+                        window.clearTimeout(that.logThread);
+                        return;
                     }
                     that.startPos = data.data.data.endPos;
                     //console.debug(that.startPos);
@@ -173,11 +179,94 @@ export default {
             })
         },
 
+        //====================================detail=============================================
+
+        openDetail(row){
+            this.detailVisible = true;
+            new Promise(resolve => {
+                setTimeout(() => {
+                    resolve();
+                }, 0)
+            }).then(res => {
+                this.readLogTask2(row.instanceId);
+            })
+
+
+        },
+
+        //log part
+        readLogTask2(instanceId){
+            //this.destoryReadLogTask2();
+            if(this.term2){
+                this.term2.dispose();
+            }
+
+            this.term2 = new Terminal({
+                logLevel: 'debug',
+                allowTransparency: true,
+                fontSize: 12,
+                fontFamily: 'courier-new,courier,monospace',
+                //letterSpacing: 0,//文字间隔（px）
+                theme: { background: '#121319'}
+            });
+            const fitAddon = new FitAddon();
+            this.term2.loadAddon(fitAddon);
+            let terminal2 = document.getElementById('terminal2');
+            this.term2.open(terminal2);
+            fitAddon.fit();
+            //=============================================
+            this.startPos2 = 0;
+            this.readLog2(instanceId);
+
+        },
+
+        destoryReadLogTask2(){
+            window.clearTimeout(this.logThread2);
+            if(this.term2){
+                this.term2.dispose();
+            }
+        },
+
+        readLog2(instanceId){
+            var that = this;
+            this.$$api_ci_taskHisReadDetailLog({
+                data: {
+                    taskHisId: this.taskHisId,
+                    instanceId: instanceId,
+                    startPos: that.startPos2,
+                    size:10000,
+                },
+                fn: data => {
+                    let logs = data.data.data.lines;
+                    for (let i in logs) {
+                        this.term2.writeln(logs[i]);
+                    }
+                    if (!data.data.data.hasNext) {
+                        window.clearTimeout(this.logThread);
+                        return;
+                    }
+                    that.startPos2 = data.data.data.endPos;
+                    //console.debug(that.startPos);
+                    this.logThread2 = self.setTimeout(function () {
+                        that.readLog2(instanceId);
+                    }, 1 * 1000);
+                },
+                errFn: () => {
+                    //do nothing
+                }
+            })
+        },
+
+
+
     },
+
+
 
     //离开前清除定时任务
     beforeRouteLeave(to,from,next){
         console.info("leave , stop the thread");
+        this.detailVisible = false;
         this.destoryReadLogTask();
         next();
     },

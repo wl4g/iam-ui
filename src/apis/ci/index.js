@@ -96,6 +96,13 @@ export default [
         sys: global.ci
     },
     {
+        name: '获取Detail日志',
+        method: 'taskHisReadDetailLog',
+        path: '/taskHis/readDetailLog',
+        type: 'post',
+        sys: global.ci
+    },
+    {
         name: '停止任务',
         method: 'stopTask',
         path: '/taskHis/stopTask',
