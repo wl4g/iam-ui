@@ -14,7 +14,7 @@
               <el-menu-item v-if='!item.hidden' @click.native="routerGo(item.path)" :index="$store.state.router.headerCurRouter+'/'+item.path" v-for="item in menu_list" :key="item.path">
                 <!--<i :class="'fa fa-'+item.icon"></i>-->
                 <img :src="item.icon?item.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>
-                <span v-if="$store.state.leftmenu.menu_flag" slot="title">{{item.name}}</span>
+                <span v-if="$store.state.leftmenu.menu_flag" slot="title">{{getMenuName(item)}}</span>
               </el-menu-item>
             </el-menu>
           </el-col>

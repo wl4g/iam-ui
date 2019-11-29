@@ -6,6 +6,7 @@ export default {
   name: 'head-nav',
   data () {
     return {
+      lang: 'cn',
       dialog: {
         show_access: false,
         show_set: false,
@@ -66,6 +67,20 @@ export default {
     // this.onGetSetting();
   },
   methods: {
+
+    getMenuName(item){
+      console.info(item);
+      return this.$i18n.locale=='en'?item.name:item.displayName;
+    },
+
+    changeLang(lang){
+      if(lang){
+        this.$i18n.locale = lang;
+      }else{
+        this.$i18n.locale = this.lang;
+      }
+    },
+
     getUsername(){
       return store.get('userinfo.username')
     },

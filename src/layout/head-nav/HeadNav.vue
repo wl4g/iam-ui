@@ -7,7 +7,7 @@
 			<img data-v-12af00ba="" src="../../assets/logo.png" alt="" style="width:160px;" class="logo">
 			<!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
         </el-col>
-        <el-col :span="16" style="width:66%;">
+        <el-col :span="15" style="width:66%;">
             <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:50px" class="el-menu-demo" mode="horizontal" unique-opened router>
             <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
             <el-menu-item
@@ -17,7 +17,7 @@
               v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
               <!--<img src="/static/images/menu/CI_on.png" />-->
               <img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>
-               {{item.name}}<!--{{item.path}}-->
+              {{getMenuName(item)}}<!--{{item.path}}-->
              </el-menu-item>
           </el-menu>
         </el-col>
@@ -41,7 +41,23 @@
           </span>
         </el-col>-->
 
-        <el-col :span="4" style="text-align: right;">
+        <el-col :span="2" style="text-align: right;">
+          <!--<el-select v-model="lang" placeholder="请选择" @change="changeLang">
+            <el-option value="cn" label="中文"></el-option>
+            <el-option value="en" label="en"></el-option>
+          </el-select>-->
+          <el-dropdown trigger="click" @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
+            <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
+              language<i class="el-icon-caret-bottom el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="cn">中文</el-dropdown-item>
+              <el-dropdown-item command="en">English</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>
+
+        <el-col :span="2" style="text-align: right;">
           <el-dropdown trigger="click" style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
             <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
               <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">

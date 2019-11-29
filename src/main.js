@@ -15,6 +15,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import dictstore from "./store/global/dictstore";
 import promise from "./views/login/promise";
+import i18n from './i18n/i18n'
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
@@ -25,6 +26,7 @@ new Vue({
     el: '#app',
     router,
     store,
+    i18n,
     template: '<App/>',
     components: {App},
 

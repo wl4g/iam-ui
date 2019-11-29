@@ -27,6 +27,15 @@ function  getName(list, permission){
     return null
 }
 
+function  getDisplayName(list, permission){
+    for (var i = 0; i < list.length; i++) {
+        if(permission == list[i]['permission']){
+            return list[i].displayName || null
+        }
+    }
+    return null
+}
+
 function setMenu(rout,menu_cache){
     let permission = rout['permission'];
     if(!permission||!menu_cache){
@@ -43,6 +52,11 @@ function setMenu(rout,menu_cache){
     let name = getName(menu_cache,permission);
     if(name){
         rout.name = name;
+    }
+
+    let displayName = getDisplayName(menu_cache,permission);
+    if(displayName){
+        rout.displayName = displayName;
     }
 
     let icon = getIcon(menu_cache,permission);

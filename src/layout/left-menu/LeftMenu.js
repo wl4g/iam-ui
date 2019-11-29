@@ -1,3 +1,5 @@
+import it from "element-ui/src/locale/lang/it";
+
 export default {
   name: 'left-menu',
   data () {
@@ -9,6 +11,12 @@ export default {
     }
   },
   methods: {
+
+    getMenuName(item){
+      console.info(item);
+      return this.$i18n.locale=='en'?item.name:item.displayName;
+    },
+
     setSize () {
       //this.win_size.height = (this.$$lib_$(window).height()) + 'px'
       this.win_size.height = '100%'
