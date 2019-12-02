@@ -79,6 +79,18 @@ export default {
       }else{
         this.$i18n.locale = this.lang;
       }
+
+      sessionStorage.setItem("authzPrincipalLangAttributeName",this.$i18n.locale);
+
+      this.$$api_iam_applylocale({
+        data: {
+          lang: this.$i18n.locale
+        },
+        fn: data => {
+
+        },
+      })
+
     },
 
     getUsername(){

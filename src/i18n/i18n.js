@@ -5,8 +5,28 @@ import messages from './langs'
 Vue.use(VueI18n)
 
 // 通过this.$i18n.locale = "en"修改语言
+function getlang() {
+  console.info('into get lang');
+  let lang = sessionStorage.getItem("authzPrincipalLangAttributeName");
+  if(lang){
+    if(lang == 'zh_CN'){
+      lang = 'cn'
+    }
+  }else{
+    lang = navigator.language.toUpperCase();
+    if(lang == 'ZH-CN' || lang == 'ZH_CN' || lang == 'CN' || lang == 'ZH'){
+      lang = 'cn'
+    }
+  }
+  console.info('user lang = '+ lang);
+  return lang;
+}
+
+
 const i18n = new VueI18n({
-  locale: localStorage.getItem("language") || 'cn', //初始未选择默认 cn 中文
+  //locale: localStorage.getItem("language") || 'cn', //初始未选择默认 cn 中文
+  //locale: sessionStorage.getItem("authzPrincipalLangAttributeName") || navigator.language ,
+  locale: getlang(),
   messages
 })
 locale.i18n((key, value) => i18n.t(key, value))

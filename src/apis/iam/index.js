@@ -174,6 +174,14 @@ export default [
         usedefault: true,
     },
 
+    {
+        name: 'applylocale',
+        method: 'applylocale',
+        path: '/login/applylocale',
+        type: 'post',
+        sys: global.iam
+    },
+
 
 
 
