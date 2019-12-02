@@ -12,11 +12,6 @@
 
             <el-form-item label="Branch:">
                 <el-input v-model="searchParams.branchName" placeholder="1.0.1-rc1"></el-input>
-                <!--<el-select v-model="searchParams.instance" placeholder="请选择实例:">
-                    <el-option label="ALL" value=""></el-option>
-                    <el-option label="a" value="1"></el-option>
-                    <el-option label="b" value="2"></el-option>
-                </el-select>-->
             </el-form-item>
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>

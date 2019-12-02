@@ -183,6 +183,7 @@ export default {
 
         openDetail(row){
             this.detailVisible = true;
+            //在旧版1.x中，对dialog没有opened回调事件，需要手动延时
             new Promise(resolve => {
                 setTimeout(() => {
                     resolve();

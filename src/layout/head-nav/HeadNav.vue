@@ -46,7 +46,7 @@
             <el-option value="cn" label="中文"></el-option>
             <el-option value="en" label="en"></el-option>
           </el-select>-->
-          <el-dropdown trigger="click" @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
+          <el-dropdown @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
             <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
               language<i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
@@ -58,7 +58,7 @@
         </el-col>
 
         <el-col :span="2" style="text-align: right;">
-          <el-dropdown trigger="click" style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
+          <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
             <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
               <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
               {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>

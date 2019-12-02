@@ -2,16 +2,16 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
 
-            <el-form-item label="Cluster:">
+            <el-form-item :label="$t('message.ci.cluster')">
                 <el-input v-model="searchParams.groupName" placeholder="e.g. sso | portal"></el-input>
             </el-form-item>
 
-            <el-form-item label="Project:">
+            <el-form-item :label="$t('message.ci.project')">
                 <el-input v-model="searchParams.projectName" placeholder="e.g. safecloud-web-portal"></el-input>
             </el-form-item>
 
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
@@ -30,23 +30,23 @@
                 <el-table :data="tableData" style="width: 100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="groupName" label="Cluster"></el-table-column>
-                    <el-table-column prop="projectName" label="Project"></el-table-column>
-                    <el-table-column prop="gitUrl" label="Git" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="createDate" label="CreateDate"></el-table-column>
+                    <el-table-column prop="groupName" :label="$t('message.ci.cluster')"></el-table-column>
+                    <el-table-column prop="projectName" :label="$t('message.ci.project')"></el-table-column>
+                    <!--<el-table-column prop="httpUrl" :label="$t('message.ci.httpUrl')" :show-overflow-tooltip="true"></el-table-column>-->
+                    <el-table-column prop="createDate" :label="$t('message.common.createDate')"></el-table-column>
 
                     <!--<el-table-column prop="lockStatus" label="LockStatus" :formatter="convertLockStatus"></el-table-column>-->
-                    <el-table-column prop="lockStatus" label="LockStatus" :formatter="convertLockStatus">
+                    <el-table-column prop="lockStatus" :label="$t('message.ci.lockStatus')" :formatter="convertLockStatus">
                         <template slot-scope="scope">
                             <el-button size="small" :disabled="convertLockStatusDisable(scope.row)" @click="unlock(scope.row)">{{convertLockStatus(scope.row)}}</el-button>
                         </template>
 
                     </el-table-column>
 
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' size="small" @click="editPriject(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' size="small" @click="delProject(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="editPriject(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delProject(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
 
@@ -62,7 +62,7 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="App Cluster:" prop="appClusterId">
+                        <el-form-item :label="$t('message.ci.cluster')" prop="appClusterId">
                             <el-select v-model="saveForm.appClusterId" placeholder="Please group">
                                 <el-option
                                         v-for="item in groupData"
@@ -77,7 +77,7 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="VCS Provider:" prop="vcs">
+                        <el-form-item :label="$t('message.ci.vcsProvider')" prop="vcs">
                             <el-select v-model="saveForm.vcsId" @change="changeVcs">
                                 <el-option
                                         v-for="item in vcsData"
@@ -89,7 +89,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Repository Project:" prop="project">
+                        <el-form-item :label="$t('message.ci.project')" prop="project">
                             <el-select
                                     v-model="saveForm.projectName"
                                     @change="changeProject"
@@ -110,34 +110,34 @@
                     </el-col>
                 </el-row>
 
-                <el-form-item label="Repository HttpURI:" prop="httpUrl">
+                <el-form-item :label="$t('message.ci.httpUrl')" prop="httpUrl">
                     <el-input v-model="saveForm.httpUrl" placeholder="http url" :disabled="true"></el-input>
                 </el-form-item>
 
-                <el-form-item label="Repository SshURI:" prop="sshUrl">
+                <el-form-item :label="$t('message.ci.sshUrl')" prop="sshUrl">
                     <el-input v-model="saveForm.sshUrl" placeholder="ssh url" :disabled="true"></el-input>
                 </el-form-item>
 
-                <el-form-item label="Assets Path:" prop="assetsPath">
+                <el-form-item :label="$t('message.ci.assetsPath')" prop="assetsPath">
                     <el-input v-model="saveForm.assetsPath" placeholder="tar path"></el-input>
                 </el-form-item>
 
-                <el-form-item label="App Install Home:" prop="parentAppHome">
+                <el-form-item :label="$t('message.ci.appInstallHome')" prop="parentAppHome">
                     <el-input v-model="saveForm.parentAppHome" placeholder="install directory"></el-input>
                 </el-form-item>
 
-                <el-form-item label="Remark:" prop="remark">
+                <el-form-item :label="$t('message.common.remark')" prop="remark">
                     <el-input v-model="saveForm.remark" placeholder="desciption"></el-input>
                 </el-form-item>
 
 
-                <el-form-item label="Dependencies：" prop="dependencies">
+                <el-form-item :label="$t('message.ci.dependencies')" prop="dependencies">
                     <!-- 查询结果表格 -->
                     <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
                         <template>
                             <el-table :data="saveForm.dependencies" style="width: 100%">
                                 <!-- 动态标签 -->
-                                <el-table-column prop="dependentId" label="Dependent" min-width="290">
+                                <el-table-column prop="dependentId" :label="$t('message.ci.dependent')" min-width="290">
                                     <template scope="scope">
                                         <el-select v-model="scope.row.dependentId"  placeholder="project" >
                                             <el-option
@@ -150,17 +150,17 @@
                                     </template>
                                 </el-table-column>
 
-                                <el-table-column prop="branch" label="BranchName" min-width="130">
+                                <el-table-column prop="branch" :label="$t('message.ci.branchName')" min-width="130">
                                     <template scope="scope">
                                         <el-input  v-model="scope.row.branch"></el-input>
                                     </template>
                                 </el-table-column>
 
-                                <el-table-column label="Operation" min-width="140">
+                                <el-table-column :label="$t('message.common.operation')" min-width="140">
                                     <template slot-scope="scope">
                                         <el-row>
                                             <el-button @click.native.prevent="deleteDep(scope.$index)" type="text" size="mini" style="float: left;line-height: 20px;">
-                                                Delete
+                                                {{$t('message.common.del')}}
                                             </el-button>
                                         </el-row>
                                     </template>
@@ -173,8 +173,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="saveProject()">Save</el-button>
-                <el-button @click="dialogVisible = false;">Cancel</el-button>
+                <el-button type="primary" @click="saveProject()">{{$t('message.common.save')}}</el-button>
+                <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
           </span>
         </el-dialog>
 
