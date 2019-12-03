@@ -20,16 +20,18 @@ export default {
             //Do nothing , just wait 3 second
             this.afterLogin();
         }, 3000);*/
-        this.fullscreenLoading = true;
-        this.afterLogin();
+
+        //this.fullscreenLoading = true;
+
 
     },
 
+    activated() {
+        this.afterLogin();
+    },
+
     methods: {
-
         afterLogin(){
-            this.getCache();
-
             this.$$api_iam_getMenuList({
                 data: {},
                 fn: data => {
@@ -45,8 +47,9 @@ export default {
                             if(children){
                                 for(let j = 0; j<children.length;j++){
                                     if(children[j].hidden!=true) {
+                                        this.getCache();
                                         this.$router.push(routList[i].path+'/'+children[j].path);
-                                        this.fullscreenLoading = false;
+                                        //this.fullscreenLoading = false;
                                         return;
                                     }
                                 }

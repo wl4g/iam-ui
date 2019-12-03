@@ -182,6 +182,14 @@ export default [
         sys: global.iam
     },
 
+    {
+        name: 'logout',
+        method: 'logout',
+        path: '/logout',
+        type: 'post',
+        sys: global.iam
+    },
+
 
 
 

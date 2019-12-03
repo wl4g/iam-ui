@@ -104,7 +104,13 @@ export default {
       }).then(() => {
         this.$store.dispatch('remove_userinfo').then(() => {
           // this.$router.push('/login')
-          window.location.href = IAM.Core.getIamBaseUri() +"/logout";
+          this.$$api_iam_logout({
+            data: {},
+            fn: data => {
+              this.$router.push('/login')
+            },
+          });
+          //window.location.href = IAM.Core.getIamBaseUri() +"/logout";
         });
       }).catch(() => {
         /*this.$message({

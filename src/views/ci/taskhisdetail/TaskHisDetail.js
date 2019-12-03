@@ -21,9 +21,10 @@ export default {
             term: null,
 
             detailVisible: false,
-            startPos2: 0,
-            logThread2: 0,
-            term2: null,
+            dialogLoading: false,
+            detailStartPos: 0,
+            detailLogThread: 0,
+            detailTerm: null,
         }
     },
 
@@ -183,26 +184,21 @@ export default {
 
         openDetail(row){
             this.detailVisible = true;
+            this.dialogLoading = true;
             //在旧版1.x中，对dialog没有opened回调事件，需要手动延时
-            new Promise(resolve => {
-                setTimeout(() => {
-                    resolve();
-                }, 0)
-            }).then(res => {
-                this.readLogTask2(row.instanceId);
-            })
-
-
+            setTimeout(() => {
+                this.readLogDetailTask(row.instanceId);
+            }, 300)
         },
 
         //log part
-        readLogTask2(instanceId){
-            //this.destoryReadLogTask2();
-            if(this.term2){
-                this.term2.dispose();
+        readLogDetailTask(instanceId){
+            //this.destoryReadLogDetailTask();
+            if(this.detailTerm){
+                this.detailTerm.dispose();
             }
-
-            this.term2 = new Terminal({
+            console.debug('before new Terminal timestamp = '+new Date().getTime());
+            this.detailTerm = new Terminal({
                 logLevel: 'debug',
                 allowTransparency: true,
                 fontSize: 12,
@@ -211,45 +207,47 @@ export default {
                 theme: { background: '#121319'}
             });
             const fitAddon = new FitAddon();
-            this.term2.loadAddon(fitAddon);
-            let terminal2 = document.getElementById('terminal2');
-            this.term2.open(terminal2);
+            this.detailTerm.loadAddon(fitAddon);
+            let detailTerminal = document.getElementById('detailTerminal');
+            this.detailTerm.open(detailTerminal);
             fitAddon.fit();
+            console.debug('before new Terminal timestamp = '+new Date().getTime());
+            this.dialogLoading = false;
             //=============================================
-            this.startPos2 = 0;
-            this.readLog2(instanceId);
+            this.detailStartPos = 0;
+            this.readDetailLog(instanceId);
 
         },
 
-        destoryReadLogTask2(){
-            window.clearTimeout(this.logThread2);
-            if(this.term2){
-                this.term2.dispose();
+        destoryReadLogDetailTask(){
+            window.clearTimeout(this.detailLogThread);
+            if(this.detailTerm){
+                this.detailTerm.dispose();
             }
         },
 
-        readLog2(instanceId){
+        readDetailLog(instanceId){
             var that = this;
             this.$$api_ci_taskHisReadDetailLog({
                 data: {
                     taskHisId: this.taskHisId,
                     instanceId: instanceId,
-                    startPos: that.startPos2,
+                    startPos: that.detailStartPos,
                     size:10000,
                 },
                 fn: data => {
                     let logs = data.data.data.lines;
                     for (let i in logs) {
-                        this.term2.writeln(logs[i]);
+                        this.detailTerm.writeln(logs[i]);
                     }
                     if (!data.data.data.hasNext) {
-                        window.clearTimeout(this.logThread);
+                        window.clearTimeout(this.detailLogThread);
                         return;
                     }
-                    that.startPos2 = data.data.data.endPos;
+                    that.detailStartPos = data.data.data.endPos;
                     //console.debug(that.startPos);
-                    this.logThread2 = self.setTimeout(function () {
-                        that.readLog2(instanceId);
+                    this.detailLogThread = self.setTimeout(function () {
+                        that.readDetailLog(instanceId);
                     }, 1 * 1000);
                 },
                 errFn: () => {

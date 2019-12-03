@@ -23,7 +23,7 @@ export default new Router({
       name: 'Login',
       hidden: true,
       redirect(to) {
-        return 'login'
+        return '/init'
       }
     }, {
       path: '/login',

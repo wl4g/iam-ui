@@ -12,14 +12,20 @@ var gbs = {
   api_data_field: 'data',
   api_custom: {
     401: function (res, url, success, error,data) {
+      let that = this;
       console.debug("Response 401 for redirect_url: " + res.data.redirect_url);
-      checkTGCExpiredRedirectToLoginIfNecessary(res,this);
+      let check = checkTGCExpiredRedirectToLoginIfNecessary(res,that);
+      if(check){
+        return;
+      }
 
       // Request IAM server authenticator.
       processUnauthWithNativeRequest(getRespJsonURL(res.data.redirect_url), true, function(res1){
         console.debug("Redirect iam-server response: "+ JSON.stringify(res1));
-        checkTGCExpiredRedirectToLoginIfNecessary(res1,this);
-
+        let check = checkTGCExpiredRedirectToLoginIfNecessary(res1,that);
+        if(check){
+          return;
+        }
         // Request IAM client authenticator.
         processUnauthWithNativeRequest(getRespJsonURL(res1.data.redirect_url), true, function(res2){
           console.debug("Redirect iam-client response: "+ JSON.stringify(res2));
@@ -112,11 +118,13 @@ var checkTGCExpiredRedirectToLoginIfNecessary = function(res,that){
     if(res.data.serviceRole == 'IamWithCasAppServer'){ // TGC过期?
       // this.$store.dispatch('remove_userinfo').then(() => {
         console.debug("TGC过期，redirect to => "+ res.data.redirect_url);
-        window.location.href = res.data.redirect_url;
-        //that.$router.push('/login');
+        //window.location.href = '/#/login';
+        that.$router.push('/login');
+        return true;
       // });
     }
   }
+  return false;
 }
 
 var cbs = {

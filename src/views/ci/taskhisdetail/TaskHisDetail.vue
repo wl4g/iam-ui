@@ -41,9 +41,9 @@
         </el-form>
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :close-on-click-modal="false" size="small" :visible.sync="detailVisible" width="60%" @close="destoryReadLogTask2">
+        <el-dialog title="详情" :close-on-click-modal="false" size="small" :visible.sync="detailVisible" width="60%" @close="destoryReadLogDetailTask" v-loading='dialogLoading'>
             <el-form>
-                <div id="terminal2"></div>
+                <div id="detailTerminal"></div>
             </el-form>
 
             <span slot="footer" class="dialog-footer">
