@@ -24,7 +24,7 @@
                                 </el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="result" label="Result" min-width="100">
+                        <el-table-column prop="result" label="Operation" min-width="100">
                             <template slot-scope="scope">
                                 <!--<el-popover placement="right" width="400" trigger="click">
                                     <el-input type="textarea" :rows="30" placeholder="暂无数据" class="mytextarea" :readonly="true"
@@ -41,7 +41,7 @@
         </el-form>
 
         <!--================================detail================================-->
-        <el-dialog title="详情" :close-on-click-modal="false" size="small" :visible.sync="detailVisible" width="60%" @close="destoryReadLogDetailTask" v-loading='dialogLoading'>
+        <el-dialog :title="title" :close-on-click-modal="false" size="small" :visible.sync="detailVisible" width="60%" @close="destoryReadLogDetailTask" v-loading='dialogLoading'>
             <el-form>
                 <div id="detailTerminal"></div>
             </el-form>

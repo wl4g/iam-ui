@@ -16,6 +16,7 @@ export default {
                 result: ''
             },
 
+            title: 'detail',
             startPos: 0,
             logThread: 0,
             term: null,
@@ -223,6 +224,7 @@ export default {
 
         openDetail(row){
             this.detailVisible = true;
+            this.title = '部署到[' + row.instanceName +']详情';
             this.dialogLoading = true;
             //在旧版1.x中，对dialog没有opened回调事件，需要手动延时
             setTimeout(() => {
