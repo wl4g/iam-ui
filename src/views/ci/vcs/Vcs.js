@@ -6,7 +6,9 @@ export default {
         return {
             //查询条件
             searchParams: {
-
+                name: '',
+                provider: '',
+                authType: '',
             },
 
             //分页信息
@@ -86,6 +88,9 @@ export default {
         getData() {
             this.$$api_ci_vcsList({
                 data: {
+                    name: this.searchParams.name,
+                    provider: this.searchParams.provider,
+                    authType: this.searchParams.authType,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },

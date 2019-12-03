@@ -1,6 +1,32 @@
 <template>
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
+            <el-form-item label="Name">
+                <el-input v-model="searchParams.name" placeholder="e.g. Gitlab" style="width:150px;"></el-input>
+            </el-form-item>
+            <el-form-item label="Provider">
+                <el-select v-model="searchParams.provider">
+                    <el-option value="" label="All"></el-option>
+                    <el-option
+                            v-for="item in dictutil.getDictListByType('vcs_provider')"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="AuthType">
+                <el-select v-model="searchParams.authType">
+                    <el-option value="" label="All"></el-option>
+                    <el-option
+                            v-for="item in dictutil.getDictListByType('vcs_auth_type')"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
