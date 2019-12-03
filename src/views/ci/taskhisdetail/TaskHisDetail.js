@@ -25,6 +25,8 @@ export default {
             detailStartPos: 0,
             detailLogThread: 0,
             detailTerm: null,
+
+            refreshListThread: 0,
         }
     },
 
@@ -81,6 +83,46 @@ export default {
             }
         },
 
+        startRefreshList(){
+            let that = this;
+            if(this.checkExistRunningTask()){
+                this.refreshListThread = self.setTimeout(function () {
+                    that.detailRefresh();
+                }, 1 * 3000);
+            }
+        },
+
+        checkExistRunningTask(){
+            console.info("into check");
+            if(this.detailForm.taskInstances){
+                for (var i in this.detailForm.taskInstances) {
+                    let taskHis = this.detailForm.taskInstances[i];
+                    if(taskHis['status']==0||taskHis['status']==1){//status is create or running
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+
+        stopRefreshList(){
+            //window.clearInterval(this.refreshListThread);
+            window.clearTimeout(this.refreshListThread);
+        },
+
+        detailRefresh() {
+            let that = this;
+            this.$$api_ci_taskHisDetail({
+                data: {
+                    taskId: this.taskHisId,
+                },
+                fn: data => {
+                    this.detailForm.taskInstances = data.data.taskInstances;
+                    that.startRefreshList();
+                }
+            })
+        },
+
         detail(id) {
             let that = this;
             this.$$api_ci_taskHisDetail({
@@ -88,7 +130,6 @@ export default {
                     taskId: id,
                 },
                 fn: data => {
-
                     this.detailForm.group = data.data.group;
                     this.detailForm.branch = data.data.branch;
                     this.detailForm.taskInstances = data.data.taskInstances;
@@ -97,10 +138,8 @@ export default {
                     } else {
                         this.detailForm.result = '';
                     }
-
-                    if (!data.data.result) {
-                        that.readLogTask(id);
-                    }
+                    that.readLogTask(id);
+                    that.startRefreshList();
                 }
             })
         },
@@ -267,6 +306,7 @@ export default {
         console.info("leave , stop the thread");
         this.detailVisible = false;
         this.destoryReadLogTask();
+        this.stopRefreshList();
         next();
     },
 

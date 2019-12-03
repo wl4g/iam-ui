@@ -117,7 +117,6 @@ export default {
         },
 
         checkExistRunningTask(){
-            console.info("into check");
             if(this.tableData){
                 for (var i in this.tableData) {
                     let taskHis = this.tableData[i];
