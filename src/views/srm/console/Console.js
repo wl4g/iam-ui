@@ -1,4 +1,7 @@
 import fa from "element-ui/src/locale/lang/fa";
+import {Terminal} from "xterm";
+import {FitAddon} from "xterm-addon-fit";
+import th from "element-ui/src/locale/lang/th";
 
 export default {
   name: 'console',
@@ -65,6 +68,11 @@ export default {
       logThread: 0,//记录读取日志的线程
       logTimeStamp: new Date(),//已经读到哪个时刻的日志
       isFirst: true,
+
+
+      term: null,
+      i: 1,
+
     }
   },
   watch: {
@@ -74,9 +82,48 @@ export default {
   },
   mounted() {
     this.getGroup();
+    this.createTerminal();
   },
 
   methods: {
+
+    //2019-12-03modify
+    createTerminal(){
+      this.term = new Terminal({
+        logLevel: 'debug',
+        allowTransparency: true,
+        fontSize: 12,
+        rows: 33,
+        fontFamily: 'courier-new,courier,monospace',
+        //letterSpacing: 0,//文字间隔（px）
+        theme: { background: '#121319'}
+      });
+      const fitAddon = new FitAddon();
+
+      this.term.loadAddon(fitAddon);
+      this.term.open(document.getElementById('terminal'));
+      fitAddon.fit();
+      //write
+      //this.term.writeln('nothing now');
+      this.testData();
+
+
+    },
+
+    testData(){
+      let that = this;
+      self.setTimeout(function () {
+        //that.term.clear();
+        that.term.writeln('info =  '+that.i);
+        that.i = that.i+1;
+        that.testData();
+      }, 1 * 200);
+    },
+
+
+
+
+
     // 获取分组名称
     getGroup() {
       this.$$api_share_clusters({
@@ -191,7 +238,8 @@ export default {
 
     //clean console
     cleanConsole(){
-      this.textarea = "";
+      //this.textarea = "";
+      this.term.clear();
       this.total = 0;
     },
 
@@ -263,6 +311,8 @@ export default {
             let list = data.data.data;
             if (!isAppend) {
               _self.textarea = "";
+              _self.term.clear();
+
             }
             if(!list||list.length == 0){
               return;
@@ -276,7 +326,8 @@ export default {
             }
             this.total = this.total+list.length;
             for(let i = 0;i<list.length;i++){
-              _self.textarea = _self.textarea + "\r\n" + list[i];
+              //_self.textarea = _self.textarea + "\r\n" + list[i];
+              _self.term.writeln(list[i]);
             }
         }
       })

@@ -36,6 +36,6 @@
   }
 
   .right-content {
-    margin-bottom: 60px;
+    // margin-bottom: 60px;
   }
 </style>

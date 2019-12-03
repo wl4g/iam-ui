@@ -70,7 +70,7 @@
                       <template scope="scope">
                           <el-input size="small" v-model="scope.row.value" placeholder="Input keyword" ></el-input>
                       </template>
-                  </el-table-column> 
+                  </el-table-column>
                   <el-table-column  label="Operation" width="110">
                     <template slot-scope="scope">
                       <el-button
@@ -122,7 +122,7 @@
                   :picker-options="{selectableRange: '00:00:00 - 23:59:59'}"
                   placeholder="任意时间点">
                 </el-time-picker>
-                <el-time-picker arrow-control v-model="value3" 
+                <el-time-picker arrow-control v-model="value3"
                 :picker-options="{selectableRange: '00:00:00 - 23:59:59'}"
                   placeholder="任意时间点">
                 </el-time-picker>
@@ -149,9 +149,10 @@
           <div style="margin-left:12px;width:200px;">Filter Result:<span class="number">{{total}}</span></div>
       </div>
       <template>
-          <el-input type="textarea" :rows="30" placeholder="No data rows"
+          <!--<el-input type="textarea" :rows="30" placeholder="No data rows"
             v-model="textarea" class="mytextarea" :readonly="true">
-          </el-input>
+          </el-input>-->
+          <div id="terminal" style="height: 100%"></div>
       </template>
     </div>
   </section>
@@ -215,7 +216,7 @@
 }
 .mytextarea .el-textarea__inner {
 height: 100%;
-color: #aaa; 
+color: #aaa;
 background-color: #333;
 padding: 10px 10px 40px 10px;
 }
