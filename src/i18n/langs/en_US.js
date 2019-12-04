@@ -3,7 +3,7 @@ const en_US = {
     message: {
         'common': {
             'home': 'home',
-            'language': 'language',
+            'language': 'Language',
             'createDate': 'CreateDate',
             'operation': 'Operation',
             'edit': 'Edit',

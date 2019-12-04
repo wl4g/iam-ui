@@ -41,12 +41,24 @@ export default {
           }
         }
       } else {
-        this.$router.push('/404')
+        //this.$router.push('/404')
       }
     },
     routerGo(route){
-      this.$router.push(route)
-    }
+      if(this.isExternal(route)){
+        window.location.href = route;
+
+
+      }else{
+        this.$router.push(route)
+      }
+
+
+    },
+
+    isExternal(path) {
+      return /^(https?:|mailto:|tel:)/.test(path)
+    },
   },
   created () {
     this.setSize()
