@@ -1,8 +1,9 @@
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
-const cn = {
+const zh_CN = {
     message: {
         'common': {
             'home': '主页',
+            'language': '语言',
             'createDate': '创建日期',
             'edit': '编辑',
             'del': '删除',
@@ -48,4 +49,4 @@ const cn = {
     ...zhLocale
 }
 
-export default cn
+export default zh_CN

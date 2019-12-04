@@ -10,13 +10,15 @@ function getlang() {
   let lang = sessionStorage.getItem("authzPrincipalLangAttributeName");
   if(lang){
     if(lang == 'zh_CN'){
-      lang = 'cn'
+      lang = 'zh_CN'
     }
-  }else{
+  }else if(navigator.language){
     lang = navigator.language.toUpperCase();
     if(lang == 'ZH-CN' || lang == 'ZH_CN' || lang == 'CN' || lang == 'ZH'){
-      lang = 'cn'
+      lang = 'zh_CN'
     }
+  }else{
+    lang = 'zh_CN'
   }
   console.info('user lang = '+ lang);
   return lang;

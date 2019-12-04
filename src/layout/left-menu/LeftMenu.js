@@ -14,7 +14,7 @@ export default {
 
     getMenuName(item){
       console.info(item);
-      return this.$i18n.locale=='en'?item.name:item.displayName;
+      return this.$i18n.locale=='en_US'?item.name:item.displayName;
     },
 
     setSize () {

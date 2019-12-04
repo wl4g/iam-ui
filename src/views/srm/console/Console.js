@@ -105,7 +105,7 @@ export default {
       fitAddon.fit();
       //write
       //this.term.writeln('nothing now');
-      this.testData();
+      //this.testData();
 
 
     },

@@ -1,8 +1,9 @@
 import enLocale from 'element-ui/lib/locale/lang/en'
-const en = {
+const en_US = {
     message: {
         'common': {
             'home': 'home',
+            'language': 'language',
             'createDate': 'CreateDate',
             'operation': 'Operation',
             'edit': 'Edit',
@@ -48,4 +49,4 @@ const en = {
     ...enLocale
 }
 
-export default en
+export default en_US
