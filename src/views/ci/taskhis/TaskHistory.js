@@ -90,7 +90,6 @@ export default {
 
     methods: {
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
         create() {
@@ -98,7 +97,6 @@ export default {
             this.dialogTitle = '新增';
         },
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -126,7 +124,6 @@ export default {
         },
 
         stopRefreshList(){
-            //window.clearInterval(this.refreshListThread);
             window.clearTimeout(this.refreshListThread);
         },
 
