@@ -333,6 +333,9 @@ export default {
             if(this.isEdit){
                 return;
             }
+            if(!this.buildForm.group){
+                return
+            }
             console.info(this.buildForm.group);
             this.$$api_ci_getTaskBuildCommands({
                 data: {
