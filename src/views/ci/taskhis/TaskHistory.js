@@ -104,11 +104,8 @@ export default {
         },
 
         startRefreshList(){
-            //this.stopRefreshList();
+            this.stopRefreshList();
             let that = this;
-            /*this.refreshListThread = self.setInterval(function () {
-                that.getData();
-            }, 1 * 4000);*/
             if(this.checkExistRunningTask()){
                 this.refreshListThread = self.setTimeout(function () {
                     that.getData();
