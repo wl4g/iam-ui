@@ -85,12 +85,13 @@
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="Classify:" prop="Classify">
-                            <el-select v-model="saveForm.classify" @change="getTemplateByClassify()" placeholder="请选择">
-                                <el-option label="basic" value="1"></el-option>
-                                <el-option label="docker" value="2"></el-option>
-                                <el-option label="redis" value="3"></el-option>
-                                <el-option label="kafka" value="4"></el-option>
-                                <el-option label="zookeeper" value="5"></el-option>
+                            <el-select v-model="saveForm.classify" @change="getTemplateByClassify()">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('metric_classify')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
