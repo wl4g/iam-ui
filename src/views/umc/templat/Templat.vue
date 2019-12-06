@@ -8,8 +8,7 @@
             </el-form-item>
 
             <el-form-item label="Classify">
-                    <el-select v-model="searchParams.classify" @change="getMetricByClassify()">
-                        <el-option label="all" value=""></el-option>
+                    <el-select v-model="searchParams.classify" @change="getMetricByClassify()" clearable>
                         <el-option
                                 v-for="item in dictutil.getDictListByType('metric_classify')"
                                 :key="item.value"
@@ -22,8 +21,7 @@
             <el-form-item label="Metric">
                <!-- <el-input v-model="searchParams.metric" placeholder="Metric"></el-input>-->
 
-                <el-select v-model="searchParams.metricId">
-                    <el-option label="all" value=""></el-option>
+                <el-select v-model="searchParams.metricId" filterable clearable>
                     <el-option
                             v-for="item in metricList"
                             :key="item.id"
@@ -108,7 +106,7 @@
 
                     <el-col :span="6">
                         <el-form-item label="Metric:" prop="addr">
-                            <el-select v-model="saveForm.metricId">
+                            <el-select v-model="saveForm.metricId" filterable>
                                 <el-option
                                         v-for="item in metricList2"
                                         :key="item.id"
