@@ -137,6 +137,7 @@ export default {
         },
 
         editTemplat(row) {
+            this.cleanSaveForm();
             if (!row.id) {
                 return;
             }
@@ -146,6 +147,10 @@ export default {
                 },
                 fn: data => {
                     this.saveForm = data.data.alarmTemplate;
+
+                    //
+                    this.saveForm.tags = '';
+                    this.saveForm.tagsMap = null;
                 }
             })
 
