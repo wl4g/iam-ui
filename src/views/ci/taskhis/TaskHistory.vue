@@ -13,6 +13,12 @@
             <el-form-item label="Branch:">
                 <el-input v-model="searchParams.branchName" placeholder="1.0.1-rc1"></el-input>
             </el-form-item>
+
+            <el-form-item :label="$t('message.common.createDate')">
+                <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
+                <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px;"></el-date-picker>
+            </el-form-item>
+
             <el-form-item>
                 <el-button @click="onSubmit" type="success">Search</el-button>
             </el-form-item>
@@ -33,7 +39,7 @@
             <template>
                 <el-table :data="tableData" @row-dblclick="doubleClickRow" style="width:100%">
                     <el-table-column label="全选" type="selection"></el-table-column>
-                    <el-table-column width="100" prop="id" label="ID" min-width="30"></el-table-column>
+                    <el-table-column width="70" prop="id" label="ID" ></el-table-column>
                     <el-table-column prop="groupName" label="Cluster"></el-table-column>
                     <el-table-column prop="projectName" label="Project"></el-table-column>
                     <el-table-column prop="branchName" label="Branch"></el-table-column>
@@ -47,11 +53,17 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
+                    <el-table-column prop="updateDate" label="UpdateDate"></el-table-column>
+                    <el-table-column prop="costTime" label="CostTime(s)">
+                        <template slot-scope="scope">
+                            {{scope.row.costTime?scope.row.costTime/1000:''}}
+                        </template>
+                    </el-table-column>
                     <el-table-column label="Operation" min-width="150">
                         <template slot-scope="scope">
                             <el-button type="info" size="small" @click="detail(scope.row)">Detail</el-button>
-                            <el-button type="warning" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
                             <el-button type="danger"  size="small" @click="stopTask(scope.row.id)">Stop</el-button>
+                            <el-button v-if="scope.row.status == 2" type="warning" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

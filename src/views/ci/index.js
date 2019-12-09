@@ -4,6 +4,9 @@ import Project from './project/'
 import Trigger from './trigger/'
 import Vcs from './vcs/'
 import TaskHisDetail from './taskhisdetail/'
+import NewPipeline from './newpipeline/'
+
+
 
 
 
@@ -14,4 +17,5 @@ export default {
     Trigger,
     Vcs,
     TaskHisDetail,
+    NewPipeline,
 }

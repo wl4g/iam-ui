@@ -49,5 +49,12 @@ export default [
         component: Ci.TaskHisDetail,
     },
 
+    {
+        path: 'newpipeline',
+        name: 'NewPipeline',
+        icon: '',
+        component: Ci.NewPipeline,
+    },
+
 
 ]

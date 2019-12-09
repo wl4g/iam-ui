@@ -180,38 +180,7 @@
                     </el-col>
                 </el-row>
 
-                <el-row>
-                    <el-col :span="22">
-                        <el-form-item :label="$t('message.ci.buildCommand')" prop="buildCommand">
-                            <el-tooltip class="item" effect="dark" placement="right-start">
-                                <div slot="content">tip:command can use this placeholder, example:<br/>#{projectPath} ==> /home/ci/myproject</div>
-                                <el-input type="textarea" v-model="buildForm.buildCommand" :rows="3" placeholder="暂无数据"></el-input>
-                            </el-tooltip>
-                        </el-form-item>
 
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="22">
-                        <el-form-item :label="$t('message.ci.preCommand')" prop="preCommand">
-                            <el-input type="textarea" v-model="buildForm.preCommand" :rows="3" placeholder="暂无数据"></el-input>
-                        </el-form-item>
-
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="22">
-                        <el-form-item :label="$t('message.ci.postCommand')" prop="postCommand">
-                            <el-tooltip class="item" effect="dark" placement="right-start">
-                                <div slot="content">tip:if command not found , try this before you command<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && </div>
-                                <el-input type="textarea" v-model="buildForm.postCommand" :rows="3" placeholder="暂无数据"></el-input>
-                            </el-tooltip>
-
-                        </el-form-item>
-                    </el-col>
-                </el-row>
                 <el-row>
                     <el-col :span="16">
                         <el-form-item :label="$t('message.ci.contactGroup')" prop="contactGroupData">
@@ -234,6 +203,39 @@
                                 on-text=""
                                 off-text="">
                         </el-switch>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row v-if="buildForm.commandOnOff">
+                    <el-col :span="22">
+                        <el-form-item :label="$t('message.ci.buildCommand')" prop="buildCommand">
+                            <el-tooltip class="item" effect="dark" placement="right-start">
+                                <div slot="content">tip:command can use this placeholder, example:<br/>#{projectPath} ==> /home/ci/myproject</div>
+                                <el-input type="textarea" v-model="buildForm.buildCommand" :rows="3" placeholder="暂无数据"></el-input>
+                            </el-tooltip>
+                        </el-form-item>
+
+                    </el-col>
+                </el-row>
+
+                <el-row v-if="buildForm.commandOnOff">
+                    <el-col :span="22">
+                        <el-form-item :label="$t('message.ci.preCommand')" prop="preCommand">
+                            <el-input type="textarea" v-model="buildForm.preCommand" :rows="3" placeholder="暂无数据"></el-input>
+                        </el-form-item>
+
+                    </el-col>
+                </el-row>
+
+                <el-row v-if="buildForm.commandOnOff">
+                    <el-col :span="22">
+                        <el-form-item :label="$t('message.ci.postCommand')" prop="postCommand">
+                            <el-tooltip class="item" effect="dark" placement="right-start">
+                                <div slot="content">tip:if command not found , try this before you command<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && </div>
+                                <el-input type="textarea" v-model="buildForm.postCommand" :rows="3" placeholder="暂无数据"></el-input>
+                            </el-tooltip>
+
                         </el-form-item>
                     </el-col>
                 </el-row>

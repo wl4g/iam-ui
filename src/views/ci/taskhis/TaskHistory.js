@@ -12,7 +12,9 @@ export default {
             searchParams: {
                 groupName: '',
                 projectName: '',
-                branchName: ''
+                branchName: '',
+                startDate: '',
+                endDate: '',
             },
             //分页信息
             total: 0,
@@ -130,11 +132,22 @@ export default {
 
         // 获取列表数据
         getData() {
+            var start = '';
+            var end = '';
+            if(this.searchParams.startDate!=''){
+                start = this.getDate(this.searchParams.startDate);
+            }
+            if(this.searchParams.endDate!=''){
+                end = this.getDate(this.searchParams.endDate);
+            }
+
             this.$$api_ci_taskHisList({
                 data: {
                     groupName: this.searchParams.groupName,
                     projectName: this.searchParams.projectName,
                     branchName: this.searchParams.branchName,
+                    startDate: start,
+                    endDate: end,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -145,6 +158,14 @@ export default {
                 },
             })
         },
+
+        getDate(startDate){
+            let Y = startDate.getFullYear() + '-';
+            let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
+            let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();
+            return Y+M+D;
+        },
+
         //Dict convert
         getDatagridDict(category, cellValue) {
             var dictGroup = this.dictData.get(category);
@@ -169,6 +190,8 @@ export default {
                 return { img: 'static/images/state/red_fail.png', text: 'Timeout' };
             case 5:
                 return { img: 'static/images/state/red_fail.png', text: 'Stopped' };
+            case 6:
+                return { img: 'static/images/state/red_fail.png', text: 'Part Success' };
             default:
                 return '--';
             }
@@ -188,6 +211,9 @@ export default {
             }
             if (row.status == 5) {
                 return '#f77171';
+            }
+            if (row.status == 6) {
+                return '#dc9417';
             }
             return '#DC143C';
         },

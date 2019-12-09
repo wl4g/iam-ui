@@ -38,7 +38,7 @@ const zh_CN = {
             'preCommand': '前置命令',
             'postCommand': '后置命令',
             'contactGroup': '联系人分组',
-            'custom': '自定义',
+            'custom': '自定义命令',
             'commands': '命令',
             'trackType': '跟踪类型',
             'trackId': '跟踪id',
