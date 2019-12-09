@@ -54,7 +54,7 @@
                     </el-table-column>
                     <el-table-column prop="createDate" label="CreateDate"></el-table-column>
                     <el-table-column prop="updateDate" label="UpdateDate"></el-table-column>
-                    <el-table-column prop="costTime" label="CostTime(s)">
+                    <el-table-column prop="costTime" label="Cost(sec)">
                         <template slot-scope="scope">
                             {{scope.row.costTime?scope.row.costTime/1000:''}}
                         </template>
