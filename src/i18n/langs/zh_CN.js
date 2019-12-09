@@ -39,7 +39,7 @@ const zh_CN = {
             'postCommand': '后置命令',
             'contactGroup': '联系人分组',
             'custom': '自定义命令',
-            'commands': '命令',
+            'commands': '依赖项目命令',
             'trackType': '跟踪类型',
             'trackId': '跟踪id',
 
