@@ -79,7 +79,7 @@
 
                     <el-table-column :label="$t('message.common.operation')" min-width="150">
                         <template slot-scope="scope">
-                            <el-button type="warning" class='el-icon-upload' size="small"  @click="beforeRunTask(scope.row)">{{$t('message.ci.build')}}</el-button>
+                            <el-button type="warning" class='iconfont icon-qidong' size="small"  @click="beforeRunTask(scope.row)">{{$t('message.ci.build')}}</el-button>
                             <el-button type="info" icon='edit' size="small" @click="taskDetail(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' size="small" @click="delTask(scope.row)">{{$t('message.common.del')}}</el-button>
                             <!--<el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>-->
@@ -278,7 +278,7 @@
 
 
 
-        <el-dialog title="Create Task Confirm" :visible.sync="confirmDialog" size="small">
+        <el-dialog :close-on-click-modal="false" title="Create Task Confirm" :visible.sync="confirmDialog" size="small">
             <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline" :rules="buildRules">
                 <el-row>
                     <el-col :span="12">

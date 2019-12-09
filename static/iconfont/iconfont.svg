@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="qidong" unicode="&#58952;" d="M776 708.8c92.8-76.8 152-192 152-321.6 0-230.4-185.6-416-416-416S96 156.8 96 387.2c0 129.6 59.2 244.8 152 321.6 6.4 4.8 12.8 8 20.8 8 17.6 0 32-14.4 32-32 0-11.2-6.4-20.8-14.4-27.2-78.4-64-128-161.6-128-272 0-195.2 156.8-352 352-352s352 156.8 352 352c0 110.4-51.2 209.6-131.2 275.2-6.4 6.4-9.6 14.4-9.6 22.4 0 17.6 14.4 32 32 32 9.6 1.6 17.6-1.6 22.4-6.4zM512 796.8c17.6 0 32-14.4 32-32v-448c0-17.6-14.4-32-32-32s-32 14.4-32 32v448c0 17.6 14.4 32 32 32z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>
