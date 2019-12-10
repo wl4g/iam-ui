@@ -41,7 +41,7 @@
         </el-form>
 
         <!--================================detail================================-->
-        <el-dialog :title="title" :close-on-click-modal="false" size="small" :visible.sync="detailVisible" width="60%" @close="destoryReadLogDetailTask" v-loading='dialogLoading'>
+        <el-dialog :title="title" :close-on-click-modal="false" size="large" :visible.sync="detailVisible" width="60%" @close="destoryReadLogDetailTask" v-loading='dialogLoading'>
             <el-form>
                 <div id="detailTerminal"></div>
             </el-form>

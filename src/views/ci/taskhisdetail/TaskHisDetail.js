@@ -196,7 +196,7 @@ export default {
             this.$$api_ci_taskHisReadLog({
                 data: {
                     taskHisId: taskHisId,
-                    startPos: that.startPos,
+                    startPos: that.startPos+1,
                     size:10000,
                 },
                 fn: data => {

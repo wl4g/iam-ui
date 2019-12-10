@@ -62,7 +62,7 @@
                     <el-table-column label="Operation" min-width="150">
                         <template slot-scope="scope">
                             <el-button type="info" size="small" @click="detail(scope.row)">Detail</el-button>
-                            <el-button type="danger"  size="small" @click="stopTask(scope.row.id)">Stop</el-button>
+                            <el-button v-if="scope.row.status == 1" type="danger"  size="small" @click="stopTask(scope.row.id)">Stop</el-button>
                             <el-button v-if="scope.row.status == 2" type="warning" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>
                         </template>
                     </el-table-column>
