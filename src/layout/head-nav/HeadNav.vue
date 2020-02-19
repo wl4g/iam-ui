@@ -2,25 +2,24 @@
   <div>
 
     <header class="head-nav">
-      <el-row>
-        <el-col :span="4" class='logo-container' style="width:14%" >
-			<img data-v-12af00ba="" src="../../assets/logo.png" alt="" style="width:160px;" class="logo">
-			<!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
-        </el-col>
-        <el-col :span="15" style="width:66%;">
-            <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:50px" class="el-menu-demo" mode="horizontal" unique-opened router>
-            <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
-            <el-menu-item
-              v-for='(item,index) in $router.options.routes'
-              :index="item.path"
-              :key='item.path'
-              v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
-              <!--<img src="/static/images/menu/CI_on.png" />-->
-              <img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>
-              {{getMenuName(item)}}<!--{{item.path}}-->
-             </el-menu-item>
-          </el-menu>
-        </el-col>
+      <div class='logo-container'>
+        <img data-v-12af00ba="" src="../../assets/logo.png" alt="" class="logo">
+        <!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
+      </div>
+      <div class="menus">
+          <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:67px" class="el-menu-demo" mode="horizontal" unique-opened router>
+          <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
+          <el-menu-item
+            v-for='(item,index) in routList'
+            :index="item.path"
+            :key='item.path'
+            v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
+            <!--<img src="/static/images/menu/CI_on.png" />-->
+            <img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>
+            {{getMenuName(item)}}<!--{{item.path}}-->
+           </el-menu-item>
+        </el-menu>
+      </div>
 
         <!--<el-col :span="4" style="text-align: right;">
           <span class='username'>
@@ -41,40 +40,43 @@
           </span>
         </el-col>-->
 
-        <el-col :span="2" style="text-align: right;">
-          <!--<el-select v-model="lang" placeholder="请选择" @change="changeLang">
-            <el-option value="cn" label="中文"></el-option>
-            <el-option value="en" label="en"></el-option>
-          </el-select>-->
-          <el-dropdown @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
-            <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
-              {{$t('message.common.language')}}<i class="el-icon-caret-bottom el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="zh_CN">中文</el-dropdown-item>
-              <el-dropdown-item command="en_US">English</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
 
-        <el-col :span="2" style="text-align: right;">
-          <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
-            <span class="el-dropdown-link" style="color: #FFF;height: 50px;display: block;">
-              <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
-              {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
-              <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
-              <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
+      <div class="pull-right">
+        <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
+          <span class="el-dropdown-link" style="height: 50px;display: block;">
+            <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
+            {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
 
-      </el-row>
+      <div class="pull-right" style="margin-right: 20px;">
+        <!--<el-select v-model="lang" placeholder="请选择" @change="changeLang">
+          <el-option value="cn" label="中文"></el-option>
+          <el-option value="en" label="en"></el-option>
+        </el-select>-->
+        <el-dropdown @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
+          <span class="el-dropdown-link" style="height: 50px;display: block;">
+            {{$t('message.common.language')}}<i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="zh_CN">中文</el-dropdown-item>
+            <el-dropdown-item command="en_US">English</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
+      <div class="pull-right" style="margin-right: 12px">
+        <theme-picker></theme-picker>
+      </div>
     </header>
 
-    <el-dialog size="small" :title="dialog.title" v-model="dialog.show_pass" :close-on-click-modal="false">
+    <el-dialog size="small" :title="dialog.title" :visible.sync="dialog.show_pass" :close-on-click-modal="false">
       <el-form style="margin:20px;width:80%;"
                label-width="100px"
                :model="dialog.user_info"
@@ -115,7 +117,7 @@
     </el-dialog>
 
     <el-dialog size="small" :title="dialog.title"
-               v-model="dialog.show_set">
+               :visible.sync="dialog.show_set">
       <el-form style="margin:20px;width:80%;"
                label-width="100px"
                v-model='dialog.set_info'
@@ -158,13 +160,15 @@
 
 <style scoped lang='less'>
   .logo-container {
-    height: 50px;
+    float: left;
+    width: 190px;
+    height: 67px;
+    text-align: center;
   }
   .logo {
-    height: 50px;
-    width: auto;
-    margin-left: 10px;
-    margin-top: 5px;
+    height: 46px;
+    max-width: 100%;
+    margin-top: 10px;
   }
   .fa-user {
     position: relative;
@@ -172,19 +176,24 @@
     margin-right: 4px;
   }
   .head-nav {
+    padding-right: 20px;
     width: 100%;
-    height: 50px;
-    background: #324057;
+    height: 67px;
+    background: #fff;
     position: fixed;
     top: 0px;
     left: 0px;
     z-index: 99;
-    color: #FFF;
-    border-bottom: 1px solid #1F2D3D;
+    box-shadow: 0 0 18px -8px #d6d3ce;
+
+    .menus {
+      float: left;
+    }
+
   .logout {
       width: 60px;
-      height: 50px;
-      line-height: 50px;
+      height: 67px;
+      line-height: 67px;
       text-align: center;
       float: right;
       cursor: pointer;
@@ -198,9 +207,13 @@
       color: #FFF;
     }
   }
-  .el-menu-item {
-    height:50px !important;
-    padding-left:18px !important;
-    line-height: 50px !important;
+  .home .head-nav .el-menu-item {
+    padding: 0 8px;
+    height:67px ;
+    line-height: 67px;
   }
+  .home .head-nav .el-menu {
+    border-bottom: 0 none;
+  }
+
 </style>

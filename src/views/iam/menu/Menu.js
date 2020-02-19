@@ -1,39 +1,51 @@
+
+import {store} from "../../../utils";
+import i18n from "../../../i18n/i18n";
+
 export default {
   name: 'manage-menu',
   components: {  },
   data() {
+    var checkNumber = (rule, value, callback) => {
+      if (!Number.isInteger(value)) {
+        callback(new Error('请输入数字值'));
+      } else {
+        callback();
+      }
+    };
+
     return {
       //tree-table 标题列数据
       columns: [
         {
-          text: 'nameEn',
+          text: i18n.t('message.common.enName'),
           value: 'name',
           icon: true,
+          width: 220
         },
         {
-          text: 'nameCN',
+          text: i18n.t('message.common.name'),
           value: 'displayName',
           width: 250,
         },
         {
-          text: 'permission',
+          text: i18n.t('message.iam.permission'),
           value: 'permission',
-          width: 250,
         },
         {
-          text: 'icon',
+          text: i18n.t('message.common.icon'),
           value: 'icon',
-
+          width: 220
         }
       ],
       //tree-table 行数据
       data: [],
       // 列表按钮配置
       btn_info: {
-        width: 370,
-        add_text: 'Add Child',
-        update_text: 'Edit',
-        delete_text: 'Del',
+        width: 250,
+        add_text: i18n.t('message.common.addChild'),
+        update_text: i18n.t('message.common.edit'),
+        delete_text: i18n.t('message.common.del'),
       },
       //form 属性
       formFields: {
@@ -42,9 +54,11 @@ export default {
         displayName: '',
         parentId: '',
         permission: '',
-        accessUri: '',
+        pageLocation: '',
+        routePath: '',
         icon: '',
         sort: '',
+        type: '',
       },
 
       //验证
@@ -52,6 +66,10 @@ export default {
         name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
         displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
         permission: [{required: true, message: 'Please input permission', trigger: 'blur' }],
+        sort: [
+          { required: true, message: 'Please input sort', trigger: 'blur' },
+          { validator: checkNumber, trigger: 'blur' }
+        ],
       },
 
       //弹窗控制
@@ -62,7 +80,7 @@ export default {
       windowTitle: '',
       //弹窗定位
       labelPosition: 'right',
-
+      loading: false,
     }
   },
   methods : {
@@ -70,9 +88,14 @@ export default {
      * 获取列表
      */
     onGetList() {
+      this.loading = true;
       this.$$api_iam_getMenuTree({
         fn: data => {
+          this.loading = false;
           this.data = data.data.data;
+        },
+        errFn: () => {
+          this.loading = false;
         }
       })
     },
@@ -115,9 +138,11 @@ export default {
         displayName: opts.data.displayName,
         parentId: opts.data.parentId,
         permission: opts.data.permission,
-        accessUri: opts.data.accessUri,
+        pageLocation: opts.data.pageLocation,
+        routePath: opts.data.routePath,
         icon: opts.data.icon,
         sort: opts.data.sort,
+        type: opts.data.type?opts.data.type.toString():'',
       }
     },
     /**
@@ -133,9 +158,11 @@ export default {
         displayName: '',
         parentId: '',
         permission: '',
-        accessUri: '',
+        pageLocation: '',
+        routePath: '',
         icon: '',
         sort: '',
+        type: ''
       };
     },
     /**
@@ -151,6 +178,8 @@ export default {
      * 添加或者保存
      */
     save(){
+      this.dialogSubmitBtnSwith = true;
+
       this.$refs['menuForm'].validate((valid) => {
         if (valid) {
           this.$$api_iam_saveMenu({
@@ -161,9 +190,15 @@ export default {
                 type: 'success'
               });
               this.dialogVisible = false;
+              this.dialogSubmitBtnSwith = false;
               this.onGetList();
             },
+            errFn: () => {
+              this.dialogSubmitBtnSwith = false;
+            }
           })
+        }else {
+          this.dialogSubmitBtnSwith = false;
         }
       });
     },

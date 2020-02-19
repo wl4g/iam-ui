@@ -8,16 +8,25 @@ Vue.use(Router)
 
 import { Login } from 'views/'
 import { Init } from 'views/'
-import Home from './home/'
-import Umc from './umc/'
-import Scm from './scm/'
-import Ci from './ci/'
-import Iam from './iam/'
-import Srm from './srm/'
-import Share from './share/'
+import { Doc } from 'views/'
+
+// import Home from './home/'
+// import Umc from './umc/'
+// import Scm from './scm/'
+// import Ci from './ci/'
+// import Iam from './iam/'
+// import Srm from './srm/'
+// import Share from './share/'
 
 export default new Router({
   routes: [
+    {
+      path: '*',
+      hidden: true,
+      redirect(to) {
+        return '/init'
+      }
+    },
     {
       path: '/',
       name: 'Login',
@@ -36,13 +45,25 @@ export default new Router({
       hidden: true,
       component: Init
     },
+    {
+      path: '/diff',
+      name: '比较',
+      hidden: true,
+      component: Doc.Diff
+    },
+    {
+      path: '/mdEdit',
+      name: 'Md编辑',
+      hidden: true,
+      component: Doc.MdEdit
+    },
     //Function,
-    Home,
-    Umc,
-    Srm,
-    Ci,
-    Scm,
-    Iam,
-    Share,
+    // Home,
+    // Umc,
+    // Srm,
+    // Ci,
+    // Scm,
+    // Iam,
+    // Share,
   ]
 })

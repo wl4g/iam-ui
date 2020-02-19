@@ -116,6 +116,10 @@ var checkTGCExpiredRedirectToLoginIfNecessary = function(res,that){
   if(res.code == 401 || res.code == '401'){
     // IamWithCasAppClient/IamWithCasAppServer
     if(res.data.serviceRole == 'IamWithCasAppServer'){ // TGC过期?
+
+      //修复跳转到登录界面，遮罩还存在bug
+      $("div").remove(".v-modal");
+
       // this.$store.dispatch('remove_userinfo').then(() => {
         console.debug("TGC过期，redirect to => "+ res.data.redirect_url);
         //window.location.href = '/#/login';

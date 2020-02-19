@@ -1,4 +1,7 @@
 import it from "element-ui/src/locale/lang/it";
+import {
+  store
+} from '../../utils/'
 
 export default {
   name: 'left-menu',
@@ -32,14 +35,24 @@ export default {
         this.$store.dispatch('set_cur_route', {
           rootPath,
           fullPath
-        })
-        var routes = this.$router.options.routes
+        });
+
+        var routes = store.get('routList')
         for (var i = 0; i < routes.length; i++) {
           if (routes[i].path === rootPath && !routes[i].hidden) {
             this.menu_list = routes[i].children
             break
           }
         }
+
+        // 跳转第一个有效路由
+        // if(this.menu_list.length) {
+        //   let target = this.menu_list[0];
+        //   while (target.children){
+        //     target = target.children
+        //   }
+        //   this.$router.push({ path: target.path});
+        // }
       } else {
         //this.$router.push('/404')
       }
@@ -47,13 +60,11 @@ export default {
     routerGo(route){
       if(this.isExternal(route)){
         window.location.href = route;
-
-
       }else{
-        this.$router.push(route)
+        let base = this.$route.matched[0].path;
+        //this.$router.push({path: base + '/' + route})
+        this.$router.push({path: route})
       }
-
-
     },
 
     isExternal(path) {

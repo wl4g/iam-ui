@@ -14,10 +14,10 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      loading: true,
+      loading: false,
       // 弹窗刚开始关闭状态
       dialogVisible: false,
-      dialogLoading:true,
+      dialogLoading:false,
       dialogTitle: '',
       logtitle: '',
 
@@ -176,7 +176,6 @@ export default {
           }
         },
         onSubmit(){
-          this.loading = true;
           this.getData();
         },
         handleEdit(index,row){
@@ -297,7 +296,7 @@ export default {
 
         // 在字典获取配置文件名
         getNamespace() {
-          this.$$api_share_getDictByType({
+          this.$$api_iam_getDictByType({
             data: {
               type: 'app_ns_type',
             },
@@ -308,6 +307,8 @@ export default {
         },
          // 获取列表数据
         getData() {
+          this.loading = true;
+
           this.$$api_configguration_lists({
             data: {
               appClusterId : this.formInline.group,
@@ -318,13 +319,15 @@ export default {
             },
             fn: data => {
               this.loading = false;
-                this.total = data.data.page.total;
-                this.tableData = data.data.list;
+              this.total = data.data.page.total;
+              this.tableData = data.data.list;
+            },
+            errFn: () => {
+              this.loading = false;
             }
           })
         },
         currentChange(i) {
-          this.loading = true;
           this.pageNum = i;
           this.getData();
         },
@@ -346,7 +349,6 @@ export default {
               id: id
             },
             fn: data => {
-              this.loading = false;
               this.dialogLoading = false;
               this.propertiesData = data.data.configVersions;
               this.ruleForm.tableData2 = data.data.configVersions;
@@ -359,18 +361,18 @@ export default {
             },
             errFn: () => {
               this.dialogLoading = false;
-              this.loading = false;
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
+              this.$message.error('request error');
             }
           })
         },
         submitForm(formName) {
+          this.dialogLoading = true;
+
           this.$refs[formName].validate((valid) => {
             if (valid) {
               this.submit();
             } else {
+              this.dialogLoading = false;
               console.log('error submit!!');
               return false;
             }
@@ -439,9 +441,13 @@ export default {
               appClusterId: this.ruleForm.group
             },
             fn: data => {
+              this.dialogLoading = false;
                 this.dialogVisible = false;
                 this.instancelist = [];
                 this.getData();
+            },
+            errFn: () => {
+              this.dialogLoading = false;
             }
           })
         },

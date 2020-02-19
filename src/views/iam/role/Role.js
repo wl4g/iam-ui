@@ -53,8 +53,7 @@ export default {
                 menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
 
             },
-
-
+            loading: false
         }
     },
 
@@ -68,12 +67,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -127,6 +124,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_iam_roleList({
                 data: {
                     roleCode: this.searchParams.roleCode,
@@ -135,8 +133,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -154,16 +156,23 @@ export default {
 
 
         saveData() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_iam_saveRole({
                         data: this.saveForm,
                         fn: data => {
+                            this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
                         }
                     });
+                }else {
+                    this.dialogLoading = false;
                 }
             });
         },

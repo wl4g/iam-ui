@@ -1,15 +1,14 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import { Srm } from 'views/'
-
+import children from "../../views/srm/index"
 
 export default [
     {
         path: 'console',
         name: 'Log Console',
         icon: '',
-        component: Srm.Console,
+        component: children.Console,
         permission: 'srm:console',
     },
 

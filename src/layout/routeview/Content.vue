@@ -9,7 +9,7 @@
 </template>
 <script>
   export default {
-    name: 'content',
+    name: 'mainBody',
     data () {
       return {}
     },

@@ -2,13 +2,13 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
 
-            <el-form-item label="Create Date Range:">
+            <el-form-item :label="$t('message.common.createDate')">
                 <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy - MM - dd " ></el-date-picker>
                 <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy - MM - dd" ></el-date-picker>
             </el-form-item>
 
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
@@ -24,19 +24,19 @@
         <div>
             <template>
                 <el-table :data="tableData" style="width: 100%">
-                    <el-table-column label="全选" type="selection"></el-table-column>
+                    <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="alarmTime" label="AlarmTime" :formatter="timestampToTime"></el-table-column>
+                    <el-table-column prop="alarmTime" :label="$t('message.umc.alarmTime')" :formatter="timestampToTime"></el-table-column>
                     <!--<el-table-column prop="groupName" label="GroupName">
                         <template slot-scope="scope">
                             <el-button type="text" size="small" @click="dataDetail(scope.row)">{{scope.row.groupName}}</el-button>
                         </template>
                     </el-table-column>-->
 
-                    <el-table-column label="Operation">
+                    <el-table-column :label="$t('message.common.operation')">
                         <template slot-scope="scope">
-                            <el-button type="info" size="small">Detail</el-button>
-                            <!--<el-button type="text" size="small" @click="delData(scope.row)">Del</el-button>-->
+                            <el-button type="info" size="small">{{$t('message.common.detail')}}</el-button>
+                            <!--<el-button type="text" size="small" @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>-->
                         </template>
                     </el-table-column>
 
@@ -51,7 +51,7 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="AlarmTime:" >
+                        <el-form-item :label="$t('message.umc.alarmTime')" >
                             <el-input :value="timestampToTime(null,null,saveForm.alarmTime)" readonly></el-input>
                         </el-form-item>
                     </el-col>
@@ -59,7 +59,7 @@
 
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="AlarmNote:" >
+                        <el-form-item :label="$t('message.umc.alarmNote')" >
                             <el-input type="textarea" v-model="saveForm.alarmNote" readonly></el-input>
                         </el-form-item>
                     </el-col>
@@ -68,15 +68,15 @@
 
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="Contacts:">
+                        <el-form-item :label="$t('message.ci.contact')">
                             <template>
                                 <el-table :data="saveForm.contacts" style="width: 100%">
 
-                                    <el-table-column prop="name" label="Name"></el-table-column>
-                                    <el-table-column prop="email" label="Email"></el-table-column>
-                                    <el-table-column prop="phone" label="Phone"></el-table-column>
+                                    <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
+                                    <el-table-column prop="email" :label="$t('message.common.email')"></el-table-column>
+                                    <el-table-column prop="phone" :label="$t('message.common.phone')"></el-table-column>
                                     <!-- 动态标签 -->
-                                    <el-table-column prop="status" label="Status">
+                                    <el-table-column prop="status" :label="$t('message.common.status')">
                                         <template slot-scope="scope">
                                             <el-tag type="primary">{{convertStatusValue(scope.row.status)}}</el-tag>
                                         </template>
@@ -93,8 +93,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <!--<el-button type="primary" @click="saveData()">Save</el-button>-->
-                        <el-button @click="dialogVisible = false;">Cancel</el-button>
+                        <!--<el-button type="primary" @click="saveData()">{{$t('message.common.save')}}</el-button>-->
+                        <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
                     </span>
         </el-dialog>
     </section>

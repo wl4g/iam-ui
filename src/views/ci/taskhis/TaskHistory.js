@@ -15,6 +15,7 @@ export default {
                 branchName: '',
                 startDate: '',
                 endDate: '',
+                envType: '',
             },
             //分页信息
             total: 0,
@@ -60,7 +61,7 @@ export default {
             refreshListThread: 0,
 
             term: null,
-
+            loading: false,
             //searchAddon: null,
 
         }
@@ -92,6 +93,7 @@ export default {
 
     methods: {
         onSubmit() {
+
             this.getData();
         },
         create() {
@@ -132,6 +134,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             var start = '';
             var end = '';
             if(this.searchParams.startDate!=''){
@@ -150,12 +153,17 @@ export default {
                     endDate: end,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
+                    envType: this.searchParams.envType,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
                     this.startRefreshList();
                 },
+                errFn: () => {
+                    this.loading = false;
+                }
             })
         },
 
@@ -219,122 +227,10 @@ export default {
         },
         //双击
         doubleClickRow(row, column, event) {
-
             this.$router.push({path:'/ci/taskhisdetail',query: {id:row.id}})
-
-            /*this.detailVisible = true;
-            let that = this;
-            this.$$api_ci_taskHisDetail({
-                data: {
-                    taskId: row.id,
-                },
-                fn: data => {
-
-                    this.detailForm.group = data.data.group;
-                    this.detailForm.branch = data.data.branch;
-                    this.detailForm.taskInstances = data.data.taskInstances;
-                    if (data.data.result) {
-                        this.detailForm.result = data.data.result;
-                    } else {
-                        this.detailForm.result = '';
-                    }
-
-                    if (!data.data.result) {
-                        that.readLogTask(row);
-                    }
-                }
-            })*/
         },
         detail(row) {
             this.doubleClickRow(row);
-        },
-
-        //log part
-        readLogTask(row){
-            this.destoryReadLogTask();
-
-            if(this.term){
-                this.term.dispose();
-            }
-            this.term = new Terminal({
-                logLevel: 'debug',
-                allowTransparency: true,
-                fontSize: 12,
-                fontFamily: 'courier-new,courier,monospace',
-                //letterSpacing: 0,//文字间隔（px）
-                theme: { background: '#121319'}
-            });
-            const fitAddon = new FitAddon();
-            this.term.loadAddon(fitAddon);
-
-            //TODO search
-            /*this.searchAddon = new SearchAddon();
-            this.term.loadAddon(this.searchAddon);*/
-
-
-            this.term.open(document.getElementById('terminal'));
-            fitAddon.fit();
-            //=============================================
-
-            let that = this;
-            console.info(this.detailForm.result);
-            this.detailForm.result = '';
-            this.startPos = 0;
-            this.readLog(row.id);
-
-
-        },
-
-        /*test(){
-            //this.searchAddon.activate(this.term);
-            this.searchAddon.findNext('SUCCESS');
-        },*/
-
-        destoryReadLogTask(){
-            console.debug("stop read log task");
-            window.clearTimeout(this.logThread);
-            if(this.term){
-                this.term.dispose();
-            }
-        },
-
-        readLog(taskHisId){
-            console.debug("read log taskHisId="+taskHisId+" taskHisReadLog="+this.startPos);
-            var that = this;
-            this.$$api_ci_taskHisReadLog({
-                data: {
-                    taskHisId: taskHisId,
-                    startPos: that.startPos,
-                    size:10000,
-                },
-                fn: data => {
-                    let logs = data.data.data.lines;
-                    if (!data.data.data.hasNext) {
-                        window.clearTimeout(this.logThread);
-                    }
-                    for (let i in logs) {
-                        this.term.writeln(logs[i]);
-                    }
-                    that.startPos = data.data.data.endPos;
-                    //console.debug(that.startPos);
-                    this.logThread = self.setTimeout(function () {
-                        that.readLog(taskHisId);
-                    }, 1 * 1000);
-                },
-                errFn: () => {
-                    //do nothing
-                }
-            })
-        },
-
-        //滚动
-        scroll() {
-            this.$nextTick(() => {
-                //console.info("into scroll");
-                let div = document.querySelector(".mytextarea2 .el-textarea__inner");
-                //console.info(div);
-                div.scrollTop = div.scrollHeight;
-            })
         },
 
         stopTask(id){
@@ -358,7 +254,6 @@ export default {
                 //do nothing
             });
         },
-
 
         createTask() {
             this.dialogLoading = true;
@@ -413,7 +308,6 @@ export default {
     beforeRouteLeave(to,from,next){
         console.info("leave , stop the thread");
         this.stopRefreshList();
-        this.destoryReadLogTask();
         next();
     },
 

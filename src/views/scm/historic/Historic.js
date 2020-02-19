@@ -55,7 +55,7 @@ export default {
       content: '',
       total: 0,
       logtitle: '',
-      loading: true,
+      loading: false,
     }
   },
   mounted () {
@@ -78,7 +78,6 @@ export default {
           id: id
         },
         fn: data => {
-          this.loading = false;
             this.propertiesData = data.data.configVersions;
             if(!falg){
               if(this.propertiesData.length>0){
@@ -88,10 +87,7 @@ export default {
             }
         },
         errFn: () => {
-          this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
+          this.$message.error('request error');
         }
       })
     },
@@ -129,6 +125,7 @@ export default {
       }
       // var startDate = this.value1.toString();
       // var endDate = this.value2.toString();
+       this.loading = true;
       this.$$api_historic_versionlist({
         data: {
           startDate : start,
@@ -143,9 +140,7 @@ export default {
         },
         errFn: () => {
           this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
+          this.$message.error('request error');
         }
       })
     },
@@ -178,8 +173,6 @@ export default {
             tag: row.tag
           },
           fn: data => {
-            this.loading = false;
-
               this.getData();
               this.$message({
                 type: 'success',
@@ -187,11 +180,8 @@ export default {
               });
           },
           errFn: () => {
-            this.loading = false;
             this.getData();
-            this.$alert('访问失败，请稍后重试！', '错误', {
-              confirmButtonText: '确定',
-            });
+            this.$message.error('request error');
           }
         })
       }).catch(() => {
@@ -203,7 +193,6 @@ export default {
       });
     },
     currentChange(i) {
-      this.loading = true;
       this.pageNum = i;
       this.getData();
     },
@@ -219,8 +208,6 @@ export default {
             id: id
           },
           fn: data => {
-            this.loading = false;
-
               this.$message({
                 type: 'success',
                 message: '删除成功!'
@@ -228,10 +215,7 @@ export default {
               this.getData();
           },
           errFn: () => {
-            this.loading = false;
-            this.$alert('访问失败，请稍后重试！', '错误', {
-              confirmButtonText: '确定',
-            });
+            this.$message.error('request error');
           }
         })
       }).catch(() => {
@@ -248,14 +232,10 @@ export default {
           id: id
         },
         fn: data => {
-          this.loading = false;
             this.getData();
         },
         errFn: () => {
-          this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
+          this.$message.error('request error');
         }
       })
     },

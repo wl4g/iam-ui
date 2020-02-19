@@ -55,7 +55,7 @@ export default {
                 label: [{ required: true, message: 'Please input label', trigger: 'blur' }],
                 labelEn: [{ required: true, message: 'Please input labelEn', trigger: 'blur' }],
             },
-
+            loading: false
         }
     },
 
@@ -68,19 +68,18 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
 
         // 获取列表数据
         getData() {
-            this.$$api_share_dictList({
+            this.loading = true;
+            this.$$api_iam_dictList({
                 data: {
                     key: this.searchParams.key,
                     label: this.searchParams.label,
@@ -90,15 +89,19 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
 
         // 获取列表数据
         allDictType() {
-            this.$$api_share_allDictType({
+            this.$$api_iam_allDictType({
                 data: {},
                 fn: data => {
                     this.allType = data.data.list;
@@ -129,9 +132,10 @@ export default {
         },
 
         saveData() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_share_saveDict({
+                    this.$$api_iam_saveDict({
                         data: {
                             key: this.saveForm.key,
                             value: this.saveForm.value,
@@ -145,16 +149,21 @@ export default {
                             isEdit: this.diseditable,
                         },
                         fn: data => {
-                            this.$$api_share_dictCache({
+                            this.dialogLoading = false;
+                            this.$$api_iam_dictCache({
                                 fn: data => {
                                     store.set("dicts_cache",data.data);
                                     this.getData();
                                 },
                             });
                             this.cleanSaveForm();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
                         }
                     });
                 } else {
+                    this.dialogLoading = false;
                     console.log('error submit!!');
                     return false;
                 }
@@ -165,7 +174,7 @@ export default {
             if (!row.key) {
                 return;
             }
-            this.$$api_share_dictDetail({
+            this.$$api_iam_dictDetail({
                 data: {
                     key: row.key,
                 },
@@ -188,7 +197,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_share_delDict({
+                this.$$api_iam_delDict({
                     data: {
                         key: row.key,
                     },
@@ -244,7 +253,7 @@ export default {
             if (!type) {
                 return;
             }
-            this.$$api_share_getDictByType({
+            this.$$api_iam_getDictByType({
                 data: {
                     type: type,
                 },

@@ -2,7 +2,7 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
@@ -19,15 +19,15 @@
         <div>
             <template>
                 <el-table :data="tableData" style="width: 100%">
-                    <el-table-column label="全选" type="selection"></el-table-column>
+                    <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="templateName" label="Template" ></el-table-column>
-                    <el-table-column prop="contactGroupName" label="ContactGroup"></el-table-column>
-                    <el-table-column prop="callbackUrl" label="callbackUrl"></el-table-column>
-                    <el-table-column label="Operation">
+                    <el-table-column prop="templateName" :label="$t('message.umc.template')" ></el-table-column>
+                    <el-table-column prop="contactGroupName" :label="$t('message.ci.contactGroup')"></el-table-column>
+                    <el-table-column prop="callbackUrl" :label="$t('message.umc.callbackUrl')"></el-table-column>
+                    <el-table-column :label="$t('message.common.operation')">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' size="small" @click="dataDetail(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' size="small" @click="dataDetail(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
 
@@ -42,7 +42,7 @@
 
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item label="Group:" prop="group">
+                        <el-form-item :label="$t('message.common.group')" prop="group">
                             <el-select v-model="saveForm.group" @change="getinstance()" placeholder="Please group" style="width: 100%">
                                 <el-option
                                         v-for="item in groupData"
@@ -55,7 +55,7 @@
                     </el-col>
 
                     <el-col :span="8">
-                        <el-form-item label="Env:" >
+                        <el-form-item :label="$t('message.ci.env')" >
                             <el-select v-model="saveForm.environment" @change="getinstance()" placeholder="Please Env" style="width: 100%">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('app_ns_type')"
@@ -68,7 +68,7 @@
                     </el-col>
 
                     <el-col :span="8">
-                        <el-form-item label="Instance:" prop="instances">
+                        <el-form-item :label="$t('message.ci.instances')" prop="instances">
                             <el-select v-model="saveForm.collectId"  placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in instanceData"
@@ -84,7 +84,7 @@
 
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item label="Classify:" prop="Classify">
+                        <el-form-item :label="$t('message.common.classify')" prop="Classify">
                             <el-select v-model="saveForm.classify" @change="getTemplateByClassify()">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('metric_classify')"
@@ -96,7 +96,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="Template:" >
+                        <el-form-item :label="$t('message.umc.template')" >
                             <el-select v-model="saveForm.templateId"  placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in templates"
@@ -108,7 +108,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="ContactGroup:" >
+                        <el-form-item :label="$t('message.ci.contactGroup')" >
                             <el-select v-model="saveForm.contactGroupId"  placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in contactGroups"
@@ -123,7 +123,7 @@
 
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="CallbackUrl:" >
+                        <el-form-item :label="$t('message.umc.callbackUrl')" >
                             <el-input  v-model="saveForm.callbackUrl" ></el-input>
                         </el-form-item>
                     </el-col>
@@ -131,8 +131,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()">Save</el-button>
-                        <el-button @click="dialogVisible = false;">Cancel</el-button>
+                        <el-button type="primary" @click="saveData()">{{$t('message.common.save')}}</el-button>
+                        <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
                     </span>
         </el-dialog>
     </section>

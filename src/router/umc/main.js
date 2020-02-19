@@ -1,21 +1,21 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import { Umc } from 'views/'
+import children from "../../views/umc/index"
 
 export default [
     {
         path: 'sbamonitor',
         name: 'SBA Monitor',
         icon: '',
-        component: Umc.Sbamonitor,
+        component: children.Sbamonitor,
         permission: 'umc:sbamonitor',
     },
     {
         path: 'biztraffic',
         name: 'Biz Traffic',
         icon: '',
-        component: Umc.Biztraffic,
+        component: children.Biztraffic,
         permission: 'umc:biztraffic',
     },
 /*    {
@@ -28,28 +28,28 @@ export default [
         path: 'record',
         name: 'Alarm Logs',
         icon: '',
-        component: Umc.Record,
+        component: children.Record,
         permission: 'umc:record',
     },
     {
         path: 'config',
         name: 'Alarm Config',
         icon: '',
-        component: Umc.Config,
+        component: children.Config,
         permission: 'umc:config',
     },
     {
         path: 'templat',
         name: 'Alarm Template',
         icon: '',
-        component: Umc.Templat,
+        component: children.Templat,
         permission: 'umc:templat',
     },
     {
         path: 'metrictemplate',
         name: 'Metric Template',
         icon: '',
-        component: Umc.MetricTemplate,
+        component: children.MetricTemplate,
         permission: 'umc:metrictemplate',
     },
 ]

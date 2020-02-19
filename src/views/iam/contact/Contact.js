@@ -68,7 +68,8 @@ export default {
                 name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
                 email: [{ required: true, message: 'Please input email', trigger: 'blur' }],
             },
-
+            submitLoading: false,
+            groupLoading: false
         }
     },
 
@@ -82,12 +83,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -102,7 +101,9 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_share_contactList({
+            this.submitLoading = true;
+
+            this.$$api_iam_contactList({
                 data: {
                     name: this.searchParams.name,
                     email: this.searchParams.email,
@@ -111,8 +112,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.submitLoading = false;
                     this.total = data.data.total;
                     this.contactData = data.data.records;
+                },
+                errFn: () => {
+                    this.submitLoading = false;
                 }
             })
         },
@@ -153,7 +158,7 @@ export default {
         },
         // 获取列表数据
         groupList() {
-            this.$$api_share_groupList({
+            this.$$api_iam_groupList({
                 data: {},
                 fn: data => {
                     this.contactGroupData = data.data;
@@ -162,10 +167,10 @@ export default {
         },
 
         saveContact() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    //this.dialogLoading = true;
-                    this.$$api_share_saveContact({
+                    this.$$api_iam_saveContact({
                         data: {
                             id: this.saveForm.id,
                             name: this.saveForm.name,
@@ -207,12 +212,11 @@ export default {
                         },
                         errFn: () => {
                             this.dialogLoading = false;
-                            this.$alert('访问失败，请稍后重试！', '错误', {
-                                confirmButtonText: '确定',
-                            });
+                            this.$message.error('request error');
                         }
                     });
                 } else {
+                    this.dialogLoading = false;
                     console.log('error submit!!');
                     return false;
                 }
@@ -224,7 +228,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_share_contactDetail({
+            this.$$api_iam_contactDetail({
                 data: {
                     id: row.id,
                 },
@@ -247,7 +251,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_share_delContact({
+                this.$$api_iam_delContact({
                     data: {
                         id: row.id,
                     },
@@ -268,15 +272,20 @@ export default {
 
 //=============================group=============================
         getGroupData() {
-            this.$$api_share_contactGroupList({
+            this.groupLoading = true;
+            this.$$api_iam_contactGroupList({
                 data: {
                     name: this.searchGroupParams.name,
                     pageNum: this.groupPageNum,
                     pageSize: this.groupPageSize,
                 },
                 fn: data => {
+                    this.groupLoading = false;
                     this.groupTotal = data.data.total;
                     this.contactGroupData = data.data.records;
+                },
+                errFn: () => {
+                    this.groupLoading = false;
                 }
             })
         },
@@ -285,7 +294,7 @@ export default {
             if(!row){
                 return;
             }
-            this.$$api_share_saveContactGroup({
+            this.$$api_iam_saveContactGroup({
                 data: {
                     id: row.id,
                     name: row.name,
@@ -311,7 +320,7 @@ export default {
             if(!row){
                 return;
             }
-            this.$$api_share_delContactGroup({
+            this.$$api_iam_delContactGroup({
                 data: {
                     id: row.id,
                 },

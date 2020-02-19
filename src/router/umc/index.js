@@ -3,14 +3,13 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
 
 export default {
   path: '/umc',
   name: 'UMC',
   icon: '',
-  component: Home,Content,
+  component: Home,
   redirect: '/umc/sbamonitor',
-  children:Main,
+  //children:Main,
   permission: 'umc',
 }

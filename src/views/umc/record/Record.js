@@ -27,7 +27,7 @@ export default {
                 alarmTemplate: {},
 
             },
-
+            loading: false
         }
     },
 
@@ -38,12 +38,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -58,6 +56,7 @@ export default {
             if(this.searchParams.endDate!=''){
                 end = this.getDate(this.searchParams.endDate);
             }
+            this.loading = true;
 
             this.$$api_umc_recordList({
                 data: {
@@ -66,8 +65,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },

@@ -28,6 +28,8 @@ export default {
         password: ''
         // token: ''
       },
+
+      link3: null,
     }
   },
   methods: {
@@ -36,8 +38,28 @@ export default {
       store.set('userinfo.username',principal);
       this.$router.push('/init');
     },
+
+    addCss(){
+      this.link3 = document.createElement('link')
+      this.link3.type = 'text/css'
+      this.link3.rel = 'stylesheet'
+      this.link3.href = 'static/css/login-1.5.2.css'
+      document.head.appendChild(this.link3)
+    },
+
+    removeLink(){
+      document.head.removeChild(this.link3);
+    }
   },
+
+  activated() {
+    //add css
+    this.addCss();
+  },
+
   mounted () {
+
+
     var that = this;
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
@@ -176,6 +198,12 @@ export default {
         }
       })();
 
+  },
+
+  beforeRouteLeave(to,from,next){
+    console.info("leave , remove link");
+    this.removeLink();
+    next();
   },
 
 }

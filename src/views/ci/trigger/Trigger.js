@@ -81,7 +81,7 @@ export default {
                 ],
 
             },
-
+            loading: false
         }
     },
 
@@ -95,7 +95,7 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
+            this.loading = true;
             this.getData();
         },
 
@@ -107,6 +107,7 @@ export default {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
+            this.dialogLoading = false;
         },
 
         //edit
@@ -118,6 +119,8 @@ export default {
             }
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
+            this.dialogLoading = false;
+
             this.$$api_ci_triggerDetail({
                 data: {
                     id: row.id,
@@ -164,9 +167,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -188,9 +194,9 @@ export default {
         },
 
         saveTrigger() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.dialogLoading = true;
                     this.$$api_ci_saveTrigger({
                         data: {
                             id: this.saveForm.id,
@@ -207,9 +213,13 @@ export default {
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                        },
+                        errFn: ()=> {
+                            this.dialogLoading = false;
                         }
                     })
                 } else {
+                    this.dialogLoading = false;
                     console.log('error submit!!');
                     return false;
                 }
@@ -324,6 +334,9 @@ export default {
             return 'warning';
         },
 
-
+        gotoCluster(){
+            this.dialogVisible = false;
+            this.$router.push({ path: '/share/cluster' })
+        }
     }
 }

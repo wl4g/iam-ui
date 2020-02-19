@@ -1,41 +1,43 @@
 <template>
 
-    <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
+    <section class="configuration">
+        <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
             <!--<el-form-item label="DisplayName:">
                 <el-input v-model="searchParams.displayName" placeholder="e.g 开发者"></el-input>
             </el-form-item>
-            <el-form-item label="Name:">
+            <el-form-item :label="$t('message.common.name')">
                 <el-input v-model="searchParams.roleCode" placeholder="e.g coder"></el-input>
             </el-form-item>-->
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
         <div class="query">
-            <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span>
-                <!-- 新增按钮 -->
-                <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + New Role </el-button>
+            <div class="query-left">
+                <div class="line"></div>
+                Result Total： <span class="number">{{total}}</span>
             </div>
+
+            <!-- 新增按钮 -->
+            <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + New Role </el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width: 100%">
-                    <el-table-column label="全选" type="selection"></el-table-column>
+                <el-table :data="tableData" border  style="width: 100%">
+                    <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="displayName" label="DisplayName"></el-table-column>
-                    <el-table-column prop="roleCode" label="RoleCode"></el-table-column>
-                    <el-table-column prop="groupDisplayName" label="Group"></el-table-column>
+                    <el-table-column prop="displayName" :label="$t('message.common.displayName')"></el-table-column>
+                    <el-table-column prop="roleCode" :label="$t('message.iam.roleCode')"></el-table-column>
+                    <el-table-column prop="groupDisplayName" :label="$t('message.common.group')"></el-table-column>
 
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' size="small" @click="editData(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
 
@@ -45,18 +47,18 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" v-loading='dialogLoading'>
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="code:" prop="roleCode">
+                        <el-form-item :label="$t('message.iam.roleCode')" prop="roleCode">
                             <el-input v-model="saveForm.roleCode" placeholder="e.g coder"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="displayName:" prop="displayName">
-                            <el-input v-model="saveForm.displayName" placeholder="e.g:开发者"></el-input>
+                        <el-form-item :label="$t('message.common.displayName')" prop="displayName">
+                            <el-input v-model="saveForm.displayName" placeholder="e.g:devoper"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -64,7 +66,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  label="Menu："   prop="menu">
+                        <el-form-item  :label="$t('message.iam.menu')"   prop="menu">
                             <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     style="max-height: 240px;overflow: scroll"
@@ -85,7 +87,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  label="Group："   prop="groups">
+                        <el-form-item  :label="$t('message.common.group')"   prop="groups">
                             <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo2()'></el-input>
                             <el-tree
                                     v-show="groupTreeShow"
@@ -105,8 +107,8 @@
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()">Save</el-button>
-                        <el-button @click="dialogVisible = false;">Cancel</el-button>
+                        <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
+                        <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
                     </span>
         </el-dialog>
 

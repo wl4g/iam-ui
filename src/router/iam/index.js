@@ -3,15 +3,14 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
 
 export default {
   path: '/iam',
   name: 'IAM',
   icon: '',
-  component: Home,Content,
+  component: Home,
   redirect: '/iam/online',
-  children:Main,
+  //children:Main,
   permission: 'iam',
 
 }

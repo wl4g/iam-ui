@@ -32,6 +32,8 @@ export default {
                 restartCommand: '',
                 dependencies: [],
                 vcsId: '',
+                clusterName: '',
+                assetsPath3: '',
             },
 
             dialogVisible: false,
@@ -81,9 +83,7 @@ export default {
                 ],
 
             },
-
-
-
+            loading: false,
         }
     },
 
@@ -100,7 +100,6 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
@@ -110,6 +109,7 @@ export default {
             this.getProject();
 
             this.cleanSaveForm();
+            this.dialogLoading = false;
             this.dialogVisible = true;
             this.dialogTitle = 'New Project information';
         },
@@ -161,6 +161,7 @@ export default {
                     this.saveForm = data.data.project;
                 },
             });
+            this.dialogLoading = false;
             this.dialogVisible = true;
             this.dialogTitle = 'Configuer Project information';
         },
@@ -173,6 +174,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_ci_projectList({
                 data: {
                     groupName: this.searchParams.groupName,
@@ -181,10 +183,13 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    //this.loading = false;
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
                 },
+                errFn: () => {
+                    this.loading = false;
+                }
             })
         },
 
@@ -198,9 +203,10 @@ export default {
         },
 
         saveProject() {
+            this.dialogLoading = true;
+
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.dialogLoading = true;
                     this.$$api_ci_saveProject({
                         data: {
                             id: this.saveForm.id,
@@ -221,8 +227,12 @@ export default {
                             this.getData();
                             this.cleanSaveForm();
                         },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                        }
                     });
                 } else {
+                    this.dialogLoading = false;
                     console.log('error submit!!');
                     return false;
                 }
@@ -230,6 +240,11 @@ export default {
         },
 
         cleanSaveForm() {
+            let firstVscId = '';
+            if(this.vcsData){
+                firstVscId = this.vcsData[0]['id'];
+            }
+
             this.saveForm = {
                 id: '',
                 appClusterId: '',
@@ -241,7 +256,9 @@ export default {
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
-                vcsId: '',
+                vcsId: firstVscId,
+                clusterName: '',
+                assetsPath3: '',
             }
         },
 
@@ -327,6 +344,16 @@ export default {
             })
         },
 
+        changeCluster(){
+            for (var i in this.groupData) {
+                if(this.groupData[i].id==this.saveForm.appClusterId){
+                    this.saveForm.clusterName = this.groupData[i].name;
+                    this.saveForm.assetsPath3 = '/'+this.saveForm.clusterName + '-{version}-bin.tar';
+                    break;
+                }
+            }
+        },
+
         remoteMethod(query) {
             this.searchProjectLoading = true;
             this.$$api_ci_vcsProjects({
@@ -358,10 +385,11 @@ export default {
                     return this.vcsProjectData[i];
                 }
             }
+        },
+
+        gotoCluster(){
+            this.dialogVisible = false;
+            this.$router.push({ path: '/share/cluster' })
         }
-
-
-
-
     }
 }

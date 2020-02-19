@@ -27,7 +27,7 @@ export default {
                 alarmTemplate: {},
 
             },
-
+            loading: false
         }
     },
 
@@ -39,18 +39,17 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             console.info(this.searchParams.id);
             this.$$api_iam_onlineList({
                 data: {
@@ -59,6 +58,10 @@ export default {
                 },
                 fn: data => {
                     this.tableData = data.data.sessions;
+                    this.loading = false;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -73,6 +76,7 @@ export default {
         },
 
         destroySessions(row) {
+            this.loading = true;
             this.$$api_iam_destroySessions({
                 data: {
                     id: this.searchParams.id,
@@ -85,6 +89,9 @@ export default {
                         type: 'success'
                     });
                     this.getData();
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },

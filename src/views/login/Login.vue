@@ -1,5 +1,5 @@
 <template>
-    <div id="wrap" style="background:url('/static/images/bg_icon/background.png') no-repeat;background-size:cover;z-index:8;">
+    <div id="wrap" class="wl4glogin" style="height: 100%;background:url('/static/images/bg_icon/background.png') no-repeat;background-size:cover;z-index:8;">
         <div id="top">
             <img id="img_logo" src="static/images/bg_icon/logo.png"/>
         </div>
@@ -152,3 +152,8 @@
   import Login from './Login.js'
   export default Login
 </script>
+<!--<style scoped src="../../../static/css/font-awesome-all.5.7.2.min.css"></style>
+<style scoped src="../../../static/css/bootstrap-3.3.7.min.css"></style>
+<style scoped src="../../../static/css/login-1.5.2.css"></style>
+<style scoped src="../../../static/css/lanren.css"></style>
+<style scoped src="../../../static/css/iam-captcha-jigsaw-1.5.2.css"></style>-->

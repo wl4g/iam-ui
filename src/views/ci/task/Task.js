@@ -1,5 +1,6 @@
 import {transDate, getDay} from 'utils/'
 import fa from "element-ui/src/locale/lang/fa";
+import global from "../../../common/global_variable";
 
 export default {
     name: 'task',
@@ -15,6 +16,7 @@ export default {
                 providerKind:'',
                 startDate:'',
                 endDate:'',
+                envType: '',
             },
             //分页信息
             total: 0,
@@ -45,12 +47,30 @@ export default {
                 trackId: '',
                 trackType: '',
                 remark: '',
+
+                userId: '',
+                projectId: '',
+                issueId: '',
+
+                fileList: [],
+                annex: '',
             },
+
+            loading: false,
+            saveLoading: false,
+
+            users: [],
+            projects: [],
+            issues: [],
+
+            uploadUrl: global.getBaseUrl(global.ci,false)+'/fs/upload',
+
         }
     },
 
     activated() {
         this.getData();
+        console.info(this.uploadUrl)
     },
 
     mounted() {
@@ -59,13 +79,15 @@ export default {
 
     methods: {
         onSubmit() {
-            //this.loading = true;
+            this.loading = true;
             this.getData();
         },
 
+        submitUpload() {
+            this.$refs.upload.submit();
+        },
+
         add(command) {
-
-
             if(command==''){
                 this.dialogVisible = true;
                 this.dialogTitle = '新增';
@@ -114,12 +136,16 @@ export default {
                     endDate: end,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
+                    envType: this.searchParams.envType,
                 },
                 fn: data => {
-                    //this.loading = false;
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
                 },
+                errFn: () => {
+                    this.loading = false;
+                }
             })
         },
 
@@ -171,6 +197,14 @@ export default {
             }
             this.confirmForm.taskId = row.id;
             this.confirmDialog = true;
+
+            this.saveLoading = false;
+
+
+            this.getUsers();
+            this.getProjects();
+            this.getIssues();
+
         },
 
         cleanConfirm() {
@@ -179,15 +213,24 @@ export default {
                 trackId: '',
                 trackType: '',
                 remark: '',
+
+                userId: '',
+                projectId: '',
+                issueId: '',
+
+                fileList: [],
+                annex: '',
             };
         },
 
         runTask() {
+            this.saveLoading = true;
             this.$refs['confirmForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_ci_runTask({
                         data: this.confirmForm,
                         fn: data => {
+                            this.saveLoading = false;
                             this.confirmDialog = false;
                             this.$confirm('Create Task Success,jump to task list?', {
                                 confirmButtonText: 'Yes',
@@ -199,9 +242,57 @@ export default {
                                 //do nothing
                             });
                         },
+                        errFn: () => {
+                            this.saveLoading = false;
+                        }
                     })
+                }else {
+                    this.saveLoading = false;
                 }
             });
+        },
+
+
+
+        getUsers(){
+            this.$$api_ci_getUsers({
+                data: {
+                    taskId: this.confirmForm.taskId
+                },
+                fn: data => {
+                    this.users = data.data;
+                },
+            })
+        },
+        getProjects(){
+            this.$$api_ci_getProjects({
+                data: {
+                    taskId: this.confirmForm.taskId
+                },
+                fn: data => {
+                    this.projects = data.data;
+                },
+            })
+        },
+        getIssues(){
+            this.$$api_ci_getIssues({
+                data: {
+                    taskId: this.confirmForm.taskId,
+                    userId: this.confirmForm.userId,
+                    projectId: this.confirmForm.projectId,
+                },
+                fn: data => {
+                    this.issues = data.data;
+                    console.info(this.issues.length)
+                },
+            })
+        },
+        uploadSuccess(response, file, fileList){
+            console.info(response,file,fileList)
+            this.confirmForm.annex = response.data
+        },
+        uploadFail(err, file, fileList){
+            this.$message.error('upload fail');
         }
 
     }

@@ -56,7 +56,7 @@ export default {
                 displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
                 password: [{required: true, message: 'Please input password', trigger: 'blur' }],
             },
-
+            loading: false
         }
     },
 
@@ -69,12 +69,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -110,6 +108,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_iam_userList({
                 data: {
                     userName: this.searchParams.userName,
@@ -120,6 +119,10 @@ export default {
                 fn: data => {
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                    this.loading = false;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -141,6 +144,8 @@ export default {
 
 
         save() {
+            this.dialogLoading = true;
+
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
@@ -148,6 +153,8 @@ export default {
                     }else{//needn't update password
                         this.saveData();
                     }
+                }else {
+                    this.dialogLoading = false;
                 }
             })
 
@@ -166,19 +173,26 @@ export default {
                         let password = window.IAM.Crypto.rivestShamirAdleman(secret,this.saveForm.password);
                         this.saveData(password);
                     }
+                    this.dialogLoading = false;
                 },
+                errFn: () => {
+                    this.dialogLoading = false;
+                }
             });
         },
 
         saveData(password) {
-            //this.dialogLoading = true;
             this.saveForm.password = password;
             this.$$api_iam_saveUser({
                 data: this.saveForm,
                 fn: data => {
                     this.dialogVisible = false;
+                    this.dialogLoading = false;
                     this.getData();
                     this.cleanSaveForm();
+                },
+                errFn: () => {
+                    this.dialogLoading = false;
                 }
             });
         },

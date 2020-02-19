@@ -35,7 +35,7 @@ export default {
 
             metricList: [],
             metricList2: [],
-
+            loading: false
         }
     },
 
@@ -47,12 +47,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -65,6 +63,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_umc_templatList({
                 data: {
                     name: this.searchParams.name,
@@ -74,8 +73,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -95,6 +98,9 @@ export default {
         },
 
         addTag() {
+            if(!this.saveForm.tagMap){
+                this.saveForm.tagMap = [];
+            }
             this.saveForm.tagMap.push({
                 name: '',
                 value: '',
@@ -118,18 +124,23 @@ export default {
 
 
         saveTemplat() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    //this.dialogLoading = true;
                     this.$$api_umc_saveTemplat({
                         data: this.saveForm,
                         fn: data => {
+                            this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
                         }
                     });
                 } else {
+                    this.dialogLoading = false;
                     console.log('error submit!!');
                     return false;
                 }

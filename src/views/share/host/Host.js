@@ -40,6 +40,7 @@ export default {
                     { min: 1, max: 30, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
             },
+            loading: false
         }
     },
 
@@ -55,7 +56,6 @@ export default {
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -68,6 +68,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_share_hostList({
                 data: {
                     name: this.searchParams.name,
@@ -76,8 +77,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -91,16 +96,23 @@ export default {
         },
 
         saveData() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_share_saveHost({
                         data: this.saveForm,
                         fn: data => {
+                            this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
                         },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                        }
                     });
+                }else {
+                    this.dialogLoading = false;
                 }
             });
         },

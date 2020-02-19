@@ -1,9 +1,14 @@
 import {
   store
 } from '../../utils/'
+import ThemePicker from '../../components/theme-picker'
+
 
 export default {
   name: 'head-nav',
+  components: {
+    'theme-picker': ThemePicker
+  },
   data () {
     return {
       lang: 'cn',
@@ -57,12 +62,15 @@ export default {
               }
             }
           }]
-        }
-      }
+        },
+      },
+      routList: []
     }
   },
   mounted () {
     // this.setDialogInfo('access');
+    this.routList = store.get('routList');
+
     console.log()
     // this.onGetSetting();
   },
