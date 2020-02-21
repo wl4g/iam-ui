@@ -113,6 +113,22 @@ export default {
                                     // 默认指向第一个子菜单
                                     if (item.children && item.children.length) {
                                         item.redirect = item.children[0].routePath
+<<<<<<< HEAD
+=======
+                                    }
+
+                                    item.component = Layout;
+                                } else {
+                                    item.path = item.routePath;
+
+                                    // 二级菜单下有子菜单
+                                    if (item.children && item.children.length) {
+                                        item.component = Content;
+                                    } else {
+                                        // 二级菜单没有子菜单
+                                        let routePath = loadView(item.pageLocation);
+                                        item.component = routePath;
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                                     }
 
                                     item.component = Layout;
@@ -127,6 +143,12 @@ export default {
                                         let routePath = loadView(item.pageLocation);
                                         item.component = routePath;
                                     }
+                                }
+                            } else if (item.type == '2') {            // 处理动态路由
+                                item.path = item.routePath ? item.routePath : 'webview' + item.name;
+                                item.component = webView;
+                                item.meta = {
+                                    linkhref: item.pageLocation
                                 }
                             } else if (item.type == '2') {            // 处理动态路由
                                 item.path = item.routePath ? item.routePath : 'webview' + item.name;
@@ -183,10 +205,17 @@ export default {
                             })
                         }
                     });
+<<<<<<< HEAD
 
                     router.addRoutes(highLevel);
                     this.$store.commit('update_routList',{routList: highLevel});
 
+=======
+
+                    router.addRoutes(highLevel);
+                    this.$store.commit('update_routList',{routList: highLevel});
+
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                     if (this.$route.redirectedFrom && this.$route.redirectedFrom != '/') {
                         // jump 跳转刷新前页面
                         this.$router.push({path: this.$route.redirectedFrom});

@@ -220,6 +220,10 @@ export default {
             this.$$api_share_generateSshKeyPair({
                 data: {},
                 fn: data => {
+<<<<<<< HEAD
+=======
+                    console.info(data);
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                     row.sshKey = data.data.privateKey;
                     row.sshKeyPub = data.data.publicKey;
                 }

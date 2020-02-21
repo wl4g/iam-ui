@@ -173,9 +173,12 @@ const zh_CN = {
             'shareTime':'分享日期',
             'expireTime':'过期时间',
             'docName':'文档名称',
+<<<<<<< HEAD
             'withPasswordLink':'加密外链',
             'withNoPasswordLink':'直接外链',
             'cancelShare':'取消分享',
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         }
     },
     ...zhLocale

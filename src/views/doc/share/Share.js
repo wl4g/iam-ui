@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import global from "../../../common/global_variable";
 
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
 export default {
     name: 'share',
     data() {
@@ -15,8 +18,11 @@ export default {
             pageSize: 10,
 
             tableData: [],
+<<<<<<< HEAD
 
             browseUrl: global.getBaseUrl(global.doc,false)+'/view/index.html',
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         }
     },
 
@@ -72,7 +78,11 @@ export default {
                     },
                     fn: data => {
                         this.$message({
+<<<<<<< HEAD
                             message: '取消分享成功',
+=======
+                            message: '删除成功',
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                             type: 'success'
                         });
                         this.getData();
@@ -83,6 +93,7 @@ export default {
             });
         },
 
+<<<<<<< HEAD
         getShareText(row){
             let shareText = '链接:'+this.browseUrl+"?code="+row.shareCode;
             if(row.passwd){
@@ -111,6 +122,8 @@ export default {
             }
         },
 
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
 
     }
 }

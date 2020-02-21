@@ -201,6 +201,10 @@ export default {
   },
 
   beforeRouteLeave(to,from,next){
+<<<<<<< HEAD
+=======
+    console.info("leave , remove link");
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
     this.removeLink();
     next();
   },

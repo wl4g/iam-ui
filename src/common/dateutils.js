@@ -7,6 +7,10 @@ export default {
         if(typeof date == 'string'){
             date =  new Date(date);
         }
+<<<<<<< HEAD
+=======
+        console.info('dateformat');
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         let ret;
         const opt = {
             "Y+": date.getFullYear().toString(),        // 年

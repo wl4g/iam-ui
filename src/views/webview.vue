@@ -1,7 +1,11 @@
 <template>
     <div class="">
       <div id="wrap">
+<<<<<<< HEAD
         <iframe :src="url"  style="width: 100%; height: 100%;border: none"></iframe>
+=======
+        <iframe :src="url"  style="width: 100%; height: 100%"></iframe>
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
       </div>
 
     </div>

@@ -1,7 +1,11 @@
 <template>
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
+<<<<<<< HEAD
             <el-form-item :label="$t('message.doc.docName')">
+=======
+            <el-form-item :label="$t('message.common.name')">
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 <el-input clearable v-model="searchParams.name" placeholder="e.g. fileName" style="width:150px;"></el-input>
             </el-form-item>
             <el-form-item :label="$t('message.common.language')">
@@ -13,9 +17,12 @@
                             :value="item.value">
                     </el-option>
                 </el-select>
+<<<<<<< HEAD
                 <el-tooltip class="item" effect="dark" content="每个文档都会对应一个语言类型的属性" placement="top-start">
                     <i class="el-icon-question"></i>
                 </el-tooltip>
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             </el-form-item>
             <el-form-item :label="$t('message.share.label')">
                 <el-select clearable filterable v-model="searchParams.labelId">
@@ -26,11 +33,15 @@
                             :value="item.id">
                     </el-option>
                 </el-select>
+<<<<<<< HEAD
                 <el-tooltip class="item" effect="dark" content="每个文档都可以自定义标记多个标签，如，在查找时可以更高效" placement="top-start">
                     <i class="el-icon-question"></i>
                 </el-tooltip>
             </el-form-item>
 
+=======
+            </el-form-item>
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             <el-form-item>
                 <el-button @click="onSubmit" type="success">{{$t('message.common.search')}}</el-button>
             </el-form-item>
@@ -57,7 +68,11 @@
                 <el-table :data="tableData" border style="width:100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
+<<<<<<< HEAD
                     <el-table-column prop="name" :label="$t('message.doc.docName')"></el-table-column>
+=======
+                    <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                     <el-table-column prop="type" :label="$t('message.doc.fileType')">
                         <template slot-scope="scope">
                             <el-tag :type="dictutil.getDictThemesByTypeAndValue('doc_file_type',scope.row.type)">{{dictutil.getDictLabelByTypeAndValue('doc_file_type',scope.row.type)}}</el-tag>
@@ -82,7 +97,11 @@
                             <!--browse-->
                             <el-button type="primary" icon='el-icon-tickets' @click="browseFile(scope.row)">{{$t('message.doc.browse')}}</el-button>
                             <!--share-->
+<<<<<<< HEAD
                             <el-button type="primary" icon='el-icon-share' @click="showShareConfirmForm(scope.row)">{{$t('message.doc.share')}}</el-button>
+=======
+                            <el-button type="primary" icon='el-icon-share' @click="shareDoc(scope.row)">{{$t('message.doc.share')}}</el-button>
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                         </template>
                     </el-table-column>
                 </el-table>
@@ -91,7 +110,11 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <el-dialog :close-on-click-modal="false" title="Upload" :visible.sync="dialogVisible" size="small">
+<<<<<<< HEAD
             <el-form label-width="80px" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+=======
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 <el-row>
                     <el-col :span="6">
                         <el-form-item prop="name" :label="$t('message.common.name')">
@@ -156,6 +179,7 @@
                     </span>
         </el-dialog>
 
+<<<<<<< HEAD
         <el-dialog :close-on-click-modal="false" title="创建外部连接，可分享给他人查看此文档" :visible.sync="shareConfirmDialogVisible" width="45%">
             <el-form label-width="80px" class="demo-form-inline">
                 <el-form-item label="外链有效期:">
@@ -179,6 +203,8 @@
             </span>
         </el-dialog>
 
+=======
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         <el-dialog :close-on-click-modal="false" title="分享" :visible.sync="shareDialogVisible" width="30%">
             <strong>
                 <i>{{shareText}}</i>

@@ -172,10 +172,14 @@ const en_US = {
             'shareCode':'ShareCode',
             'shareTime':'ShareTime',
             'expireTime':'ExpireTime',
+<<<<<<< HEAD
             'docName':'Doc Name',
             'withPasswordLink':'WithPasswordLink',
             'withNoPasswordLink':'WithNoPasswordLink',
             'cancelShare':'CancelShare',
+=======
+            'docName':'DocName',
+>>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         }
     },
     ...enLocale
