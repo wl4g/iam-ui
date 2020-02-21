@@ -15,7 +15,7 @@ import {
 
 // 动态设置本地和线上接口域名
 Vue.axios.defaults.baseURL = gbs.host
-
+Vue.axios.defaults.timeout = 30000
 //Vue.axios.defaults.withCredentials = true
 
 /**
@@ -42,7 +42,6 @@ export default function ({
                          } = {}) {
 
     //TODO 11-15 modify 根据sys获取baseUrl
-    //console.info(sys);
     var baseUrl = global.getBaseUrl(sys,usedefault);
 
   var p = baseUrl + path;

@@ -1,12 +1,11 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
-            <el-form-item label="Name">
+        <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
+            <el-form-item :label="$t('message.common.name')">
                 <el-input v-model="searchParams.name" placeholder="e.g. Gitlab" style="width:150px;"></el-input>
             </el-form-item>
-            <el-form-item label="Provider">
-                <el-select v-model="searchParams.provider">
-                    <el-option value="" label="All"></el-option>
+            <el-form-item :label="$t('message.ci.vcsProvider')">
+                <el-select clearable v-model="searchParams.providerKind">
                     <el-option
                             v-for="item in dictutil.getDictListByType('vcs_provider')"
                             :key="item.value"
@@ -15,9 +14,8 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="AuthType">
-                <el-select v-model="searchParams.authType">
-                    <el-option value="" label="All"></el-option>
+            <el-form-item :label="$t('message.ci.authType')">
+                <el-select clearable v-model="searchParams.authType">
                     <el-option
                             v-for="item in dictutil.getDictListByType('vcs_auth_type')"
                             :key="item.value"
@@ -28,41 +26,42 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
         <div class="query">
-            <div class="line"></div>
-            <div class="">Result Total： <span class="number">{{total}}</span>
-                <!-- 新增按钮 -->
-                <el-button type="primary" @click="addData()" style='float:right;margin:5px'>+ Add VCS Provider&nbsp;</el-button>
+            <div class="query-left">
+                <div class="line"></div>
+                {{$t('message.common.total')}}:<span class="number">{{total}}</span>
             </div>
+            <!-- 新增按钮 -->
+            <el-button type="primary" @click="addData()">+ Add VCS Provider&nbsp;</el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width:100%">
-                    <el-table-column label="全选" type="selection"></el-table-column>
+                <el-table :data="tableData" border style="width:100%">
+                    <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
-                    <el-table-column prop="name" label="VCS Name"></el-table-column>
-                    <el-table-column prop="provider" label="Provider">
+                    <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
+                    <el-table-column prop="providerKind" :label="$t('message.ci.vcsProvider')">
                         <template slot-scope="scope">
-                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('vcs_provider',scope.row.provider)">{{dictutil.getDictLabelByTypeAndValue('vcs_provider',scope.row.provider)}}</el-tag>
+                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('vcs_provider',scope.row.providerKind)">{{dictutil.getDictLabelByTypeAndValue('vcs_provider',scope.row.providerKind)}}</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="authType" label="AuthType">
+                    <el-table-column prop="authType" :label="$t('message.ci.authType')">
                         <template slot-scope="scope">
                             <el-tag :type="dictutil.getDictThemesByTypeAndValue('vcs_auth_type',scope.row.authType)">{{dictutil.getDictLabelByTypeAndValue('vcs_auth_type',scope.row.authType)}}</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="baseUri" label="Repo BaseURI"></el-table-column>
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column prop="baseUri" :label="$t('message.common.baseUrl')"></el-table-column>
+                    <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' size="small" @click="editData(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' size="small" @click="delData(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -75,15 +74,15 @@
             <el-form label-width="165px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Name:" prop="name">
+                        <el-form-item :label="$t('message.common.name')" prop="name">
                             <el-input v-model="saveForm.name"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Provider:" prop="provider">
-                            <el-select v-model="saveForm.provider">
+                        <el-form-item :label="$t('message.ci.vcsProvider')" prop="providerKind">
+                            <el-select v-model="saveForm.providerKind">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('vcs_provider')"
                                         :key="item.value"
@@ -94,7 +93,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="AuthType:" prop="authType">
+                        <el-form-item :label="$t('message.ci.authType')" prop="authType">
                             <el-select v-model="saveForm.authType">
                                 <el-option
                                         v-for="item in dictutil.getDictListByType('vcs_auth_type')"
@@ -108,48 +107,48 @@
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="Repo BaseURI:" prop="baseUri">
+                        <el-form-item :label="$t('message.common.baseUrl')" prop="baseUri">
                             <el-input v-model="saveForm.baseUri"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row v-if="saveForm.authType==1">
                     <el-col :span="12">
-                        <el-form-item label="Username:" prop="username">
+                        <el-form-item :label="$t('message.common.username')" prop="username">
                             <el-input v-model="saveForm.username"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Password:" prop="password">
+                        <el-form-item :label="$t('message.common.password')" prop="password">
                             <el-input v-model="saveForm.password"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row v-if="saveForm.authType!=1">
                     <el-col :span="24">
-                        <el-form-item label="SshKey:" prop="sshKey">
+                        <el-form-item :label="$t('message.common.sshKey')" prop="sshKey">
                             <el-input v-model="saveForm.sshKey"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row v-if="saveForm.authType!=1">
                     <el-col :span="24">
-                        <el-form-item label="SshKey Pub:" prop="sshKeyPub">
+                        <el-form-item :label="$t('message.common.sshKeyPub')" prop="sshKeyPub">
                             <el-input v-model="saveForm.sshKeyPub"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="Access Token:" prop="token">
-                            <el-input v-model="saveForm.token"></el-input>
+                        <el-form-item :label="$t('message.common.token')" prop="accessToken">
+                            <el-input v-model="saveForm.accessToken"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()">Save</el-button>
-                        <el-button @click="dialogVisible = false;">Cancel</el-button>
+                        <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
+                        <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
                     </span>
         </el-dialog>
     </section>
@@ -165,4 +164,4 @@
 <style scoped>
 
 </style>
-s
+

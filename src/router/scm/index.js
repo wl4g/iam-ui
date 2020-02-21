@@ -3,14 +3,13 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
 
 export default {
   path: '/scm',
   name: 'SCM',
   icon: '',
-  component: Home,Content,
+  component: Home,
   redirect: '/scm/configuration',
-  children:Main,
+  //children:Main,
   permission: 'scm',
 }

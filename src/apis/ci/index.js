@@ -244,4 +244,71 @@ export default [
         sys: global.ci
     },
 
+    //analysis
+    {
+        name: 'analysis列表',
+        method: 'analysisList',
+        path: '/analysis/list',
+        type: 'post',
+        sys: global.ci
+    },
+
+    //pcm
+    {
+        name: 'pm获取用户列表',
+        method: 'getUsers',
+        path: '/pcm/getUsers',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'pm获取项目列表',
+        method: 'getProjects',
+        path: '/pcm/getProjects',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'pm获取问题列表',
+        method: 'getIssues',
+        path: '/pcm/getIssues',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'pcm列表',
+        method: 'pcmList',
+        path: '/pcm/list',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '保存pcm',
+        method: 'savePcm',
+        path: '/pcm/save',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'pcm详情',
+        method: 'pcmDetail',
+        path: '/pcm/detail',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '删除pcm',
+        method: 'delPcm',
+        path: '/pcm/del',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '所有pcm',
+        method: 'pcmAll',
+        path: '/pcm/all',
+        type: 'post',
+        sys: global.ci
+    },
+
 ]

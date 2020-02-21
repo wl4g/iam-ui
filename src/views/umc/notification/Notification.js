@@ -110,7 +110,6 @@ export default {
         },
 
         convertStatusValue(value){
-            console.info(value)
             if (value == 0) {
                 return 'send';
             }

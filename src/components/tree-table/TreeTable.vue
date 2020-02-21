@@ -1,12 +1,8 @@
 <template>
-  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs">
+  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs" row-key="id">
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
-        <span v-if="iconShow(0,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
-          <i v-if="!scope.row._expanded" class="el-icon-plus"/>
-          <i v-else class="el-icon-minus"/>
-        </span>
         {{ scope.$index }}
       </template>
     </el-table-column>
@@ -16,10 +12,6 @@
     :width="column.width" >
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
-        <span v-if="iconShow(index,scope.row)" class="tree-ctrl" @click="toggleExpanded(scope.$index)">
-          <i v-if="!scope.row._expanded" class="el-icon-plus"/>
-          <i v-else class="el-icon-minus"/>
-        </span>
 
         <span v-if="column.icon">
           <img :src="scope.row['icon']" onerror="this.style.display='none'"/>
@@ -103,16 +95,17 @@ export default {
   computed: {
     // 格式化数据源
     formatData: function() {
-      let tmp
-      if (!Array.isArray(this.data)) {
-        tmp = [this.data]
-      } else {
-        tmp = this.data
-      }
-      const func = this.evalFunc || treeToArray
-      const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
-      this.allData = func.apply(null, args)
-      return this.allData
+      return this.data;
+      // let tmp
+      // if (!Array.isArray(this.data)) {
+      //   tmp = [this.data]
+      // } else {
+      //   tmp = this.data
+      // }
+      // const func = this.evalFunc || treeToArray
+      // const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
+      // this.allData = func.apply(null, args)
+      // return this.allData
     }
   },
   methods: {
@@ -120,11 +113,6 @@ export default {
       const show = (row.parent ? (row.parent._expanded && row.parent._show) : true)
       row._show = show
       return show ? 'animation:treeTableShow 0.5s;-webkit-animation:treeTableShow 0.5s;' : 'display:none;'
-    },
-    // 切换下级是否展开
-    toggleExpanded: function(trIndex) {
-      const record = this.formatData[trIndex]
-      record._expanded = !record._expanded
     },
     // 图标显示
     iconShow(index, record) {

@@ -3,8 +3,8 @@
     <head-nav></head-nav>
     <div class="left-fixed-right-auto">
       <left-menu></left-menu>
-      <div class="right-content">
-        <div class="content" :style="{marginLeft:$store.state.leftmenu.width}">
+      <div class="right-content" :style="{marginLeft:$store.state.leftmenu.width}">
+        <div class="content" >
           <!-- <tabs></tabs> -->
           <bread></bread>
           <keep-alive>
@@ -21,7 +21,7 @@
   import Bread from '../bread/Bread.vue'
 
   export default {
-    name: 'home',
+    name: 'layout',
     components: {
       HeadNav, LeftMenu, Bread,
     }
@@ -29,13 +29,13 @@
 </script>
 <style scoped lang='less'>
   .content {
-    margin-top: 44px;
     /*background: #f1f2f7;*/
     background: #FFF;
-    padding: 16px;
+    padding: 8px 16px;
   }
 
   .right-content {
+    padding-top: 67px;
     // margin-bottom: 60px;
   }
 </style>

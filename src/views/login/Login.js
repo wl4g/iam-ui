@@ -28,6 +28,8 @@ export default {
         password: ''
         // token: ''
       },
+
+      link3: null,
     }
   },
   methods: {
@@ -36,8 +38,28 @@ export default {
       store.set('userinfo.username',principal);
       this.$router.push('/init');
     },
+
+    addCss(){
+      this.link3 = document.createElement('link')
+      this.link3.type = 'text/css'
+      this.link3.rel = 'stylesheet'
+      this.link3.href = 'static/css/login-1.5.2.css'
+      document.head.appendChild(this.link3)
+    },
+
+    removeLink(){
+      document.head.removeChild(this.link3);
+    }
   },
+
+  activated() {
+    //add css
+    this.addCss();
+  },
+
   mounted () {
+
+
     var that = this;
       //var iamBaseURI = "http://passport.wl4g.com/sso";
       //var iamBaseURI = "http://localhost:14040/iam-server";
@@ -54,7 +76,7 @@ export default {
             onPostCheck: function(res) {
               console.debug("onPostCheck... "+res);
               // 因SNS授权（如:WeChat）只能刷新页面，因此授权错误消息只能从IAM服务加载
-              var url = IAM.Core.getIamBaseUri() +"/login/errread";	
+              var url = IAM.Core.getIamBaseUri() +"/login/errread";
               $.ajax({
                 url: url,
                 xhrFields: { withCredentials: true }, // Send cookies when support cross-domain request.
@@ -166,7 +188,7 @@ export default {
           }
         }).bindForAccountAuthenticator().bindForSMSAuthenticator().bindForSNSAuthenticator().bindForCaptchaVerifier();
       })();
-    
+
       // 监听panelType为pagePanel类型的SNS授权回调
       (function () {
         window.onmessage = function (e) {
@@ -176,6 +198,11 @@ export default {
         }
       })();
 
+  },
+
+  beforeRouteLeave(to,from,next){
+    this.removeLink();
+    next();
   },
 
 }

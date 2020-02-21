@@ -3,7 +3,7 @@
       <!-- //表单 -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
-      <el-form-item label="Group:">
+      <el-form-item :label="$t('message.common.group')">
         <el-select v-model="formInline.region" placeholder="请选择Group:">
           <el-option label="sso" value="sso"></el-option>
           <el-option label="portal" value="portal"></el-option>
@@ -18,10 +18,10 @@
       </el-form-item> -->
 
       <el-form-item>
-        <el-button type="success" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="onSubmit">{{ $t('message.common.search') }}</el-button>
       </el-form-item>
       <el-form-item style='float:right'>
-        <el-button type="primary" @click="onSubmit">新增</el-button>
+        <el-button type="primary" @click="onSubmit">{{ $t('message.common.add') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -39,32 +39,31 @@
           style="width: 100%">
           <el-table-column
             prop="group"
-            label="Group"
+            :label="$t('message.common.group')"
             :formatter="formatter">
           </el-table-column>
           <el-table-column
             prop="node"
-            label="节点数"
+            :label="$t('message.scm.node')"
             :formatter="formatter">
           </el-table-column>
           <el-table-column
             prop="address"
-            label="描述"
+            :label="$t('message.common.remark')"
             :formatter="formatter">
           </el-table-column>
-          <el-table-column
-            label="操作"
+          <el-table-column :label="$t('message.common.operation')"
             >
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button @click="handleClick(scope.row)" type="text" size="small">{{$t('message.common.del')}}</el-button>
+              <el-button type="text" size="small">{{$t('message.common.edit')}}</el-button>
             </template>
           </el-table-column>
-          
+
         </el-table>
       </template>
     </div>
-    
+
   </section>
 </template>
 <script>
@@ -73,14 +72,7 @@
   export default Application
 </script>
 <style scoped>
-  .query{
-    line-height: 18px;
-    margin-bottom: 22px;
-  }
   .number{
     font-weight: bold;color: #6cb33e;
-  }
-  .line{
-    width:4px;height:18px;background:#6cb33e;display: block;float: left;margin-right: 6px;
   }
 </style>

@@ -257,7 +257,6 @@ export default {
           return;
         }
 
-        console.info("fq="+that.formInline.fq);
         that.logThread=self.setInterval(function () {
           that.dataAppend();
         },that.formInline.fq*1000);
@@ -281,7 +280,6 @@ export default {
     },
 
     dataAppend(){
-      //console.info("thread start"+this.isFirst);
       let queryList = this.getQueryList();
 
       if(this.isFirst){
@@ -360,7 +358,6 @@ export default {
 
   //离开前清除定时任务
   beforeRouteLeave(to,from,next){
-    console.info("leave , stop the thread");
     this.stopThread();
     next();
   }

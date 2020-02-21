@@ -4,7 +4,6 @@ export default {
     name: 'newPipeline',
     data() {
         var validateInstances = (rule, value, callback) => {
-            console.info(value.length);
             if (value.length<=0) {
                 callback(new Error('Instances is Empty'));
             } else {
@@ -20,7 +19,7 @@ export default {
                 id: '',
                 taskName: '',
                 group: '',
-                environment: '',
+                envType: '',
                 instances: [],
                 branch: '',
                 desc: '',
@@ -32,6 +31,7 @@ export default {
                 contactGroupId: '',
                 taskBuildCommands: [],
                 commandOnOff:false,
+                pcmId: '',
             },
 
             //create内的下拉数据
@@ -41,6 +41,7 @@ export default {
             branchs: [],
             contactGroupData: [],
             isEdit: false,
+            pcmData: [],
 
             postCommandTip: '<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && ',
 
@@ -63,8 +64,11 @@ export default {
                 branch: [
                     {required: true, message: 'Please select branch', trigger: 'change' },
                 ],
+                pcmId: [
+                    {required: true, message: 'Please select Pcm', trigger: 'change' },
+                ],
             },
-
+            loading: false,
         }
     },
 
@@ -72,16 +76,19 @@ export default {
         this.cleanBuildForm();
         this.taskId = this.$route.query.id;
 
-        let command = this.$route.query.id;
+        let command = this.$route.query.command;
         if(command){
             this.buildForm.providerKind = command;
         }
 
         this.getGroup();
         this.groupList();
+        this.getPcm();
         if(this.taskId){
             this.isEdit = true;
             this.taskDetail(this.taskId);
+        }else{
+            this.isEdit = false;
         }
 
     },
@@ -96,7 +103,7 @@ export default {
                 id: '',
                 taskName: '',
                 group: '',
-                environment: '',
+                envType: '',
                 instances: [],
                 branch: '',
                 desc: '',
@@ -108,11 +115,12 @@ export default {
                 contactGroupId: '',
                 taskBuildCommands: [],
                 commandOnOff:false,
+                pcmId: '',
             }
         },
 
         groupList() {
-            this.$$api_share_groupList({
+            this.$$api_iam_groupList({
                 data: {
 
                 },
@@ -125,7 +133,7 @@ export default {
         //获取实例名称
         getinstance() {
             let clusterId = this.buildForm.group;
-            let envType = this.buildForm.environment;
+            let envType = this.buildForm.envType;
             this.instanceData = [];
             if (!envType || envType == "" || !clusterId || clusterId == "") {
                 return;
@@ -169,14 +177,16 @@ export default {
         },
 
         save() {
+            this.loading = true;
+
             this.$refs['buildForm'].validate((valid) => {
                 if (valid) {
-                    this.dialogLoading = true;
                     this.$$api_ci_saveTask({
                         data: {
                             id: this.buildForm.id,
                             taskName: this.buildForm.taskName,
                             appClusterId: this.buildForm.group,
+                            envType: this.buildForm.envType,
                             branchName: this.buildForm.branch,
                             instance: this.buildForm.instances,
                             providerKind: this.buildForm.providerKind,
@@ -186,13 +196,19 @@ export default {
                             postCommand: this.buildForm.postCommand,
                             contactGroupId: this.buildForm.contactGroupId,
                             taskBuildCommands: this.buildForm.taskBuildCommands,
+                            pcmId: this.buildForm.pcmId,
                         },
                         fn: data => {
+                            this.loading = false;
                             this.cleanBuildForm();
                             this.$router.push({path:'/ci/task'})
                         },
+                        errFn: () => {
+                            this.loading = false;
+                        }
                     })
                 } else {
+                    this.loading = false;
                     console.log('error submit!!');
                     return false;
                 }
@@ -213,7 +229,7 @@ export default {
                     this.buildForm.id=data.data.task.id;
                     this.buildForm.taskName=data.data.task.taskName;
                     this.buildForm.group=data.data.task.appClusterId;
-                    this.buildForm.environment=data.data.envId;
+                    this.buildForm.envType=data.data.task.envType;
                     this.buildForm.instances=data.data.instances;
                     this.buildForm.branch=data.data.task.branchName;
                     this.buildForm.providerKind=data.data.task.providerKind;
@@ -223,6 +239,9 @@ export default {
                     this.buildForm.contactGroupId=data.data.task.contactGroupId;
                     this.buildForm.taskBuildCommands=data.data.taskBuildCommands;
                     this.buildForm.commandOnOff=true;
+                    this.buildForm.pcmId=data.data.task.pcmId;
+
+                    this.getinstance();
                 },
             })
 
@@ -252,7 +271,6 @@ export default {
             if(!this.buildForm.group){
                 return
             }
-            console.info(this.buildForm.group);
             this.$$api_ci_getTaskBuildCommands({
                 data: {
                     appClusterId: this.buildForm.group,
@@ -265,6 +283,14 @@ export default {
 
         backToTask(){
             this.$router.push({path:'/ci/task'})
+        },
+
+        getPcm() {
+            this.$$api_ci_pcmAll({
+                fn: data => {
+                    this.pcmData = data.data;
+                },
+            })
         },
 
     }

@@ -6,7 +6,6 @@ Vue.use(VueI18n)
 
 // 通过this.$i18n.locale = "en"修改语言
 function getlang() {
-  console.info('into get lang');
   let lang = sessionStorage.getItem("authzPrincipalLangAttributeName");
   if(lang){
     if(lang == 'zh_CN'){
@@ -20,7 +19,6 @@ function getlang() {
   }else{
     lang = 'zh_CN'
   }
-  console.info('user lang = '+ lang);
   return lang;
 }
 

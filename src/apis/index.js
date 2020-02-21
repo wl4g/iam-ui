@@ -18,6 +18,7 @@ import umc from './umc/'
 import share from './share/'
 import srm from './srm'
 import iam from './iam/'
+import doc from './doc/'
 
 export default [{
   module: 'user',
@@ -59,4 +60,8 @@ export default [{
   module: 'iam',
   name: '权限管理',
   list: iam
+},{
+  module: 'doc',
+  name: '文档管理',
+  list: doc
 }]

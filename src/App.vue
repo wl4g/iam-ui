@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="bounce">
-      <keep-alive>
+      <keep-alive exclude="Init" >
         <router-view></router-view>
       </keep-alive>
     </transition>
@@ -43,13 +43,22 @@
   }
 </script>
 <style lang="less">
+  html,body {
+    height: 100%;
+  }
+  #app {
+    height: 100%;
+  }
+  body{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #333;
+  }
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-    z-index:50;
+    margin: 0;
+    padding: 0;
   }
   button{
     position:relative;
@@ -99,5 +108,104 @@
     100% {
       transform: scale(0);
     }
+  }
+  p {
+    margin: 0;
+  }
+  .query{
+    display: flex;
+    justify-content: space-between;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+  .query-left {
+    display: flex;
+    align-items: center;
+  }
+  .line {
+    margin-right: 6px;
+    width:4px;
+    height:18px;
+    background:#6cb33e;
+  }
+  .searchbar.el-form .el-form-item--mini.el-form-item {
+    margin-bottom: 4px;
+  }
+  .link {
+    font-size: 12px;
+    color: #409EFF;
+    cursor: pointer;
+  }
+  .link:focus,
+  .link:hover {
+    color: #66b1ff;
+  }
+  /* element ui 扩展样式*/
+  .el-table th,
+  .el-table th.is-leaf{
+    color: #1f2d3d;
+    background-color: #eef1f6;
+  }
+  .el-table.el-table--mini td,
+  .el-table.el-table--mini th {
+    padding: 3px 0;
+  }
+  .el-pagination {
+    margin-top: 4px;
+  }
+  .el-dialog__wrapper .el-dialog__header {
+    padding: 10px 12px;
+  }
+  .el-dialog__wrapper .el-dialog__title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .el-dialog__wrapper .el-dialog__headerbtn {
+    top: 12px;
+  }
+  .el-dialog__wrapper .el-dialog__body {
+    padding: 16px 10px;
+  }
+  .el-form .el-form-item__label {
+    font-size: 12px;
+  }
+  .el-bread .el-breadcrumb__inner a,
+  .el-bread .el-breadcrumb__inner.is-link {
+    color: #7a7b7e;
+  }
+  .el-bread .el-breadcrumb__item:last-child .el-breadcrumb__inner,
+  .el-bread .el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+  .el-bread .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+  .el-bread .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+    color: #20a1ff;
+  }
+  .el-pagination.is-background {
+    padding: 2px 0;
+  }
+  .home .el-pagination.is-background .btn-next,
+  .home .el-pagination.is-background .btn-prev,
+  .home .el-pagination.is-background .el-pager li {
+    margin: 0 2px;
+  }
+  body .el-loading-mask {
+    background: rgba(0,0,0,.4);
+  }
+
+  ::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;
+    height: 1px;
+  }
+
+  ::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #535353;
+
+  }
+
+  ::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background: #EDEDED;
   }
 </style>

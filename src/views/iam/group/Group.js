@@ -1,4 +1,4 @@
-import fa from "element-ui/src/locale/lang/fa";
+import i18n from '../../../i18n/i18n'
 
 export default {
   name: 'manage-group',
@@ -8,11 +8,11 @@ export default {
       //tree-table 标题列数据
       columns: [
         {
-          text: 'GroupCode',
+          text: i18n.t('message.common.name'),
           value: 'name',
         },
         {
-          text: 'DisplayName',
+          text: i18n.t('message.common.displayName'),
           value: 'displayName',
         },
       ],
@@ -21,9 +21,10 @@ export default {
       // 列表按钮配置
       btn_info: {
         width: 350,
-        add_text: 'Add Child',
-        update_text: 'Edit',
-        delete_text: 'Del',
+        label: i18n.t('message.common.operation'),
+        add_text: i18n.t('message.common.addChild'),
+        update_text: i18n.t('message.common.edit'),
+        delete_text: i18n.t('message.common.del'),
       },
 
       //form 属性
@@ -73,7 +74,7 @@ export default {
         children: 'children',
         label: 'displayName',
       },
-
+      loading: false
 
     }
   },
@@ -82,9 +83,14 @@ export default {
      * 获取列表
      */
     onGetList() {
+      this.loading = true;
       this.$$api_iam_getGroupsTree({
         fn: data => {
+          this.loading = false;
           this.data = data.data.data;
+        },
+        errFn: () => {
+          this.loading = false;
         }
       })
     },
@@ -147,7 +153,6 @@ export default {
       this.getMenus();
 
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
-      console.info(opts);
       this.windowTitle = '修改['+opts.data.displayName+']菜单';
       this.dialogVisible = true;
       this.isEdit = true;
@@ -208,6 +213,8 @@ export default {
      * 添加或者保存
      */
     save(){
+      this.dialogSubmitBtnSwith = true;
+
       this.$refs['groupForm'].validate((valid) => {
         if (valid) {
           this.$$api_iam_saveGroup({
@@ -217,10 +224,16 @@ export default {
                 message: 'save success',
                 type: 'success'
               });
+              this.dialogSubmitBtnSwith = false;
               this.dialogVisible = false;
               this.onGetList();
             },
+            errFn: () => {
+              this.dialogSubmitBtnSwith = false;
+            }
           })
+        }else {
+          this.dialogSubmitBtnSwith = false;
         }
       });
     },
@@ -299,7 +312,6 @@ export default {
         moduleNameList.push(item.displayName)
       });
       this.saveForm.menuIds = checkedKeys;
-      console.info(this.saveForm.menuIds);
       this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
     },
 

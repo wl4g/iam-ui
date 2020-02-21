@@ -12,6 +12,8 @@ import Srm from './srm/'
 import Ci from './ci'
 import Iam from './iam'
 import Share from './share'
+import Doc from './doc'
+
 
 export {
     Login,
@@ -24,4 +26,5 @@ export {
     Umc,
     Iam,
     Share,
+    Doc,
 }

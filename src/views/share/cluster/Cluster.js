@@ -36,7 +36,7 @@ export default {
             rules: {
                 name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
             },
-
+            loading: false
         }
     },
 
@@ -48,12 +48,10 @@ export default {
     methods: {
 
         onSubmit() {
-            //this.loading = true;
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
             this.pageNum = i;
             this.getData();
         },
@@ -78,6 +76,7 @@ export default {
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_share_clusterList({
                 data: {
                     clusterName: this.searchParams.clusterName,
@@ -85,8 +84,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.page.total;
                     this.tableData = data.data.list;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -102,30 +105,52 @@ export default {
             this.saveForm.instances.splice(index, 1);
         },
 
+        connectTest(row){
+            this.$$api_share_connectTest({
+                data: {
+                    hostId: row.hostId,
+                    sshUser: row.sshUser,
+                    sshKey: row.sshKey,
+                },
+                fn: data => {
+                    this.$message({
+                        message: 'Connect Success',
+                        type: 'success'
+                    });
+                }
+            });
+        },
+
         addRow() {
             this.saveForm.instances.push({
-
                 envType: '',
                 hostId: '',
                 endpoint: '',
                 sshUser: '',
                 sshKey: '',
+                sshKeyPub: '',
                 remark: '',
-
             })
         },
 
         saveData() {
+            this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_share_saveCluster({
                         data: this.saveForm,
                         fn: data => {
+                            this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
                         }
                     });
+                }else {
+                    this.dialogLoading = false;
                 }
             })
         },
@@ -142,7 +167,6 @@ export default {
                     clusterId: row.id,
                 },
                 fn: data => {
-                    console.info(data.data.data);
                     this.saveForm = data.data.data;
                 }
             });
@@ -177,5 +201,35 @@ export default {
             });
 
         },
+
+        copyRow(row) {
+            if (!row) {
+                return;
+            }
+            this.saveForm.instances.push({
+                envType: row.envType,
+                hostId: row.hostId,
+                endpoint: row.endpoint,
+                sshUser: row.sshUser,
+                sshKey: row.sshKey,
+                sshKeyPub: row.sshKeyPub,
+                remark: row.remark,
+            })
+        },
+        generateSshKey(row){
+            this.$$api_share_generateSshKeyPair({
+                data: {},
+                fn: data => {
+                    row.sshKey = data.data.privateKey;
+                    row.sshKeyPub = data.data.publicKey;
+                }
+            })
+        },
+        sshKeyPubTip(row){
+            if(!row.sshKeyPub || !row.sshUser){
+                return '参考命令:';
+            }
+            return '参考命令:echo "\n'+row.sshKeyPub+'\n" >> /home/'+row.sshUser + '/authorized_keys'
+        }
     }
 }

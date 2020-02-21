@@ -190,7 +190,117 @@ export default [
         sys: global.iam
     },
 
+    //dict
+    {
+        name: '字典列表',
+        method: 'dictList',
+        path: '/dict/list',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '保存字典',
+        method: 'saveDict',
+        path: '/dict/save',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '字典详情',
+        method: 'dictDetail',
+        path: '/dict/detail',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '删除字典',
+        method: 'delDict',
+        path: '/dict/del',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '所有字典类型',
+        method: 'allDictType',
+        path: '/dict/allType',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '字典详情',
+        method: 'getDictByType',
+        path: '/dict/getByType',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '获取字典缓存',
+        method: 'dictCache',
+        path: '/dict/getInit',
+        type: 'post',
+        sys: global.iam
+    },
 
+    //contact
+    {
+        name: '联系人列表',
+        method: 'contactList',
+        path: '/contact/list',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '保存',
+        method: 'saveContact',
+        path: '/contact/save',
+        type: 'json',
+        sys: global.iam
+    },
+    {
+        name: '联系人详情',
+        method: 'contactDetail',
+        path: '/contact/detail',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '逻辑删除联系人',
+        method: 'delContact',
+        path: '/contact/del',
+        type: 'post',
+        sys: global.iam
+    },
+
+
+    //group
+    {
+        name: '联系人分组列表',
+        method: 'contactGroupList',
+        path: '/contactGroup/list',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '所有分组列表',
+        method: 'groupList',
+        path: '/contactGroup/groupList',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '保存联系人分组',
+        method: 'saveContactGroup',
+        path: '/contactGroup/save',
+        type: 'post',
+        sys: global.iam
+    },
+    {
+        name: '删除联系人分组',
+        method: 'delContactGroup',
+        path: '/contactGroup/del',
+        type: 'post',
+        sys: global.iam
+    },
 
 
 

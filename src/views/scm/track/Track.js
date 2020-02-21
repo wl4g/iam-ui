@@ -47,7 +47,7 @@ export default {
       groupData: [],
       envirFormData: [],
       instanceFormData: [],
-      loading: true,
+      loading: false,
       total: 0,
       detail: {},
       dialogLoading: true,
@@ -81,8 +81,6 @@ export default {
                 remark: remark
               },
               fn: data => {
-                this.loading = false;
-
                   this.$message({
                     type: 'success',
                     message: '删除成功!'
@@ -90,10 +88,7 @@ export default {
                   this.getData();
               },
               errFn: () => {
-                this.loading = false;
-                this.$alert('访问失败，请稍后重试！', '错误', {
-                  confirmButtonText: '确定',
-                });
+                this.$message.error('request error');
               }
             })
           }).catch(() => {
@@ -105,7 +100,6 @@ export default {
           });
         },
         onSubmit(){
-          this.loading = true;
           this.getData();
         },
         // 获取列表数据
@@ -113,6 +107,8 @@ export default {
           let clusterId = this.formInline.group;
           let envId = this.formInline.environment;
           let instanceId = this.formInline.instance;
+          this.loading = true;
+
           this.$$api_track_releaselist({
             data: {
               appClusterId : clusterId,
@@ -128,9 +124,7 @@ export default {
             },
             errFn: () => {
               this.loading = false;
-              this.$alert('访问失败，请稍后重试！', '错误', {
-                confirmButtonText: '确定',
-              });
+              this.$message.error('request error');
             }
           })
         },
@@ -149,11 +143,6 @@ export default {
         },
         fn: data => {
             this.instanceFormData = data.data.instances;
-        },
-        errFn: () => {
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
         }
       })
     },
@@ -169,7 +158,6 @@ export default {
       return row.tag === value;
     },
     currentChange(i) {
-      this.loading = true;
       this.pageNum = i;
       this.getData();
     },
@@ -190,10 +178,7 @@ export default {
         },
         errFn: () => {
           this.dialogLoading = false;
-          this.loading = false;
-          this.$alert('访问失败，请稍后重试！', '错误', {
-            confirmButtonText: '确定',
-          });
+          this.$message.error('request error');
         }
       })
     },

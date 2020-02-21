@@ -7,7 +7,7 @@ export default {
             //查询条件
             searchParams: {
                 name: '',
-                provider: '',
+                providerKind: '',
                 authType: '',
             },
 
@@ -20,12 +20,12 @@ export default {
             saveForm: {
                 id: '',
                 name: '',
-                provider: '',
+                providerKind: '',
                 authType: '',
                 baseUri: '',
                 sshKeyPub: '',
                 sshKey: '',
-                token: '',
+                accessToken: '',
                 username: '',
                 password: '',
             },
@@ -44,8 +44,8 @@ export default {
                     {required: true, message: 'Please Input name', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
-                provider: [
-                    { required: true, message: 'Please Input provider', trigger: 'change' },
+                providerKind: [
+                    { required: true, message: 'Please Input providerKind', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
                 authType: [
@@ -57,7 +57,7 @@ export default {
                 ],
 
             },
-
+            loading: false
         }
     },
 
@@ -80,23 +80,29 @@ export default {
 
         addData() {
             this.cleanSaveForm();
+            this.dialogLoading = false;
             this.dialogVisible = true;
             this.dialogTitle = 'Add VCS information';
         },
 
         // 获取列表数据
         getData() {
+            this.loading = true;
             this.$$api_ci_vcsList({
                 data: {
                     name: this.searchParams.name,
-                    provider: this.searchParams.provider,
+                    providerKind: this.searchParams.providerKind,
                     authType: this.searchParams.authType,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
                 fn: data => {
+                    this.loading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
                 }
             })
         },
@@ -104,12 +110,12 @@ export default {
             this.saveForm = {
                 id: '',
                 name: '',
-                provider: '',
+                providerKind: '',
                 authType: '',
                 baseUri: '',
                 sshKeyPub: '',
                 sshKey: '',
-                token: '',
+                accessToken: '',
                 username: '',
                 password: '',
             };
@@ -117,16 +123,24 @@ export default {
         },
 
         saveData() {
+            this.dialogLoading = true;
+
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_ci_saveVcs({
                         data: this.saveForm,
                         fn: data => {
+                            this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
                         }
                     });
+                }else {
+                    this.dialogLoading = false;
                 }
             });
         },
@@ -143,17 +157,18 @@ export default {
                     this.saveForm = {
                         id: data.data.id,
                         name: data.data.name,
-                        provider: data.data.provider.toString(),
+                        providerKind: data.data.providerKind,
                         authType: data.data.authType.toString(),
                         baseUri: data.data.baseUri,
                         sshKeyPub: data.data.sshKeyPub,
                         sshKey: data.data.sshKey,
-                        token: data.data.token,
+                        accessToken: data.data.accessToken,
                         username: data.data.username,
                         password: data.data.password,
                     };
                 }
             });
+            this.dialogLoading = false;
             this.dialogVisible = true;
             this.dialogTitle = 'Configure VCS information';
         },

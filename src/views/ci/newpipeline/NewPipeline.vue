@@ -11,21 +11,26 @@
                 </el-col>
                 <el-col :span="11">
                     <el-form-item :label="$t('message.ci.cluster')" prop="cluster">
-                        <el-select v-model="buildForm.group" @change="onChangeCluster()" :disabled="isEdit" style="width: 100%">
-                            <el-option
-                                    v-for="item in groupData"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
-                            </el-option>
-                        </el-select>
+                        <el-col :span="12">
+                            <el-select v-model="buildForm.group" @change="onChangeCluster()" :disabled="isEdit" filterable style="width: 100%">
+                                <el-option
+                                        v-for="item in groupData"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4" class="text-center">
+                            <router-link to="/share/cluster" class="link">前往配置</router-link>
+                        </el-col>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="11">
-                    <el-form-item :label="$t('message.ci.env')" prop="environment">
-                        <el-select v-model="buildForm.environment" @change="getinstance()" placeholder="Please Env" style="width: 100%">
+                    <el-form-item :label="$t('message.ci.env')" prop="envType">
+                        <el-select v-model="buildForm.envType" @change="getinstance()" placeholder="Please Env" style="width: 100%">
                             <el-option
                                     v-for="item in dictutil.getDictListByType('app_ns_type')"
                                     :key="item.value"
@@ -35,16 +40,23 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <!--<el-col :span="11">
-                    <el-form-item label="PackType:" prop="providerKind">
-                        <el-select v-model="buildForm.providerKind" placeholder="打包类型" style="width: 100%;">
-                            <el-option label="tar" :value="1"></el-option>
-                            <el-option label="vue" :value="4"></el-option>
-                            <el-option disabled label="jar" :value="2"></el-option>
-                            <el-option disabled label="docker" :value="3"></el-option>
-                        </el-select>
+                <el-col :span="11">
+                    <el-form-item label="Pcm:" prop="pcmId">
+                        <el-col :span="12">
+                            <el-select v-model="buildForm.pcmId" width="100%">
+                                <el-option
+                                        v-for="item in pcmData"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4" class="text-center">
+                            <router-link to="/ci/pcm" class="link">前往配置</router-link>
+                        </el-col>
                     </el-form-item>
-                </el-col>-->
+                </el-col>
             </el-row>
 
             <el-row>
@@ -180,7 +192,7 @@
             </el-row>
             <el-row>
                 <el-col :span="4" :offset="20">
-                    <el-button type="primary" @click="save()">{{$t('message.common.save')}}</el-button>
+                    <el-button type="primary" @click="save()" :loading="loading">{{$t('message.common.save')}}</el-button>
                     <el-button @click="backToTask()">{{$t('message.common.cancel')}}</el-button>
                 </el-col>
             </el-row>

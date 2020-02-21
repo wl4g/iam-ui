@@ -3,14 +3,13 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
 
 export default {
   path: '/srm',
   name: 'SRM',
   icon: '',
-  component: Home,Content,
+  component: Home,
   redirect: '/srm/console',
-  children:Main,
+  //children:Main,
   permission: 'srm',
 }

@@ -1,33 +1,33 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import {Share} from 'views/'
+import children from "../../views/share/index"
 
 export default [
     {
         path: 'cluster',
         name: 'Cluster',
         icon: '',
-        component: Share.Cluster,
+        component: children.Cluster,
         permission: 'share:cluster',
 
     }, {
         path: 'dict',
         name: 'Dictionaries',
         icon: '',
-        component: Share.Dict,
+        component: children.Dict,
         permission: 'share:dict',
     }, {
         path: 'contact',
         name: 'Alarm Contact',
         icon: '',
-        component: Share.Contact,
+        component: children.Contact,
         permission: 'share:contact',
     },{
         path: 'host',
         name: 'Host',
         icon: '',
-        component: Share.Host,
+        component: children.Host,
         permission: 'share:host',
 
     }

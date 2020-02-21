@@ -45,7 +45,8 @@
 
 <style scoped lang='less'>
   .bread {
-    height: 40px;
+    margin-bottom: 4px;
+    height: 26px;
     line-height: 26px;
     .el-bread {
       display: inline-block;

@@ -3,14 +3,14 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
+
 
 export default {
   path: '/ci',
   name: 'CI/CD',
   icon: '',
-  component: Home,Content,
+  component: Home,
   redirect: '/ci/task',
-  children:Main,
+  // children:Main,
   permission: 'ci'
 }

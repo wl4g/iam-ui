@@ -12,12 +12,23 @@ Vue.prototype.GLOBAL = globalVariable;
 
 // element-ui
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import dictstore from "./store/global/dictstore";
 import promise from "./views/login/promise";
 import i18n from './i18n/i18n'
 
-Vue.use(ElementUI);
+// mavonEditor
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
+
+//vue-clipboard2
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
+Vue.use(ElementUI,{
+    size: 'mini'
+});
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
 

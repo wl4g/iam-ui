@@ -13,7 +13,8 @@ export default {
                 group: '',
                 branch: '',
                 taskInstances: [],
-                result: ''
+                result: '',
+                annex: '',
             },
 
             title: 'detail',
@@ -28,6 +29,10 @@ export default {
             detailTerm: null,
 
             refreshListThread: 0,
+
+            ///////
+            logReadRunning: false,
+
         }
     },
 
@@ -41,6 +46,17 @@ export default {
     },
 
     methods: {
+
+        changeLogReadRunning(){
+            this.logReadRunning = !this.logReadRunning;
+            if(this.logReadRunning){
+                this.readLog(this.taskHisId);
+            }else{
+                this.stopReadLogTask();
+            }
+        },
+
+        ///////////
 
         backToChanges(){
             this.$router.push({path:'/ci/taskhis'})
@@ -94,7 +110,6 @@ export default {
         },
 
         checkExistRunningTask(){
-            console.info("into check");
             if(this.detailForm.taskInstances){
                 for (var i in this.detailForm.taskInstances) {
                     let taskHis = this.detailForm.taskInstances[i];
@@ -134,12 +149,17 @@ export default {
                     this.detailForm.group = data.data.group;
                     this.detailForm.branch = data.data.branch;
                     this.detailForm.taskInstances = data.data.taskInstances;
+                    this.detailForm.annex = data.data.annex;
                     if (data.data.result) {
                         this.detailForm.result = data.data.result;
                     } else {
                         this.detailForm.result = '';
                     }
-                    that.readLogTask(id);
+
+                    // 由于偶尔渲染此页面时，xterm的cavas画出的内容高度变矮了，需要延时？延时暂时显示正常
+                    self.setTimeout(function () {
+                        that.readLogTask(id);
+                    }, 1 * 1000);
                     that.startRefreshList();
                 }
             })
@@ -149,13 +169,11 @@ export default {
         readLogTask(id){
             this.destoryReadLogTask();
 
-            if(this.term){
-                this.term.dispose();
-            }
             this.term = new Terminal({
-                logLevel: 'debug',
-                allowTransparency: true,
+                logLevel: 'off',
+                allowTransparency: false,
                 fontSize: 12,
+                //rendererType: 'dom',
                 fontFamily: 'courier-new,courier,monospace',
                 //letterSpacing: 0,//文字间隔（px）
                 theme: { background: '#121319'}
@@ -163,11 +181,7 @@ export default {
             const fitAddon = new FitAddon();
             this.term.loadAddon(fitAddon);
 
-            //TODO search
-            /*this.searchAddon = new SearchAddon();
-            this.term.loadAddon(this.searchAddon);*/
-
-            this.term.open(document.getElementById('terminal'));
+            this.term.open(document.getElementById('myterminal'));
             fitAddon.fit();
             //=============================================
 
@@ -177,17 +191,16 @@ export default {
 
         },
 
-        /*test(){
-            //this.searchAddon.activate(this.term);
-            this.searchAddon.findNext('SUCCESS');
-        },*/
-
         destoryReadLogTask(){
             console.debug("stop read log task");
             window.clearTimeout(this.logThread);
             if(this.term){
                 this.term.dispose();
             }
+        },
+
+        stopReadLogTask(){
+            window.clearTimeout(this.logThread);
         },
 
         readLog(taskHisId){
@@ -201,11 +214,13 @@ export default {
                 },
                 fn: data => {
                     let logs = data.data.data.lines;
+                    this.logReadRunning = true;
                     for (let i in logs) {
                         that.term.writeln(logs[i]);
                     }
                     if (!data.data.data.hasNext) {
                         window.clearTimeout(that.logThread);
+                        this.logReadRunning = false;
                         return;
                     }
                     that.startPos = data.data.data.endPos;
@@ -305,7 +320,6 @@ export default {
 
     //离开前清除定时任务
     beforeRouteLeave(to,from,next){
-        console.info("leave , stop the thread");
         this.detailVisible = false;
         this.destoryReadLogTask();
         this.stopRefreshList();

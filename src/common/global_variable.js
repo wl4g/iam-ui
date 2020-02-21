@@ -37,6 +37,12 @@ export default {
         defaultContextPath: '/iam-server',
         defaultPort: '14040',
     },
+    doc: {
+        cluster: 'doc-manager',
+        twoDomain: 'doc',
+        defaultContextPath: '/doc-manager',
+        defaultPort: '14060',
+    },
 
     getBaseUrl: function(app,usedefault) {
         if(!app){
@@ -50,17 +56,18 @@ export default {
         if(!usedefault&&applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
             baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
             //console.debug("user cache Url , url = "+ baseUrl);
-        }else{//user default
+        } else {//user default
             let isIp = window.Common.Util.isIp(hostname);
-            if (hostname == 'localhost' || isIp) {//if localhost
-                baseUrl = protocol + "//" +hostname+":"+ app.defaultPort + app.defaultContextPath;
+            // 为方便同事调用，当域名以debug，local，dev后缀结尾，跟localhost一样处理，同时修改java配置文件 application-dev #32-#34 ， 同时修改数据库app_cluster_config
+            if (hostname == 'localhost' || isIp || hostname.endsWith('.debug') || hostname.endsWith('.local') || hostname.endsWith('.dev')) {//if localhost
+                baseUrl = protocol + "//" + hostname + ":" + app.defaultPort + app.defaultContextPath;
                 //console.debug("user localhost Url , url = "+ baseUrl);
             } else {
                 var topDomainName = hostname.split('.').slice(-2).join('.');
-                if(hostname.indexOf("com.cn") > 0){
+                if (hostname.indexOf("com.cn") > 0) {
                     topDomainName = hostname.split('.').slice(-3).join('.');
                 }
-                baseUrl = protocol +"//"+app.twoDomain +"."+ topDomainName + app.defaultContextPath;
+                baseUrl = protocol + "//" + app.twoDomain + "." + topDomainName + app.defaultContextPath;
                 //console.debug("user default Url , url = "+ baseUrl);
             }
         }

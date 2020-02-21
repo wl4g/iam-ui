@@ -85,7 +85,7 @@ export default {
         },
 
         allContactGroup() {
-            this.$$api_share_groupList({
+            this.$$api_iam_groupList({
                 data: {},
                 fn: data => {
                     this.contactGroups = data.data;

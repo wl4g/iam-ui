@@ -1,43 +1,43 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import { Ci } from 'views/'
-
+//import { Ci } from 'views/'
+import children from "../../views/ci/index"
 
 export default [
     {
         path: 'task',
         name: 'Pipeline',
         icon: '',
-        component: Ci.Task,
+        component: children.Task,
         permission: 'ci:task',
     },
     {
         path: 'trigger',
         name: 'Schedule',
         icon: '',
-        component: Ci.Trigger,
+        component: children.Trigger,
         permission: 'ci:trigger',
     },
     {
         path: 'taskhis',
         name: 'Changes',
         icon: '',
-        component: Ci.TaskHistory,
+        component: children.TaskHistory,
         permission: 'ci:taskhis',
     },
     {
         path: 'project',
         name: 'Projects',
         icon: '',
-        component: Ci.Project,
+        component: children.Project,
         permission: 'ci:project',
     },
     {
         path: 'vcs',
         name: 'Vcs',
         icon: '',
-        component: Ci.Vcs,
+        component: children.Vcs,
         permission: 'ci:vcs',
     },
 
@@ -46,15 +46,21 @@ export default [
         path: 'taskhisdetail',
         name: 'TaskHisDetail',
         icon: '',
-        component: Ci.TaskHisDetail,
+        component: children.TaskHisDetail,
     },
-
+    {
+        path: 'analysis',
+        name: 'Analysis',
+        icon: '',
+        component: children.AnalysisHis,
+        permission: 'ci:analysis',
+    },
     {
         path: 'newpipeline',
-        name: 'NewPipeline',
+        name: 'newpipeline',
         icon: '',
-        component: Ci.NewPipeline,
+        component: children.NewPipeline,
+        permission: 'ci:NewPipeline',
     },
-
 
 ]

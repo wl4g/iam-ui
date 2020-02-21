@@ -1,71 +1,68 @@
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="demo-form-inline" @keyup.enter.native="onSubmit()">
+        <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
             <el-form-item label="ID:">
                 <el-input v-model="searchParams.id" placeholder="e.g. 1" style="width:80px"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="Name:">
+            <!-- <el-form-item :label="$t('message.common.name')">
                 <el-input v-model="searchParams.name" placeholder="e.g. TaskPortalDev"></el-input>
             </el-form-item> -->
-            <el-form-item label="Pipeline:">
+            <el-form-item :label="$t('message.ci.pipeId')">
                 <el-input v-model="searchParams.taskId" placeholder="e.g. TaskPortalDev" style="width:155px"></el-input>
             </el-form-item>
-            <el-form-item label="Status:">
+            <el-form-item :label="$t('message.common.enable')">
                 <!--<el-switch v-model="searchParams.enable" on-value="1" off-value="0"></el-switch>-->
-                <el-select v-model="searchParams.enable" style="width:100px">
-                    <el-option label="All" value=""></el-option>
+                <el-select clearable v-model="searchParams.enable" style="width:100px">
                     <el-option label="Enable" value="1"></el-option>
                     <el-option label="Disable" value="0"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="CreateDate:">
+            <el-form-item :label="$t('message.common.createDate')">
                 <el-date-picker v-model="searchParams.startDate" type="date" placeholder="Start Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
                 <el-date-picker v-model="searchParams.endDate" type="date" placeholder="End Date" format="yyyy-MM-dd HH:mm" style="width:160px"></el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button @click="onSubmit" type="success">Search</el-button>
+                <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
         </el-form>
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
         <div class="query">
-            <div class="line"></div>
-            <div class="">Total： <span class="number">{{total}}</span>
-                <!-- 新增按钮 -->
-                <el-button type="primary" @click="addTrigger()" style='float:right;margin-right:20px'>+ Task Schedule </el-button>
+            <div class="query-left">
+                <div class="line"></div>
+                {{$t('message.common.total')}}： <span class="number">{{total}}</span>
             </div>
+            <!-- 新增按钮 -->
+            <el-button type="primary" @click="addTrigger()">+ Task Schedule </el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width: 100%">
-                    <el-table-column label="全选" type="selection"></el-table-column>
+                <el-table :data="tableData" border style="width: 100%">
+                    <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
 
-                    <el-table-column prop="name" label="Name"></el-table-column>
-                    <el-table-column prop="taskId" label="Task ID"></el-table-column>
+                    <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
+                    <el-table-column prop="taskId" :label="$t('message.ci.pipeId')"></el-table-column>
 
-                    <el-table-column prop="type" label="type">
+                    <el-table-column prop="type" :label="$t('message.common.type')">
                         <template slot-scope="scope">
                             {{convertType(scope.row)}}
                         </template>
                     </el-table-column>
 
-
-                    <el-table-column prop="enable" label="Status">
+                    <el-table-column prop="enable" :label="$t('message.common.enable')">
                         <template slot-scope="scope">
                             <el-tag :type="convertEnableType(scope.row)">{{convertEnableValue(scope.row)}}</el-tag>
                         </template>
                     </el-table-column>
 
-
-
-                    <el-table-column prop="createDate" label="CreateDate"></el-table-column>
-                    <el-table-column label="Operation" min-width="100">
+                    <el-table-column prop="createDate" :label="$t('message.common.createDate')"></el-table-column>
+                    <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' size="small" @click="editTrigger(scope.row)">Edit</el-button>
-                            <el-button type="danger" icon='delete' size="small" @click="delTrigger(scope.row)">Del</el-button>
+                            <el-button type="info" icon='edit' @click="editTrigger(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button type="danger" icon='delete' @click="delTrigger(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
 
@@ -101,20 +98,25 @@
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Cluster:" prop="cluster">
-                            <el-select v-model="saveForm.group" @change="getTasksByAppClusterId()" placeholder="Please Cluster" style="width: 100%;">
-                                <el-option
-                                        v-for="item in groupData"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
+                        <el-form-item :label="$t('message.ci.cluster')" prop="cluster">
+                            <el-col :span="20">
+                                <el-select v-model="saveForm.group" @change="getTasksByAppClusterId()" placeholder="Please Cluster" style="width: 100%;">
+                                    <el-option
+                                            v-for="item in groupData"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4" class="text-center">
+                                <a @click="gotoCluster" class="link">前往配置</a>
+                            </el-col>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item label="Task:" prop="taskId">
+                        <el-form-item :label="$t('message.ci.pipeId')" prop="taskId">
                             <el-select v-model="saveForm.taskId" placeholder="Please Task" style="width: 100%;">
                                 <el-option
                                         v-for="item in tasksData"
@@ -127,35 +129,10 @@
                     </el-col>
 
                 </el-row>
-                    <!--<el-col :span="12">
-                        <el-form-item label="Env:" prop="environment">
-                            <el-select v-model="saveForm.environment" @change="getinstance()" placeholder="Please Env" style="width: 100%;">
-                                <el-option
-                                        v-for="item in envirData"
-                                        :key="item.id"
-                                        :label="item.remark"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-                <el-form-item label="Instance:" prop="instances">
-                    <el-select v-model="saveForm.instances" multiple placeholder="请选择" style="width: 100%;">
-                        <el-option
-                                v-for="item in instanceData"
-                                :key="item.id"
-                                :label="item.host"
-                                :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>-->
 
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Type:" prop="type">
+                        <el-form-item :label="$t('message.common.type')" prop="type">
                             <el-select v-model="saveForm.type" placeholder="类型" style="width: 100%;">
                                 <el-option label="Scheduler" :value="4"></el-option>
                                 <el-option label="Hook" :value="1"></el-option>
@@ -163,7 +140,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Cron:" prop="cron" v-if="saveForm.type==4">
+                        <el-form-item :label="$t('message.ci.cron')" prop="cron" v-if="saveForm.type==4">
                             <!--<el-input  v-model="saveForm.cron" placeholder="时间表达式" @change="checkCron"></el-input>-->
                             <el-popover placement="right" width="200" trigger="focus" title="Last 5 run times:">
                                 <el-input type="textarea" :rows="10" :readonly="true" v-model="checkResult"></el-input>
@@ -176,36 +153,27 @@
 
 
                 <el-row>
-                    <!--<el-col :span="12">
-                        <el-form-item label="PackType:" prop="providerKind">
-                            <el-select v-model="saveForm.providerKind" placeholder="打包类型" style="width: 100%;">
-                                <el-option label="tar" :value="1"></el-option>
-                                <el-option disabled label="jar" :value="2"></el-option>
-                                <el-option label="docker" :value="3"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>-->
                     <el-col :span="12">
-                        <el-form-item label="Name:" prop="name">
-                            <el-input v-model="saveForm.name" placeholder="备注"></el-input>
+                        <el-form-item :label="$t('message.common.name')" prop="name">
+                            <el-input v-model="saveForm.name" placeholder="name"></el-input>
                         </el-form-item>
                     </el-col>
 
                     <el-col :span="12">
-                        <el-form-item label="Enable:" prop="enable">
+                        <el-form-item :label="$t('message.common.enable')" prop="enable">
                             <el-switch v-model="saveForm.enable" :on-value="1" :off-value="0"></el-switch>
                         </el-form-item>
                     </el-col>
                 </el-row>
 
-                <el-form-item label="Remark:" prop="remark">
+                <el-form-item :label="$t('message.common.remark')" prop="remark">
                     <el-input v-model="saveForm.remark" placeholder="备注"></el-input>
                 </el-form-item>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="saveTrigger()">Save</el-button>
-                <el-button @click="dialogVisible = false;">Cancel</el-button>
+                <el-button type="primary" @click="saveTrigger()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
           </span>
         </el-dialog>
 

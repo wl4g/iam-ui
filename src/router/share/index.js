@@ -3,7 +3,6 @@
  */
 
 import { Home , Content } from 'layout/'
-import Main  from './main'
 
 export default {
   path: '/share',
@@ -11,6 +10,6 @@ export default {
   icon: '',
   component: Home,Content,
   redirect: '/share/cluster',
-  children:Main,
+  //children:Main,
   permission: 'share',
 }

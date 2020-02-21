@@ -1,43 +1,43 @@
 /**
  * Created by sailengsi on 2017/5/11.
  */
-import { Iam } from 'views/'
 
+import children from "../../views/iam/index"
 
 export default [
     {
         path: 'online',
         name: 'Online',
         icon: '',
-        component: Iam.Online,
+        component: children.Online,
         permission: 'iam:online',
     },
     {
         path: 'user',
         name: 'User',
         icon: '',
-        component: Iam.User,
+        component: children.User,
         permission: 'iam:user',
     },
     {
         path: 'menu',
         name: 'Menu',
         icon: '',
-        component: Iam.Menu,
+        component: children.Menu,
         permission: 'iam:menu',
     },
     {
         path: 'group',
         name: 'Group',
         icon: '',
-        component: Iam.Group,
+        component: children.Group,
         permission: 'iam:group',
     },
     {
         path: 'role',
         name: 'Role',
         icon: '',
-        component: Iam.Role,
+        component: children.Role,
         permission: 'iam:role',
     },
 
