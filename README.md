@@ -4,7 +4,7 @@
 # 下载依赖包
 npm install
 
-# 运行项目，Serve with hot reload at localhost:8090
+# 运行项目，Serve with hot reload at localhost:80 or wl4g.debug(Local hosts need to be configured)
 npm run dev
 
 # 项目打包， Build for production with minification
