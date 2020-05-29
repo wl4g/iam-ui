@@ -11,7 +11,6 @@
                 <el-input v-model="searchParams.taskId" placeholder="e.g. TaskPortalDev" style="width:155px"></el-input>
             </el-form-item>
             <el-form-item :label="$t('message.common.enable')">
-                <!--<el-switch v-model="searchParams.enable" on-value="1" off-value="0"></el-switch>-->
                 <el-select clearable v-model="searchParams.enable" style="width:100px">
                     <el-option label="Enable" value="1"></el-option>
                     <el-option label="Disable" value="0"></el-option>
@@ -76,26 +75,6 @@
             <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" :rules="rules"
                      class="demo-form-inline">
 
-                <!--<el-row>
-                    <el-col :span="12">
-                        <el-form-item label="Project:" prop="projectId">
-                            <el-select v-model="saveForm.projectId" placeholder="项目" style="width: 100%;">
-                                <el-option
-                                        v-for="item in ProjectData"
-                                        :key="item.id"
-                                        :label="item.projectName"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="Branch:" prop="branchName">
-                            <el-input v-model="saveForm.branchName" placeholder="项目分支"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>-->
-
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('message.ci.cluster')" prop="cluster">
@@ -110,6 +89,7 @@
                                 </el-select>
                             </el-col>
                             <el-col :span="4" class="text-center">
+                                <i class="el-icon-refresh" @click="getGroup"></i>
                                 <a @click="gotoCluster" class="link">前往配置</a>
                             </el-col>
                         </el-form-item>
@@ -161,7 +141,7 @@
 
                     <el-col :span="12">
                         <el-form-item :label="$t('message.common.enable')" prop="enable">
-                            <el-switch v-model="saveForm.enable" :on-value="1" :off-value="0"></el-switch>
+                            <el-switch v-model="saveForm.enable" :active-value="1" :inactive-value="0"></el-switch>
                         </el-form-item>
                     </el-col>
                 </el-row>

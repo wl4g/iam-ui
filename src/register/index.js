@@ -9,10 +9,14 @@ import cps from './component.js'
 import mixins from './mixin'
 import plugins from './plugin'
 
-// console.log(plugins);
-// console.log(libs);
- console.log(cps);
-// console.log(mixins);
+console.debug("libs:");
+console.debug(libs);
+console.debug("components:");
+console.debug(cps);
+console.debug("mixins:");
+console.debug(mixins);
+console.debug("plugins:");
+console.debug(plugins);
 
 /**
  * 把一些全局对象和一些全局方法，注册到Vue原型上
@@ -28,6 +32,9 @@ Vue.use({
 
     // 注册全局方法，如常用的接口方法，工具方法等。
     _.each(plugins, (item, key) => {
+      // if(key.indexOf('iam_clusterConfigInfo') > 0){
+      //   debugger
+      // }
       Vue.prototype['$$' + key] = item
     })
   }

@@ -41,6 +41,7 @@ export default {
 
             //before create Build Task
             confirmDialog: false,
+            confirmDialogTitle: '[Confirm Title]',
 
             confirmForm:{
                 taskId: '',
@@ -70,7 +71,6 @@ export default {
 
     activated() {
         this.getData();
-        console.info(this.uploadUrl)
     },
 
     mounted() {
@@ -195,6 +195,8 @@ export default {
             if(!row.id){
                 return;
             }
+
+            this.confirmDialogTitle = '构建[' + row.taskName+ ']';
             this.confirmForm.taskId = row.id;
             this.confirmDialog = true;
 
@@ -283,18 +285,10 @@ export default {
                 },
                 fn: data => {
                     this.issues = data.data;
-<<<<<<< HEAD
-=======
-                    console.info(this.issues.length)
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 },
             })
         },
         uploadSuccess(response, file, fileList){
-<<<<<<< HEAD
-=======
-            console.info(response,file,fileList)
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             this.confirmForm.annex = response.data
         },
         uploadFail(err, file, fileList){

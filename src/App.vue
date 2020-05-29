@@ -208,4 +208,17 @@
     border-radius: 10px;
     background: #EDEDED;
   }
+
+  .el-icon-question {
+    color: #31546554;
+    font-size: 17px;
+  }
+
+  .myIcon {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 </style>

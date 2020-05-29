@@ -2,8 +2,8 @@ import * as types from './mutations_types'
 
 export default {
   show_loading: ({
-                   commit
-                 }) => {
+    commit
+  }) => {
     return new Promise((resolve, reject) => {
       commit(types.SHOW_LOADING)
       resolve()
@@ -11,8 +11,8 @@ export default {
   },
 
   hide_loading: ({
-                   commit
-                 }) => {
+    commit
+  }) => {
     return new Promise((resolve, reject) => {
       commit(types.HIDE_LOADING)
       resolve()

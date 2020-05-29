@@ -2,12 +2,15 @@ import it from "element-ui/src/locale/lang/it";
 import {
   store
 } from '../../utils/'
+import SidebarItem from './SidebarItem'
+
 
 export default {
   name: 'left-menu',
+  components: { SidebarItem },
   data () {
     return {
-      menu_list: [],
+      permission_routes: [],
       win_size: {
         height: ''
       },
@@ -39,10 +42,11 @@ export default {
         var routes = store.get('routList')
         for (var i = 0; i < routes.length; i++) {
           if (routes[i].path === rootPath && !routes[i].hidden) {
-            this.menu_list = routes[i].children
+            this.permission_routes = routes[i].children
             break
           }
         }
+
 
         // 跳转第一个有效路由
         // if(this.menu_list.length) {
@@ -56,13 +60,17 @@ export default {
         //this.$router.push('/404')
       }
     },
-    routerGo(route){
+    routerGo(route,item){
       if(this.isExternal(route)){
         window.location.href = route;
       }else{
-        let base = this.$route.matched[0].path;
-        //this.$router.push({path: base + '/' + route})
-        this.$router.push({path: route})
+        if(item.renderTarget && item.renderTarget == '_blank') {
+          this.$router.push({path: '/common/middleware', query: { url: item.meta.linkhref }})
+        }else {
+          let base = this.$route.matched[0].path;
+          //this.$router.push({path: base + '/' + route})
+          this.$router.push({path: route})
+        }
       }
     },
 

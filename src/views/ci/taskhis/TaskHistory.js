@@ -200,6 +200,8 @@ export default {
                 return { img: 'static/images/state/red_fail.png', text: 'Stopped' };
             case 6:
                 return { img: 'static/images/state/red_fail.png', text: 'Part Success' };
+            case 7:
+                return { img: 'static/images/state/red_fail.png', text: 'Stopping' };
             default:
                 return '--';
             }
@@ -214,6 +216,9 @@ export default {
             if (row.status == 2) {
                 return '#44e88d';
             }
+            if (row.status == 3) {
+                return '#DC143C';
+            }
             if (row.status == 4) {
                 return '#dc9417';
             }
@@ -222,6 +227,9 @@ export default {
             }
             if (row.status == 6) {
                 return '#dc9417';
+            }
+            if (row.status == 7) {
+                return '#f77171';
             }
             return '#DC143C';
         },

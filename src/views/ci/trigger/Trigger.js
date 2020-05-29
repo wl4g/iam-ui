@@ -186,7 +186,10 @@ export default {
 
         // 获取分组名称
         getProject() {
-            this.$$api_ci_allProject({
+            this.$$api_ci_getProjectBySelect({
+                data: {
+                    isBoot: 1
+                },
                 fn: data => {
                     this.ProjectData = data.data.list;
                 }
@@ -265,7 +268,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_share_clusters({
+            this.$$api_erm_clusters({
                 fn: data => {
                     this.groupData = data.data.clusters;
                 }

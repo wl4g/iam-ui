@@ -91,15 +91,12 @@ export default [
         path: '/share/list',
         type: 'post',
         sys: global.doc
-<<<<<<< HEAD
     },{
         name: 'cancelShare',
         method: 'cancelShare',
         path: '/share/cancelShare',
         type: 'post',
         sys: global.doc
-=======
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
     },
 
 

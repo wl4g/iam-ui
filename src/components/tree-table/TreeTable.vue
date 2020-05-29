@@ -14,7 +14,10 @@
         <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
 
         <span v-if="column.icon">
-          <img :src="scope.row['icon']" onerror="this.style.display='none'"/>
+          <!--<img :src="scope.row['icon']" onerror="this.style.display='none'"/>-->
+          <svg class="myIcon" aria-hidden="true" style="cursor:pointer;">
+              <use :xlink:href="'#'+scope.row['icon']"></use>
+            </svg>
         </span>
         {{ scope.row[column.value] }}
       </template>

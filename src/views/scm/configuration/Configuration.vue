@@ -85,7 +85,7 @@
              >
           </el-table-column>
           <el-table-column
-            prop="envRemark"
+            prop="envType"
             :label="$t('message.ci.env')"
 
              >
@@ -158,7 +158,7 @@
 
           <el-col :span="8">
             <el-form-item :label="$t('message.ci.env')" prop="environment">
-              <el-select v-model="ruleForm.environment" @change="getinstance(1)" placeholder="Please environment" v-bind:disabled="isedit">
+              <el-select v-model="ruleForm.environment" @change="getinstance(1)" placeholder="Please environment" >
                 <el-option
                         v-for="item in dictutil.getDictListByType('app_ns_type')"
                         :key="item.value"
@@ -171,7 +171,7 @@
 
           <el-col :span="8">
             <el-form-item :label="$t('message.scm.node')" prop="instance" >
-              <el-select v-model="ruleForm.instance" placeholder="Please node" v-bind:disabled="isedit">
+              <el-select v-model="ruleForm.instance" placeholder="Please node" >
                 <el-option label="ALL" value=""></el-option>
                 <el-option
                         v-for="item in instanceFormData"
@@ -207,12 +207,12 @@
                     <el-table-column prop="namespaceId" :label="$t('message.scm.namespace')" min-width="290">
                       <template scope="scope">
 
-                        <el-select v-model="scope.row.namespaceId"  placeholder="namespace" v-bind:disabled="isedit">
+                        <el-select v-model="scope.row.namespaceId"  placeholder="namespace" >
                           <el-option
                                   v-for="item in namespaces"
-                                  :key="item.key"
-                                  :label="item.value"
-                                  :value="item.key">
+                                  :key="item"
+                                  :label="item"
+                                  :value="item">
                           </el-option>
                         </el-select>
 
@@ -286,10 +286,10 @@
             :visible.sync="innerVisible"
             append-to-body custom-class="mytc">
       <template v-if="checkfalg">
-        <img src="../../../assets/correct.png" class='logo' alt="" >
+        <img src="static/images/bg_icon/correct.png" class='logo' alt="" >
       </template>
       <template v-if="!checkfalg">
-        <img src="../../../assets/error.png" class='logo' alt="" >
+        <img src="static/images/bg_icon/error.png" class='logo' alt="" >
       </template>
       <el-input  v-model="insidecontent" type="textarea" @change="checkconf" autosize  placeholder="请输入配置内容" class="myinput" ></el-input>
       <!-- end -->

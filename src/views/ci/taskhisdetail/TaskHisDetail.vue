@@ -1,7 +1,7 @@
 <template>
     <section id="configuration" class="configuration">
 
-        <el-button type="primary" @click="backToChanges" style='float:right;margin-right:20px'>Back</el-button>
+        <el-button type="primary" @click="backToChanges" style='float:right;margin-right:20px'>{{$t('message.common.back')}}</el-button>
         <el-button :type="logReadRunning?'danger':'success' " @click="changeLogReadRunning" style='float:right;margin-right:20px'>{{ logReadRunning?'Stop':'Start' }}</el-button>
 
         <el-form :inline="true" label-width="80px" class="demo-form-inline">
@@ -36,7 +36,7 @@
                                           v-model="scope.row.result"></el-input>
                                 <el-button slot="reference">{{$t('message.common.detail')}}</el-button>
                             </el-popover>-->
-                            <el-button type="info" size="small" @click="openDetail(scope.row)">{{$t('message.common.detail')}}</el-button>
+                            <el-button type="info" size="small" :disabled="scope.row.status === 0 || scope.row.status === 1" @click="openDetail(scope.row)">{{$t('message.common.detail')}}</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

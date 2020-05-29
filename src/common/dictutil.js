@@ -23,7 +23,7 @@ export default {
     },
 
     getDictLabelByTypeAndValue: function (type, value) {
-        if (!type || !value) {//type can not be null
+        if (!type || (!value && value!==0)) {//type can not be null
             return defaultLabel;
         }
         let dicts_cache = stor.get("dicts_cache");
@@ -34,7 +34,7 @@ export default {
         if (!dictGroup) {
             return defaultLabel;
         }
-        let dict = dictGroup[value];
+        let dict = dictGroup[value.toString()];
         if (!dict) {
             return defaultLabel;
         }
@@ -43,7 +43,7 @@ export default {
 
     getDictThemesByTypeAndValue: function (type, value) {
         //defalut return primary theme , because the default theme is ugly
-        if (!type || !value) {//type can not be null
+        if (!type || (!value && value!==0)) {//type can not be null
             return defaultTheme;
         }
         let dicts_cache = stor.get("dicts_cache");
@@ -54,7 +54,7 @@ export default {
         if (!dictGroup) {
             return defaultTheme;
         }
-        let dict = dictGroup[value];
+        let dict = dictGroup[value.toString()];
         if (!dict) {
             return defaultTheme;
         }

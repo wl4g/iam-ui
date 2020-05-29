@@ -1,16 +1,10 @@
 import de from "element-ui/src/locale/lang/de";
 
 export default {
-
     dateFormat(fmt, date) {
-
         if(typeof date == 'string'){
             date =  new Date(date);
         }
-<<<<<<< HEAD
-=======
-        console.info('dateformat');
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         let ret;
         const opt = {
             "Y+": date.getFullYear().toString(),        // 年
@@ -25,10 +19,8 @@ export default {
             ret = new RegExp("(" + k + ")").exec(fmt);
             if (ret) {
                 fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
-            }
-            ;
-        }
-        ;
+            };
+        };
         return fmt;
     },
 

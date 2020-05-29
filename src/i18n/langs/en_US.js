@@ -41,13 +41,18 @@ const en_US = {
             'email':'Email',
             'phone':'Phone',
             'refresh':'Refresh',
-            'endpoint':'Endpoint',
+            'endpoint':'Endpoint/Port',
             'classify':'Classify',
             'download':'Download',
             'accessToken':'AccessToken',
             'upload':'Upload',
             'light': 'Diurnal light',
             'night': 'Dark night',
+            'back':'Back',
+            'owner':'Owner',
+            'manager':'Manager',
+            'startTime':'StartTime',
+            'endTime':'EndTime',
         },
         'ci': {
             'instances': 'Instances',
@@ -90,6 +95,10 @@ const en_US = {
             'bugCollectionFile':'BugCollectionFile',
             'issue':'Issue',
             'annex':'Annex',
+            'isBoot':'isBoot',
+            'pipeline':'Pipeline',
+            'priority':'Priority',
+            'run':'Run',
         },
         iam: {
             'menu': 'Menu',
@@ -108,6 +117,9 @@ const en_US = {
             'role':'Role',
             'pageLocation':'pageLocation',
             'routePath':'routePath',
+            'contactChannel':'contactChannel',
+            'contactType':'ContactType',
+            'primaryAddress':'PrimaryAddress',
         },
         scm: {
             'node':'Node',
@@ -161,6 +173,13 @@ const en_US = {
             'queueTime':'QueueTime',
             'alarmLevel':'AlarmLevel',
             'compareValue':'CompareValue',
+            'dataSourceProvide':'DatasourceProvide',
+            'dataSourceUrl':'DataSourceUrl',
+            'dataSourceUserName':'DataSourceUserName',
+            'dataSourcePassword':'DataSourcePassword',
+            'alarmMessage':'AlarmMessage',
+            'dataSourceName':'DataSourceName',
+            'costTime':'CostTime(Ms)',
         },
         doc: {
             'fileType':'FileType',
@@ -172,15 +191,17 @@ const en_US = {
             'shareCode':'ShareCode',
             'shareTime':'ShareTime',
             'expireTime':'ExpireTime',
-<<<<<<< HEAD
             'docName':'Doc Name',
             'withPasswordLink':'WithPasswordLink',
             'withNoPasswordLink':'WithNoPasswordLink',
             'cancelShare':'CancelShare',
-=======
-            'docName':'DocName',
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
-        }
+        },
+        coss: {
+            'fileSize':'FileSize',
+            'prefix':'Prefix',
+            'cossProvider':'CossProvider',
+            'acl':'ACL',
+        },
     },
     ...enLocale
 }

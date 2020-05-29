@@ -26,14 +26,14 @@ export default {
                 projectName: '',
                 httpUrl: '',
                 sshUrl: '',
-                assetsPath: '',
-                parentAppHome: '',
+
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
                 vcsId: '',
                 clusterName: '',
-                assetsPath3: '',
+
+                isBoot: 1,
             },
 
             dialogVisible: false,
@@ -67,27 +67,28 @@ export default {
 
             // 表单规则
             rules: {
-
                 projectName: [
                     {required: true, message: 'Please Input projectName', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
 
-                assetsPath: [
-                    { required: true, message: 'Please Input assets Path', trigger: 'change' },
-                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
-                ],
-                parentAppHome: [
-                    { required: true, message: 'Please Input App Home', trigger: 'change' },
-                    { min: 1, max: 100, message: 'length between 1 to 100', trigger: 'blur' }
-                ],
-
             },
             loading: false,
+
+            appClusterId: '',
         }
     },
 
+    activated() {
+        if(this.$route.query.appClusterId){
+            this.appClusterId = Number(this.$route.query.appClusterId);
+            this.addPriject();
+            this.saveForm.appClusterId = this.appClusterId;
+        }else{
+            this.appClusterId = '';
+        }
 
+    },
 
     mounted() {
         this.getData();
@@ -120,13 +121,16 @@ export default {
             this.$$api_ci_vcsAll({
                 fn: data => {
                     this.vcsData = data.data;
+                    if(this.vcsData && this.vcsData[0] && !this.saveForm.vcsId){
+                        this.saveForm.vcsId = this.vcsData[0]['id'];
+                    }
                 },
             })
         },
 
         // 获取分组名称
         getProject() {
-            this.$$api_ci_allProject({
+            this.$$api_ci_getProjectBySelect({
                 fn: data => {
                     this.ProjectData = data.data.list;
                 },
@@ -195,9 +199,10 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_share_clusters({
+            this.$$api_erm_clusters({
                 fn: data => {
                     this.groupData = data.data.clusters;
+                    this.saveForm.appClusterId = this.appClusterId;
                 },
             })
         },
@@ -215,17 +220,17 @@ export default {
                             httpUrl: this.saveForm.httpUrl,
                             sshUrl: this.saveForm.sshUrl,
                             vcsId: this.saveForm.vcsId,
-                            assetsPath: this.saveForm.assetsPath,
-                            parentAppHome: this.saveForm.parentAppHome,
                             restartCommand: this.saveForm.restartCommand,
                             remark: this.saveForm.remark,
                             dependencies: this.saveForm.dependencies,
+                            isBoot: this.saveForm.isBoot,
                         },
                         fn: data => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
+                            this.backToPipeline();
                         },
                         errFn: () => {
                             this.dialogLoading = false;
@@ -241,7 +246,7 @@ export default {
 
         cleanSaveForm() {
             let firstVscId = '';
-            if(this.vcsData){
+            if(this.vcsData && this.vcsData[0]){
                 firstVscId = this.vcsData[0]['id'];
             }
 
@@ -251,14 +256,12 @@ export default {
                 projectName: '',
                 httpUrl: '',
                 sshUrl: '',
-                assetsPath: '',
-                parentAppHome: '',
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
                 vcsId: firstVscId,
                 clusterName: '',
-                assetsPath3: '',
+                isBoot: 1,
             }
         },
 
@@ -344,15 +347,6 @@ export default {
             })
         },
 
-        changeCluster(){
-            for (var i in this.groupData) {
-                if(this.groupData[i].id==this.saveForm.appClusterId){
-                    this.saveForm.clusterName = this.groupData[i].name;
-                    this.saveForm.assetsPath3 = '/'+this.saveForm.clusterName + '-{version}-bin.tar';
-                    break;
-                }
-            }
-        },
 
         remoteMethod(query) {
             this.searchProjectLoading = true;
@@ -366,15 +360,13 @@ export default {
                     this.searchProjectLoading = false;
                 },
             })
-
-
         },
 
         changeProject(){
             let remoteProject = this.getProjectByName(this.saveForm.projectName);
             if(remoteProject){
-                this.saveForm.httpUrl = remoteProject.httpUrl
-                this.saveForm.sshUrl = remoteProject.sshUrl
+                this.saveForm.httpUrl = remoteProject.httpUrl;
+                this.saveForm.sshUrl = remoteProject.sshUrl;
             }
         },
 
@@ -387,9 +379,12 @@ export default {
             }
         },
 
-        gotoCluster(){
-            this.dialogVisible = false;
-            this.$router.push({ path: '/share/cluster' })
+        backToPipeline(){
+            if(this.appClusterId){
+                this.$router.push({path:'/ci/newpipeline',query: {from: 'project'}})
+            }
+            this.appClusterId = '';
         }
+
     }
 }

@@ -140,7 +140,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item :label="$t('message.common.token')" prop="accessToken">
+                        <el-form-item :label="$t('message.common.accessToken')" prop="accessToken">
                             <el-input v-model="saveForm.accessToken"></el-input>
                         </el-form-item>
                     </el-col>

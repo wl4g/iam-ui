@@ -7,8 +7,6 @@ export default {
             //查询条件
             searchParams: {
                 name: '',
-                email: '',
-                phone: '',
             },
 
             //分页信息
@@ -20,29 +18,8 @@ export default {
             saveForm: {
                 id: '',
                 name: '',
-                email: '',
-                phone: '',
-                dingtalk: '',
-                wechat: '',
-                twitter: '',
-                facebook: '',
-                emailEnable: '',
-                phoneEnable: '',
-                dingtalkEnable: '',
-                wechatEnable: '',
-                twitterEnable: '',
-                facebookEnable: '',
-                phoneTimeOfFreq: '',
-                dingtalkTimeOfFreq: '',
-                wechatTimeOfFreq: '',
-                twitterTimeOfFreq: '',
-                facebookTimeOfFreq: '',
-                phoneNumOfFreq: '',
-                dingtalkNumOfFreq: '',
-                wechatNumOfFreq: '',
-                twitterNumOfFreq: '',
-                facebookNumOfFreq: '',
                 groups: [],
+                contactChannels: [],
             },
 
             contactGroupData: [],
@@ -66,7 +43,6 @@ export default {
 
             rules: {
                 name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
-                email: [{ required: true, message: 'Please input email', trigger: 'blur' }],
             },
             submitLoading: false,
             groupLoading: false
@@ -106,8 +82,6 @@ export default {
             this.$$api_iam_contactList({
                 data: {
                     name: this.searchParams.name,
-                    email: this.searchParams.email,
-                    phone: this.searchParams.phone,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -123,31 +97,12 @@ export default {
         },
 
         cleanSaveForm() {
-            this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.email = '';
-            this.saveForm.phone = '';
-            this.saveForm.dingtalk = '';
-            this.saveForm.wechat = '';
-            this.saveForm.twitter = '';
-            this.saveForm.facebook = '';
-            this.saveForm.emailEnable = '';
-            this.saveForm.phoneEnable = '';
-            this.saveForm.dingtalkEnable = '';
-            this.saveForm.wechatEnable = '';
-            this.saveForm.twitterEnable = '';
-            this.saveForm.facebookEnable = '';
-            this.saveForm.phoneTimeOfFreq = '';
-            this.saveForm.dingtalkTimeOfFreq = '';
-            this.saveForm.wechatTimeOfFreq = '';
-            this.saveForm.twitterTimeOfFreq = '';
-            this.saveForm.facebookTimeOfFreq = '';
-            this.saveForm.phoneNumOfFreq = '';
-            this.saveForm.dingtalkNumOfFreq = '';
-            this.saveForm.wechatNumOfFreq = '';
-            this.saveForm.twitterNumOfFreq = '';
-            this.saveForm.facebookNumOfFreq = '';
-            this.saveForm.groups = [];
+            this.saveForm = {
+                id: '',
+                name: '',
+                groups: [],
+                contactChannels: [],
+            };
         },
         addContact() {
             this.groupList();
@@ -171,33 +126,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_iam_saveContact({
-                        data: {
-                            id: this.saveForm.id,
-                            name: this.saveForm.name,
-                            email: this.saveForm.email,
-                            phone: this.saveForm.phone,
-                            dingtalk: this.saveForm.dingtalk,
-                            wechat: this.saveForm.wechat,
-                            twitter: this.saveForm.twitter,
-                            facebook: this.saveForm.facebook,
-                            emailEnable: this.saveForm.emailEnable,
-                            phoneEnable: this.saveForm.phoneEnable,
-                            dingtalkEnable: this.saveForm.dingtalkEnable,
-                            wechatEnable: this.saveForm.wechatEnable,
-                            twitterEnable: this.saveForm.twitterEnable,
-                            facebookEnable: this.saveForm.facebookEnable,
-                            phoneTimeOfFreq: this.saveForm.phoneTimeOfFreq,
-                            dingtalkTimeOfFreq: this.saveForm.dingtalkTimeOfFreq,
-                            wechatTimeOfFreq: this.saveForm.wechatTimeOfFreq,
-                            twitterTimeOfFreq: this.saveForm.twitterTimeOfFreq,
-                            facebookTimeOfFreq: this.saveForm.facebookTimeOfFreq,
-                            phoneNumOfFreq: this.saveForm.phoneNumOfFreq,
-                            dingtalkNumOfFreq: this.saveForm.dingtalkNumOfFreq,
-                            wechatNumOfFreq: this.saveForm.wechatNumOfFreq,
-                            twitterNumOfFreq: this.saveForm.twitterNumOfFreq,
-                            facebookNumOfFreq: this.saveForm.facebookNumOfFreq,
-                            groups: this.saveForm.groups,
-                        },
+                        data: this.saveForm,
                         fn: data => {
                             this.dialogLoading = false;
                             if (data.code == 200) {
@@ -331,6 +260,23 @@ export default {
                     });
                     this.getGroupData();
                 }
+            })
+        },
+
+        deleteRow(index) {
+            this.saveForm.contactChannels.splice(index, 1);
+        },
+
+        addRow() {
+            if(!this.saveForm.contactChannels){
+                this.saveForm.contactChannels = [];
+            }
+            this.saveForm.contactChannels.push({
+                kind: '',
+                primaryAddress: '',
+                enable: 1,
+                timeOfFreq: '',
+                numOfFreq: '',
             })
         },
 

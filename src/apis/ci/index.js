@@ -39,6 +39,13 @@ export default [
         sys: global.ci
     },
     {
+        name: '获取pipelines给下拉框使用',
+        method: 'getPipelineForSelect',
+        path: '/task/getForSelect',
+        type: 'post',
+        sys: global.ci
+    },
+    {
         name: '创建任务',
         method: 'runTask',
         path: '/task/create',
@@ -142,8 +149,8 @@ export default [
     },
     {
         name: '所有项目',
-        method: 'allProject',
-        path: '/project/all',
+        method: 'getProjectBySelect',
+        path: '/project/getBySelect',
         type: 'post',
         sys: global.ci
     },
@@ -158,6 +165,13 @@ export default [
         name: '获取分支列表',
         method: 'getBranchs',
         path: '/project/getBranchs',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '获取分支列表',
+        method: 'getProjectByAppClusterId',
+        path: '/project/getByAppClusterId',
         type: 'post',
         sys: global.ci
     },
@@ -307,6 +321,44 @@ export default [
         name: '所有pcm',
         method: 'pcmAll',
         path: '/pcm/all',
+        type: 'post',
+        sys: global.ci
+    },
+
+
+    //orchestration
+    {
+        name: 'orchestration列表',
+        method: 'orchestrationList',
+        path: '/orchestration/list',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '保存orchestration',
+        method: 'saveOrchestration',
+        path: '/orchestration/save',
+        type: 'json',
+        sys: global.ci
+    },
+    {
+        name: 'orchestration详情',
+        method: 'orchestrationDetail',
+        path: '/orchestration/detail',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '删除orchestration',
+        method: 'delOrchestration',
+        path: '/orchestration/del',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '运行orchestration',
+        method: 'runOrchestration',
+        path: '/orchestration/run',
         type: 'post',
         sys: global.ci
     },

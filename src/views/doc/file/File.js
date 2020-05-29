@@ -30,13 +30,12 @@ export default {
                 fileList: [],
             },
 
-            uploadUrl: global.getBaseUrl(global.doc,false)+'/file/upload',
+            uploadUrl: global.getBaseUrl(global.doc,false)+'/doc/upload',
             browseUrl: global.getBaseUrl(global.doc,false)+'/view/index.html',
 
             shareDialogVisible: false,
             shareText: '',
 
-<<<<<<< HEAD
             shareConfirmDialogVisible: false,
             expireRadio: '',
             expireTimeDisable: true,
@@ -47,8 +46,6 @@ export default {
                 expireTime: '',
             },
 
-=======
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             // 表单规则
             rules: {
                 name: [
@@ -128,16 +125,10 @@ export default {
             })
         },
         compareFile(row){
-<<<<<<< HEAD
             this.$router.push({path:'/doc/diff',query: {docCode: row.docCode}})
         },
         uploadSuccess(response, file, fileList){
-=======
-            this.$router.push({path:'/doc/diff',query: {docCode: row.dodCode}})
-        },
-        uploadSuccess(response, file, fileList){
-            console.info(response,file,fileList);
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
+            console.debug(response);
             this.saveForm.content = response.data.path;
             this.saveForm.docCode = response.data.docCode;
         },
@@ -184,7 +175,6 @@ export default {
             }
             window.open(url, '_blank');
         },
-<<<<<<< HEAD
 
         showShareConfirmForm(row){
             this.expireRadio = 1;
@@ -241,48 +231,6 @@ export default {
             this.shareText = '链接:'+this.browseUrl+"?code="+data.docCode;
             if(data.passwd){
                 this.shareText = this.shareText + ' 密码:' + data.passwd;
-=======
-        shareDoc(row){
-            this.isEncryptFile(row);
-        },
-        isEncryptFile(row){
-            this.$confirm('是否加密文件?', '提示', {
-                distinguishCancelAndClose: true,
-                confirmButtonText: '是',
-                cancelButtonText: '否'
-            }).then(() => {
-                this.$$api_doc_shareDoc({
-                    data: {
-                        id: row.id,
-                        isEncrypt:true
-                    },
-                    fn: data => {
-                        row.passwd = data.data;
-                        row.shareType = 1;
-                        this.showShareInfo(row);
-                    },
-                });
-            }).catch(action => {
-                if(action === 'cancel'){
-                    this.$$api_doc_shareDoc({
-                        data: {
-                            id: row.id,
-                            isEncrypt:false
-                        },
-                        fn: data => {
-                            row.shareType = 0;
-                            this.showShareInfo(row);
-                        },
-                    });
-                }
-            });
-        },
-        showShareInfo(row){
-            //e.g: 链接:https://pan.baidu.com/s/aaaaaaaaaaaaaaaaa  密码:k2hn
-            this.shareText = '链接:'+this.browseUrl+"?code="+row.docCode;
-            if(row.passwd){
-                this.shareText = this.shareText + ' 密码:' + row.passwd;
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             }
             this.shareDialogVisible = true;
         },

@@ -59,7 +59,7 @@
                     <el-table-column prop="type" :label="$t('message.ci.pipeKind')" min-width="50" :formatter="convertType"></el-table-column>
                     <el-table-column prop="status" :label="$t('message.common.status')">
                         <template slot-scope="scope">
-                            <el-tag  :color="convertStatusType(scope.row)">
+                            <el-tag  :color="convertStatusType(scope.row)" style="color: #ffffffeb;border: 1px solid #99bce0;">
                                 <img v-bind:src="convertStatusValue(scope.row)['img']" />
                                 {{convertStatusValue(scope.row)['text']}}
                             </el-tag>

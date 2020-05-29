@@ -10,29 +10,42 @@
               class="el-menu-vertical-demo"
               active-text-color="#20a1ff"
               >
-              <div v-for="item in menu_list" :key="item.id">
-                <!-- :index="$store.state.router.headerCurRouter+'/'+item.path" -->
-                <el-menu-item v-if="!item.children && !item.hidden" :index="item.path" @click.native="routerGo(item.path)">
-                  <!--<i :class="'fa fa-'+item.icon"></i>-->
-                  <img class="icon" :src="item.icon?item.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>
-                  <span v-if="$store.state.leftmenu.menu_flag" slot="title">{{getMenuName(item)}}</span>
-                </el-menu-item>
 
-                <el-submenu v-else-if="!item.hidden" :index="item.path">
-                  <div slot="title">
-                    <div>
-                      <img class="icon" :src="item.icon?item.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>
-                      <span>{{getMenuName(item)}}</span>
-                    </div>
-                  </div>
-                  <template v-for="child in item.children">
-                    <el-menu-item :index="child.path" @click.native="routerGo(child.path)">
-                      <img class="icon" :src="child.icon?child.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>
-                      <span slot="title">{{getMenuName(child)}}</span>
-                    </el-menu-item>
-                  </template>
-                </el-submenu>
-              </div>
+              <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
+
+              <!-- 旧的侧边栏 -->
+              <!--<div v-for="item in menu_list" :key="item.id">-->
+                <!--&lt;!&ndash; :index="$store.state.router.headerCurRouter+'/'+item.path" &ndash;&gt;-->
+                <!--<el-menu-item v-if="!item.children && !item.hidden" :index="item.path" @click.native="routerGo(item.path,item)">-->
+                  <!--&lt;!&ndash;<i :class="'fa fa-'+item.icon"></i>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<img class="icon" :src="item.icon?item.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>&ndash;&gt;-->
+                  <!--<svg class="myIcon" aria-hidden="true" style="cursor:pointer;">-->
+                    <!--<use :xlink:href="'#'+item.icon"></use>-->
+                  <!--</svg>-->
+                  <!--<span v-if="$store.state.leftmenu.menu_flag" slot="title">{{getMenuName(item)}}</span>-->
+                <!--</el-menu-item>-->
+
+                <!--<el-submenu v-else-if="!item.hidden" :index="item.path">-->
+                  <!--<div slot="title">-->
+                    <!--<div>-->
+                      <!--&lt;!&ndash;<img class="icon" :src="item.icon?item.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>&ndash;&gt;-->
+                      <!--<svg class="myIcon" aria-hidden="true" style="cursor:pointer;">-->
+                        <!--<use :xlink:href="'#'+item.icon"></use>-->
+                      <!--</svg>-->
+                      <!--<span>{{getMenuName(item)}}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<template v-for="child in item.children">-->
+                    <!--<el-menu-item :index="child.path" @click.native="routerGo(child.path,child)">-->
+                      <!--&lt;!&ndash;<img class="icon" :src="child.icon?child.icon:'/static/images/menu/DOC_on.png'" onerror="this.style.display='none'"/>&ndash;&gt;-->
+                      <!--<svg class="myIcon" aria-hidden="true" style="cursor:pointer;">-->
+                        <!--<use :xlink:href="'#'+child.icon"></use>-->
+                      <!--</svg>-->
+                      <!--<span slot="title">{{getMenuName(child)}}</span>-->
+                    <!--</el-menu-item>-->
+                  <!--</template>-->
+                <!--</el-submenu>-->
+              <!--</div>-->
 
 
             </el-menu>
@@ -61,9 +74,7 @@
     color: #fff;
     text-align: center;line-height: 46px;
   }
-  // .el-menu li{
-  //   color: #959fae;
-  // }
+
 </style>
 <style lang="less">
   .left-fixed-right-auto .left .el-menu{
@@ -88,5 +99,10 @@
   .left-fixed-right-auto .left  .el-submenu__title .icon {
     margin-right: 8px;
   }
-
+  .el-menu a:hover {
+    text-decoration: none;
+  }
+  .el-menu .svg-icon {
+    margin-right: 6px;
+  }
 </style>

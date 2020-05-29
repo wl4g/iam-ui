@@ -22,53 +22,28 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-<<<<<<< HEAD
                 <el-table ref="tableDate" :data="tableData" border style="width:100%" @row-click="rowClick">
                     <!--<el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>-->
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             {{getShareText(props.row)}}
                             <el-button type="text" size="medium" v-clipboard:copy="getShareText(props.row)" v-clipboard:success="onCopySuccess">点击复制</el-button>
-=======
-                <el-table :data="tableData" border style="width:100%">
-                    <!--<el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>-->
-                    <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <el-form label-position="left" inline class="demo-table-expand">
-                                <el-form-item label="密码">
-                                    <span>{{ props.row.passwd }}</span>
-                                </el-form-item>
-                            </el-form>
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                         </template>
                     </el-table-column>
 
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
                     <el-table-column prop="name" :label="$t('message.doc.docName')"></el-table-column>
 
-<<<<<<< HEAD
-                    <el-table-column width="300" prop="shareCode" :label="$t('message.doc.shareCode')"></el-table-column>
-=======
-                    <el-table-column prop="shareCode" :label="$t('message.common.name')"></el-table-column>
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
+                    <el-table-column width="260" prop="shareCode" :label="$t('message.doc.shareCode')"></el-table-column>
 
-                    <el-table-column prop="passwd" :label="$t('message.common.password')"></el-table-column>
+                    <el-table-column width="100" prop="passwd" :label="$t('message.common.password')"></el-table-column>
 
                     <el-table-column prop="createDate" :label="$t('message.doc.shareTime')"></el-table-column>
-<<<<<<< HEAD
                     <el-table-column prop="expireTime" :formatter="formatExpireTime" :label="$t('message.doc.expireTime')"></el-table-column>
 
-                    <el-table-column :label="$t('message.common.operation')" min-width="100">
+                    <el-table-column :label="$t('message.common.operation')" min-width="80">
                         <template slot-scope="scope">
                             <el-button type="danger" icon='delete' @click="cancelShare(scope.row)">{{$t('message.doc.cancelShare')}}</el-button>
-=======
-                    <el-table-column prop="expireTime" :label="$t('message.doc.expireTime')"></el-table-column>
-
-
-                    <el-table-column :label="$t('message.common.operation')" min-width="100">
-                        <template slot-scope="scope">
-                            <el-button type="danger" icon='delete' @click="cancelShare(scope.row)">{{$t('message.common.del')}}</el-button>
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                         </template>
                     </el-table-column>
                 </el-table>

@@ -3,7 +3,7 @@
 
     <header class="head-nav">
       <div class='logo-container'>
-        <img data-v-12af00ba="" src="../../assets/logo.png" alt="" class="logo">
+        <img data-v-12af00ba="" src="static/images/bg_icon/logo.png" alt="" class="logo">
         <!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
       </div>
       <div class="menus">
@@ -15,7 +15,10 @@
             :key='item.path'
             v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
             <!--<img src="/static/images/menu/CI_on.png" />-->
-            <img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>
+            <!--<img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>-->
+            <svg class="myIcon" aria-hidden="true" style="cursor:pointer;">
+              <use :xlink:href="'#'+item.icon"></use>
+            </svg>
             {{getMenuName(item)}}<!--{{item.path}}-->
            </el-menu-item>
         </el-menu>
@@ -29,7 +32,7 @@
                 <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
               </span>
               <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
-                <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
+                <img src="static/images/bg_icon/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
               </el-col>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
@@ -44,7 +47,7 @@
       <div class="pull-right">
         <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
           <span class="el-dropdown-link" style="height: 50px;display: block;">
-            <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
+            <img src="static/images/bg_icon/def_user.png" alt="" style="border-radius:50%;height: 40px;">
             {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">

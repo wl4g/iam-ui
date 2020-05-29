@@ -1,6 +1,6 @@
-import {transDate, getDay} from 'utils/'
-import {Terminal} from "xterm";
-import {FitAddon} from "xterm-addon-fit";
+import { transDate, getDay } from 'utils/'
+import { Terminal } from "xterm";
+import { FitAddon } from "xterm-addon-fit";
 
 export default {
     name: 'taskHisDetail',
@@ -47,22 +47,22 @@ export default {
 
     methods: {
 
-        changeLogReadRunning(){
+        changeLogReadRunning() {
             this.logReadRunning = !this.logReadRunning;
-            if(this.logReadRunning){
+            if (this.logReadRunning) {
                 this.readLog(this.taskHisId);
-            }else{
+            } else {
                 this.stopReadLogTask();
             }
         },
 
         ///////////
 
-        backToChanges(){
-            this.$router.push({path:'/ci/taskhis'})
+        backToChanges() {
+            this.$router.push({ path: '/ci/taskhis' })
         },
 
-        convertStatusType(row){
+        convertStatusType(row) {
             if (row.status == 0) {
                 return '#75a2f9';
             }
@@ -81,8 +81,8 @@ export default {
             return '#DC143C';
         },
 
-        convertStatusValue(row){
-            switch(row.status){
+        convertStatusValue(row) {
+            switch (row.status) {
                 case 0:
                     return { img: 'static/images/state/gray_normal.png', text: 'New' };
                 case 1:
@@ -100,20 +100,20 @@ export default {
             }
         },
 
-        startRefreshList(){
+        startRefreshList() {
             let that = this;
-            if(this.checkExistRunningTask()){
+            if (this.checkExistRunningTask()) {
                 this.refreshListThread = self.setTimeout(function () {
                     that.detailRefresh();
                 }, 1 * 3000);
             }
         },
 
-        checkExistRunningTask(){
-            if(this.detailForm.taskInstances){
+        checkExistRunningTask() {
+            if (this.detailForm.taskInstances) {
                 for (var i in this.detailForm.taskInstances) {
                     let taskHis = this.detailForm.taskInstances[i];
-                    if(taskHis['status']==0||taskHis['status']==1){//status is create or running
+                    if (taskHis['status'] == 0 || taskHis['status'] == 1) {//status is create or running
                         return true;
                     }
                 }
@@ -121,7 +121,7 @@ export default {
             return false;
         },
 
-        stopRefreshList(){
+        stopRefreshList() {
             //window.clearInterval(this.refreshListThread);
             window.clearTimeout(this.refreshListThread);
         },
@@ -164,9 +164,8 @@ export default {
                 }
             })
         },
-
-        //log part
-        readLogTask(id){
+        // ---------------------- Pipeline runner logs ------------------------
+        readLogTask(id) {
             this.destoryReadLogTask();
 
             this.term = new Terminal({
@@ -174,49 +173,55 @@ export default {
                 allowTransparency: false,
                 fontSize: 12,
                 //rendererType: 'dom',
-                fontFamily: 'courier-new,courier,monospace',
-                //letterSpacing: 0,//文字间隔（px）
-                theme: { background: '#121319'}
+                // 最后结尾不能是','逗号??? 否则字体变得很小
+                fontFamily: 'Consolas,DejaVu Sans Mono,WenQuanYi Zen Hei Mono,courier,monospace',
+                letterSpacing: 0,// 文字间隔（px）
+                theme: { background: '#121319', foreground: '#dfd2cd' }
             });
             const fitAddon = new FitAddon();
-            this.term.loadAddon(fitAddon);
 
+            this.term.loadAddon(fitAddon);
             this.term.open(document.getElementById('myterminal'));
             fitAddon.fit();
-            //=============================================
 
             this.detailForm.result = '';
             this.startPos = 0;
             this.readLog(id);
-
         },
-
-        destoryReadLogTask(){
+        destoryReadLogTask() {
             console.debug("stop read log task");
             window.clearTimeout(this.logThread);
-            if(this.term){
+            if (this.term) {
                 this.term.dispose();
             }
         },
-
-        stopReadLogTask(){
+        stopReadLogTask() {
             window.clearTimeout(this.logThread);
         },
-
-        readLog(taskHisId){
-            console.debug("read log taskHisId="+taskHisId+" taskHisReadLog="+this.startPos);
+        readLog(taskHisId) {
+            console.debug("read log taskHisId=" + taskHisId + " taskHisReadLog=" + this.startPos);
             let that = this;
             this.$$api_ci_taskHisReadLog({
                 data: {
                     taskHisId: taskHisId,
-                    startPos: that.startPos+1,
-                    size:10000,
+                    startPos: that.startPos + 1,
+                    size: 10000,
                 },
                 fn: data => {
                     let logs = data.data.data.lines;
                     this.logReadRunning = true;
                     for (let i in logs) {
-                        that.term.writeln(logs[i]);
+                        /**
+                         * console.log('\x1B[31m%s\x1B[0m', '错误');
+                         * console.log('\x1B[32m%s\x1B[0m', '成功');
+                         * console.log('\x1B[33m%s\x1b[0m:', '警告');
+                         **/
+                        // that.term.writeln(logs[i]);
+                        var logLine = logs[i];
+                        logLine = logLine.replace('INFO', '\x1B[32mINFO\x1B[0m');
+                        logLine = logLine.replace('WARNING', '\x1B[33mWARNING\x1B[0m');
+                        logLine = logLine.replace('ERROR', '\x1B[31mERROR\x1B[0m');
+                        that.term.writeln(logLine);
                     }
                     if (!data.data.data.hasNext) {
                         window.clearTimeout(that.logThread);
@@ -234,66 +239,68 @@ export default {
                 }
             })
         },
-
-        //====================================detail=============================================
-
-        openDetail(row){
+        // --------------------- Pipeline deploying logs ------------------------
+        openDetail(row) {
             this.detailVisible = true;
-            this.title = '部署到[' + row.instanceName +']详情';
+            this.title = '部署到[' + row.instanceName + ']详情';
             this.dialogLoading = true;
             //在旧版1.x中，对dialog没有opened回调事件，需要手动延时
             setTimeout(() => {
                 this.readLogDetailTask(row.instanceId);
             }, 300)
         },
-
-        //log part
-        readLogDetailTask(instanceId){
+        // log part
+        readLogDetailTask(instanceId) {
             //this.destoryReadLogDetailTask();
-            if(this.detailTerm){
+            if (this.detailTerm) {
                 this.detailTerm.dispose();
             }
-            console.debug('before new Terminal timestamp = '+new Date().getTime());
+            console.debug('before new Terminal timestamp: ' + new Date().getTime());
             this.detailTerm = new Terminal({
-                logLevel: 'debug',
+                logLevel: 'off',
                 allowTransparency: true,
                 fontSize: 12,
-                fontFamily: 'courier-new,courier,monospace',
-                //letterSpacing: 0,//文字间隔（px）
-                theme: { background: '#121319'}
+                // 最后结尾不能是','逗号??? 否则字体变得很小
+                fontFamily: 'Consolas,DejaVu Sans Mono,WenQuanYi Zen Hei Mono,courier,monospace',
+                letterSpacing: 0,// 文字间隔（px）
+                theme: { background: '#121319', foreground: '#dfd2cd' }
             });
             const fitAddon = new FitAddon();
             this.detailTerm.loadAddon(fitAddon);
             let detailTerminal = document.getElementById('detailTerminal');
             this.detailTerm.open(detailTerminal);
             fitAddon.fit();
-            console.debug('before new Terminal timestamp = '+new Date().getTime());
+            console.debug('before new Terminal timestamp = ' + new Date().getTime());
             this.dialogLoading = false;
-            //=============================================
+            // Reset log start position
             this.detailStartPos = 0;
             this.readDetailLog(instanceId);
-
         },
 
-        destoryReadLogDetailTask(){
+        destoryReadLogDetailTask() {
             window.clearTimeout(this.detailLogThread);
-            if(this.detailTerm){
+            if (this.detailTerm) {
                 this.detailTerm.dispose();
             }
         },
 
-        readDetailLog(instanceId){
+        readDetailLog(instanceId) {
             var that = this;
             this.$$api_ci_taskHisReadDetailLog({
                 data: {
                     taskHisId: this.taskHisId,
                     instanceId: instanceId,
                     startPos: that.detailStartPos,
-                    size:10000,
+                    size: 10000,
                 },
                 fn: data => {
                     let logs = data.data.data.lines;
                     for (let i in logs) {
+                        /**
+                         * console.log('\x1B[31m%s\x1B[0m', '错误');
+                         * console.log('\x1B[32m%s\x1B[0m', '成功');
+                         * console.log('\x1B[33m%s\x1b[0m:', '警告');
+                         **/
                         this.detailTerm.writeln(logs[i]);
                     }
                     if (!data.data.data.hasNext) {
@@ -311,15 +318,10 @@ export default {
                 }
             })
         },
-
-
-
     },
 
-
-
     //离开前清除定时任务
-    beforeRouteLeave(to,from,next){
+    beforeRouteLeave(to, from, next) {
         this.detailVisible = false;
         this.destoryReadLogTask();
         this.stopRefreshList();

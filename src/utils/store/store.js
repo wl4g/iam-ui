@@ -7,18 +7,14 @@ class Store {
     this.store = window.localStorage
     this.prefix = gbs.db_prefix
   }
-
   set (key, value, fn) {
     try {
       value = JSON.stringify(value)
     } catch (e) {
     }
-
     this.store.setItem(this.prefix + key, value)
-
     fn && fn()
   }
-
   get (key, fn) {
     if (!key) {
       throw new Error('没有找到key。')
@@ -33,7 +29,6 @@ class Store {
       } catch (e) {
       }
     }
-
     return value
   }
 

@@ -55,7 +55,7 @@
                 {{$t('message.common.total')}}： <span class="number">{{total}}</span>
             </div>
 
-            <el-dropdown @command="add">
+            <el-dropdown @command="add" :show-timeout="0" :hide-timeout="0">
                 <el-button type="primary">+ New Pipeline</el-button>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
@@ -83,17 +83,22 @@
                             </el-popover>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="envType" :label="$t('message.ci.env')">
+                        <template slot-scope="scope">
+                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('app_ns_type',scope.row.envType)">{{dictutil.getDictLabelByTypeAndValue('app_ns_type',scope.row.envType)}}</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="branchName" :label="$t('message.ci.branchName')" min-width="58"></el-table-column>
                     <!--<el-table-column prop="projectName" label="Project"></el-table-column>-->
                     <el-table-column prop="providerKind" :label="$t('message.ci.pipeKind')" ></el-table-column>
-                    <el-table-column prop="createDate" :label="$t('message.common.createDate')" min-width="150"></el-table-column>
+                    <el-table-column prop="createDate" :label="$t('message.common.createDate')" min-width="130"></el-table-column>
                     <!--<el-table-column prop="buildCommand" label="BuildCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="preCommand" label="PreCmd" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="postCommand" label="PostCmd" :show-overflow-tooltip="true"></el-table-column>-->
 
-                    <el-table-column :label="$t('message.common.operation')" min-width="220">
+                    <el-table-column :label="$t('message.common.operation')" min-width="200">
                         <template slot-scope="scope">
-                            <el-button type="warning" class='iconfont icon-qidong' @click="beforeRunTask(scope.row)">{{$t('message.ci.build')}}</el-button>
+                            <el-button type="warning" @click="beforeRunTask(scope.row)">{{$t('message.ci.build')}}</el-button>
                             <el-button type="info" icon='edit' @click="taskDetail(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' @click="delTask(scope.row)">{{$t('message.common.del')}}</el-button>
                             <!--<el-button type="text" size="small" @click="rollbackTask(scope.row)">Rollback</el-button>-->
@@ -106,7 +111,7 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
 
-        <el-dialog :close-on-click-modal="false" title="Create Task Confirm" :visible.sync="confirmDialog" size="small">
+        <el-dialog :close-on-click-modal="false" :title="confirmDialogTitle" :visible.sync="confirmDialog" size="small">
             <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline" :rules="buildRules">
 
                 <el-card class="box-card" shadow="hover" v-if="projects && projects.length >0">

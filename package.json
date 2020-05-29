@@ -21,6 +21,7 @@
     "element-ui": "^2.4.6",
     "jquery": "^3.2.1",
     "mavon-editor": "^2.7.7",
+    "moment": "^2.24.0",
     "vue": "^2.4.2",
     "vue-axios": "^2.0.2",
     "vue-cli": "^2.9.6",

@@ -136,7 +136,7 @@ export default {
       if(environmentId==""||clusterId==""){
         return;
       }
-      this.$$api_share_instances({
+      this.$$api_erm_instances({
         data: {
           clusterId: clusterId,
           envType: environmentId
@@ -147,7 +147,7 @@ export default {
       })
     },
     getGroup() {
-      this.$$api_share_clusters({
+      this.$$api_erm_clusters({
         fn: data => {
             this.groupData = data.data.clusters;
         },

@@ -1,4 +1,5 @@
 import global from "../../common/global_variable";
+import request from '@/utils/ajax/request'
 
 export default [
     //user
@@ -30,15 +31,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-    {
-        name: 'loginCheck',
-        method: 'loginCheck',
-        path: '/login/check',
-        type: 'post',
-        sys: global.iam
-    },
-
-
     //menu
     {
         name: 'menu树列表',
@@ -68,10 +60,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
-
-
-
     //role
     {
         name: '角色列表',
@@ -108,8 +96,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
-
     //group
     {
         name: '获取分组树',
@@ -139,8 +125,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
-
     //online
     {
         name: 'onlineList',
@@ -163,17 +147,15 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
     // Cluster Config Informcation
     {
-        name: '所有application',
-        method: 'clusterConfigInfo',//applicationInfo ==> clusterConfigInfo
+        name: 'appModules',
+        method: 'clusterConfigInfo',
         path: '/clusterConfig/info',
-        type: 'post',
+        type: 'get', // 原因参见：getInit
         sys: global.iam,
         usedefault: true,
     },
-
     {
         name: 'applylocale',
         method: 'applylocale',
@@ -181,7 +163,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
     {
         name: 'logout',
         method: 'logout',
@@ -189,7 +170,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
     //dict
     {
         name: '字典列表',
@@ -237,10 +217,9 @@ export default [
         name: '获取字典缓存',
         method: 'dictCache',
         path: '/dict/getInit',
-        type: 'post',
+        type: 'get', // 由于初始页面时调用，用post会要求调用IAMCore.getXsrfToken等（此时index.html动态加载的IAM sdk还未异步加载完）
         sys: global.iam
     },
-
     //contact
     {
         name: '联系人列表',
@@ -270,8 +249,6 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
-
     //group
     {
         name: '联系人分组列表',
@@ -301,9 +278,13 @@ export default [
         type: 'post',
         sys: global.iam
     },
-
-
-
-
-
 ]
+
+export function getRoutes() {
+    return request({
+        url: '/menu/list',
+        method: 'get',
+        sys: global.iam,
+        usedefault: false
+    })
+}

@@ -1,11 +1,12 @@
-import {store} from "../utils";
+import { store } from "../utils";
+import iputil from "./iputil";
 
 export default {
-    ci:{
-        cluster: 'ci-server',//这个必须和数据表app_cluster的name字段对应
-        twoDomain: 'ci',//默认二级域名
-        defaultContextPath: '/ci-server',//默认项目上下文路径
-        defaultPort: '14046',//默认端口
+    ci: {
+        cluster: 'ci-server',// 这个必须和数据表app_cluster的name字段对应
+        twoDomain: 'ci',// 默认二级域名
+        defaultContextPath: '/ci-server',// 默认项目根路径
+        defaultPort: '14046',// 默认端口
     },
     scm: {
         cluster: 'scm-server',
@@ -13,22 +14,16 @@ export default {
         defaultContextPath: '/scm-server',
         defaultPort: '14043',
     },
-    srm: {
-        cluster: 'srm-manager',
-        twoDomain: 'srm',
-        defaultContextPath: '/srm-manager',
-        defaultPort: '15050',
-    },
     umc: {
         cluster: 'umc-manager',
         twoDomain: 'umc',
         defaultContextPath: '/umc-manager',
         defaultPort: '14048',
     },
-    share: {
-        cluster: 'share-manager',
-        twoDomain: 'share',
-        defaultContextPath: '/share-manager',
+    erm: {
+        cluster: 'erm-manager',
+        twoDomain: 'erm',
+        defaultContextPath: '/erm-manager',
         defaultPort: '14051',
     },
     iam: {
@@ -43,35 +38,47 @@ export default {
         defaultContextPath: '/doc-manager',
         defaultPort: '14060',
     },
-
-    getBaseUrl: function(app,usedefault) {
-        if(!app){
+    coss: {
+        cluster: 'coss-manager',
+        twoDomain: 'coss',
+        defaultContextPath: '/coss-manager',
+        defaultPort: '14062',
+    },
+    vcs: {
+        cluster: 'vcs-manager',
+        twoDomain: 'vcs',
+        defaultContextPath: '/vcs-manager',
+        defaultPort: '14063',
+    },
+    getBaseUrl: function (app, usedefault) {
+        if (!app) {
             return;
         }
+        let baseUri = '';
         let hostname = location.hostname;
         let protocol = location.protocol;
-        let baseUrl = '';
-        //get from store , if found , user it
-        let applicationCache = store.get("application_cache");
-        if(!usedefault&&applicationCache && applicationCache != 'null' && applicationCache[app.cluster] &&applicationCache[app.cluster]['extranetBaseUri']){//found from store
-            baseUrl = applicationCache[app.cluster]['extranetBaseUri'];
-            //console.debug("user cache Url , url = "+ baseUrl);
-        } else {//user default
-            let isIp = window.Common.Util.isIp(hostname);
-            // 为方便同事调用，当域名以debug，local，dev后缀结尾，跟localhost一样处理，同时修改java配置文件 application-dev #32-#34 ， 同时修改数据库app_cluster_config
+        let appModules = store.get("iam_system_modules");
+        if (!usedefault && appModules && appModules != 'null' && appModules[app.cluster] && appModules[app.cluster]['extranetBaseUri']) {//found from store
+            baseUri = appModules[app.cluster]['extranetBaseUri'];
+            console.debug("Got appModule baseUri: "+ baseUri);
+        }
+        // Use default
+        else {
+            let isIp = iputil.isIp(hostname);
+            // 为方便本地调试，当域名以debug/local/dev后缀结尾，跟localhost一样处理，同时修改java配置文件application-dev #32-#34, 同时修改数据库app_cluster_config
             if (hostname == 'localhost' || isIp || hostname.endsWith('.debug') || hostname.endsWith('.local') || hostname.endsWith('.dev')) {//if localhost
-                baseUrl = protocol + "//" + hostname + ":" + app.defaultPort + app.defaultContextPath;
-                //console.debug("user localhost Url , url = "+ baseUrl);
+                baseUri = protocol + "//" + hostname + ":" + app.defaultPort + app.defaultContextPath;
+                console.debug("Got appModule default baseUri(local): "+ baseUri);
             } else {
                 var topDomainName = hostname.split('.').slice(-2).join('.');
                 if (hostname.indexOf("com.cn") > 0) {
                     topDomainName = hostname.split('.').slice(-3).join('.');
                 }
-                baseUrl = protocol + "//" + app.twoDomain + "." + topDomainName + app.defaultContextPath;
-                //console.debug("user default Url , url = "+ baseUrl);
+                baseUri = protocol + "//" + app.twoDomain + "." + topDomainName + app.defaultContextPath;
+                console.debug("Got appModule default baseUri: "+ baseUri);
             }
         }
-        return baseUrl;
-    }
+        return baseUri;
+    },
 
 }

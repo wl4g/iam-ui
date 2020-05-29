@@ -73,7 +73,7 @@ export default {
       this.getdetails(id);
     },
     getdetails(id,falg){
-      this.$$api_configguration_configselect({
+      this.$$api_scm_configselect({
         data:{
           id: id
         },

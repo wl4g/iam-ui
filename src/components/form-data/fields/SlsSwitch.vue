@@ -2,8 +2,8 @@
   <div>
     <el-switch
       @change="onChange"
-      :on-text="data.value.on"
-      :off-text="data.value.off"
+      :active-text="data.value.on"
+      :inactive-text="data.value.off"
       v-bind="switch_attrs"
       v-model="submit_data[data.key]"></el-switch>
   </div>
