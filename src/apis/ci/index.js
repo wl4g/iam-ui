@@ -2,6 +2,62 @@ import global from '../../common/global_variable.js'
 
 export default [
 
+    //pipeline
+    {
+        name: '任务列表',
+        method: 'pipelineList',
+        path: '/pipe/list',
+        type: 'post',
+        sys: global.ci
+    }, {
+        name: '任务列表',
+        method: 'getPipeStepBuilding',
+        path: '/pipe/getPipeStepBuilding',
+        type: 'post',
+        sys: global.ci
+    }, {
+        name: '保存任务',
+        method: 'savePipeline',
+        path: '/pipe/save',
+        type: 'json',
+        sys: global.ci
+    },
+    {
+        name: '任务详情',
+        method: 'pipelineDetail',
+        path: '/pipe/detail',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '删除任务',
+        method: 'delPipeline',
+        path: '/pipe/del',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '创建任务',
+        method: 'runPipeline',
+        path: '/pipe/create',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '获取pipelines给下拉框使用',
+        method: 'getPipelineForSelect',
+        path: '/pipe/getForSelect',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '根据appClusterId获取任务',
+        method: 'getPipesByAppClusterId',
+        path: '/pipe/getListByAppClusterId',
+        type: 'post',
+        sys: global.ci
+    },
+
     //task
     {
         name: '任务列表',
@@ -32,20 +88,12 @@ export default [
         sys: global.ci
     },
     {
-        name: '根据appClusterId获取任务',
-        method: 'getTasksByAppClusterId',
-        path: '/task/getListByAppClusterId',
-        type: 'post',
-        sys: global.ci
-    },
-    {
         name: '创建任务',
         method: 'runTask',
         path: '/task/create',
         type: 'post',
         sys: global.ci
     },
-
     {
         name: '获取依赖',
         method: 'getTaskBuildCommands',
@@ -55,57 +103,46 @@ export default [
     },
 
 
-
-
-
-
     //taskhis
     {
         name: '任务列表',
-        method: 'taskHisList',
-        path: '/taskHis/list',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '创建任务',
-        method: 'createTaskHis',
-        path: '/taskHis/create',
+        method: 'pipeHisList',
+        path: '/pipeHis/list',
         type: 'post',
         sys: global.ci
     },
     {
         name: '任务详情',
-        method: 'taskHisDetail',
-        path: '/taskHis/detail',
+        method: 'pipeHisDetail',
+        path: '/pipeHis/detail',
         type: 'post',
         sys: global.ci
     },
     {
         name: '回滚',
-        method: 'rollbackTaskHis',
-        path: '/taskHis/rollback',
+        method: 'rollbackPipeHis',
+        path: '/pipeHis/rollback',
         type: 'post',
         sys: global.ci
     },
     {
         name: '获取日志',
-        method: 'taskHisReadLog',
-        path: '/taskHis/readLog',
+        method: 'pipeHisReadLog',
+        path: '/pipeHis/readLog',
         type: 'post',
         sys: global.ci
     },
     {
         name: '获取Detail日志',
-        method: 'taskHisReadDetailLog',
-        path: '/taskHis/readDetailLog',
+        method: 'pipeHisReadDetailLog',
+        path: '/pipeHis/readDetailLog',
         type: 'post',
         sys: global.ci
     },
     {
         name: '停止任务',
         method: 'stopTask',
-        path: '/taskHis/stopTask',
+        path: '/pipeHis/stopTask',
         type: 'post',
         sys: global.ci
     },
@@ -142,8 +179,8 @@ export default [
     },
     {
         name: '所有项目',
-        method: 'allProject',
-        path: '/project/all',
+        method: 'getProjectBySelect',
+        path: '/project/getBySelect',
         type: 'post',
         sys: global.ci
     },
@@ -158,6 +195,13 @@ export default [
         name: '获取分支列表',
         method: 'getBranchs',
         path: '/project/getBranchs',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '获取分支列表',
+        method: 'getProjectByAppClusterId',
+        path: '/project/getByAppClusterId',
         type: 'post',
         sys: global.ci
     },
@@ -199,51 +243,6 @@ export default [
         sys: global.ci
     },
 
-
-    //vcs
-    {
-        name: 'vcs列表',
-        method: 'vcsList',
-        path: '/vcs/list',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '保存vcs',
-        method: 'saveVcs',
-        path: '/vcs/save',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: 'vcs详情',
-        method: 'vcsDetail',
-        path: '/vcs/detail',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '删除vcs',
-        method: 'delVcs',
-        path: '/vcs/del',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: '所有vcs',
-        method: 'vcsAll',
-        path: '/vcs/all',
-        type: 'post',
-        sys: global.ci
-    },
-    {
-        name: 'vcsProjects',
-        method: 'vcsProjects',
-        path: '/project/vcsProjects',
-        type: 'post',
-        sys: global.ci
-    },
-
     //analysis
     {
         name: 'analysis列表',
@@ -263,8 +262,14 @@ export default [
     },
     {
         name: 'pm获取项目列表',
-        method: 'getProjects',
+        method: 'getPcmProjects',
         path: '/pcm/getProjects',
+        type: 'post',
+        sys: global.ci
+    }, {
+        name: 'pm获取项目列表',
+        method: 'getProjectsByPcmId',
+        path: '/pcm/getProjectsByPcmId',
         type: 'post',
         sys: global.ci
     },
@@ -310,5 +315,91 @@ export default [
         type: 'post',
         sys: global.ci
     },
+    {
+        name: 'getPcmStatuses',
+        method: 'getPcmStatuses',
+        path: '/pcm/getStatuses',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'getPcmTrackers',
+        method: 'getPcmTrackers',
+        path: '/pcm/getTrackers',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: 'getPcmPriorities',
+        method: 'getPcmPriorities',
+        path: '/pcm/getPriorities',
+        type: 'post',
+        sys: global.ci
+    },
+
+
+    //orchestration
+    {
+        name: 'orchestration列表',
+        method: 'orchestrationList',
+        path: '/orchestration/list',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '保存orchestration',
+        method: 'saveOrchestration',
+        path: '/orchestration/save',
+        type: 'json',
+        sys: global.ci
+    },
+    {
+        name: 'orchestration详情',
+        method: 'orchestrationDetail',
+        path: '/orchestration/detail',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '删除orchestration',
+        method: 'delOrchestration',
+        path: '/orchestration/del',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '运行orchestration',
+        method: 'runOrchestration',
+        path: '/orchestration/run',
+        type: 'post',
+        sys: global.ci
+    },
+
+    //clusterExtension
+    {
+        name: 'clusterExtensionList列表',
+        method: 'clusterExtensionList',
+        path: '/pipe/clusterExtensionList',
+        type: 'post',
+        sys: global.ci
+    },
+    {
+        name: '保存clusterExtension',
+        method: 'saveClusterExtension',
+        path: '/pipe/saveClusterExtension',
+        type: 'post',
+        sys: global.ci
+    },
+
+    //orchestrationHistory
+    {
+        name: 'orchestrationHistoryList',
+        method: 'orchestrationHistoryList',
+        path: '/orchestrationHistory/list',
+        type: 'post',
+        sys: global.ci
+    },
+
+
 
 ]

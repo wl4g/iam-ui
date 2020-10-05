@@ -133,6 +133,7 @@ export default {
 
         saveData() {
             this.dialogLoading = true;
+
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_iam_saveDict({
@@ -150,6 +151,7 @@ export default {
                         },
                         fn: data => {
                             this.dialogLoading = false;
+                            this.dialogVisible = false;
                             this.$$api_iam_dictCache({
                                 fn: data => {
                                     store.set("dicts_cache",data.data);
@@ -160,10 +162,12 @@ export default {
                         },
                         errFn: () => {
                             this.dialogLoading = false;
+                            this.dialogVisible = false;
                         }
                     });
                 } else {
                     this.dialogLoading = false;
+                    this.dialogVisible = false;
                     console.log('error submit!!');
                     return false;
                 }

@@ -1,4 +1,4 @@
-import {getDay, transDate} from 'utils/'
+import { getDay, transDate } from 'utils/'
 
 export default {
     name: 'user',
@@ -19,7 +19,7 @@ export default {
             saveForm: {
                 displayName: '',
                 userName: '',
-                oldPassword:'',
+                oldPassword: '',
                 password: '',
                 email: '',
                 phone: '',
@@ -39,8 +39,8 @@ export default {
             tableData: [],
 
             //rolesData
-            rolesData:[],
-            groupsTreeData:[],
+            rolesData: [],
+            groupsTreeData: [],
 
 
             defaultProps: {
@@ -54,7 +54,7 @@ export default {
             rules: {
                 userName: [{ required: true, message: 'Please input userName', trigger: 'blur' }],
                 displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
-                password: [{required: true, message: 'Please input password', trigger: 'blur' }],
+                password: [{ required: true, message: 'Please input password', trigger: 'blur' }],
             },
             loading: false
         }
@@ -131,7 +131,7 @@ export default {
             this.saveForm = {
                 displayName: '',
                 userName: '',
-                oldPassword:'',
+                oldPassword: '',
                 password: '',
                 email: '',
                 phone: '',
@@ -148,36 +148,38 @@ export default {
 
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    if(this.saveForm.oldPassword!=this.saveForm.password || this.saveForm.oldPassword==''){//need update password
+                    if (this.saveForm.oldPassword != this.saveForm.password || this.saveForm.oldPassword == '') {//need update password
                         this.saveDataWithPassword();
-                    }else{//needn't update password
+                    } else {//needn't update password
                         this.saveData();
                     }
-                }else {
+                } else {
                     this.dialogLoading = false;
                 }
             })
 
         },
 
-        saveDataWithPassword(){
-            let loginAccount = this.saveForm.userName;
-            this.$$api_iam_loginCheck({
-                data: {
-                    principal: loginAccount,
-                    verifyType: 'VerifyWithSimpleGraph',
+        saveDataWithPassword() {
+            const that = this;
+            const loginAccount = that.saveForm.userName;
+            new IAMCore({
+                deploy: {
+                    // e.g. http://127.0.0.1:14040/iam-server
+                    // e.g. http://localhost:14040/iam-server
+                    // e.g. http://iam.wl4g.debug/iam-server
+                    //baseUri: "http://localhost:14040/iam-server",
+                    defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
+                    defaultContextPath: "/iam-server"
                 },
-                fn: data => {
-                    if (data.data&&data.data.checkGeneral&&data.data.checkGeneral.secret) {
-                        let secret = data.data.checkGeneral.secret;
-                        let password = window.IAM.Crypto.rivestShamirAdleman(secret,this.saveForm.password);
-                        this.saveData(password);
-                    }
-                    this.dialogLoading = false;
-                },
-                errFn: () => {
-                    this.dialogLoading = false;
+            }).safeCheck(loginAccount, function (res) {
+                if (res.data && res.data.checkGeneric && res.data.checkGeneric.secretKey) {
+                    let secret = res.data.checkGeneric.secretKey;
+                    // The api supports dynamic algorithms(ECC/RSA/...) The default algorithm is used RSA
+                    let password = IAMCrypto.RSA.encryptToHexString(secret, that.saveForm.password);
+                    that.saveData(password);
                 }
+                that.dialogLoading = false;
             });
         },
 
@@ -254,12 +256,12 @@ export default {
 
         //模块权限树展示
         focusDo() {
-            if(this.$refs.modulesTree && this.saveForm.groupIds instanceof Array) this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds)
+            if (this.$refs.modulesTree && this.saveForm.groupIds instanceof Array) this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds)
             this.treeShow = !this.treeShow;
             let _self = this;
-            this.$$lib_$(document).bind("click",function(e){
-                let target  = _self.$$lib_$(e.target);
-                if(target.closest(".noHide").length == 0 && _self.treeShow){
+            this.$$lib_$(document).bind("click", function (e) {
+                let target = _self.$$lib_$(e.target);
+                if (target.closest(".noHide").length == 0 && _self.treeShow) {
                     _self.treeShow = false;
                 }
                 e.stopPropagation();
@@ -272,12 +274,12 @@ export default {
             var checkedNodes = this.$refs.modulesTree.getCheckedNodes();
 
             let moduleNameList = [];
-            checkedNodes.forEach(function(item){
+            checkedNodes.forEach(function (item) {
                 moduleNameList.push(item.displayName)
             });
             this.saveForm.groupIds = checkedKeys;
             //this.saveForm.groupNameStrs = moduleNameList.join(',');
-            this.$set(this.saveForm,'groupNameStrs',moduleNameList.join(','))
+            this.$set(this.saveForm, 'groupNameStrs', moduleNameList.join(','))
 
         },
 

@@ -8,17 +8,10 @@ Vue.use(Router)
 
 import { Login } from 'views/'
 import { Init } from 'views/'
-import { Doc } from 'views/'
+import Layout from 'layout/routeview/Home.vue'
+import middleware from '@/views/middleware.vue'
 
-// import Home from './home/'
-// import Umc from './umc/'
-// import Scm from './scm/'
-// import Ci from './ci/'
-// import Iam from './iam/'
-// import Srm from './srm/'
-// import Share from './share/'
-
-export default new Router({
+const createRouter = () => new Router({
   routes: [
     {
       path: '*',
@@ -46,16 +39,16 @@ export default new Router({
       component: Init
     },
     {
-      path: '/diff',
-      name: '比较',
-      hidden: true,
-      component: Doc.Diff
-    },
-    {
-      path: '/mdEdit',
-      name: 'Md编辑',
-      hidden: true,
-      component: Doc.MdEdit
+      path: '/common',
+      name: '框架页',
+      component: Layout,
+      children: [
+        {
+          path: 'middleware',
+          name: '打开外部链接',
+          component: middleware
+        }
+      ]
     },
     //Function,
     // Home,
@@ -67,3 +60,13 @@ export default new Router({
     // Share,
   ]
 })
+
+const router =  createRouter();
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router

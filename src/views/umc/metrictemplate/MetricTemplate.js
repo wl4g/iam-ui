@@ -82,7 +82,7 @@ export default {
 
         // 获取列表数据
         getAllHost() {
-            this.$$api_share_allHost({
+            this.$$api_erm_allHost({
                 data: {},
                 fn: data => {
                     this.allHost = data.data;

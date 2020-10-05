@@ -159,6 +159,7 @@ export default {
                         accessToken: data.data.accessToken,
                         username: data.data.username,
                         password: data.data.password,
+                        organizationCode: data.data.organizationCode,
                     };
                 }
             });

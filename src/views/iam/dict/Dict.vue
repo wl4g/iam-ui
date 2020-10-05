@@ -8,8 +8,7 @@
                 <el-input v-model="searchParams.label" placeholder="e.g. 最大值" style="width:140px"></el-input>
             </el-form-item>
             <el-form-item :label="$t('message.common.type')">
-                <el-select v-model="searchParams.type" placeholder="e.g. app_ns_type" style="width:160px" :filterable="true" >
-                    <el-option value="">e.g. app_ns_type</el-option>
+                <el-select v-model="searchParams.type" placeholder="e.g. app_ns_type" style="width:160px" :filterable="true" clearable>
 					<el-option v-for="item in allType" :key="item" :label="item" :value="item"></el-option>
                 </el-select>
             </el-form-item>
@@ -34,7 +33,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width:100%">
+                <el-table :data="tableData" :border="false" style="width:100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="key" label="Key" min-width="200"></el-table-column>
                     <el-table-column prop="value" :label="$t('message.share.value')"></el-table-column>

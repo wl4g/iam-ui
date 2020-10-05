@@ -28,6 +28,7 @@ export default {
         group: '',
         desc: '',
         environment: '',
+         remark: '',
         instance: '',
         tableData2: [],
       },
@@ -113,7 +114,7 @@ export default {
       // 删除一列
   methods: {
     checkconf() {
-      this.$$api_configguration_configcheck({
+      this.$$api_scm_configcheck({
         data: {
           content: this.insidecontent
         },
@@ -215,7 +216,8 @@ export default {
           if(falg == 1){
             this.dialogTitle = 'Configuration Edit';
             this.ruleForm.group = parseInt(row.appClusterId);
-            this.ruleForm.environment = parseInt(row.envId);
+            this.ruleForm.environment = row.envType;
+            this.getinstance(1);
             this.ruleForm.instance = row.nodeId;
             this.ruleForm.remark = row.remark;
             let id = row.id;
@@ -262,7 +264,7 @@ export default {
               return;
             }
           }
-          this.$$api_share_instances({
+          this.$$api_erm_instances({
             data: {
               clusterId: clusterId,
               envType: environmentId
@@ -287,7 +289,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-          this.$$api_share_clusters({
+          this.$$api_erm_clusters({
             fn: data => {
                 this.groupData = data.data.clusters;
             }
@@ -296,20 +298,24 @@ export default {
 
         // 在字典获取配置文件名
         getNamespace() {
-          this.$$api_iam_getDictByType({
+          /*this.$$api_iam_getDictByType({
             data: {
               type: 'app_ns_type',
             },
             fn: data => {
                 this.namespaces = data.data.list;
             }
-          })
+          })*/
+          this.namespaces = [
+              "application-dev.yml","application-test.yml","application-prod.yml"
+          ];
+
         },
          // 获取列表数据
         getData() {
           this.loading = true;
 
-          this.$$api_configguration_lists({
+          this.$$api_scm_lists({
             data: {
               appClusterId : this.formInline.group,
               envId : this.formInline.environment,
@@ -344,7 +350,7 @@ export default {
           this.getdetails(id);
         },
         getdetails(id,falg){
-          this.$$api_configguration_configselect({
+          this.$$api_scm_configselect({
             data:{
               id: id
             },
@@ -427,7 +433,7 @@ export default {
           //   type: this.ruleForm.type,
           //   content: this.ruleForm.content
           // })
-          this.$$api_configguration_configset({
+          this.$$api_scm_configset({
             data: {
               configGurations: this.ruleForm.tableData2,
               deptId: 1,

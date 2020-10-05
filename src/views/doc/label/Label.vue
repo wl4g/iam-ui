@@ -22,7 +22,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width:100%">
+                <el-table :data="tableData" :border="false" style="width:100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
                     <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>

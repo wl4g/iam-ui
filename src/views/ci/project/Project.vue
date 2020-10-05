@@ -28,9 +28,9 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width: 100%">
+                <el-table :data="tableData" :border="false" style="width: 100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
-                    <el-table-column width="100" prop="id" label="ID"></el-table-column>
+                    <!--<el-table-column width="100" prop="id" label="ID"></el-table-column>-->
                     <el-table-column prop="groupName" :label="$t('message.ci.cluster')"></el-table-column>
                     <el-table-column prop="projectName" :label="$t('message.ci.project')"></el-table-column>
                     <!--<el-table-column prop="httpUrl" :label="$t('message.ci.httpUrl')" :show-overflow-tooltip="true"></el-table-column>-->
@@ -57,15 +57,21 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
-        <el-dialog :close-on-click-modal="false" size="small" :title="dialogTitle" :visible.sync="dialogVisible" v-loading='dialogLoading'>
-            <el-form label-width="90px"  :rules="rules" :model="saveForm" ref="saveForm"
+        <el-dialog :close-on-click-modal="false" width="60%" :title="dialogTitle" :visible.sync="dialogVisible" v-loading='dialogLoading'>
+            <el-form label-width="100px"  :rules="rules" :model="saveForm" ref="saveForm"
                      class="demo-form-inline">
 
-                <el-row>
+                <el-form-item :label="$t('message.ci.isBoot')" prop="isBoot">
+                    <el-switch v-model="saveForm.isBoot"
+                               :active-value="1" :inactive-value="0">
+                    </el-switch>
+                </el-form-item>
+
+                <el-row v-if="saveForm.isBoot===1">
                     <el-col :span="12">
                         <el-form-item :label="$t('message.ci.cluster')" prop="appClusterId">
-                            <el-col :span="18">
-                                <el-select v-model="saveForm.appClusterId" @change="changeCluster" placeholder="Please group">
+                            <el-col :span="16">
+                                <el-select v-model="saveForm.appClusterId" placeholder="Please group" filterable>
                                     <el-option
                                             v-for="item in groupData"
                                             :key="item.id"
@@ -74,8 +80,9 @@
                                     </el-option>
                                 </el-select>
                             </el-col>
-                            <el-col :span="6" class="text-center">
-                                <a @click="gotoCluster" class="link">前往配置</a>
+                            <el-col :span="8" class="text-center">
+                                <i class="el-icon-refresh" @click="getGroup"></i>
+                                <router-link to="/share/cluster" target="_blank" class="link">前往配置</router-link>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -83,6 +90,7 @@
 
                 <el-row>
                     <el-col :span="12">
+                        <el-col :span="18">
                         <el-form-item :label="$t('message.ci.vcsProvider')" prop="vcs">
                             <el-select v-model="saveForm.vcsId" @change="changeVcs">
                                 <el-option
@@ -93,25 +101,41 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+                        </el-col>
+                        <el-col :span="6" class="text-center">
+                            <i class="el-icon-refresh" @click="getVcs"></i>
+                            <router-link to="/ci/vcs" target="_blank" class="link">前往配置</router-link>
+                        </el-col>
                     </el-col>
+
                     <el-col :span="12">
                         <el-form-item :label="$t('message.ci.project')" prop="project">
-                            <el-select
-                                    v-model="saveForm.projectName"
-                                    @change="changeProject"
-                                    filterable
-                                    remote
-                                    :clearable="true"
-                                    placeholder="请输入关键词"
-                                    :remote-method="remoteMethod"
-                                    :loading="searchProjectLoading">
-                                <el-option
-                                        v-for="item in vcsProjectData"
-                                        :key="item.name"
-                                        :label="item.name"
-                                        :value="item.name">
-                                </el-option>
-                            </el-select>
+                            <el-col :span="22">
+                                <el-select
+                                        v-model="saveForm.projectName"
+                                        @change="changeProject"
+                                        filterable
+                                        remote
+                                        :clearable="true"
+                                        placeholder="请输入关键词"
+                                        :remote-method="remoteMethod"
+                                        :loading="searchProjectLoading" style="width: 100%">
+                                    <el-option
+                                            v-for="item in vcsProjectData"
+                                            :key="item.name"
+                                            :label="item.name"
+                                            :value="item.name">
+                                        <span style="float: left">{{ item.name }}&nbsp;&nbsp;&nbsp;</span>
+                                        <span style="float: right; color: #8492a6; font-size: 12px">({{ item.pathWithNamespace }})</span>
+                                    </el-option>
+                                </el-select>
+                            </el-col>
+                            <el-col :span="1">
+                                <el-tooltip placement="top">
+                                    <div slot="content">该数据从provider实时远程获取</div>
+                                    <i class="el-icon-question"></i>
+                                </el-tooltip>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -124,70 +148,60 @@
                     <el-input v-model="saveForm.sshUrl" placeholder="ssh url" :disabled="true"></el-input>
                 </el-form-item>
 
-
-                <el-form-item :label="$t('message.ci.assetsPath')" prop="assetsPath">
-                    <el-row>
-                        <el-col :span="11">
-                            <el-input :disabled="true" v-model="'{WORKSPACE}/sources/'+saveForm.projectName"></el-input>
-                        </el-col>
-                        <el-col :span="7">
-                            <el-input v-model="saveForm.assetsPath" placeholder="tar path e.g: /portal-start/target"></el-input>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-input :disabled="true" v-model="saveForm.assetsPath3" placeholder="tar path"></el-input>
-                        </el-col>
-                    </el-row>
-
-                </el-form-item>
-
-                <el-form-item :label="$t('message.ci.appInstallHome')" prop="parentAppHome">
-                    <el-input v-model="saveForm.parentAppHome" placeholder="install directory"></el-input>
-                </el-form-item>
-
                 <el-form-item :label="$t('message.common.remark')" prop="remark">
                     <el-input v-model="saveForm.remark" placeholder="desciption"></el-input>
                 </el-form-item>
 
+                <el-row>
+                    <el-col :span="23">
+                        <el-form-item :label="$t('message.ci.dependencies')" prop="dependencies">
+                            <!-- 查询结果表格 -->
+                            <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
+                            <template>
+                                <el-table :data="saveForm.dependencies" style="width: 100%" :border="false">
+                                    <!-- 动态标签 -->
+                                    <el-table-column prop="dependentId" :label="$t('message.ci.dependent')" min-width="290">
+                                        <template scope="scope">
+                                            <el-select v-model="scope.row.dependentId"  placeholder="project" >
+                                                <el-option
+                                                        v-for="item in ProjectData"
+                                                        :key="item.id"
+                                                        :label="item.projectName"
+                                                        :value="item.id">
+                                                </el-option>
+                                            </el-select>
+                                        </template>
+                                    </el-table-column>
 
-                <el-form-item :label="$t('message.ci.dependencies')" prop="dependencies">
-                    <!-- 查询结果表格 -->
-                    <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
-                        <template>
-                            <el-table :data="saveForm.dependencies" style="width: 100%">
-                                <!-- 动态标签 -->
-                                <el-table-column prop="dependentId" :label="$t('message.ci.dependent')" min-width="290">
-                                    <template scope="scope">
-                                        <el-select v-model="scope.row.dependentId"  placeholder="project" >
-                                            <el-option
-                                                    v-for="item in ProjectData"
-                                                    :key="item.id"
-                                                    :label="item.projectName"
-                                                    :value="item.id">
-                                            </el-option>
-                                        </el-select>
-                                    </template>
-                                </el-table-column>
+                                    <el-table-column :label="$t('message.common.operation')" min-width="140">
+                                        <template slot-scope="scope">
+                                            <el-row>
+                                                <el-button @click.native.prevent="deleteDep(scope.$index)" type="text" size="mini" style="float: left;line-height: 20px;">
+                                                    {{$t('message.common.del')}}
+                                                </el-button>
+                                            </el-row>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                            <!--</div>-->
+                            <el-button type="primary"  @click.native.prevent="addRow()">+ Add Dependency</el-button>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="1">
+                        <el-tooltip placement="top">
+                            <div slot="content">只用配直接依赖，间接依赖可以不用配</div>
+                            <i class="el-icon-question"></i>
+                        </el-tooltip>
+                    </el-col>
+                </el-row>
 
-                                <el-table-column prop="branch" :label="$t('message.ci.branchName')" min-width="130">
-                                    <template scope="scope">
-                                        <el-input  v-model="scope.row.branch"></el-input>
-                                    </template>
-                                </el-table-column>
 
-                                <el-table-column :label="$t('message.common.operation')" min-width="140">
-                                    <template slot-scope="scope">
-                                        <el-row>
-                                            <el-button @click.native.prevent="deleteDep(scope.$index)" type="text" size="mini" style="float: left;line-height: 20px;">
-                                                {{$t('message.common.del')}}
-                                            </el-button>
-                                        </el-row>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </template>
-                    <!--</div>-->
-                    <el-button type="primary"  @click.native.prevent="addRow()">+ Add Dependency</el-button>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="24">
+                        <organization-selector :inputData="{organizationCode: saveForm.organizationCode}" @onChangeOrganization="opt => {if(opt){saveForm.organizationCode = opt}}"></organization-selector>
+                    </el-col>
+                </el-row>
 
             </el-form>
             <span slot="footer" class="dialog-footer">

@@ -18,7 +18,8 @@ export default {
             buildForm: {
                 id: '',
                 taskName: '',
-                group: '',
+                //projectId: '',
+                appClusterId: '',
                 envType: '',
                 instances: [],
                 branch: '',
@@ -32,19 +33,29 @@ export default {
                 taskBuildCommands: [],
                 commandOnOff:false,
                 pcmId: '',
+
+                //
+                projectName: '',
+                assetsPath: '',
+                assetsPath3: '{clusterName}-{version}-bin.tar',
+                parentAppHome: '',
+
             },
 
             //create内的下拉数据
-            groupData: [],
             envirData: [],
             instanceData: [],
+            instanceData2: [],
             branchs: [],
             contactGroupData: [],
             isEdit: false,
             pcmData: [],
+            //projectData:[],
+            clusterData:[],
 
             postCommandTip: '<br/>. /etc/profile && . /etc/bashrc && . ~/.bash_profile && . ~/.bashrc && ',
 
+            gotoProjectSettingDialog: false,
 
             // 表单规则
             rules: {
@@ -52,8 +63,8 @@ export default {
                     {required: true, message: 'Please Input taskName', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
-                group: [
-                    {type:'number', required: true, message: 'Please select Group', trigger: 'change' },
+                appClusterId: [
+                    {required: true, message: 'Please select Cluster', trigger: 'change' },
                 ],
                 providerKind: [
                     {type:'number', required: true, message: 'Please select tar type', trigger: 'change' },
@@ -73,24 +84,30 @@ export default {
     },
 
     activated() {
-        this.cleanBuildForm();
-        this.taskId = this.$route.query.id;
+        const from = this.$route.query.from;
+        if(!from || from==='task'){
+            this.cleanBuildForm();
+            this.taskId = this.$route.query.id;
 
-        let command = this.$route.query.command;
-        if(command){
-            this.buildForm.providerKind = command;
-        }
+            let command = this.$route.query.command;
+            if(command){
+                this.buildForm.providerKind = command;
+            }
 
-        this.getGroup();
-        this.groupList();
-        this.getPcm();
-        if(this.taskId){
-            this.isEdit = true;
-            this.taskDetail(this.taskId);
+            this.getClusters();
+            this.groupList();
+            this.getPcm();
+            //this.getProject();
+            if(this.taskId){
+                this.isEdit = true;
+                this.taskDetail(this.taskId);
+            }else{
+                this.isEdit = false;
+            }
         }else{
-            this.isEdit = false;
+            this.gotoProjectSettingDialog = false;
+            this.onChangeCluster(this.buildForm.appClusterId);
         }
-
     },
 
     mounted() {
@@ -101,8 +118,8 @@ export default {
         cleanBuildForm() {
             this.buildForm = {
                 id: '',
+                appClusterId: '',
                 taskName: '',
-                group: '',
                 envType: '',
                 instances: [],
                 branch: '',
@@ -116,8 +133,25 @@ export default {
                 taskBuildCommands: [],
                 commandOnOff:false,
                 pcmId: '',
+
+                projectName: '',
+                assetsPath: '',
+                assetsPath3: '{clusterName}-{version}-bin.tar',
+                parentAppHome: '',
             }
         },
+
+        refreshClusterData(){
+            //this.getProject();
+            this.getClusters();
+        },
+        refreshPcmtData(){
+            this.getPcm();
+        },
+        refreshInstanceData(){
+            this.getinstance();
+        },
+
 
         groupList() {
             this.$$api_iam_groupList({
@@ -130,21 +164,39 @@ export default {
             })
         },
 
+        // 获取分组名称
+        getClusters() {
+            this.$$api_erm_clusters({
+                fn: data => {
+                    this.clusterData = data.data.clusters;
+                },
+            })
+        },
+
         //获取实例名称
         getinstance() {
-            let clusterId = this.buildForm.group;
+            let clusterId = this.buildForm.appClusterId;
             let envType = this.buildForm.envType;
             this.instanceData = [];
             if (!envType || envType == "" || !clusterId || clusterId == "") {
                 return;
             }
-            this.$$api_share_instances({
+            this.$$api_erm_instances({
                 data: {
                     clusterId: clusterId,
                     envType: envType
                 },
                 fn: data => {
                     this.instanceData = data.data.instances;
+                    this.instanceData2 = [];
+                    for (let i = 0; i < this.instanceData.length; i++) {
+                        this.instanceData2.push({
+                            label: this.instanceData[i].hostname,
+                            key: this.instanceData[i].id,
+                        });
+                    }
+
+
                     //判断要不要清空选中
                     let needClean = true;
                     for (let i = 0; i < this.instanceData.length; i++) {
@@ -161,31 +213,34 @@ export default {
         },
 
         //获取环境名称
-        onChangeCluster() {
+        onChangeCluster(id) {
             this.getBranchs();
-            this.getTaskBuildCommands();
             this.getinstance();
+
+            this.buildForm.assetsPath3 = '/'+this.getClusterById(id).name + '-{version}-bin.tar';
+            this.getProjectByAppClusterId();
         },
 
-        // 获取分组名称
-        getGroup() {
-            this.$$api_share_clusters({
-                fn: data => {
-                    this.groupData = data.data.clusters;
-                },
-            })
+        getClusterById(id){
+            for(let i in this.clusterData){
+                if(this.clusterData[i].id === id){
+                    return this.clusterData[i];
+                }
+            }
         },
+
 
         save() {
             this.loading = true;
-
             this.$refs['buildForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_ci_saveTask({
                         data: {
                             id: this.buildForm.id,
                             taskName: this.buildForm.taskName,
-                            appClusterId: this.buildForm.group,
+                            //projectId: this.buildForm.projectId,
+                            appClusterId: this.buildForm.appClusterId,
+
                             envType: this.buildForm.envType,
                             branchName: this.buildForm.branch,
                             instance: this.buildForm.instances,
@@ -197,14 +252,18 @@ export default {
                             contactGroupId: this.buildForm.contactGroupId,
                             taskBuildCommands: this.buildForm.taskBuildCommands,
                             pcmId: this.buildForm.pcmId,
+
+                            assetsPath: this.buildForm.assetsPath,
+                            parentAppHome: this.buildForm.parentAppHome,
                         },
                         fn: data => {
                             this.loading = false;
                             this.cleanBuildForm();
                             this.$router.push({path:'/ci/task'})
                         },
-                        errFn: () => {
+                        errFn: (data) => {
                             this.loading = false;
+                            this.$message.error(data.message);
                         }
                     })
                 } else {
@@ -216,8 +275,8 @@ export default {
         },
 
         taskDetail(){
-            this.getGroup();
-            this.groupList();
+            // this.getGroup();
+            // this.groupList();
 
             this.isEdit = true;
             this.dialogVisible=true;
@@ -228,11 +287,14 @@ export default {
                 fn: data => {
                     this.buildForm.id=data.data.task.id;
                     this.buildForm.taskName=data.data.task.taskName;
-                    this.buildForm.group=data.data.task.appClusterId;
+                    //this.buildForm.projectId=data.data.task.projectId;
+                    this.buildForm.appClusterId=data.data.task.appClusterId;
+
                     this.buildForm.envType=data.data.task.envType;
                     this.buildForm.instances=data.data.instances;
                     this.buildForm.branch=data.data.task.branchName;
                     this.buildForm.providerKind=data.data.task.providerKind;
+                    this.buildForm.tagOrBranch=data.data.task.branchType;
                     this.buildForm.buildCommand=data.data.task.buildCommand;
                     this.buildForm.preCommand=data.data.task.preCommand;
                     this.buildForm.postCommand=data.data.task.postCommand;
@@ -240,40 +302,62 @@ export default {
                     this.buildForm.taskBuildCommands=data.data.taskBuildCommands;
                     this.buildForm.commandOnOff=true;
                     this.buildForm.pcmId=data.data.task.pcmId;
+                    this.buildForm.assetsPath=data.data.task.assetsPath;
+                    this.buildForm.parentAppHome=data.data.task.parentAppHome;
 
+                    this.getProjectByAppClusterId();
                     this.getinstance();
+                    this.getBranchs();
+
+                    this.buildForm.assetsPath3 = '/'+this.getClusterById(this.buildForm.appClusterId).name + '-{version}-bin.tar';
                 },
             })
 
         },
 
-
         getBranchs() {
             this.branchs=[];
-            if(this.buildForm.group==''){
+            if(this.buildForm.appClusterId==''){
                 return;
             }
             this.$$api_ci_getBranchs({
                 data: {
-                    appClusterId: this.buildForm.group,
-                    tarOrBranch: this.buildForm.tagOrBranch,
+                    appClusterId: this.buildForm.appClusterId,
+                    tagOrBranch: this.buildForm.tagOrBranch,
                 },
                 fn: data => {
                     this.branchs=data.data.branchNames;
+                },
+                errFn: data => {
+                    this.gotoProjectSettingDialog = true;
+                }
+            });
+            this.getTaskBuildCommands();
+        },
+
+        getProjectByAppClusterId(){
+            if(this.buildForm.appClusterId==''){
+                return;
+            }
+            this.$$api_ci_getProjectByAppClusterId({
+                data: {
+                    appClusterId: this.buildForm.appClusterId,
+                },
+                fn: data => {
+                    this.buildForm.projectName=data.data.projectName;
                 },
             })
         },
 
         getTaskBuildCommands(){
-            if(this.isEdit){
-                return;
-            }
-            if(!this.buildForm.group){
+            if(!this.buildForm.appClusterId){
                 return
             }
             this.$$api_ci_getTaskBuildCommands({
                 data: {
-                    appClusterId: this.buildForm.group,
+                    taskId: this.buildForm.id,
+                    appClusterId: this.buildForm.appClusterId,
+                    tagOrBranch: this.buildForm.tagOrBranch,
                 },
                 fn: data => {
                     this.buildForm.taskBuildCommands=data.data.list;
@@ -291,6 +375,11 @@ export default {
                     this.pcmData = data.data;
                 },
             })
+        },
+
+        gotoProjectSetting(){
+            this.$router.push({path:'/ci/project',query: {appClusterId: this.buildForm.appClusterId}})
+            this.gotoProjectSettingDialog = false;
         },
 
     }

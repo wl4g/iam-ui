@@ -50,7 +50,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width: 100%">
+                <el-table :data="tableData" :border="false" style="width: 100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="name" :label="$t('message.common.name')" min-width="220"></el-table-column>
@@ -136,7 +136,7 @@
                     <el-col>
                         <el-form-item :label="$t('message.scm.tag')">
                             <template>
-                                <el-table :data="saveForm.tagMap" border style="width: 100%">
+                                <el-table :data="saveForm.tagMap" :border="false" style="width: 100%">
                                     <!-- 动态标签 -->
                                     <el-table-column prop="name" :label="$t('message.common.name')">
                                         <template scope="scope">
@@ -170,7 +170,7 @@
                     <el-col>
                         <el-form-item :label="$t('message.umc.rule')">
                             <template>
-                                <el-table :data="saveForm.rules" border style="width: 100%">
+                                <el-table :data="saveForm.rules" :border="false" style="width: 100%">
                                     <!-- 动态标签 -->
                                     <el-table-column  :label="$t('message.umc.logicalOperator')" >
                                         <template scope="scope">

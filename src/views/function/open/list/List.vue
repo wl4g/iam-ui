@@ -11,7 +11,7 @@
         <el-button type="primary" @click='onSelectData'>查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" border style="width: 100%" align='center'>
+    <el-table :data="tableData" :border="false" style="width: 100%" align='center'>
       <el-table-column
         :prop="fields.date.info.prop"
         :label="fields.date.info.label"

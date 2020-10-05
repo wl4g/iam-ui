@@ -134,6 +134,7 @@ export default {
                     this.saveForm.type = data.data.type;
                     this.saveForm.cron = data.data.cron;
                     this.saveForm.group = data.data.appClusterId;
+                    this.saveForm.organizationCode = data.data.organizationCode;
                 }
             })
         },
@@ -186,7 +187,10 @@ export default {
 
         // 获取分组名称
         getProject() {
-            this.$$api_ci_allProject({
+            this.$$api_ci_getProjectBySelect({
+                data: {
+                    isBoot: 1
+                },
                 fn: data => {
                     this.ProjectData = data.data.list;
                 }
@@ -265,7 +269,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_share_clusters({
+            this.$$api_erm_clusters({
                 fn: data => {
                     this.groupData = data.data.clusters;
                 }
@@ -290,13 +294,13 @@ export default {
         },
 
 
-        getTasksByAppClusterId() {
+        getPipesByAppClusterId() {
             if(!this.saveForm.group){
                 return;
             }
-            this.$$api_ci_getTasksByAppClusterId({
+            this.$$api_ci_getPipesByAppClusterId({
                 data: {
-                    appClusterId: this.saveForm.group,
+                    clusterId: this.saveForm.group,
                 },
                 fn: data => {
                     this.tasksData = data.data;

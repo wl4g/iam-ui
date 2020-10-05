@@ -44,9 +44,9 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width:100%">
+                <el-table :data="tableData" :border="false" style="width:100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
-                    <el-table-column width="100" prop="id" label="ID"></el-table-column>
+                    <!--<el-table-column width="100" prop="id" label="ID"></el-table-column>-->
                     <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
                     <el-table-column prop="providerKind" :label="$t('message.ci.pcmProvider')">
                         <template slot-scope="scope">
@@ -136,6 +136,12 @@
                 <el-row>
                     <el-col :offset="4" :span="20">
                         <p style="font-size:10px;color:red">请使用redmine管理员账号登录，配置=>API认证=>允许XXX，然后打开"我的账号"右侧会出现API token</p>
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="24">
+                        <organization-selector :inputData="{organizationCode: saveForm.organizationCode}" @onChangeOrganization="opt => {if(opt){saveForm.organizationCode = opt}}"></organization-selector>
                     </el-col>
                 </el-row>
 

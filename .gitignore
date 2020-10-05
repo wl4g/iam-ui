@@ -26,3 +26,4 @@ typings/
 .next
 .idea
 dist/
+package-lock.json

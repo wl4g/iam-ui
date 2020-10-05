@@ -27,7 +27,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" border style="width: 100%">
+                <el-table :data="tableData" :border="false" style="width: 100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="name" :label="$t('message.common.name')" ></el-table-column>
@@ -88,7 +88,7 @@
                             <!-- 查询结果表格 -->
                             <!--<div style="float:left;width: 266%;" v-loading='dialogLoading'>-->
                             <template>
-                                <el-table :data="saveForm.alarmRules" border style="width: 100%">
+                                <el-table :data="saveForm.alarmRules" :border="false" style="width: 100%">
 
                                     <el-table-column :label="$t('message.umc.logicalOperator')">
                                         <template scope="scope">
@@ -167,7 +167,7 @@
                     <el-col :span="24">
                         <el-form-item :label="$t('message.ci.contact')">
                             <template>
-                                <el-table :data="saveForm.notificationContacts" style="width: 100%">
+                                <el-table :data="saveForm.notificationContacts" style="width: 100%" :border="false">
 
                                     <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
                                     <el-table-column prop="email" :label="$t('message.common.email')"></el-table-column>

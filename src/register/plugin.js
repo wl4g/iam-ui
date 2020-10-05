@@ -10,8 +10,18 @@ for (var i = 0; i < request.length; i++) {
   if (typeof request[i] === 'object' && request[i].list && Array.isArray(request[i].list)) {
     for (var j = 0; j < request[i].list.length; j++) {
       plugins['api_' + request[i].module + '_' + request[i].list[j].method] = (function (n, m) {
-        return function ({type = request[n].list[m].type, path = request[n].list[m].path,sys = request[n].list[m].sys,usedefault =request[n].list[m].usedefault  ,pathParams, data, fn, errFn, headers, opts} = {}) {
-          // request[n].list[m].type, request[n].list[m].path, data, fn, opts
+        return function ({
+          type = request[n].list[m].type, 
+          pathParams,
+          path = request[n].list[m].path,
+          data,
+          fn,
+          errFn,
+          headers,
+          opts,
+          sys = request[n].list[m].sys,
+          usedefault = request[n].list[m].usedefault
+        } = {}) {
           ajax.call(this, {
             type,
             pathParams,

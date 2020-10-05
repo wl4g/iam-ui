@@ -7,12 +7,6 @@
                         <el-form-item :label="$t('message.common.name')">
                             <el-input v-model="searchParams.name" placeholder="名字"></el-input>
                         </el-form-item>
-                        <el-form-item :label="$t('message.common.email')">
-                            <el-input v-model="searchParams.email" placeholder="Email"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('message.common.phone')">
-                            <el-input v-model="searchParams.phone" placeholder="Phone"></el-input>
-                        </el-form-item>
                         <el-form-item>
                             <el-button @click="onSubmit" type="success" :loading="submitLoading">{{$t('message.common.search')}}</el-button>
                         </el-form-item>
@@ -32,16 +26,16 @@
                     <!-- 查询结果表格 -->
                     <div>
                         <template>
-                            <el-table :data="contactData" style="width: 100%">
+                            <el-table :data="contactData" style="width: 100%" :border="false">
                                 <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                                 <el-table-column prop="id" label="ID"></el-table-column>
                                 <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
-                                <el-table-column prop="email" :label="$t('message.common.email')"></el-table-column>
-                                <el-table-column prop="phone" :label="$t('message.common.phone')"></el-table-column>
+                                <!--<el-table-column prop="email" :label="$t('message.common.email')"></el-table-column>
+                                <el-table-column prop="phone" :label="$t('message.common.phone')"></el-table-column>-->
 
                                 <el-table-column :label="$t('message.common.operation')" min-width="100">
                                     <template slot-scope="scope">
-                                        <el-button type="info" icon='edit' @click="editContact(scope.row)">{{$t('message.common.edit')}}</el-button>
+                                        <el-button type="info" dockerRepository='edit' @click="editContact(scope.row)">{{$t('message.common.edit')}}</el-button>
                                         <el-button type="danger" icon='delete' @click="delContact(scope.row)">{{$t('message.common.del')}}</el-button>
                                     </template>
                                 </el-table-column>
@@ -77,7 +71,7 @@
                 <!-- 查询结果表格 -->
                 <div>
                     <template>
-                        <el-table :data="contactGroupData" border style="width: 100%">
+                        <el-table :data="contactGroupData" :border="false" style="width: 100%">
                             <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                             <el-table-column prop="id" label="ID"></el-table-column>
                             <el-table-column prop="name" :label="$t('message.common.name')">
@@ -119,135 +113,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.common.email')" prop="email">
-                            <el-input v-model="saveForm.email" placeholder="Email"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="emailEnable">
-                            <el-switch v-model="saveForm.emailEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.common.phone')" prop="phone">
-                            <el-input v-model="saveForm.phone" placeholder="Phone"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="phoneEnable">
-                            <el-switch v-model="saveForm.phoneEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.timeOfFreq')" prop="phoneTimeOfFreq">
-                            <el-input v-model="saveForm.phoneTimeOfFreq" placeholder="TimeOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.numOfFreq')" prop="phoneNumOfFreq">
-                            <el-input v-model="saveForm.phoneNumOfFreq" placeholder="NumOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.dingtalk')" prop="dingtalk">
-                            <el-input v-model="saveForm.dingtalk" placeholder="dingtalk"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="dingtalkEnable">
-                            <el-switch v-model="saveForm.dingtalkEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.timeOfFreq')" prop="dingtalkTimeOfFreq">
-                            <el-input v-model="saveForm.dingtalkTimeOfFreq" placeholder="TimeOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.numOfFreq')" prop="dingtalkNumOfFreq">
-                            <el-input v-model="saveForm.dingtalkNumOfFreq" placeholder="NumOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.wechat')" prop="wechat">
-                            <el-input v-model="saveForm.wechat" placeholder="Wechat"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="wechatEnable">
-                            <el-switch v-model="saveForm.wechatEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.timeOfFreq')" prop="wechatTimeOfFreq">
-                            <el-input v-model="saveForm.wechatTimeOfFreq" placeholder="TimeOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.numOfFreq')" prop="wechatNumOfFreq">
-                            <el-input v-model="saveForm.wechatNumOfFreq" placeholder="NumOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.twitter')" prop="twitter">
-                            <el-input v-model="saveForm.twitter" placeholder="Twitter"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="twitterEnable">
-                            <el-switch v-model="saveForm.twitterEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.timeOfFreq')" prop="twitterTimeOfFreq">
-                            <el-input v-model="saveForm.twitterTimeOfFreq" placeholder="TimeOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.numOfFreq')" prop="twitterNumOfFreq">
-                            <el-input v-model="saveForm.twitterNumOfFreq" placeholder="NumOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.facebook')" prop="facebook">
-                            <el-input v-model="saveForm.facebook" placeholder="Facebook"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item :label="$t('message.common.enable')" prop="facebookEnable">
-                            <el-switch v-model="saveForm.facebookEnable" :on-value="1" :off-value="0"></el-switch>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.timeOfFreq')" prop="facebookTimeOfFreq">
-                            <el-input v-model="saveForm.facebookTimeOfFreq" placeholder="TimeOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="7">
-                        <el-form-item :label="$t('message.share.numOfFreq')" prop="facebookNumOfFreq">
-                            <el-input v-model="saveForm.facebookNumOfFreq" placeholder="NumOfFreq"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
                 <el-row>
                     <el-col :span="16">
                         <el-form-item :label="$t('message.common.group')" prop="groups">
@@ -263,7 +128,62 @@
                     </el-col>
                 </el-row>
 
+                <!--===========================================new========================================================-->
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item :label="$t('message.iam.contactChannel')">
+                            <template>
+                                <el-table :data="saveForm.contactChannels" :border="false" style="width: 100%">
+                                    <!-- 动态标签 -->
+                                    <el-table-column prop="kind" :label="$t('message.iam.contactType')">
+                                        <template scope="scope">
+                                            <el-select v-model="scope.row.kind">
+                                                <el-option
+                                                        v-for="item in dictutil.getDictListByType('sys_contact_type')"
+                                                        :key="item.value"
+                                                        :label="item.label"
+                                                        :value="item.value">
+                                                </el-option>
+                                            </el-select>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="primaryAddress" :label="$t('message.iam.primaryAddress')" >
+                                        <template scope="scope">
+                                            <el-input  v-model="scope.row.primaryAddress"></el-input>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="enable" :label="$t('message.common.enable')" >
+                                        <template scope="scope">
+                                            <el-switch v-model="scope.row.enable" :active-value="1" :inactive-value="0"/>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="timeOfFreq" :label="$t('message.share.timeOfFreq')" >
+                                        <template scope="scope">
+                                            <el-input  v-model="scope.row.timeOfFreq"></el-input>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="numOfFreq" :label="$t('message.share.numOfFreq')" >
+                                        <template scope="scope">
+                                            <el-input  v-model="scope.row.numOfFreq"></el-input>
+                                        </template>
+                                    </el-table-column>
 
+                                    <el-table-column :label="$t('message.common.operation')">
+                                        <template slot-scope="scope">
+                                            <el-row>
+                                                <el-button @click.native.prevent="deleteRow(scope.$index)" type="danger">
+                                                    Delete
+                                                </el-button>
+                                            </el-row>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                            <!--</div>-->
+                            <el-button type="primary"  @click.native.prevent="addRow()"> + </el-button>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
             <span slot="footer" class="dialog-footer">
                             <el-button type="primary" @click="saveContact()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>

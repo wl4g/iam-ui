@@ -1,7 +1,7 @@
 <template>
   <div class="shop-list">
     <h3>商品信息</h3>
-    <el-table :data="shop_list" border style="width: 100%">
+    <el-table :data="shop_list" :border="false" style="width: 100%">
       <el-table-column prop="id" label="ID" sortable width="100"></el-table-column>
       <el-table-column prop="name" label="菜品名称"></el-table-column>
       <el-table-column prop="price" label="菜品价格" width="120" sortable></el-table-column>

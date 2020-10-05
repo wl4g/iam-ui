@@ -50,10 +50,6 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-<<<<<<< HEAD
-=======
-            console.info(this.searchParams.id);
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             this.$$api_iam_onlineList({
                 data: {
                     id: this.searchParams.id,

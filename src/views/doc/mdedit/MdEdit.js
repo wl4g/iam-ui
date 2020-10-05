@@ -6,10 +6,6 @@ export default {
     name: 'mdEdit',
     data() {
         var validateLabels = (rule, value, callback) => {
-<<<<<<< HEAD
-=======
-            console.info(value.length);
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             if (value.length<=0) {
                 callback(new Error('Label is Empty'));
             } else {
@@ -26,17 +22,15 @@ export default {
                 lang: '',
                 content: '',
                 description: '',
-<<<<<<< HEAD
                 docCode: '',
-=======
-                fileCode: '',
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 labelIds: [],
             },
 
+            oldContent: '',
+
             labelData: [],
 
-            uploadUrl: global.getBaseUrl(global.share,false)+'/fs/uploadImg',
+            uploadUrl: global.getBaseUrl(global.erm,false)+'/fs/uploadImg',
 
             rules: {
                 name: [
@@ -55,22 +49,13 @@ export default {
 
     mounted() {
 
-<<<<<<< HEAD
         const DOC_LINK_BASEURI = "₤DOC_LINK_BASEURI₤";
         const DOC_LINK_BASEURI_TRAN = "%E2%82%A4DOC_LINK_BASEURI%E2%82%A4";
-=======
-        const SHARE_BASE_URL = "₤shareBaseUrl₤";
-        const SHARE_BASE_URL_TRAN = "%E2%82%A4shareBaseUrl%E2%82%A4";
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
 
         const  md = this.$refs.md.markdownIt;
         let defaultRender = md.renderer.rules.image;
-        let baseUrl = global.getBaseUrl(global.share,false);
+        let baseUrl = global.getBaseUrl(global.erm,false);
         md.renderer.rules.image = function (tokens, idx, options, env, self) {
-<<<<<<< HEAD
-=======
-            console.info(tokens)
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
             if(!tokens){
                 return defaultRender(tokens, idx, options, env, self);
             }
@@ -79,17 +64,10 @@ export default {
                 for(let j in attrs){
                     let attr = attrs[j];
                     if(attr && attr[0] && attr[0]=='src' && attr[1]){
-<<<<<<< HEAD
                         if(attr[1].indexOf(DOC_LINK_BASEURI_TRAN) != -1){
                             attr[1] = attr[1].replace(new RegExp(DOC_LINK_BASEURI_TRAN,'g'),baseUrl);
                         }else if (attr[1].indexOf(DOC_LINK_BASEURI) != -1){
                             attr[1] = attr[1].replace(new RegExp(DOC_LINK_BASEURI,'g'),baseUrl);
-=======
-                        if(attr[1].indexOf(SHARE_BASE_URL_TRAN) != -1){
-                            attr[1] = attr[1].replace(new RegExp(SHARE_BASE_URL_TRAN,'g'),baseUrl);
-                        }else if (attr[1].indexOf(SHARE_BASE_URL) != -1){
-                            attr[1] = attr[1].replace(new RegExp(SHARE_BASE_URL,'g'),baseUrl);
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                         }
                     }
                 }
@@ -111,6 +89,9 @@ export default {
         save(){
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
+                    if(this.oldContent === this.saveForm.content){// not change , just go back
+                        this.$router.push({path:'/doc/file'})
+                    }
                     this.$$api_doc_saveDoc({
                         data:  this.saveForm,
                         fn: data => {
@@ -130,32 +111,23 @@ export default {
             this.$router.push({path:'/doc/file'})
         },
         detail(){
-<<<<<<< HEAD
             this.$$api_doc_docDetail({
-=======
-            this.$$api_doc_fileDetail({
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 data: {
                     id: this.saveForm.id,
                 },
                 fn: data => {
                     if(data.data){
                         this.saveForm = data.data;
+                        this.oldContent = data.data.content;
                     }
                     this.getChanges();
                 }
             })
         },
         getChanges(){
-<<<<<<< HEAD
             this.$$api_doc_getHistoryByDocCode({
                 data: {
                     docCode: this.saveForm.docCode
-=======
-            this.$$api_doc_getHistoryByFileCode({
-                data: {
-                    fileCode: this.saveForm.fileCode
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 },
                 fn: data => {
                     this.changesData = data.data;
@@ -170,11 +142,7 @@ export default {
                 lang: '',
                 content: '',
                 description: '',
-<<<<<<< HEAD
                 docCode: '',
-=======
-                fileCode: '',
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
                 labelIds: [],
             };
             this.changesData = [];
@@ -226,7 +194,6 @@ export default {
                 if(data.data.code !== 200){
                     this.$message.error('上传图片失败');
                 }
-<<<<<<< HEAD
                 this.$refs.md.$img2Url(pos, data.data.data);
             })
         },
@@ -239,12 +206,6 @@ export default {
                 this.$store.dispatch('set_menu_open')//
             }
         },
-=======
-                console.info(data);
-                this.$refs.md.$img2Url(pos, data.data.data);
-            })
-        }
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
 
     },
 }

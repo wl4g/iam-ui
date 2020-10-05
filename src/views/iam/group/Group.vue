@@ -34,6 +34,14 @@
           </el-row>
 
           <el-row>
+              <el-col :span="12">
+                  <el-form-item label="组织机构编码" prop="organizationCode">
+                      <el-input v-model="saveForm.organizationCode"></el-input>
+                  </el-form-item>
+              </el-col>
+          </el-row>
+
+          <el-row>
               <el-col :span="20">
                   <el-form-item  :label="$t('message.iam.menu')"   prop="menu">
                       <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>

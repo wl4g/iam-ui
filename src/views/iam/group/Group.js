@@ -31,6 +31,7 @@ export default {
       saveForm: {
         id: '',
         name: '',
+        organizationCode: '',
         displayName: '',
         parentId: '',
         type: '',
@@ -50,6 +51,7 @@ export default {
       //验证
       rules: {
         name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+        organizationCode: [{ required: true, message: 'Please input organizationCode', trigger: 'blur' }],
         displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
         //role: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorRules }],
         menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
@@ -180,6 +182,7 @@ export default {
       this.saveForm = {
         id: '',
         name: '',
+        organizationCode: '',
         displayName: '',
         parentId: '',
         type: '',

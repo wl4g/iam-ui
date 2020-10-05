@@ -157,7 +157,7 @@ export default {
             if (environmentId == "" || clusterId == "" || clusterId == undefined|| environmentId == undefined) {
                 return;
             }
-            this.$$api_share_instances({
+            this.$$api_erm_instances({
                 data: {
                     clusterId: clusterId,
                     envType: environmentId
@@ -181,7 +181,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_share_clusters({
+            this.$$api_erm_clusters({
                 fn: data => {
                     this.groupData = data.data.clusters;
                 }

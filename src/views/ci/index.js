@@ -1,21 +1,23 @@
 import Task from './task/'
-import TaskHistory from './taskhis/'
+import PipeHistory from './pipehis/'
 import Project from './project/'
 import Trigger from './trigger/'
 import Vcs from './vcs/'
-import TaskHisDetail from './taskhisdetail/'
+import PipeHisDetail from './pipehisdetail/'
 import NewPipeline from './newpipeline/'
 import AnalysisHis from './analysishis/'
-
-
+import Orchestration from './orchestration/'
+import Pipeline from './pipeline/'
 
 export default {
     Task,
-    TaskHistory,
+    PipeHistory,
     Project,
     Trigger,
     Vcs,
-    TaskHisDetail,
+    PipeHisDetail,
     NewPipeline,
     AnalysisHis,
+    Orchestration,
+    Pipeline,
 }

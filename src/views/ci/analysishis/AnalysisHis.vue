@@ -16,7 +16,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width:100%">
+                <el-table :data="tableData" style="width:100%" :border="false">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column width="100" prop="id" label="ID"></el-table-column>
                     <el-table-column prop="projectId" :label="$t('message.ci.projectId')"></el-table-column>

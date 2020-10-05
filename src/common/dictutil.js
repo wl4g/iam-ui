@@ -3,7 +3,6 @@ import {
 } from 'utils/'
 
 //config
-let defaultLabel = "- -";
 let defaultTheme = "primary";
 
 export default {
@@ -22,8 +21,8 @@ export default {
         return dictGroup;
     },
 
-    getDictLabelByTypeAndValue: function (type, value) {
-        if (!type || !value) {//type can not be null
+    getDictLabelByTypeAndValue: function (type, value, defaultLabel = '- -') {
+        if (!type || (!value && value !== 0)) {//type can not be null
             return defaultLabel;
         }
         let dicts_cache = stor.get("dicts_cache");
@@ -34,7 +33,7 @@ export default {
         if (!dictGroup) {
             return defaultLabel;
         }
-        let dict = dictGroup[value];
+        let dict = dictGroup[value.toString()];
         if (!dict) {
             return defaultLabel;
         }
@@ -43,7 +42,7 @@ export default {
 
     getDictThemesByTypeAndValue: function (type, value) {
         //defalut return primary theme , because the default theme is ugly
-        if (!type || !value) {//type can not be null
+        if (!type || (!value && value!==0)) {//type can not be null
             return defaultTheme;
         }
         let dicts_cache = stor.get("dicts_cache");
@@ -54,11 +53,30 @@ export default {
         if (!dictGroup) {
             return defaultTheme;
         }
-        let dict = dictGroup[value];
+        let dict = dictGroup[value.toString()];
         if (!dict) {
             return defaultTheme;
         }
         return dict.themes;
+    },
+
+    getDictByTypeAndValue: function (type, value) {
+        if (!type || !value) {//type can not be null
+            return {};
+        }
+        let dicts_cache = stor.get("dicts_cache");
+        if (!dicts_cache) {
+            return {};
+        }
+        let dictGroup = dicts_cache.dictMap[type];
+        if (!dictGroup) {
+            return {};
+        }
+        let dict = dictGroup[value.toString()];
+        if (!dict) {
+            return {};
+        }
+        return dict;
     },
 
 

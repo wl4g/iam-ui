@@ -60,11 +60,7 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-<<<<<<< HEAD
             <mavon-editor  ref="md" v-model="saveForm.content" @save="save" @imgAdd="imgAdd" @fullScreen="onFullScreen" style="margin-left:20px;;min-height: 500px"/>
-=======
-            <mavon-editor  ref="md" v-model="saveForm.content" @save="save" @imgAdd="imgAdd" style="margin-left:20px;;min-height: 500px"/>
->>>>>>> f18868747d1000612e2c0181c362c3ff3dd8bd20
         </el-form>
     </div>
 

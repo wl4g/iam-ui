@@ -2,24 +2,33 @@
   <div>
 
     <header class="head-nav">
+      <div class="btn-toggle" @click="toggleSidebarLightbox">
+        <i class="el-icon-s-fold"></i>
+      </div>
+
       <div class='logo-container'>
-        <img data-v-12af00ba="" src="../../assets/logo.png" alt="" class="logo">
+        <img data-v-12af00ba="" src="static/images/logo.png" alt="" class="logo">
         <!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
       </div>
-      <div class="menus">
-          <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:67px" class="el-menu-demo" mode="horizontal" unique-opened router>
-          <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'-->
-          <el-menu-item
-            v-for='(item,index) in routList'
-            :index="item.path"
-            :key='item.path'
-            v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>
-            <!--<img src="/static/images/menu/CI_on.png" />-->
-            <img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>
-            {{getMenuName(item)}}<!--{{item.path}}-->
-           </el-menu-item>
-        </el-menu>
-      </div>
+
+
+      <!--<div class="menus">-->
+          <!--<el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:67px" class="el-menu-demo" mode="horizontal" unique-opened router>-->
+          <!--&lt;!&ndash; v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'&ndash;&gt;-->
+          <!--<el-menu-item-->
+            <!--v-for='(item,index) in routList'-->
+            <!--:index="item.path"-->
+            <!--:key='item.path'-->
+            <!--v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>-->
+            <!--&lt;!&ndash;<img src="/static/images/menu/CI_on.png" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>&ndash;&gt;-->
+            <!--<svg class="top-menu-iconfont" aria-hidden="true" style="cursor:pointer;">-->
+              <!--<use :xlink:href="'#'+item.icon"></use>-->
+            <!--</svg>-->
+            <!--{{getMenuName(item)}}&lt;!&ndash;{{item.path}}&ndash;&gt;-->
+           <!--</el-menu-item>-->
+        <!--</el-menu>-->
+      <!--</div>-->
 
         <!--<el-col :span="4" style="text-align: right;">
           <span class='username'>
@@ -29,7 +38,7 @@
                 <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
               </span>
               <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
-                <img src="../../assets/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
+                <img src="static/images/bg_icon/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
               </el-col>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
@@ -44,7 +53,7 @@
       <div class="pull-right">
         <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
           <span class="el-dropdown-link" style="height: 50px;display: block;">
-            <img src="../../assets/def_user.png" alt="" style="border-radius:50%;height: 40px;">
+            <img src="static/images/bg_icon/def_user.png" alt="" style="border-radius:50%;height: 40px;">
             {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -74,6 +83,9 @@
       <div class="pull-right" style="margin-right: 12px">
         <theme-picker></theme-picker>
       </div>
+
+      <organization-panel class="pull-right" style="margin-right: 10px" ></organization-panel>
+
     </header>
 
     <el-dialog size="small" :title="dialog.title" :visible.sync="dialog.show_pass" :close-on-click-modal="false">
@@ -155,20 +167,19 @@
 
 <script>
   import HeadNavJs from './HeadNav.js'
+  import OrganizationPanel from "../../components/organization-panel/OrganizationPanel";
   export default HeadNavJs
 </script>
 
 <style scoped lang='less'>
   .logo-container {
     float: left;
-    width: 190px;
-    height: 67px;
+    height: 50px;
     text-align: center;
   }
   .logo {
-    height: 46px;
+    height: 50px;
     max-width: 100%;
-    margin-top: 10px;
   }
   .fa-user {
     position: relative;
@@ -178,13 +189,13 @@
   .head-nav {
     padding-right: 20px;
     width: 100%;
-    height: 67px;
+    height: 50px;
     background: #fff;
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 99;
-    box-shadow: 0 0 18px -8px #d6d3ce;
+    z-index: 2000;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;
 
     .menus {
       float: left;
@@ -216,4 +227,17 @@
     border-bottom: 0 none;
   }
 
+  .btn-toggle {
+    float: left;
+    width: 48px;
+    height: 50px;
+    line-height: 62px;
+    color: #fff;
+    text-align: center;
+    background-color: #20a1ff;
+    cursor: pointer;
+  }
+  .btn-toggle .el-icon-s-fold {
+    font-size: 24px;
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="cart-list">
     <h3>购物车信息</h3>
-    <el-table :data="cartList" border style="width: 100%">
+    <el-table :data="cartList" :border="false" style="width: 100%">
       <el-table-column prop="id" label="ID" sortable width="100"></el-table-column>
       <el-table-column prop="name" label="菜品名称"></el-table-column>
       <el-table-column prop="price" label="菜品价格" width="120" sortable></el-table-column>

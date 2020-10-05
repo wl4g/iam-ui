@@ -23,7 +23,7 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" style="width: 100%">
+                <el-table :data="tableData" style="width: 100%" :border="false">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID"></el-table-column>
                     <el-table-column prop="alarmTime" :label="$t('message.umc.alarmTime')" :formatter="timestampToTime"></el-table-column>
@@ -70,7 +70,7 @@
                     <el-col :span="24">
                         <el-form-item :label="$t('message.ci.contact')">
                             <template>
-                                <el-table :data="saveForm.contacts" style="width: 100%">
+                                <el-table :data="saveForm.contacts" style="width: 100%" :border="false">
 
                                     <el-table-column prop="name" :label="$t('message.common.name')"></el-table-column>
                                     <el-table-column prop="email" :label="$t('message.common.email')"></el-table-column>
@@ -110,4 +110,4 @@
 <style scoped>
 
 </style>
-s
+

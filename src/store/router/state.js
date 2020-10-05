@@ -6,5 +6,5 @@ export default {
 
   // 左侧当前路由，匹配高亮所用
   leftCurRouter: '',
-  routList : store.get('routList') ||  [],
+  routList : [],
 }
