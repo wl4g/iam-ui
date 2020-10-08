@@ -115,10 +115,8 @@ export default {
                             //clean router
                             //utilstore.remove("routList");
                             //store.commit('update_routList', { routList: [] })
-
                             //window.location.href = IAM.Core.getIamBaseUri() + "/logout";
                             this.$router.push('/login');
-                            
                             location.reload();
                         },
                     });

@@ -1,6 +1,5 @@
 <template>
     <section id="configuration" class="configuration">
-
         <!--step 1: select db & table-->
         <div v-if="!isEdit && !clickNext">
             <el-card class="box-card">
@@ -42,7 +41,7 @@
             </aside>
             <el-card class="box-card" style="padding: 0 30px 0 30px">
                 <div slot="header">
-                    <span>基本信息</span>
+                    <span><b>基本信息</b></span>
                 </div>
                 <el-row>
                     <el-col :span="9">
@@ -63,9 +62,9 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="9">
-                        <el-form-item label="生成模块名" prop="moduleName">
+                        <el-form-item label="模块名" prop="moduleName">
                             <span slot="label">
-                                  <span>生成模块名</span>
+                                  <span>模块名</span>
                                   <el-tooltip class="item" effect="dark" content="生成项目源码的模块名，只能是字母、数字、下划线、$ 组合，开头只能是字母，例如：若生成的是java项目 src/main/java/com/mycompany/myproject/{moduleName}/service/XxxService.java" placement="right">
                                      <i class="el-icon-question"></i>
                                   </el-tooltip>
@@ -76,21 +75,21 @@
                 </el-row>
                 <el-row>
                     <el-col :span="9">
-                        <el-form-item label="生成功能名" prop="functionName">
+                        <el-form-item label="功能简称" prop="functionNameSimple">
                             <span slot="label">
-                                  <span>生成功能名</span>
-                                  <el-tooltip class="item" effect="dark" content="生成模块的功能名称，如：会作为源文件的注释" placement="right">
+                                  <span>功能简称</span>
+                                  <el-tooltip class="item" effect="dark" content="如, 用作菜单名, 建议4个中文字或2个英文单词" placement="right">
                                      <i class="el-icon-question"></i>
                                   </el-tooltip>
                             </span>
-                            <el-input v-model="saveForm.functionName" style="width: 100%" placeholder="e.g: Xxx management center"></el-input>
+                            <el-input v-model="saveForm.functionNameSimple" style="width: 100%" placeholder="e.g: Xxx Management"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="9">
-                        <el-form-item label="生成子模块名" prop="subModuleName">
+                        <el-form-item label="子模块名" prop="subModuleName">
                             <span slot="label">
-                                  <span>生成子模块名</span>
-                                  <el-tooltip class="item" effect="dark" content="同“生成模块名”，例如：src/main/java/com/mycompany/myproject/{moduleName}/service/{subModuleName}/XxxService.java" placement="right">
+                                  <span>子模块名</span>
+                                  <el-tooltip class="item" effect="dark" content="类似“生成模块名”，如：src/main/java/com/mycompany/myproject/{moduleName}/service/{subModuleName}/XxxService.java" placement="right">
                                      <i class="el-icon-question"></i>
                                   </el-tooltip>
                             </span>
@@ -100,14 +99,14 @@
                 </el-row>
                 <el-row>
                     <el-col :span="9">
-                        <el-form-item label="功能名(简写)" prop="functionNameSimple">
+                        <el-form-item label="功能信息" prop="functionName">
                             <span slot="label">
-                                  <span>功能名(简写)</span>
-                                  <el-tooltip class="item" effect="dark" content="用作菜单名" placement="right">
+                                  <span>功能信息</span>
+                                  <el-tooltip class="item" effect="dark" content="生成模块的功能名称，如：会作为源文件的注释" placement="right">
                                      <i class="el-icon-question"></i>
                                   </el-tooltip>
                             </span>
-                            <el-input v-model="saveForm.functionNameSimple" style="width: 100%" placeholder="e.g: Xxx Management"></el-input>
+                            <el-input v-model="saveForm.functionName" style="width: 100%" placeholder="e.g: Xxx management center"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col>&nbsp;</el-col>
@@ -160,7 +159,7 @@
             </el-card>
             <el-card class="box-card" style="padding: 0 30px 0 30px">
                 <div slot="header">
-                    <span>扩展配置</span>
+                    <span><b>扩展配置</b></span>
                 </div>
                 <el-row>
                     <el-col :span="9">
@@ -194,25 +193,36 @@
                                   </el-tooltip>
                             </span>
                             <el-radio-group v-model="saveForm.optionObj.tableEditType">
-                                <el-radio-button :label="'editOnDialog'">弹窗编辑</el-radio-button>
                                 <el-radio-button :label="'editOnPage'">页面编辑</el-radio-button>
+                                <el-radio-button :label="'editOnDialog'">弹窗编辑</el-radio-button>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-card>
-
             <el-card class="box-card">
                 <div slot="header">
-                    <span>字段信息</span>
+                    <el-row>
+                        <el-col :span="17">
+                            <span><b>字段信息</b></span>
+                        </el-col>
+                        <el-col :span="4" style="position:relative;margin-left:40px">
+                            <!--<el-button v-if="activeName!='third'" type="primary" @click="nextStep()">下一步</el-button>-->
+                            <el-button @click="saveData()" type="success">保存配置</el-button>
+                            <el-button @click="back()" type="primary">返回上一步</el-button>
+                        </el-col>
+                        <el-col :span="2" style="position:relative;margin-left:6px">
+                            <el-button type="primary" @click="loadMetadata()" :loading="metadataLoading">重新加载</el-button>
+                        </el-col>
+                    </el-row>
                 </div>
-                <el-table ref="dragTable" :data="saveForm.genTableColumns" row-key="columnName" style="width: 100%">
+                <el-table ref="dragTable" :data="saveForm.genTableColumns" row-key="columnName" style="width:100%" height="600">
                     <el-table-column label="序号" type="index" width="40" align="center">
                         <template scope="scope">
                             <span>{{scope.$index + 1}}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" label="拖动" width="50" class-name="handle-rank">
+                    <el-table-column align="center" label="拖动" width="40" class-name="handle-rank">
                         <template slot-scope="{}">
                             <i class="el-icon-rank"></i>
                         </template>
@@ -227,12 +237,12 @@
                             <el-input v-model="row.columnComment"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" label="列类型" width="100">
+                    <el-table-column align="center" label="列类型" width="95">
                         <template slot-scope="{row}">
                             <span>{{ row.columnType }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" label="属性类型" width="100">
+                    <el-table-column align="center" label="属性类型" width="105">
                         <template slot-scope="{row}">
                             <el-select v-model="row.attrType" filterable style="width: 100%">
                                 <el-option
@@ -304,7 +314,7 @@
                             <el-checkbox v-model="row.isQuery" true-label="1" false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" label="匹配方式" width="100">
+                    <el-table-column align="center" label="匹配方式" width="80">
                         <template slot="header" slot-scope="scope">
                             <span>匹配方式</span>
                             <el-tooltip class="item" effect="dark" content="作为查询条件时的匹配方式" placement="right">
@@ -420,11 +430,10 @@
                 </el-table>
             </el-card>
             <!--button div-->
-            <div style="margin: 0 0 0 185px">
-                <!--<el-button v-if="activeName!='third'" type="primary" @click="nextStep()">下一步</el-button>-->
-                <el-button @click="saveData()" type="primary">保存</el-button>
-                <el-button @click="back()" type="danger">关闭</el-button>
-            </div>
+            <!-- <el-row>
+                <el-col :span="18">&nbsp;</el-col>
+                
+            </el-row> -->
         </el-form>
     </section>
 </template>

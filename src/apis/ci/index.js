@@ -8,54 +8,54 @@ export default [
         method: 'pipelineList',
         path: '/pipe/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     }, {
         name: '任务列表',
         method: 'getPipeStepBuilding',
         path: '/pipe/getPipeStepBuilding',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     }, {
         name: '保存任务',
         method: 'savePipeline',
         path: '/pipe/save',
         type: 'json',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '任务详情',
         method: 'pipelineDetail',
         path: '/pipe/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除任务',
         method: 'delPipeline',
         path: '/pipe/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '创建任务',
         method: 'runPipeline',
         path: '/pipe/create',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取pipelines给下拉框使用',
         method: 'getPipelineForSelect',
         path: '/pipe/getForSelect',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '根据appClusterId获取任务',
         method: 'getPipesByAppClusterId',
         path: '/pipe/getListByAppClusterId',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //task
@@ -64,42 +64,42 @@ export default [
         method: 'taskList',
         path: '/task/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存任务',
         method: 'saveTask',
         path: '/task/save',
         type: 'json',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '任务详情',
         method: 'taskDetail',
         path: '/task/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除任务',
         method: 'delTask',
         path: '/task/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '创建任务',
         method: 'runTask',
         path: '/task/create',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取依赖',
         method: 'getTaskBuildCommands',
         path: '/task/getDependencys',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
 
@@ -109,42 +109,42 @@ export default [
         method: 'pipeHisList',
         path: '/pipeHis/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '任务详情',
         method: 'pipeHisDetail',
         path: '/pipeHis/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '回滚',
         method: 'rollbackPipeHis',
         path: '/pipeHis/rollback',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取日志',
         method: 'pipeHisReadLog',
         path: '/pipeHis/readLog',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取Detail日志',
         method: 'pipeHisReadDetailLog',
         path: '/pipeHis/readDetailLog',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '停止任务',
         method: 'stopTask',
         path: '/pipeHis/stopTask',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
 
@@ -154,56 +154,56 @@ export default [
         method: 'projectList',
         path: '/project/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存项目',
         method: 'saveProject',
         path: '/project/save',
         type: 'json',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '项目详情',
         method: 'projectDetail',
         path: '/project/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除项目',
         method: 'delProject',
         path: '/project/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '所有项目',
         method: 'getProjectBySelect',
         path: '/project/getBySelect',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '解锁项目',
         method: 'unlock',
         path: '/project/unlock',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取分支列表',
         method: 'getBranchs',
         path: '/project/getBranchs',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '获取分支列表',
         method: 'getProjectByAppClusterId',
         path: '/project/getByAppClusterId',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //trigger
@@ -212,35 +212,35 @@ export default [
         method: 'triggerList',
         path: '/trigger/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存触发器',
         method: 'saveTrigger',
         path: '/trigger/save',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '触发器详情',
         method: 'triggerDetail',
         path: '/trigger/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除触发器',
         method: 'delTrigger',
         path: '/trigger/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '校验cron',
         method: 'checkCron',
         path: '/trigger/cronNextExecTime',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //analysis
@@ -249,7 +249,7 @@ export default [
         method: 'analysisList',
         path: '/analysis/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //pcm
@@ -258,83 +258,83 @@ export default [
         method: 'getUsers',
         path: '/pcm/getUsers',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'pm获取项目列表',
         method: 'getPcmProjects',
         path: '/pcm/getProjects',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     }, {
         name: 'pm获取项目列表',
         method: 'getProjectsByPcmId',
         path: '/pcm/getProjectsByPcmId',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'pm获取问题列表',
         method: 'getIssues',
         path: '/pcm/getIssues',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'pcm列表',
         method: 'pcmList',
         path: '/pcm/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存pcm',
         method: 'savePcm',
         path: '/pcm/save',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'pcm详情',
         method: 'pcmDetail',
         path: '/pcm/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除pcm',
         method: 'delPcm',
         path: '/pcm/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '所有pcm',
         method: 'pcmAll',
         path: '/pcm/all',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'getPcmStatuses',
         method: 'getPcmStatuses',
         path: '/pcm/getStatuses',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'getPcmTrackers',
         method: 'getPcmTrackers',
         path: '/pcm/getTrackers',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'getPcmPriorities',
         method: 'getPcmPriorities',
         path: '/pcm/getPriorities',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
 
@@ -344,35 +344,35 @@ export default [
         method: 'orchestrationList',
         path: '/orchestration/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存orchestration',
         method: 'saveOrchestration',
         path: '/orchestration/save',
         type: 'json',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: 'orchestration详情',
         method: 'orchestrationDetail',
         path: '/orchestration/detail',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '删除orchestration',
         method: 'delOrchestration',
         path: '/orchestration/del',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '运行orchestration',
         method: 'runOrchestration',
         path: '/orchestration/run',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //clusterExtension
@@ -381,14 +381,14 @@ export default [
         method: 'clusterExtensionList',
         path: '/pipe/clusterExtensionList',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
     {
         name: '保存clusterExtension',
         method: 'saveClusterExtension',
         path: '/pipe/saveClusterExtension',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
     //orchestrationHistory
@@ -397,7 +397,7 @@ export default [
         method: 'orchestrationHistoryList',
         path: '/orchestrationHistory/list',
         type: 'post',
-        sys: global.ci
+        sysModule: global.ci
     },
 
 

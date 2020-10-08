@@ -17,7 +17,7 @@
             </el-form-item>
             <input hidden></input>
             <el-form-item>
-                <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
+                <el-button @click="onSubmit" type="success" :loading="tmetadataLoading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
 
             <el-button type="primary" style='float:right;margin-right:20px' @click="addData()" >+ Add Gen Table</el-button>
@@ -45,30 +45,46 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="entityName" label="映射实体类/结构"></el-table-column>
-                    <el-table-column prop="functionAuthor" label="作者信息" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="functionAuthor" label="作者信息" :show-overflow-tooltip="true" min-width="50"></el-table-column>
+                    <el-table-column prop="functionNameSimple" label="功能名" :show-overflow-tooltip="true" min-width="65">
+                        <template slot="header" slot-scope="scope">
+                            <span>功能简称</span>
+                            <el-tooltip class="item" effect="dark" content="如用作菜单名称" placement="right">
+                                <i class="el-icon-question"></i>
+                            </el-tooltip>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="functionName" label="功能信息" :show-overflow-tooltip="true">
                         <template slot="header" slot-scope="scope">
                             <span>功能信息</span>
-                            <el-tooltip class="item" effect="dark" content="用作菜单显示等" placement="right">
+                            <el-tooltip class="item" effect="dark" content="源码对应的功能信息，如, 作为源文件的注释" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="comments" label="注释" :show-overflow-tooltip="true">
+                    <el-table-column prop="moduleName" label="模块名" :show-overflow-tooltip="true" min-width="55">
                         <template slot="header" slot-scope="scope">
-                            <span>功能信息</span>
-                            <el-tooltip class="item" effect="dark" content="从数据库字段说明中获取" placement="right">
+                            <span>模块名</span>
+                            <el-tooltip class="item" effect="dark" content="生成的源码所属模块名称" placement="right">
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="humanCreateDate" label="创建时间"></el-table-column>
-                    <el-table-column label="启用">
+                    <el-table-column prop="subModuleName" label="子模块名" :show-overflow-tooltip="true" min-width="55">
+                        <template slot="header" slot-scope="scope">
+                            <span>子模块名</span>
+                            <el-tooltip class="item" effect="dark" content="生成的源码所属子模块名称(可选值)" placement="right">
+                                <i class="el-icon-question"></i>
+                            </el-tooltip>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="humanUpdateDate" label="更新时间" min-width="50"></el-table-column>
+                    <el-table-column label="启用" min-width="35">
                         <template slot-scope="scope">
                             <el-switch v-model="scope.row.status" :active-value="'1'" :inactive-value="'0'" @change="setEnable(scope.row)"/>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="$t('message.common.operation')" min-width="150">
+                    <el-table-column :label="$t('message.common.operation')" min-width="80">
                         <template slot-scope="scope">
                             <el-button
                                 type="text"

@@ -71,7 +71,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('message.common.name')" prop="environment">
@@ -86,8 +85,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-
                 <el-row>
                     <el-col :span="24">
                         <el-form-item :label="$t('message.ci.pipeline')">
@@ -140,24 +137,20 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col :span="24">
                         <organization-selector :inputData="{organizationCode: saveForm.organizationCode}" @onChangeOrganization="opt => {if(opt){saveForm.organizationCode = opt}}"></organization-selector>
                     </el-col>
                 </el-row>
-
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
-                        <el-button @click="dialogVisible = false;cleanSaveForm();">{{$t('message.common.cancel')}}</el-button>
-                    </span>
+                <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="dialogVisible = false;cleanSaveForm();">{{$t('message.common.cancel')}}</el-button>
+            </span>
         </el-dialog>
-
         <section class=" dialogOnRightPage">
             <el-dialog :close-on-click-modal="false" title="Create Task Confirm" :visible.sync="confirmDialog" width="40%" top="0vh" custom-class="dialogOnRight">
                 <el-form label-width="80px"  :model="confirmForm" ref="confirmForm" class="demo-form-inline"  :rules="buildRules">
-
                     <el-card class="box-card" shadow="hover" v-if="projects && projects.length >0">
                         <div slot="header" class="clearfix">
                             <span>任务工单信息(请选择上游项目协作系统的任务指派工单信息):</span>
@@ -188,8 +181,6 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-
-
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('message.common.username')" prop="userId" >
@@ -216,7 +207,6 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-
                     </el-card>
                     <el-card class="box-card mt10" shadow="hover">
                         <div slot="header" class="clearfix">
@@ -242,9 +232,7 @@
                                 </el-col>
                             </el-form-item>
                         </el-row>
-
                     </el-card>
-
                     <el-card class="box-card mt10" shadow="hover" :body-style="{padding: '10px'}">
                         <div slot="header" class="clearfix">
                             <span>其他:</span>
@@ -264,21 +252,13 @@
           </span>
             </el-dialog>
         </section>
-
-
-
-
-
     </section>
 </template>
-
-
 <script>
     import Orchestration from './Orchestration.js'
     export default Orchestration
 </script>
 
 <style scoped>
-
 </style>
 

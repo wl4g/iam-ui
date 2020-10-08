@@ -9,63 +9,33 @@ export default {
     name: 'login',
     data() {
         return {
-            winSize: {
-                width: '',
-                height: ''
-            },
-            formOffset: {
-                position: 'absolute',
-                left: '',
-                top: ''
-            },
-            register: false,
-            login_actions: {
-                disabled: false
-            },
-            data: {
-                username: '',
-                password: ''
-            },
         }
     },
     methods: {
-        postLoginSuccess(principal) {
-            store.set('userinfo.username', principal);
-            this.$router.push('/');
-        },
-        initIamJssdk() {
+        initIAMLoginUI() {
             var that = this;
             new IAMUi().initUI(document.getElementById("iam_container"), {
-                deploy: {
-                    // e.g. http://127.0.0.1:14040/iam-server
-                    // e.g. http://localhost:14040/iam-server
-                    // e.g. http://iam.wl4g.debug/iam-server
-                    //baseUri: "http://localhost:14040/iam-server",
-                    defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
-                    defaultContextPath: "/iam-server"
-                },
+                deploy: global.iam,
                 account: {
                     onSuccess: function (principal, data) {
-                        console.log("Login successful of: " + principal);
-                        that.postLoginSuccess(principal);
-                        return false; // 返回false会阻止自动调整
+                        console.debug("Logged successful for:", principal);
+                        store.set('userinfo.username', principal);
+                        that.$router.push('/');
+                        return false; // 阻止SDK自动跳转
                     },
                     onError: function (errmsg) {
-                        console.error("登录失败. " + errmsg);
+                        console.error("Failed to login, cause by:", errmsg);
                     }
                 }
             });
         },
-        removeLink() {
-        }
     },
     activated() {
-        this.initIamJssdk()
+        this.initIAMLoginUI()
     },
     mounted() {
     },
     beforeRouteLeave(to, from, next) {
-        this.removeLink();
         next();
     },
 }

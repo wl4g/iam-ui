@@ -59,9 +59,32 @@ export default {
                 ],
                 moduleName: [
                     { required: true, message: 'Module name is require', trigger: 'change' },
+                    {
+                        validator: function (rule, value, callback) {
+                            if (/^[a-zA-Z]+[a-zA-Z0-9]+$/.test(value)) {
+                                callback(); // Pass
+                            } else {
+                                callback(new Error("Module name can only be a combination of upper and lower case letters and numbers, The initial letter can only be a letter and the total length is greater than 1"));
+                            }
+                        },
+                        trigger: "change"
+                    }
+                ],
+                subModuleName: [
+                    { required: false, message: 'Sub module name non is require', trigger: 'change' },
+                    {
+                        validator: function (rule, value, callback) {
+                            if (/^[a-zA-Z]+[a-zA-Z0-9]+$/.test(value)) {
+                                callback(); // Pass
+                            } else {
+                                callback(new Error("Sub module name can only be a combination of upper and lower case letters and numbers, The initial letter can only be a letter and the total length is greater than 1"));
+                            }
+                        },
+                        trigger: "change"
+                    }
                 ],
             },
-            loading: true,
+            metadataLoading: false,
             activeName: 'first',
             isdeleteWithLogicalAble: false,
         }
@@ -83,11 +106,9 @@ export default {
         } else {//add
             this.isEdit = false;
         }
-
     },
 
     mounted() {
-        //this.getData();
         this.allDictType();
     },
 
@@ -185,12 +206,14 @@ export default {
         },
 
         loadMetadata() {
+            this.metadataLoading = true;
             this.$$api_dts_loadMetadata({
                 data: {
                     projectId: this.saveForm.projectId,
                     tableName: this.saveForm.tableName,
                 },
                 fn: data => {
+                    this.metadataLoading = false;
                     if (data.data && !data.data.genTableColumns) {
                         data.data.genTableColumns = [];
                     }
@@ -217,7 +240,7 @@ export default {
                         data.data.status = '1';
                     }
                     data.data.projectId = this.saveForm.projectId;
-                    this.saveForm = data.data;
+                    this.saveForm.genTableColumns = data.data.genTableColumns;
                     this.$nextTick(() => {
                         this.setSort()
                     });
@@ -235,6 +258,9 @@ export default {
                         });
                     }
                 },
+                errFn: () => {
+                    this.metadataLoading = false;
+                }
             });
         },
 
@@ -357,6 +383,6 @@ export default {
         },
         back() {
             this.$router.push({ path: '/dts/table', query: { id: this.saveForm.projectId } })
-        }
+        },
     }
 }

@@ -22,7 +22,7 @@ export default {
 
             tableData: [],
 
-            loading: false
+            tmetadataLoading: false
         }
     },
 
@@ -59,7 +59,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.loading = true;
+            this.tmetadataLoading = true;
             this.$$api_dts_genConfigList({
                 data: {
                     tableName: this.searchParams.tableName,
@@ -68,12 +68,12 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: data => {
-                    this.loading = false;
+                    this.tmetadataLoading = false;
                     this.total = data.data.total;
                     this.tableData = data.data.records;
                 },
                 errFn: () => {
-                    this.loading = false;
+                    this.tmetadataLoading = false;
                 }
             })
         },
@@ -111,7 +111,7 @@ export default {
             this.$router.push({ path: '/dts/tableedit', query: { id: row.id, projectId: this.projectId } })
         },
 
-        setEnable(row){
+        setEnable(row) {
             this.$$api_dts_setTableEnable({
                 data: {
                     id: row.id,
@@ -134,7 +134,7 @@ export default {
             this.synchronizeTable(row, force);
         },
 
-        synchronizeTable(row, force){
+        synchronizeTable(row, force) {
             this.$confirm('同步Table信息?', 'warning', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
@@ -194,7 +194,6 @@ export default {
             }).catch(() => {
                 //do nothing
             });*/
-
         }
 
     }

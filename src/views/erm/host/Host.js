@@ -1,4 +1,4 @@
-import {transDate, getDay} from 'utils/'
+import { transDate, getDay } from 'utils/'
 import de from "element-ui/src/locale/lang/de";
 import global from "../../../common/global_variable";
 
@@ -46,12 +46,12 @@ export default {
             // 表单规则
             rules: {
                 name: [
-                    {required: true, message: 'Please Input name', trigger: 'blur'},
-                    {min: 1, max: 50, message: 'length between 1 to 50', trigger: 'blur'}
+                    { required: true, message: 'Please Input name', trigger: 'blur' },
+                    { min: 1, max: 50, message: 'length between 1 to 50', trigger: 'blur' }
                 ],
                 hostname: [
-                    {required: true, message: 'Please Input hostname', trigger: 'blur'},
-                    {min: 1, max: 30, message: 'length between 1 to 100', trigger: 'blur'}
+                    { required: true, message: 'Please Input hostname', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 100', trigger: 'blur' }
                 ],
             },
             loading: false,
@@ -241,7 +241,7 @@ export default {
         },
 
         toNetcard(row) {
-            this.$router.push({path: '/erm/hostnetcard', query: {id: row.id}})
+            this.$router.push({ path: '/erm/hostnetcard', query: { id: row.id } })
         },
 
         openTestConnect(row) {
@@ -288,6 +288,7 @@ export default {
         },
 
         importHost() {
+            // Temporary
             var iamCore = new IAMCore({
                 deploy: {
                     defaultTwoDomain: "erm",
@@ -307,12 +308,12 @@ export default {
             //this.confirmForm.annex = response.data
             let success = response.data.success;
             let fail = response.data.fail;
-            let message = 'import success:'+success+';import fail:'+fail;
-            if(success==0){
+            let message = 'import success:' + success + ';import fail:' + fail;
+            if (success == 0) {
                 this.$message.error(message);
-            }else if(fail == 0){
+            } else if (fail == 0) {
                 this.$message.success(message);
-            }else{
+            } else {
                 this.$message.warning(message);
             }
             this.importDialogVisible = false;
@@ -323,7 +324,5 @@ export default {
             this.importDialogVisible = false;
             this.uploading = false;
         }
-
-
     }
 }

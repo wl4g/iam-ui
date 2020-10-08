@@ -1,4 +1,4 @@
-import {transDate, getDay} from 'utils/'
+import { transDate, getDay } from 'utils/'
 import global from "../../../common/global_variable";
 
 export default {
@@ -9,12 +9,10 @@ export default {
             searchParams: {
                 name: '',
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             //弹窗表单
             saveForm: {
                 id: '',
@@ -24,7 +22,6 @@ export default {
                 remark: '',
                 orchestrationPipelines: [],
             },
-
             dialogVisible: false,
             dialogTitle: '',
             dialogLoading: false,
@@ -32,22 +29,16 @@ export default {
             tableData: [],
             pipelines: [],
             pipelinesShow: [],
-
-
             // 表单规则
             rules: {
-
                 name: [
-                    {required: true, message: 'Please Input name', trigger: 'change'},
-                    {min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur'}
+                    { required: true, message: 'Please Input name', trigger: 'change' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
-
             },
             loading: false,
-
             //before create Build Task
             confirmDialog: false,
-
             confirmForm: {
                 id: '',
                 trackId: '',
@@ -61,28 +52,22 @@ export default {
                 fileList: [],
                 annex: '',
             },
-
             saveLoading: false,
-
             users: [],
             projects: [],
             issues: [],
-
             uploadUrl: global.getBaseUrl(global.ci, false) + '/fs/upload',
-
             buildRules: {
                 trackType: [
-                    {required: true, message: 'Please select trackType', trigger: 'change'},
+                    { required: true, message: 'Please select trackType', trigger: 'change' },
                 ],
                 trackId: [
-                    {required: true, message: 'Please input trackId', trigger: 'change'},
+                    { required: true, message: 'Please input trackId', trigger: 'change' },
                 ],
                 remark: [
-                    {required: true, message: 'Please input remark', trigger: 'change'},
+                    { required: true, message: 'Please input remark', trigger: 'change' },
                 ],
             },
-
-
         }
     },
 
@@ -231,28 +216,28 @@ export default {
         },
 
 
-        fixPipelinesShow(){
-            for(let i in this.saveForm.orchestrationPipelines){
+        fixPipelinesShow() {
+            for (let i in this.saveForm.orchestrationPipelines) {
                 this.buildPipelinesShow(this.saveForm.orchestrationPipelines[i]);
             }
         },
 
-        buildPipelinesShow(orchestrationPipeline){
+        buildPipelinesShow(orchestrationPipeline) {
             orchestrationPipeline.showPipelines = [];
-            for(let i in this.pipelines){
-                if(this.isContainPipeline(this.pipelines[i].id)){
-                    if(this.pipelines[i].id==orchestrationPipeline.pipelineId){
+            for (let i in this.pipelines) {
+                if (this.isContainPipeline(this.pipelines[i].id)) {
+                    if (this.pipelines[i].id == orchestrationPipeline.pipelineId) {
                         orchestrationPipeline.showPipelines.push(this.pipelines[i]);
                     }
-                }else{
+                } else {
                     orchestrationPipeline.showPipelines.push(this.pipelines[i]);
                 }
             }
         },
 
-        isContainPipeline(pipelineId){
-            for(let i in this.saveForm.orchestrationPipelines){
-                if(this.saveForm.orchestrationPipelines[i].pipelineId==pipelineId){
+        isContainPipeline(pipelineId) {
+            for (let i in this.saveForm.orchestrationPipelines) {
+                if (this.saveForm.orchestrationPipelines[i].pipelineId == pipelineId) {
                     return true;
                 }
             }
@@ -409,15 +394,13 @@ export default {
             this.$message.error('upload fail');
         },
 
-        getInstanceByIdCount(id){
-            for(let i in this.pipelines){
-                if(id===this.pipelines[i].id){
+        getInstanceByIdCount(id) {
+            for (let i in this.pipelines) {
+                if (id === this.pipelines[i].id) {
                     return this.pipelines[i]['instances'].length;
                 }
             }
             return '';
         }
-
-
     }
 }

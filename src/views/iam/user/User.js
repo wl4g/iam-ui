@@ -164,14 +164,7 @@ export default {
             const that = this;
             const loginAccount = that.saveForm.userName;
             new IAMCore({
-                deploy: {
-                    // e.g. http://127.0.0.1:14040/iam-server
-                    // e.g. http://localhost:14040/iam-server
-                    // e.g. http://iam.wl4g.debug/iam-server
-                    //baseUri: "http://localhost:14040/iam-server",
-                    defaultTwoDomain: "iam", // IAM后端服务部署二级域名，当iamBaseUri为空时，会自动与location.hostnamee拼接一个IAM后端地址.
-                    defaultContextPath: "/iam-server"
-                },
+                deploy: global.iam,
             }).safeCheck(loginAccount, function (res) {
                 if (res.data && res.data.checkGeneric && res.data.checkGeneric.secretKey) {
                     let secret = res.data.checkGeneric.secretKey;

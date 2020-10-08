@@ -13,10 +13,10 @@ var gbs = {
     api_data_field: 'data',
     api_custom: {
         401: function (that, res, method, url, success, error, dataParams) {
-            IAMCore.multiModularMutexAuthenticatingHandler(res, method, url, success, error, dataParams, function(res){
+            IAMCore.multiModularMutexAuthenticatingHandler(res, method, url, success, error, dataParams, function (res) {
                 IAMCore.Console.info("Devops redirection...");
                 // window.location.href = res.data.redirect_url;
-                that.$alert('请登录<br/>RequestId: '+ res.requestId, '提示', {
+                that.$alert('请登录<br/>RequestId: ' + res.requestId, '提示', {
                     confirmButtonText: '确定',
                     dangerouslyUseHTMLString: true,
                     type: 'warning',

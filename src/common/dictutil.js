@@ -2,12 +2,10 @@ import {
     store as stor
 } from 'utils/'
 
-//config
+// Default dict theme(if necessary)
 let defaultTheme = "primary";
 
 export default {
-
-
     //==========字典共用方法==========
     getDictListByType: function (type) {
         if (!type) {//type can not be null
@@ -20,7 +18,6 @@ export default {
         let dictGroup = dicts_cache.dictList[type];
         return dictGroup;
     },
-
     getDictLabelByTypeAndValue: function (type, value, defaultLabel = '- -') {
         if (!type || (!value && value !== 0)) {//type can not be null
             return defaultLabel;
@@ -39,10 +36,9 @@ export default {
         }
         return dict.label;
     },
-
     getDictThemesByTypeAndValue: function (type, value) {
         //defalut return primary theme , because the default theme is ugly
-        if (!type || (!value && value!==0)) {//type can not be null
+        if (!type || (!value && value !== 0)) {//type can not be null
             return defaultTheme;
         }
         let dicts_cache = stor.get("dicts_cache");
@@ -59,7 +55,6 @@ export default {
         }
         return dict.themes;
     },
-
     getDictByTypeAndValue: function (type, value) {
         if (!type || !value) {//type can not be null
             return {};
@@ -78,6 +73,4 @@ export default {
         }
         return dict;
     },
-
-
 }
