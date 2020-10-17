@@ -46,7 +46,7 @@ export default [
     {
         name: '获取pipelines给下拉框使用',
         method: 'getPipelineForSelect',
-        path: '/pipe/getForSelect',
+        path: '/pipe/loadDatasources',
         type: 'post',
         sysModule: global.ci
     },

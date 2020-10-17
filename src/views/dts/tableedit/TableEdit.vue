@@ -113,37 +113,37 @@
                 </el-row>
                 <el-row>
                     <el-col :span="9">
-                        <el-form-item label="关联的主表" prop="parentTableName">
+                        <el-form-item label="本表关联外键" prop="parentTableFkName">
                             <span slot="label">
-                                  <span>关联的主表</span>
-                                  <el-tooltip class="item" effect="dark" content="配置后可以自动生成 join 查询" placement="right">
-                                     <i class="el-icon-question"></i>
-                                  </el-tooltip>
-                            </span>
-                            <el-select v-model="saveForm.parentTableName" filterable style="width: 100%">
-                                <el-option
-                                        v-for="item in tables"
-                                        :key="item.tableName"
-                                        :label="item.tableName+'  '+item.comments"
-                                        :value="item.tableName">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="9">
-                        <el-form-item label="本表关联主表的外键字段" prop="parentTableFkName">
-                            <span slot="label">
-                                <span>本表关联主表的外键</span>
-                                <el-tooltip class="item" effect="dark" content="同 “关联主表”" placement="right">
+                                <span>本表关联外键</span>
+                                <el-tooltip class="item" effect="dark" content="本表关联主表的外键字段，同 “关联主表”" placement="right">
                                     <i class="el-icon-question"></i>
                                 </el-tooltip>
                             </span>
-                            <el-select v-model="saveForm.parentTableFkName" filterable style="width:91%">
+                            <el-select v-model="saveForm.parentTableFkName" filterable style="width:100%;">
                                 <el-option
                                         v-for="item in saveForm.genTableColumns"
                                         :key="item.columnName"
                                         :label="item.columnName"
                                         :value="item.columnName">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="9">
+                        <el-form-item label="关联主表名" prop="parentTableName">
+                            <span slot="label">
+                                  <span>关联主表名</span>
+                                  <el-tooltip class="item" effect="dark" content="关联的主表名称，配置后可以自动生成 join 查询" placement="right">
+                                     <i class="el-icon-question"></i>
+                                  </el-tooltip>
+                            </span>
+                            <el-select v-model="saveForm.parentTableName" filterable style="width:100%">
+                                <el-option
+                                        v-for="item in tables"
+                                        :key="item.tableName"
+                                        :label="item.tableName+'  '+item.comments"
+                                        :value="item.tableName">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -157,66 +157,18 @@
                     </el-col>
                 </el-row>
             </el-card>
-            <el-card class="box-card" style="padding: 0 30px 0 30px">
-                <div slot="header">
-                    <span><b>扩展配置</b></span>
-                </div>
-                <el-row>
-                    <el-col :span="9">
-                        <el-form-item label="删除功能">
-                            <span slot="label">
-                                  <span>删除功能</span>
-                                  <el-tooltip class="item" effect="dark" content="列表记录是否有删除功能，逻辑删除：后端执行的是update set del_flag=1 ，注：当逻辑删除不可用时，需检查表是否有del_flag字段" placement="right">
-                                     <i class="el-icon-question"></i>
-                                  </el-tooltip>
-                            </span>
-                            <el-radio-group v-model="saveForm.optionObj.tableDeleteType">
-                                <el-radio-button :label="'deleteWithLogical'" :disabled="!isdeleteWithLogicalAble">逻辑删除</el-radio-button>
-                                <el-radio-button :label="'deleteWithPhysical'">物理删除</el-radio-button>
-                                <el-radio-button :label="'deleteWithNone'">无</el-radio-button>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="9">
-                        <el-form-item label="启用Excel导出">
-                            <el-checkbox saveForm.optionObj.isExportExcel></el-checkbox>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="9">
-                        <el-form-item label="编辑方式">
-                            <span slot="label">
-                                  <span>编辑方式</span>
-                                  <el-tooltip class="item" effect="dark" content="编辑页面字段的展示方式：如，弹窗编辑：点击编辑按钮在当前页弹出框进行编辑，页面编辑：会新打开页面进行编辑" placement="right">
-                                     <i class="el-icon-question"></i>
-                                  </el-tooltip>
-                            </span>
-                            <el-radio-group v-model="saveForm.optionObj.tableEditType">
-                                <el-radio-button :label="'editOnPage'">页面编辑</el-radio-button>
-                                <el-radio-button :label="'editOnDialog'">弹窗编辑</el-radio-button>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-card>
-            <el-card class="box-card">
+            <el-card class="box-card" style="padding: 0 30px 0 30px" max-height="600">
                 <div slot="header">
                     <el-row>
-                        <el-col :span="17">
+                        <el-col :span="22">
                             <span><b>字段信息</b></span>
                         </el-col>
-                        <el-col :span="4" style="position:relative;margin-left:40px">
-                            <!--<el-button v-if="activeName!='third'" type="primary" @click="nextStep()">下一步</el-button>-->
-                            <el-button @click="saveData()" type="success">保存配置</el-button>
-                            <el-button @click="back()" type="primary">返回上一步</el-button>
-                        </el-col>
-                        <el-col :span="2" style="position:relative;margin-left:6px">
-                            <el-button type="primary" @click="loadMetadata()" :loading="metadataLoading">重新加载</el-button>
+                        <el-col :span="2">
+                            <el-button type="primary" @click="loadGenColumns()" size="small" :loading="loadGenColumnsLoading">重新加载</el-button>
                         </el-col>
                     </el-row>
                 </div>
-                <el-table ref="dragTable" :data="saveForm.genTableColumns" row-key="columnName" style="width:100%" height="600">
+                <el-table ref="dragTable" :data="saveForm.genTableColumns" row-key="columnName" style="width:100%" max-height="600" v-loading="loadGenColumnsLoading">
                     <el-table-column label="序号" type="index" width="40" align="center">
                         <template scope="scope">
                             <span>{{scope.$index + 1}}</span>
@@ -368,7 +320,6 @@
                                     </el-tooltip>
                                 </el-option>
                                 <el-option label="日期时间" value="8">
-
                                 </el-option>
                             </el-select>
                         </template>
@@ -429,17 +380,59 @@
                     </el-table-column>
                 </el-table>
             </el-card>
-            <!--button div-->
-            <!-- <el-row>
-                <el-col :span="18">&nbsp;</el-col>
-                
-            </el-row> -->
+            <el-card class="box-card" style="padding: 0 30px 0 30px">
+                <div slot="header">
+                    <span><b>扩展配置</b></span>
+                </div>
+                <el-row v-if="saveForm.extraOptions">
+                    <el-col :span="24">
+                        <el-table :data="saveForm.extraOptions" :border="false" style="width:100%" >
+                            <el-table-column prop="name" label="配置键" width="300">
+                                <template slot-scope="scope">
+                                    <span>{{dictutil.getDictLabelByTypeAndValue('dts_config_option',scope.row.name)!='- -'?dictutil.getDictLabelByTypeAndValue('dts_config_option',scope.row.name):scope.row.name}}</span>
+                                    <el-tooltip placement="top">
+                                        <div slot="content">{{dictutil.getDictByTypeAndValue('dts_config_option',scope.row.name).remark}}</div>
+                                        <i class="el-icon-question"></i>
+                                    </el-tooltip>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="value" label="配置选项值">
+                                <template slot-scope="scope">
+                                    <el-select v-model="scope.row.selectedValue" placeholder="请选择" style="width: 30%">
+                                        <el-option
+                                                v-for="item in scope.row.values"
+                                                :key="item"
+                                                :label="item"
+                                                :value="item">
+                                        </el-option>
+                                    </el-select>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">&nbsp;</el-col>
+                </el-row>
+            </el-card>
+            <el-card class="box-card" style="height:60px;padding: 5px 0px 0 0px">
+                <el-row>
+                    <el-col :span="1">&nbsp;</el-col>
+                    <el-col :span="23">
+                        <!--<el-button v-if="activeName!='third'" type="primary" @click="nextStep()">下一步</el-button>-->
+                        <el-button @click="saveData()" type="primary" size="small" :loading="saveLoading">{{$t('message.common.save')}}</el-button>
+                        <el-button @click="back()" size="small">{{$t('message.common.lastStep')}}</el-button>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">&nbsp;</el-col>
+                </el-row>
+            </el-card>
         </el-form>
     </section>
 </template>
 <script>
 import TableEdit from "./TableEdit.js";
-
 export default TableEdit;
 </script>
 <style>

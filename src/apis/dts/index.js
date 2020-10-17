@@ -33,7 +33,7 @@ export default [
     },{
         name: 'getDatabaseForSelect',
         method: 'getDatabaseForSelect',
-        path: '/gen/datasource/getForSelect',
+        path: '/gen/datasource/loadDatasources',
         type: 'post',
         sysModule: global.dts
     },{
@@ -79,21 +79,21 @@ export default [
         type: 'post',
         sysModule: global.dts
     },{
-        name: 'loadTables',
-        method: 'loadTables',
-        path: '/gen/configure/loadTables',
+        name: 'findTables',
+        method: 'findTables',
+        path: '/gen/configure/findTables',
         type: 'post',
         sysModule: global.dts
     },{
-        name: 'loadMetadata',
-        method: 'loadMetadata',
-        path: '/gen/configure/loadMetadata',
+        name: 'loadGenColumns',
+        method: 'loadGenColumns',
+        path: '/gen/configure/loadGenColumns',
         type: 'post',
         sysModule: global.dts
     },{
         name: 'setTableEnable',
         method: 'setTableEnable',
-        path: '/gen/configure/setEnable',
+        path: '/gen/configure/setGenTableStatus',
         type: 'post',
         sysModule: global.dts
     },{
@@ -103,9 +103,9 @@ export default [
         type: 'post',
         sysModule: global.dts
     },{
-        name: 'synchronizeTable',
-        method: 'synchronizeTable',
-        path: '/gen/configure/synchronizeTable',
+        name: 'syncGenTableConfig',
+        method: 'syncGenTableConfig',
+        path: '/gen/configure/syncGenTableConfig',
         type: 'post',
         sysModule: global.dts
     },
@@ -140,9 +140,21 @@ export default [
         sysModule: global.dts
     },
     {
-        name: 'getConfigOption',
-        method: 'getConfigOption',
-        path: '/gen/project/getConfigOption',
+        name: 'extraOptions',
+        method: 'extraOptions',
+        path: '/gen/project/extraOptions',
+        type: 'post',
+        sysModule: global.dts
+    },{
+        name: 'getGenProviderSet',
+        method: 'getGenProviderSet',
+        path: '/gen/project/getGenProviderSet',
+        type: 'post',
+        sysModule: global.dts
+    },{
+        name: 'tableExtraOptions',
+        method: 'tableExtraOptions',
+        path: '/gen/configure/tableExtraOptions',
         type: 'post',
         sysModule: global.dts
     },

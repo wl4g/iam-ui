@@ -32,7 +32,6 @@ export default {
                 options: '',
                 status: '',
                 genTableColumns: [],
-                optionObj: {},
                 remark: '',
             },
             tableData: [],
@@ -84,12 +83,11 @@ export default {
                     }
                 ],
             },
-            metadataLoading: false,
+            loadGenColumnsLoading: false,
+            saveLoading: false,
             activeName: 'first',
-            isdeleteWithLogicalAble: false,
         }
     },
-
     activated() {
         this.cleanSaveForm();
         const id = this.$route.query.id;
@@ -99,19 +97,17 @@ export default {
 
         this.getAttrTypes(projectId);
         this.getTables();
-        if (id) {//edit
+        if (id) { // edit
             this.isEdit = true;
             this.clickNext = true;
             this.editData();
-        } else {//add
+        } else { // add
             this.isEdit = false;
         }
     },
-
     mounted() {
         this.allDictType();
     },
-
     methods: {
         cleanSaveForm() {
             this.isEdit = false;
@@ -137,34 +133,30 @@ export default {
                 options: '',
                 status: '',
                 genTableColumns: [],
-                optionObj: {},
                 remark: '',
             };
         },
-
         getTables() {
             if (!this.saveForm.projectId) {
                 return;
             }
-            this.$$api_dts_loadTables({
+            this.$$api_dts_findTables({
                 data: { projectId: this.saveForm.projectId },
                 fn: data => {
                     this.tables = data.data;
                 }
             });
         },
-
         getFilterTables() {
             if (this.filterSysTable) {
                 return this.tables.filter(item => {
-                    //console.info(b);
+                    //console.info(item);
                     return item.tableName.indexOf('sys_') < 0;
                 })
             } else {
                 return this.tables;
             }
         },
-
         setSort() {
             //const anchor = this.$el.querySelector("#pipe_step"+id);
             const el = this.$refs['dragTable'].$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0];
@@ -177,7 +169,6 @@ export default {
                 onEnd: evt => {
                     const targetRow = this.saveForm.genTableColumns.splice(evt.oldIndex, 1)[0];
                     this.saveForm.genTableColumns.splice(evt.newIndex, 0, targetRow);
-
                     //打开注释可以看下顺序是否正确
                     /*for(let i in this.saveForm.genTableColumns){
                         console.info(this.saveForm.genTableColumns[i].columnName);
@@ -185,16 +176,14 @@ export default {
                 }
             })
         },
-
         afterSelectTable() {
             this.$refs['selectTableForm'].validate((valid) => {
                 if (valid) {
                     this.clickNext = true;
-                    this.loadMetadata();
+                    this.loadGenColumns();
                 }
             });
         },
-
         nextStep() {
             if (this.activeName == 'first') {
                 this.activeName = 'second';
@@ -204,46 +193,27 @@ export default {
 
             }
         },
-
-        loadMetadata() {
-            this.metadataLoading = true;
-            this.$$api_dts_loadMetadata({
+        loadGenColumns() {
+            this.loadGenColumnsLoading = true;
+            this.$$api_dts_loadGenColumns({
                 data: {
                     projectId: this.saveForm.projectId,
                     tableName: this.saveForm.tableName,
                 },
                 fn: data => {
-                    this.metadataLoading = false;
-                    if (data.data && !data.data.genTableColumns) {
-                        data.data.genTableColumns = [];
-                    }
-                    this.isColumnNamehadDelFlag(data.data.genTableColumns);
-                    if (data.data && data.data.options) {
-                        const o = JSON.parse(data.data.options);
-                        if (o) {
-                            data.data.optionObj = o;
-                        } else {
-                            data.data.optionObj = {
-                                tableDeleteType: this.getDefaultDelFlag(),
-                                tableEditType: 'editOnDialog',
-                                isExportExcel: false,
-                            };
-                        }
-                    } else {
-                        data.data.optionObj = {
-                            tableDeleteType: this.getDefaultDelFlag(),
-                            tableEditType: 'editOnDialog',
-                            isExportExcel: false,
-                        };
-                    }
+                    this.loadGenColumnsLoading = false;
                     if (!data.data.status) {
                         data.data.status = '1';
                     }
                     data.data.projectId = this.saveForm.projectId;
-                    this.saveForm.genTableColumns = data.data.genTableColumns;
+                    this.saveForm = data.data;
+                    // this.saveForm.genTableColumns = data.data.genTableColumns;
+
                     this.$nextTick(() => {
                         this.setSort()
                     });
+
+                    this.tableExtraOptions();
 
                     if (data.status == 'warningTip' && data.message) {
                         this.$alert(data.message, '温馨提示', {
@@ -259,49 +229,26 @@ export default {
                     }
                 },
                 errFn: () => {
-                    this.metadataLoading = false;
+                    this.loadGenColumnsLoading = false;
                 }
             });
         },
-
-        getDefaultDelFlag() {
-            if (this.isdeleteWithLogicalAble) {
-                return "deleteWithLogical";
-            } else {
-                return "deleteWithPhysical";
-            }
-        },
-
-        isColumnNamehadDelFlag(genTableColumns) {
-            for (let i in genTableColumns) {
-                if (genTableColumns[i].columnName == 'del_flag') {
-                    this.isdeleteWithLogicalAble = true;
-                    return;
-                }
-            }
-            this.isdeleteWithLogicalAble = false;
-        },
-
         saveData() {
-            this.dialogLoading = true;
+            this.saveLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-
-                    if (this.saveForm.optionObj) {
-                        this.saveForm.options = JSON.stringify(this.saveForm.optionObj);
-                    }
-
                     this.$$api_dts_saveGenConfig({
                         data: this.saveForm,
                         fn: data => {
+                            this.saveLoading = false;
                             this.back();
                         },
                         errFn: () => {
-                            this.dialogLoading = false;
+                            this.saveLoading = false;
                         }
                     });
                 } else {
-                    this.dialogLoading = false;
+                    this.saveLoading = false;
                 }
             });
         },
@@ -311,32 +258,11 @@ export default {
                     tableId: this.saveForm.id,
                 },
                 fn: data => {
-                    if (data.data && !data.data.genTableColumns) {
-                        data.data.genTableColumns = [];
-                    }
-                    this.isColumnNamehadDelFlag(data.data.genTableColumns);
-                    if (data.data && data.data.options) {
-                        const o = JSON.parse(data.data.options);
-                        if (o) {
-                            data.data.optionObj = o;
-                        } else {
-                            data.data.optionObj = {
-                                tableDeleteType: this.getDefaultDelFlag(),
-                                tableEditType: 'editOnDialog',
-                                isExportExcel: false,
-                            };
-                        }
-                    } else {
-                        data.data.optionObj = {
-                            tableDeleteType: this.getDefaultDelFlag(),
-                            tableEditType: 'editOnDialog',
-                            isExportExcel: false,
-                        };
-                    }
                     this.saveForm = data.data;
                     this.$nextTick(() => {
                         this.setSort()
                     });
+                    this.tableExtraOptions();
 
                     if (data.status == 'warningTip' && data.message) {
                         this.$alert(data.message, '温馨提示', {
@@ -354,6 +280,35 @@ export default {
             });
             this.dialogVisible = true;
             this.dialogTitle = 'Edit';
+        },
+        tableExtraOptions() {
+            this.$$api_dts_tableExtraOptions({
+                data: {
+                    providerSet: this.saveForm.providerSet,
+                },
+                fn: data => {
+                    this.mergeExtraOption(data.data, this.saveForm.extraOptions);
+                    this.saveForm.extraOptions = data.data;
+                },
+            })
+        },
+        mergeExtraOption(latestOptions, lastOptions) {
+            for (let i in latestOptions) {
+                let lastSelectedValue = this.getLastSelectedValue(lastOptions, latestOptions[i].name);
+                if (lastSelectedValue) {
+                    latestOptions[i].selectedValue = lastSelectedValue;
+                } else { // Default to first
+                    latestOptions[i].selectedValue = latestOptions[i].values[0];
+                }
+            }
+        },
+        getLastSelectedValue(lastOptions, name) {
+            for (let i in lastOptions) {
+                if (lastOptions[i].name == name) {
+                    return lastOptions[i].selectedValue;
+                }
+            }
+            return null;
         },
         // 获取列表数据
         allDictType() {

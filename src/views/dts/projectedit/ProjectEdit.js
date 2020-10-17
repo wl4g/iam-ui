@@ -82,13 +82,15 @@ export default {
                 ],
             },
             loading: false,
-            datasources: []
+            datasources: [],
+            genProviderSet: [],
         }
     },
 
     activated() {
         this.cleanSaveForm();
         this.getDatasources();
+        this.getGenProviderSet();
         const id = this.$route.query.id;
         this.saveForm.id = id;
         if (id) {//edit
@@ -99,11 +101,9 @@ export default {
         }
 
     },
-
     mounted() {
         //this.getData();
     },
-
     methods: {
         cleanSaveForm() {
             this.saveForm = {
@@ -136,7 +136,6 @@ export default {
                 organType: 'com',
             };
         },
-
         saveData() {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
@@ -157,7 +156,6 @@ export default {
                 }
             });
         },
-
         getDatasources() {
             this.$$api_dts_getDatabaseForSelect({
                 data: {},
@@ -169,11 +167,9 @@ export default {
                 }
             });
         },
-
         dealPackageName() {
             this.saveForm.packageName = this.saveForm.organType + '.' + this.saveForm.organName + '.' + this.saveForm.projectName;
         },
-
         editData() {
             this.$$api_dts_projectDetail({
                 data: {
@@ -188,53 +184,53 @@ export default {
                     }
                     this.saveForm = data.data;
 
-                    this.getConfigOption();
+                    this.extraOptions();
                 },
             });
             this.dialogVisible = true;
             this.dialogTitle = 'Edit';
         },
-
         getUsername() {
             return utilstore.get('userinfo.username')
         },
-
         back() {
             this.$router.push({ path: '/dts/project' })
         },
-
-        getConfigOption() {
-            console.info("into getConfigOption")
-            this.$$api_dts_getConfigOption({
+        getGenProviderSet() {
+            this.$$api_dts_getGenProviderSet({
+                fn: data => {
+                    this.genProviderSet = data.data;
+                },
+            })
+        },
+        extraOptions() {
+            this.$$api_dts_extraOptions({
                 data: {
                     providerSet: this.saveForm.providerSet,
                 },
                 fn: data => {
-                    this.mergeConfigOption(data.data, this.saveForm.extraOptions);
+                    this.mergeExtraOption(data.data, this.saveForm.extraOptions);
                     this.saveForm.extraOptions = data.data;
                 },
             })
         },
-
-        mergeConfigOption(extraOptions, oldExtraOptions) {
-            for (let i in extraOptions) {
-                let oldSelectedValue = this.getOptionsByProviderAndName(oldExtraOptions, extraOptions[i].provider, extraOptions[i].name);
-                if (oldSelectedValue) {
-                    extraOptions[i].selectedValue = oldSelectedValue;
-                } else {
-                    extraOptions[i].selectedValue = extraOptions[i].values[0];
+        mergeExtraOption(latestOptions, lastOptions) {
+            for (let i in latestOptions) {
+                let lastSelectedValue = this.getLastSelectedValue(lastOptions, latestOptions[i].provider, latestOptions[i].name);
+                if (lastSelectedValue) {
+                    latestOptions[i].selectedValue = lastSelectedValue;
+                } else { // Default to first
+                    latestOptions[i].selectedValue = latestOptions[i].values[0];
                 }
             }
         },
-
-        getOptionsByProviderAndName(oldExtraOptions, provider, name) {
-            for (let i in oldExtraOptions) {
-                if (oldExtraOptions[i].provider == provider && oldExtraOptions[i].name == name) {
-                    return oldExtraOptions[i].selectedValue;
+        getLastSelectedValue(lastOptions, provider, name) {
+            for (let i in lastOptions) {
+                if (lastOptions[i].provider == provider && lastOptions[i].name == name) {
+                    return lastOptions[i].selectedValue;
                 }
             }
             return null;
         }
-
     }
 }

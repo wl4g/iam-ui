@@ -20,7 +20,7 @@
                 <el-button @click="onSubmit" type="success" :loading="tmetadataLoading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
 
-            <el-button type="primary" style='float:right;margin-right:20px' @click="addData()" >+ Add Gen Table</el-button>
+            <el-button type="primary" style='float:right;margin-right:20px' @click="addData()" >{{$t('message.common.add')}} GenTable</el-button>
         </el-form>
 
         <!--================================table================================-->
@@ -81,7 +81,7 @@
                     <el-table-column prop="humanUpdateDate" label="更新时间" min-width="50"></el-table-column>
                     <el-table-column label="启用" min-width="35">
                         <template slot-scope="scope">
-                            <el-switch v-model="scope.row.status" :active-value="'1'" :inactive-value="'0'" @change="setEnable(scope.row)"/>
+                            <el-switch v-model="scope.row.status" :active-value="'1'" :inactive-value="'0'" @change="setGenTableStatus(scope.row)"/>
                         </template>
                     </el-table-column>
                     <el-table-column :label="$t('message.common.operation')" min-width="80">

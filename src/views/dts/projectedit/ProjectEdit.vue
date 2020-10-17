@@ -79,12 +79,12 @@
                 <el-row>
                     <el-col :span="9">
                         <el-form-item label="生成模版组" prop="providerSet">
-                            <el-select v-model="saveForm.providerSet" filterable style="width: 100%" @change="getConfigOption">
+                            <el-select v-model="saveForm.providerSet" filterable style="width: 100%" @change="extraOptions">
                                 <el-option
-                                        v-for="item in dictutil.getDictListByType('dts_gen_category')"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
+                                        v-for="item in genProviderSet"
+                                        :key="item"
+                                        :label="item"
+                                        :value="item">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -151,10 +151,14 @@
                 </el-row>
             </el-form>
             <el-row>
-                <el-col :offset="12" :span="4">
-                    <el-button type="primary" @click="saveData()" :loading="saveLoading">{{$t('message.common.save')}}</el-button>
-                    <el-button @click="back">{{$t('message.common.cancel')}}</el-button>
+                <el-col :span="4">
+                    <el-button type="primary" @click="saveData()" size="small" :loading="saveLoading">{{$t('message.common.save')}}</el-button>
+                    <el-button @click="back" size="small">{{$t('message.common.cancel')}}</el-button>
                 </el-col>
+                <el-col :span="20">&nbsp;</el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">&nbsp;</el-col>
             </el-row>
         </div>
     </section>

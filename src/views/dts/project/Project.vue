@@ -21,7 +21,7 @@
         >{{$t('message.common.search')}}</el-button>
       </el-form-item>
 
-      <el-button type="primary" style="float:right;margin-right:20px" @click="addData()">+ Add Gen Project</el-button>
+      <el-button type="primary" style="float:right;margin-right:20px" @click="addData()">{{$t('message.common.add')}} GenProject</el-button>
     </el-form>
 
     <!--================================table================================-->
@@ -63,9 +63,9 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column prop="copyright" label="版权信息" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="humanUpdateDate" label="更新时间"></el-table-column>
-          <el-table-column :label="$t('message.common.operation')" min-width="120">
+          <el-table-column prop="copyright" label="版权信息" min-width="60" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="humanUpdateDate" label="更新时间" min-width="80"></el-table-column>
+          <el-table-column :label="$t('message.common.operation')" min-width="140">
             <template slot-scope="scope">
               <el-button type="primary" icon="edit" @click="generate(scope.row)" :loading="scope.row.generating">{{scope.row.generating?'生成中...':'一键生成'}}</el-button>
               <el-button
@@ -73,12 +73,14 @@
                 icon="el-icon-edit"
                 @click="editData(scope.row)"
                 :title="$t('message.common.edit')"
+                size="mini"
               ></el-button>
               <el-button
                 type="text"
                 icon="el-icon-delete"
                 @click="delData(scope.row)"
                 :title="$t('message.common.del')"
+                size="mini"
               ></el-button>
             </template>
           </el-table-column>
@@ -96,10 +98,8 @@
 
 <script>
 import Project from "./Project.js";
-
 export default Project;
 </script>
 
 <style scoped>
 </style>
-

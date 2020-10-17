@@ -111,7 +111,7 @@ export default {
             this.$router.push({ path: '/dts/tableedit', query: { id: row.id, projectId: this.projectId } })
         },
 
-        setEnable(row) {
+        setGenTableStatus(row) {
             this.$$api_dts_setTableEnable({
                 data: {
                     id: row.id,
@@ -131,16 +131,16 @@ export default {
         handleCommand(command) {
             const force = command.force;
             const row = command.row;
-            this.synchronizeTable(row, force);
+            this.syncGenTableConfig(row, force);
         },
 
-        synchronizeTable(row, force) {
+        syncGenTableConfig(row, force) {
             this.$confirm('同步Table信息?', 'warning', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_synchronizeTable({
+                this.$$api_dts_syncGenTableConfig({
                     data: {
                         id: row.id,
                         force: force,
