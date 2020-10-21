@@ -9,12 +9,10 @@ export default {
             searchParams: {
                 name: '',
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             //弹窗表单
             saveForm: {
                 id: '',
@@ -27,17 +25,32 @@ export default {
                 password: '',
                 remark: '',
             },
-
             dialogVisible: false,
             dialogTitle: '',
             dialogLoading: false,
-
             tableData: [],
-
             // 表单规则
             rules: {
                 name: [
                     {required: true, message: 'Please Input name', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                type: [
+                    {required: true, message: 'DbType is requires', trigger: 'blur' },
+                ],
+                host: [
+                    {required: true, message: 'DbHost is requires', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                port: [
+                    {required: true, message: 'DbPort is requires', trigger: 'blur' },
+                ],
+                database: [
+                    {required: true, message: 'DbName is requires', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                username: [
+                    {required: true, message: 'DbUsername is requires', trigger: 'blur' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
             },

@@ -39,7 +39,7 @@ export default {
 
     methods: {
         toFs() {
-            this.$router.push({path: '/coss/fs', query: {cossProvider: this.cossProvider, bucketName: this.bucketName,}})
+            this.$router.push({path: '/coss/bucket/fs', query: {cossProvider: this.cossProvider, bucketName: this.bucketName,}})
         },
 
         back() {

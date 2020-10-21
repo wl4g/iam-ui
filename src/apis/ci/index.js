@@ -19,7 +19,8 @@ export default [
         name: '保存任务',
         method: 'savePipeline',
         path: '/pipe/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.ci
     },
     {
@@ -70,7 +71,8 @@ export default [
         name: '保存任务',
         method: 'saveTask',
         path: '/task/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.ci
     },
     {
@@ -160,7 +162,8 @@ export default [
         name: '保存项目',
         method: 'saveProject',
         path: '/project/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.ci
     },
     {
@@ -350,7 +353,8 @@ export default [
         name: '保存orchestration',
         method: 'saveOrchestration',
         path: '/orchestration/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.ci
     },
     {
@@ -399,7 +403,6 @@ export default [
         type: 'post',
         sysModule: global.ci
     },
-
 
 
 ]

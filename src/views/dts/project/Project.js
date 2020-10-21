@@ -45,7 +45,7 @@ export default {
             this.getData();
         },
         addData() {
-            this.$router.push({ path: '/dts/projectedit' })
+            this.$router.push({ path: '/dts/project/edit' })
         },
         // 获取列表数据
         getData() {
@@ -75,7 +75,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$router.push({ path: '/dts/projectedit', query: { id: row.id } })
+            this.$router.push({ path: '/dts/project/edit', query: { id: row.id } })
         },
         delData(row) {
             if (!row.id) {
@@ -104,7 +104,7 @@ export default {
         },
 
         toTable(row) {
-            this.$router.push({ path: '/dts/table', query: { id: row.id } })
+            this.$router.push({ path: '/dts/project/table', query: { id: row.id } })
         },
 
         generate(row) {

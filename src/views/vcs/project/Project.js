@@ -106,7 +106,7 @@ export default {
         },
 
         toProjectDetail(row){
-            this.$router.push({path:'/vcs/projectdetail',query: {vcsId:this.searchParams.vscId,projectId:row.id}})
+            this.$router.push({path:'/vcs/vcs/project/detail',query: {vcsId:this.searchParams.vscId,projectId:row.id}})
         },
 
         onChangeGroup(){

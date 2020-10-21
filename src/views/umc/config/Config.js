@@ -1,7 +1,4 @@
 import {transDate, getDay} from 'utils/'
-import {
-    store
-} from '../../../utils/'
 
 export default {
     name: 'config3',

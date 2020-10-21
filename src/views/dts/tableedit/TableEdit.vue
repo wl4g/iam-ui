@@ -389,9 +389,9 @@
                         <el-table :data="saveForm.extraOptions" :border="false" style="width:100%" >
                             <el-table-column prop="name" label="配置键" width="300">
                                 <template slot-scope="scope">
-                                    <span>{{dictutil.getDictLabelByTypeAndValue('dts_config_option',scope.row.name)!='- -'?dictutil.getDictLabelByTypeAndValue('dts_config_option',scope.row.name):scope.row.name}}</span>
+                                    <span>{{dictutil.getDictLabelByTypeAndValue('codegen_tab_extra_type',scope.row.name)!='- -'?dictutil.getDictLabelByTypeAndValue('codegen_tab_extra_type',scope.row.name):scope.row.name}}</span>
                                     <el-tooltip placement="top">
-                                        <div slot="content">{{dictutil.getDictByTypeAndValue('dts_config_option',scope.row.name).remark}}</div>
+                                        <div slot="content">{{dictutil.getDictByTypeAndValue('codegen_tab_extra_type',scope.row.name).remark}}</div>
                                         <i class="el-icon-question"></i>
                                     </el-tooltip>
                                 </template>

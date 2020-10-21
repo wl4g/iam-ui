@@ -20,7 +20,8 @@ export default [
         name: 'saveHost',
         method: 'saveHost',
         path: '/host/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -57,7 +58,8 @@ export default [
         name: '保存集群',
         method: 'saveCluster',
         path: '/cluster/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -94,7 +96,8 @@ export default [
         name: '获取控制台日志',
         method: 'getlog',
         path: '/console/consoleLog',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         async: false,
         sysModule: global.erm
     },
@@ -112,7 +115,8 @@ export default [
         name: 'saveNetcard',
         method: 'saveNetcard',
         path: '/netcard/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -149,7 +153,8 @@ export default [
         name: 'saveIdc',
         method: 'saveIdc',
         path: '/idc/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -185,7 +190,8 @@ export default [
         name: 'saveSsh',
         method: 'saveSsh',
         path: '/ssh/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -235,7 +241,8 @@ export default [
         name: 'saveDockerCluster',
         method: 'saveDockerCluster',
         path: '/dockerCluster/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -271,7 +278,8 @@ export default [
         name: 'saveK8sCluster',
         method: 'saveK8sCluster',
         path: '/k8sCluster/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -307,7 +315,8 @@ export default [
         name: 'saveInstance',
         method: 'saveInstance',
         path: '/instance/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -337,7 +346,8 @@ export default [
         name: 'saveDockerRepository',
         method: 'saveDockerRepository',
         path: '/dockerRepository/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -380,7 +390,8 @@ export default [
         name: 'saveDnsPrivateDomain',
         method: 'saveDnsPrivateDomain',
         path: '/dnsPrivateDomain/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -410,7 +421,8 @@ export default [
         name: 'saveDnsPrivateResolution',
         method: 'saveDnsPrivateResolution',
         path: '/dnsPrivateResolution/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -440,7 +452,8 @@ export default [
         name: 'saveDnsPrivateBlacklist',
         method: 'saveDnsPrivateBlacklist',
         path: '/dnsPrivateBlacklist/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {
@@ -470,7 +483,8 @@ export default [
         name: 'saveDnsPublicDomain',
         method: 'saveDnsPublicDomain',
         path: '/dnsPublicDomain/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.erm
     },
     {

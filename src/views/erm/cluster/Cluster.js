@@ -58,12 +58,12 @@ export default {
 
         addData() {
             //TODO jump to detail page
-            this.$router.push({path:'/erm/clusteredit'})
+            this.$router.push({path:'/erm/cluster/edit'})
         },
 
         editData(row) {
             //TODO jump to detail page
-            this.$router.push({path:'/erm/clusteredit',query: {id: row.id}})
+            this.$router.push({path:'/erm/cluster/edit',query: {id: row.id}})
         },
 
 

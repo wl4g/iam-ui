@@ -101,7 +101,7 @@ export default {
             }
 
             //TODO jump to detail page
-            this.$router.push({path:'/ci/pipelineedit',query: {command: command}})
+            this.$router.push({path:'/ci/pipeline/edit',query: {command: command}})
 
         },
 
@@ -112,7 +112,7 @@ export default {
         },
 
         taskDetail(row){
-            this.$router.push({path:'/ci/pipelineedit',query: {id:row.id}})
+            this.$router.push({path:'/ci/pipeline/edit',query: {id:row.id}})
         },
 
         // 获取列表数据
@@ -160,11 +160,21 @@ export default {
             //return "1";
             return row.instances.length
         },
-
         instances2Str(row){
             var result = "";
             for(var i=0;i<row.instances.length;i++){
                 result += row.instances[i].remark+"\n";
+            }
+            return result;
+        },
+        countProject(row){
+            //return "1";
+            return row.pipeStepBuildingProjects.length
+        },
+        branchs2Str(row){
+            var result = "";
+            for(var i=0;i<row.pipeStepBuildingProjects.length;i++){
+                result += row.pipeStepBuildingProjects[i].projectName+" ["+row.pipeStepBuildingProjects[i].ref +"]\n";
             }
             return result;
         },

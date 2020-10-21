@@ -1,4 +1,4 @@
-import { store } from "../../utils";
+import { cache } from "../../utils";
 
 function menuExist(list, permission) {
     for (var i = 0; i < list.length; i++) {
@@ -69,7 +69,7 @@ let promise = {
     buildRoleRoute: function (_this) {
         console.info("start build Role Route");
         let routList = _this.$router.options.routes;
-        let menu_cache = store.get("menu_cache");
+        let menu_cache = cache.get("menu_cache");
         for (let i = 0; i < routList.length; i++) {
             setMenu(routList[i], menu_cache);
 

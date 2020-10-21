@@ -2,7 +2,7 @@ import {
     gbs
 } from 'config/'
 
-class Store {
+class Cache {
     constructor() {
         this.store = window.localStorage
         this.prefix = gbs.db_prefix
@@ -37,4 +37,4 @@ class Store {
     }
 }
 
-export default new Store()
+export default new Cache()

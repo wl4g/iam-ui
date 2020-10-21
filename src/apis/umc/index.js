@@ -16,7 +16,8 @@ export default [
         name: '保存模板',
         method: 'saveTemplat',
         path: '/template/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.umc
     },
     {
@@ -71,7 +72,8 @@ export default [
         name: '保存模板',
         method: 'saveMetric',
         path: '/metric/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.umc
     },
     {
@@ -123,7 +125,8 @@ export default [
         name: '保存模板',
         method: 'saveConfig',
         path: '/config/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.umc
     },
     {
@@ -148,7 +151,7 @@ export default [
         path: '/datasource/list',
         type: 'post',
         sysModule: global.umc
-    },{
+    }, {
         name: '保存',
         method: 'saveDataSource',
         path: '/datasource/save',
@@ -168,19 +171,19 @@ export default [
         path: '/datasource/del',
         type: 'post',
         sysModule: global.umc
-    },{
+    }, {
         name: '列表',
         method: 'dataSourceProvides',
         path: '/datasource/dataSourceProvides',
         type: 'post',
         sysModule: global.umc
-    },{
+    }, {
         name: '列表',
         method: 'testConnect',
         path: '/datasource/testConnect',
         type: 'post',
         sysModule: global.umc
-    },{
+    }, {
         name: '列表',
         method: 'dataSources',
         path: '/datasource/dataSources',
@@ -195,11 +198,12 @@ export default [
         path: '/engine/list',
         type: 'post',
         sysModule: global.umc
-    },{
+    }, {
         name: '保存',
         method: 'saveEngine',
         path: '/engine/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.umc
     },
     {
@@ -241,12 +245,6 @@ export default [
         type: 'post',
         sysModule: global.umc
     },
-
-
-
-
-
-
 
 
 ]

@@ -1,5 +1,5 @@
 import {
-    store
+    cache
 } from '../../utils/'
 import da from "element-ui/src/locale/lang/da";
 import promise from './promise'
@@ -19,7 +19,7 @@ export default {
                 account: {
                     onSuccess: function (principal, data) {
                         console.debug("Logged successful for:", principal);
-                        store.set('userinfo.username', principal);
+                        cache.set('login_username', principal);
                         that.$router.push('/');
                         return false; // 阻止SDK自动跳转
                     },

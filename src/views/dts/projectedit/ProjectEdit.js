@@ -1,6 +1,6 @@
 import { transDate, getDay } from 'utils/'
 import fa from "element-ui/src/locale/lang/fa";
-import { store as utilstore } from "../../../utils";
+import { cache } from "../../../utils";
 
 export default {
     name: 'project',
@@ -67,9 +67,6 @@ export default {
                 ],
                 version: [
                     { required: true, message: 'Verion is requires', trigger: 'change' },
-                ],
-                packageName: [
-                    { required: true, message: 'Source file package path is requires', trigger: 'change' },
                 ],
                 author: [
                     { required: true, message: 'Authors is requires', trigger: 'change' },
@@ -191,7 +188,7 @@ export default {
             this.dialogTitle = 'Edit';
         },
         getUsername() {
-            return utilstore.get('userinfo.username')
+            return cache.get('login_username')
         },
         back() {
             this.$router.push({ path: '/dts/project' })

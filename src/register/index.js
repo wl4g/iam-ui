@@ -2,25 +2,13 @@ import Vue from 'vue'
 import _ from 'underscore'
 import libs from './lib.js'
 import cps from './component.js'
-import mixins from './mixin'
 import plugins from './plugin'
-
-// console.debug("libs:");
-// console.debug(libs);
-// console.debug("components:");
-// console.debug(cps);
-// console.debug("mixins:");
-// console.debug(mixins);
-// console.debug("plugins:");
-// console.debug(plugins);
 
 /**
  * 把一些全局对象和一些全局方法，注册到Vue原型上
  */
 Vue.use({
     install(Vue, options) {
-        Vue.mixin(mixins)
-
         // 注册第三方库
         _.each(libs, (item, key) => {
             Vue.prototype['$$' + key] = item

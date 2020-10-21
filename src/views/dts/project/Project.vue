@@ -4,7 +4,7 @@
       :inline="true"
       :model="searchParams"
       class="searchbar"
-      @keyup.enter.native="onSubmit()"
+      @keyup.enter.native.prevent="onSubmit()"
     >
       <el-form-item :label="$t('message.common.name')">
         <el-input
@@ -12,6 +12,7 @@
           placeholder="e.g. localhost"
           style="width:165px"
         ></el-input>
+        <input type="text" style="display:none;" />
       </el-form-item>
       <el-form-item>
         <el-button

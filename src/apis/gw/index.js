@@ -14,7 +14,8 @@ export default [
         name: '保存gateway',
         method: 'saveGateway',
         path: '/gateway/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.gw
     },
     {
@@ -44,7 +45,8 @@ export default [
         name: '保存upstream',
         method: 'saveUpstream',
         path: '/upstream/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.gw
     },
     {
@@ -60,7 +62,7 @@ export default [
         path: '/upstream/del',
         type: 'post',
         sysModule: global.gw
-    },{
+    }, {
         name: 'getUpstreamsForSelect',
         method: 'getUpstreamsForSelect',
         path: '/upstream/loadDatasources',
@@ -81,7 +83,8 @@ export default [
         name: '保存upstreamGroup',
         method: 'saveUpstreamGroup',
         path: '/upstreamGroup/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.gw
     },
     {

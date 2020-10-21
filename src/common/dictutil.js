@@ -1,5 +1,5 @@
 import {
-    store as stor
+    cache
 } from 'utils/'
 
 // Default dict theme(if necessary)
@@ -11,7 +11,7 @@ export default {
         if (!type) {//type can not be null
             return [];
         }
-        let dicts_cache = stor.get("dicts_cache");
+        let dicts_cache = cache.get("dicts_cache");
         if (!dicts_cache) {
             return [];
         }
@@ -22,7 +22,7 @@ export default {
         if (!type || (!value && value !== 0)) {//type can not be null
             return defaultLabel;
         }
-        let dicts_cache = stor.get("dicts_cache");
+        let dicts_cache = cache.get("dicts_cache");
         if (!dicts_cache) {
             return defaultLabel;
         }
@@ -41,7 +41,7 @@ export default {
         if (!type || (!value && value !== 0)) {//type can not be null
             return defaultTheme;
         }
-        let dicts_cache = stor.get("dicts_cache");
+        let dicts_cache = cache.get("dicts_cache");
         if (!dicts_cache) {
             return defaultTheme;
         }
@@ -59,7 +59,7 @@ export default {
         if (!type || !value) {//type can not be null
             return {};
         }
-        let dicts_cache = stor.get("dicts_cache");
+        let dicts_cache = cache.get("dicts_cache");
         if (!dicts_cache) {
             return {};
         }

@@ -14,7 +14,8 @@ export default [
         name: 'saveDatabase',
         method: 'saveDatabase',
         path: '/gen/datasource/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.dts
     },
     {
@@ -30,17 +31,18 @@ export default [
         path: '/gen/datasource/del',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'getDatabaseForSelect',
         method: 'getDatabaseForSelect',
         path: '/gen/datasource/loadDatasources',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'testConnectDb',
         method: 'testConnectDb',
         path: '/gen/datasource/testConnectDb',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.dts
     },
 
@@ -56,7 +58,8 @@ export default [
         name: 'saveGenConfig',
         method: 'saveGenConfig',
         path: '/gen/configure/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.dts
     },
     {
@@ -72,37 +75,37 @@ export default [
         path: '/gen/configure/del',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'generate',
         method: 'generate',
         path: '/gen/configure/generate',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'findTables',
         method: 'findTables',
         path: '/gen/configure/findTables',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'loadGenColumns',
         method: 'loadGenColumns',
         path: '/gen/configure/loadGenColumns',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'setTableEnable',
         method: 'setTableEnable',
         path: '/gen/configure/setGenTableStatus',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'getAttrTypes',
         method: 'getAttrTypes',
         path: '/gen/configure/getAttrTypes',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'syncGenTableConfig',
         method: 'syncGenTableConfig',
         path: '/gen/configure/syncGenTableConfig',
@@ -122,7 +125,8 @@ export default [
         name: 'saveProject',
         method: 'saveProject',
         path: '/gen/project/save',
-        type: 'json',
+        type: 'post',
+        dataType: 'json',
         sysModule: global.dts
     },
     {
@@ -145,13 +149,13 @@ export default [
         path: '/gen/project/extraOptions',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'getGenProviderSet',
         method: 'getGenProviderSet',
         path: '/gen/project/getGenProviderSet',
         type: 'post',
         sysModule: global.dts
-    },{
+    }, {
         name: 'tableExtraOptions',
         method: 'tableExtraOptions',
         path: '/gen/configure/tableExtraOptions',

@@ -90,10 +90,10 @@ export default {
             })
         },
         add(){
-            this.$router.push({path:'/doc/mdEdit'})
+            this.$router.push({path:'/doc/edit'})
         },
         edit(row){
-            this.$router.push({path:'/doc/mdEdit',query: {id: row.id}})
+            this.$router.push({path:'/doc/edit',query: {id: row.id}})
         },
         delData(row){
             if(!row){

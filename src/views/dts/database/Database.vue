@@ -37,12 +37,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="type" label="类型"></el-table-column>
-                    <el-table-column prop="host" label="Host"></el-table-column>
-                    <el-table-column prop="port" label="Port"></el-table-column>
-                    <el-table-column prop="database" label="Database"></el-table-column>
-                    <el-table-column prop="username" label="Username"></el-table-column>
+                    <el-table-column prop="host" label="地址"></el-table-column>
+                    <el-table-column prop="port" label="端口"></el-table-column>
+                    <el-table-column prop="database" label="数据库名"></el-table-column>
+                    <el-table-column prop="username" label="账号"></el-table-column>
                     <el-table-column prop="remark" label="备注"></el-table-column>
-
                     <el-table-column :label="$t('message.common.operation')" min-width="80">
                         <template slot-scope="scope">
                             <!--<el-button type="success"  @click="testConnectDb(scope.row)">测试连接</el-button>-->
@@ -57,7 +56,7 @@
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible"  v-loading='dialogLoading'>
-            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+            <el-form label-width="90px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('message.common.name')" prop="name">
@@ -76,45 +75,42 @@
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Host" prop="host">
+                        <el-form-item label="地址" prop="host">
                             <el-input v-model="saveForm.host"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Port" prop="port">
-                            <el-input v-model="saveForm.port"></el-input>
+                        <el-form-item label="端口" prop="port">
+                            <el-input type="number" v-model="saveForm.port"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="Username" prop="username">
+                        <el-form-item label="账号" prop="username">
                             <el-input v-model="saveForm.username"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="Password" prop="password">
+                        <el-form-item label="密码" prop="password">
                             <el-input type="password" v-model="saveForm.password"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="database" prop="database">
+                        <el-form-item label="数据库名" prop="database">
                             <el-input v-model="saveForm.database"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label="remark" prop="remark">
+                        <el-form-item label="备注" prop="remark">
                             <el-input v-model="saveForm.remark"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button type="success"  @click="testConnectDb()">测试连接</el-button>
@@ -124,15 +120,10 @@
         </el-dialog>
     </section>
 </template>
-
-
 <script>
     import Database from './Database.js'
-
     export default Database
 </script>
-
 <style scoped>
-
 </style>
 

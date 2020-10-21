@@ -1,4 +1,4 @@
-import { store } from "../utils";
+import { cache } from "../utils";
 // https://blog.csdn.net/mrliucx/article/details/105585202
 // import { request } from "express";
 
@@ -48,7 +48,7 @@ export default {
 
         let baseUri = null;
         // Extract baseUri from store.
-        let sysModuleCache = store.get("iam_system_modules");
+        let sysModuleCache = cache.get("iamSysModules");
         if (sysModuleCache && sysModuleCache[sysModule.cluster] && sysModuleCache[sysModule.cluster]['extranetBaseUri']) {
             baseUri = sysModuleCache[sysModule.cluster]['extranetBaseUri'];
         }

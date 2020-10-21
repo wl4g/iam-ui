@@ -67,6 +67,14 @@
                             </el-popover>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="branchs" label="分支/标签" width="80">
+                        <template slot-scope="scope">
+                            <el-popover placement="right" width="300" trigger="hover">
+                                <el-input type="textarea" :rows="3" placeholder="No data row" :readonly="true" :value="branchs2Str(scope.row)"></el-input>
+                                <el-button slot="reference">{{countProject(scope.row)}}</el-button>
+                            </el-popover>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="envType" :label="$t('message.ci.env')">
                         <template slot-scope="scope">
                             <el-tag :type="dictutil.getDictThemesByTypeAndValue('app_ns_type',scope.row.environment)">{{dictutil.getDictLabelByTypeAndValue('app_ns_type',scope.row.environment)}}</el-tag>

@@ -98,7 +98,7 @@ export default {
             this.$refs['toAddForm'].validate((valid) => {
                 if (valid) {
                     if(this.toAddForm.datasourceProvider === 'MYSQL'){
-                        this.$router.push({path:'/umc/custom/mysqldatasource'})
+                        this.$router.push({path:'/umc/custom/datasource/edit'})
                     }
                     this.selectVisible = false;
                 } else {
@@ -169,7 +169,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$router.push({path:'/umc/custom/mysqldatasource',query: {id:row.id}})
+            this.$router.push({path:'/umc/custom/datasource/edit',query: {id:row.id}})
         },
 
         delData(row) {
