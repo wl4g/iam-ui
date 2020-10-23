@@ -26,6 +26,7 @@ export default {
                 projectName: '',
                 httpUrl: '',
                 sshUrl: '',
+                gitInfo: '',
 
                 remark: '',
                 restartCommand: '',
@@ -163,6 +164,7 @@ export default {
                 fn: data => {
                     //this.loading = false;
                     this.saveForm = data.data.project;
+                    this.remoteMethod(this.saveForm.projectName);
                 },
             });
             this.dialogLoading = false;
@@ -202,7 +204,7 @@ export default {
             this.$$api_erm_clusters({
                 fn: data => {
                     this.groupData = data.data.clusters;
-                    this.saveForm.appClusterId = this.appClusterId;
+                    //this.saveForm.appClusterId = this.appClusterId;
                 },
             })
         },
@@ -219,6 +221,7 @@ export default {
                             projectName: this.saveForm.projectName,
                             httpUrl: this.saveForm.httpUrl,
                             sshUrl: this.saveForm.sshUrl,
+                            gitInfo: this.saveForm.gitInfo,
                             vcsId: this.saveForm.vcsId,
                             restartCommand: this.saveForm.restartCommand,
                             remark: this.saveForm.remark,
@@ -257,6 +260,7 @@ export default {
                 projectName: '',
                 httpUrl: '',
                 sshUrl: '',
+                gitInfo: '',
                 remark: '',
                 restartCommand: '',
                 dependencies: [],
@@ -338,14 +342,7 @@ export default {
             if(!this.saveForm.vcsId){
                 return;
             }
-            this.$$api_vcs_vcsProjects({
-                data: {
-                    vcsId: this.saveForm.vcsId,
-                },
-                fn: data => {
-                    this.vcsProjectData = data.data;
-                },
-            })
+            this.remoteMethod();
         },
 
 
@@ -359,15 +356,20 @@ export default {
                 fn: data => {
                     this.vcsProjectData = data.data;
                     this.searchProjectLoading = false;
+                    this.changeProject();
                 },
             })
         },
 
         changeProject(){
+            if(!this.saveForm.projectName){
+                return;
+            }
             let remoteProject = this.getProjectByName(this.saveForm.projectName);
             if(remoteProject){
                 this.saveForm.httpUrl = remoteProject.httpUrl;
                 this.saveForm.sshUrl = remoteProject.sshUrl;
+                this.saveForm.gitInfo = JSON.stringify(remoteProject);
             }
         },
 

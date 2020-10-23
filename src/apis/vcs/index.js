@@ -14,6 +14,7 @@ export default [
         method: 'saveVcs',
         path: '/vcs/save',
         type: 'post',
+        dataType: 'json',
         sysModule: global.vcs
     },
     {
