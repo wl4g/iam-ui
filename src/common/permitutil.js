@@ -7,7 +7,7 @@ let defaultTheme = "primary";
 
 export default {
     //==========判断是否拥有该权限==========
-    isHasPermission: function (permission) {
+    hasPermit: function (permission) {
         if (!permission) {//type can not be null
             return false;
         }
