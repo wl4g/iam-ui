@@ -6,6 +6,7 @@ import router from './router'
 import 'register/'
 import store from 'store/'
 import dictutil from './common/dictutil'
+import permissionutil from './common/permissionutil'
 import globalVariable from './common/global_variable.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -18,6 +19,7 @@ import 'mavon-editor/dist/css/index.css'
 import '@/utils/security/sysmodules'
 
 Vue.prototype.dictutil = dictutil;
+Vue.prototype.permissionutil = permissionutil;
 Vue.prototype.GLOBAL = globalVariable;
 Vue.use(ElementUI, { size: 'mini' });
 Vue.use(mavonEditor)
