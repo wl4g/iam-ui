@@ -173,7 +173,7 @@ export default [
     }, {
         name: 'getIdcForSelect',
         method: 'getIdcForSelect',
-        path: '/idc/loadDatasources',
+        path: '/idc/getForSelect',
         type: 'post',
         sysModule: global.erm
     },
@@ -210,7 +210,7 @@ export default [
     }, {
         name: 'getSshForSelect',
         method: 'getSshForSelect',
-        path: '/ssh/loadDatasources',
+        path: '/ssh/getForSelect',
         type: 'post',
         sysModule: global.erm
     },
@@ -261,7 +261,7 @@ export default [
     }, {
         name: 'getDockerForSelect',
         method: 'getDockerForSelect',
-        path: '/dockerCluster/loadDatasources',
+        path: '/dockerCluster/getForSelect',
         type: 'post',
         sysModule: global.erm
     },
@@ -298,7 +298,7 @@ export default [
     }, {
         name: 'getK8sForSelect',
         method: 'getK8sForSelect',
-        path: '/k8sCluster/loadDatasources',
+        path: '/k8sCluster/getForSelect',
         type: 'post',
         sysModule: global.erm
     },
@@ -366,7 +366,7 @@ export default [
     }, {
         name: 'getDockerRepositoryForSelect',
         method: 'getDockerRepositoryForSelect',
-        path: '/dockerRepository/loadDatasources',
+        path: '/dockerRepository/getForSelect',
         type: 'post',
         sysModule: global.erm
     }, {

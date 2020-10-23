@@ -73,7 +73,7 @@ export default {
 
     mounted() {
         this.getData();
-
+        this.getPipelines();
     },
 
     methods: {

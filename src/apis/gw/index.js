@@ -65,7 +65,7 @@ export default [
     }, {
         name: 'getUpstreamsForSelect',
         method: 'getUpstreamsForSelect',
-        path: '/upstream/loadDatasources',
+        path: '/upstream/getForSelect',
         type: 'post',
         sysModule: global.gw
     },
