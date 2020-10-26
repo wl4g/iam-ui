@@ -76,9 +76,18 @@
                                     ref="modulesTree"
                                     show-checkbox
                                     node-key="id"
+                                    :expand-on-click-node="false"
                                     :check-strictly="true"
                                     @check-change = "checkChange"
                                     :props="defaultProps">
+                                <span class="custom-tree-node" slot-scope="{ node, data }">
+                                    <span>{{ node.label }}</span>
+                                    <span style="float: right">
+                                      <el-button type="primary" size="mini" @click="() => selectAllChildren(node, data)"
+                                                 style="font-size: 12px; line-height: 0; padding: 7px 5px;margin-left: 10px"
+                                      >Child All</el-button>
+                                    </span>
+                                </span>
                             </el-tree>
                         </el-form-item>
                     </el-col>

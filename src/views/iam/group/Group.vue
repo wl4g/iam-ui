@@ -1,12 +1,10 @@
-/**
- * Created by Penn Peng on 2018/10/01.
- */
 <template>
   <div class="">
     <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">{{ $t('message.common.addTop') }}</el-button>
       <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.search') }}</el-button>
    <tree-table
       border
+      rowKey="organizationCode"
       :data="data"
       :columns="columns"
       :BtnInfo="btn_info"
@@ -43,8 +41,8 @@
 
           <el-row>
               <el-col :span="20">
-                  <el-form-item  :label="$t('message.iam.menu')"   prop="menu">
-                      <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
+                  <el-form-item :label="$t('message.iam.menu')" prop="menu">
+                      <el-input type="textarea" :readonly="true" class="noHide" v-model="saveForm.menuNameStrs" @click.native='focusDo()'></el-input>
                       <el-tree
                               style="max-height: 240px;overflow: scroll"
                               v-show="treeShow"
@@ -53,9 +51,18 @@
                               ref="modulesTree"
                               show-checkbox
                               node-key="id"
+                              :expand-on-click-node="false"
                               :check-strictly="true"
-                              @check-change = "checkChange"
+                              @check-change="checkChange"
                               :props="defaultProps">
+                           <span class="custom-tree-node" slot-scope="{ node, data }">
+                            <span>{{ node.label }}</span>
+                            <span style="float: right">
+                              <el-button type="primary" size="mini" @click="() => selectAllChildren(node, data)"
+                                         style="font-size: 12px; line-height: 0; padding: 7px 5px"
+                              >Child All</el-button>
+                            </span>
+                          </span>
                       </el-tree>
                   </el-form-item>
               </el-col>

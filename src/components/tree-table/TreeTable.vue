@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs" row-key="id">
+  <el-table :data="formatData"  v-bind="$attrs" :row-key="rowKey">
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" :key="space" class="ms-tree-space"/>
@@ -74,6 +74,10 @@ export default {
     }
   },
   props: {
+    rowKey:{
+      type: String,
+      required: true
+    },
     data: {
       type: [Array, Object],
       required: true
@@ -113,8 +117,9 @@ export default {
   },
   methods: {
     showRow: function(row) {
-      const show = (row.parent ? (row.parent._expanded && row.parent._show) : true)
-      row._show = show
+      //const show = (row.parent ? (row.parent._expanded && row.parent._show) : true)
+      const show = true;
+      row._show = show;
       return show ? 'animation:treeTableShow 0.5s;-webkit-animation:treeTableShow 0.5s;' : 'display:none;'
     },
     // 图标显示

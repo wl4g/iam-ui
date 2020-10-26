@@ -1,4 +1,5 @@
 import i18n from '../../../i18n/i18n'
+import da from "element-ui/src/locale/lang/da";
 
 export default {
   name: 'manage-group',
@@ -327,6 +328,13 @@ export default {
         }
       }
       return parentList
+    },
+    selectAllChildren(node, data){
+      let childList = this.getChild( data, []);
+      let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
+      checkedKeys = checkedKeys.concat(data.id);//own
+      checkedKeys = checkedKeys.concat(childList);//child
+      this.$refs.modulesTree.setCheckedKeys(checkedKeys)
     },
 
 

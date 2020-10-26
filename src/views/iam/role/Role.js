@@ -331,6 +331,14 @@ export default {
 
         },
 
+        selectAllChildren(node, data){
+            let childList = this.getChild( data, []);
+            let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
+            checkedKeys = checkedKeys.concat(data.id);//own
+            checkedKeys = checkedKeys.concat(childList);//child
+            this.$refs.modulesTree.setCheckedKeys(checkedKeys)
+        },
+
 
 
 

@@ -6,7 +6,7 @@
     <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">Add Root</el-button>
     <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.search') }}</el-button>
 
-    <tree-table border :data="data" :columns="columns" :BtnInfo="btn_info" @onClickBtnAdd="onClickBtnAdd" @onClickBtnDelete="onClickBtnDelete" @onClickBtnUpdate="onClickBtnUpdate">
+    <tree-table border :data="data" rowKey="id" :columns="columns" :BtnInfo="btn_info" @onClickBtnAdd="onClickBtnAdd" @onClickBtnDelete="onClickBtnDelete" @onClickBtnUpdate="onClickBtnUpdate">
     </tree-table>
     <el-dialog :close-on-click-modal="false" :title="windowTitle" :visible.sync="dialogVisible" width="820">
         <el-form ref="menuForm" :label-position="labelPosition" :model="formFields" label-width="100px" :rules="rules">
