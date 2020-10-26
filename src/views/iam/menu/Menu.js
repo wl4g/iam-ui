@@ -155,8 +155,8 @@ export default {
          */
         onClickBtnAdd(opts) {
             // 动态菜单不能添加下级
-            if (opts.data.type == '2') {
-                this.$message.error('动态菜单不能添加下级')
+            if (opts.data.type == '3') {
+                this.$message.error('按钮不能添加下级')
                 return
             }
 
