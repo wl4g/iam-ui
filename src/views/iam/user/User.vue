@@ -94,7 +94,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item :label="$t('message.iam.role')" prop="role">
+                        <el-form-item :label="$t('message.iam.role')" prop="roleIds">
                             <el-select v-model="saveForm.roleIds"  multiple  placeholder="请选择" style="width: 100%">
                                 <el-option
                                         v-for="item in rolesData"
@@ -109,7 +109,7 @@
 
                 <el-row>
                     <el-col :span="20">
-                        <el-form-item  :label="$t('message.common.group')"   prop="groupNames">
+                        <el-form-item  :label="$t('message.common.group')"   prop="groupNameStrs">
                             <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo()'></el-input>
                             <el-tree
                                     v-show="treeShow"

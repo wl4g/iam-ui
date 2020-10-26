@@ -52,9 +52,13 @@ export default {
 
             //验证
             rules: {
-                userName: [{ required: true, message: 'Please input userName', trigger: 'blur' }],
-                displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
-                password: [{ required: true, message: 'Please input password', trigger: 'blur' }],
+                userName: [{ required: true, message: 'Please input userName', trigger: 'change' }],
+                displayName: [{ required: true, message: 'Please input displayName', trigger: 'change' }],
+                password: [{ required: true, message: 'Please input password', trigger: 'change' }],
+                roleIds: [{ required: true, message: 'Please select role', trigger: 'change' }],
+                groupNameStrs: [{ required: true, message: 'Please select group', trigger: 'change' }],
+
+
             },
             loading: false
         }
