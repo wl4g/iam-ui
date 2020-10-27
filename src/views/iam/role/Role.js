@@ -7,7 +7,8 @@ export default {
             //查询条件
             searchParams: {
                 roleCode: '',
-                displayName: '',
+                nameZh: '',
+                organizationId: '',
             },
 
             //分页信息
@@ -17,12 +18,13 @@ export default {
 
             //弹窗表单
             saveForm: {
-                displayName: '',
+                nameZh: '',
                 roleCode: '',
                 menuIds: [],
                 menuNameStrs: '',
                 groupIds: [],
                 groupNameStrs: '',
+                organizationId: '',
             },
 
             isEdit: false,
@@ -39,7 +41,7 @@ export default {
 
             defaultProps: {
                 children: 'children',
-                label: 'displayName',
+                label: 'nameZh',
             },
             treeShow: false,
 
@@ -48,12 +50,20 @@ export default {
 
             rules: {
                 roleCode: [{ required: true, message: 'Please input roleCode', trigger: 'blur' }],
-                displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+                nameZh: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
                 groups: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorGroups }],
                 menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
 
             },
-            loading: false
+            loading: false,
+
+            filterText: '',
+        }
+    },
+
+    watch: {
+        filterText(val) {
+            this.$refs.modulesTree3.filter(val);
         }
     },
 
@@ -67,11 +77,16 @@ export default {
     methods: {
 
         onSubmit() {
+            if(!this.searchParams.organizationId){
+                this.tableData = [];
+                this.$message.error('请先选择机构');
+                return;
+            }
             this.getData();
         },
 
         currentChange(i) {
-            this.pageNum = i;
+            //this.pageNum = i;
             this.getData();
         },
 
@@ -113,8 +128,12 @@ export default {
 
 
         addData() {
+            if(!this.searchParams.organizationId){
+                this.$message.error('请先选择机构');
+                return;
+            }
             this.getMenus();
-            this.getGroupsTree();
+            //this.getGroupsTree();
 
             this.isEdit = false;
             this.cleanSaveForm();
@@ -124,11 +143,15 @@ export default {
 
         // 获取列表数据
         getData() {
+            if(!this.searchParams.organizationId){
+                return;
+            }
             this.loading = true;
             this.$$api_iam_roleList({
                 data: {
                     roleCode: this.searchParams.roleCode,
-                    displayName: this.searchParams.displayName,
+                    nameZh: this.searchParams.nameZh,
+                    organizationId: this.searchParams.organizationId,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -145,12 +168,13 @@ export default {
 
         cleanSaveForm() {
             this.saveForm = {
-                displayName: '',
+                nameZh: '',
                 roleCode: '',
                 menuIds: [],
                 menuNameStrs: '',
                 groupIds: [],
                 groupNameStrs: '',
+                organizationId: this.searchParams.organizationId,
             };
         },
 
@@ -180,8 +204,6 @@ export default {
 
         editData(row) {
             this.getMenus();
-            this.getGroupsTree();
-
             this.cleanSaveForm();
             this.isEdit = true;
             if (!row.id) {
@@ -197,13 +219,9 @@ export default {
                         this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
                         this.checkChange();
                     }
-                    if (this.$refs.modulesTree2 && this.saveForm.groupIds instanceof Array) {
-                        this.$refs.modulesTree2.setCheckedKeys(this.saveForm.groupIds);
-                        this.checkChange2();
-                    }
+                    this.saveForm.organizationId = this.searchParams.organizationId;
                 }
             });
-
             this.dialogVisible = true;
             this.dialogTitle = '编辑';
         },
@@ -279,12 +297,11 @@ export default {
                     return flag
                 });
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys)
-
             }
             let checkedNodes = this.$refs.modulesTree.getCheckedNodes();
             let moduleNameList = [];
             checkedNodes.forEach(function(item){
-                moduleNameList.push(item.displayName)
+                moduleNameList.push(item.nameZh)
             });
             this.saveForm.menuIds = checkedKeys;
             this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
@@ -301,36 +318,6 @@ export default {
             return parentList
         },
 
-
-        //模块权限树展示
-        focusDo2() {
-            if(this.$refs.modulesTree2 && this.saveForm.groupIds instanceof Array) this.$refs.modulesTree2.setCheckedKeys(this.saveForm.groupIds)
-            this.groupTreeShow = !this.groupTreeShow;
-            let _self = this;
-            this.$$lib_$(document).bind("click",function(e){
-                let target  = _self.$$lib_$(e.target);
-                if(target.closest(".noHide").length == 0 && _self.groupTreeShow){
-                    _self.groupTreeShow = false;
-                }
-                e.stopPropagation();
-            })
-        },
-
-        //模块权限树选择
-        checkChange2(node, selfChecked, childChecked) {
-            var checkedKeys = this.$refs.modulesTree2.getCheckedKeys();
-            var checkedNodes = this.$refs.modulesTree2.getCheckedNodes();
-
-            let moduleNameList = [];
-            checkedNodes.forEach(function(item){
-                moduleNameList.push(item.displayName)
-            });
-            this.saveForm.groupIds = checkedKeys;
-            //this.saveForm.groupNameStrs = moduleNameList.join(',');
-            this.$set(this.saveForm,'groupNameStrs',moduleNameList.join(','))
-
-        },
-
         selectAllChildren(node, data){
             let childList = this.getChild( data, []);
             let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
@@ -339,8 +326,28 @@ export default {
             this.$refs.modulesTree.setCheckedKeys(checkedKeys)
         },
 
+        selectOrganization(node, selfChecked, childChecked){
+            if (selfChecked) {
+                this.$refs.modulesTree3.setCheckedNodes([node]);
+            }
+            let  checkedKeys = this.$refs.modulesTree3.getCheckedKeys();
+            if(checkedKeys && checkedKeys.length > 0){
+                this.searchParams.organizationId = checkedKeys[0];
+                this.onSubmit();
+            }else{
+                this.searchParams.organizationId = '';
+                this.tableData = [];
+            }
+        },
 
+        resize(){
+            console.info("resize");
+        },
 
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.nameZh.indexOf(value) !== -1;
+        }
 
     }
 }

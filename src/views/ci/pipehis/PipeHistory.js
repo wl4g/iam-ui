@@ -101,7 +101,7 @@ export default {
             this.dialogTitle = '新增';
         },
         currentChange(i) {
-            this.pageNum = i;
+            //this.pageNum = i;
             this.getData();
         },
 

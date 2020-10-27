@@ -44,7 +44,7 @@
                     <p class="mask-list-item-title">{{name}}</p>
                     <ul class="mask-list-item-ul">
                         <li v-for="n of item">
-                            <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{n.displayName}}</span>
+                            <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{n.nameZh}}</span>
                         </li>
                     </ul>
                 </div>

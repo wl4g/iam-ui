@@ -122,7 +122,7 @@ function transform2OneChildrenRoutes(list) {
                 }
                 parent.children.push(item);
             } else if (item.type == '2') {
-                item.path = item.routePath ? item.routePath : 'webview' + item.name;
+                item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                 item.component = webView;
                 item.meta = {
                     linkhref: item.pageLocation
@@ -146,8 +146,9 @@ function transform2OneChildrenRoutes(list) {
             if (!item.meta) {
                 item.meta = {}
             }
-            item.meta.displayName = item.displayName;
-            item.meta.name = item.name;
+            item.meta.nameZh = item.nameZh;
+            item.meta.nameEn = item.nameEn;
+            item.name = item.nameEn;
             return false;
         }
     });
@@ -223,7 +224,7 @@ router.beforeEach(async (to, from, next) => {
                                 }
                             }
                         } else if (item.type == '2') {            // 处理动态路由
-                            item.path = item.routePath ? item.routePath : 'webview' + item.name;
+                            item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                             item.component = webView;
                             item.meta = {
                                 linkhref: item.pageLocation
@@ -244,8 +245,9 @@ router.beforeEach(async (to, from, next) => {
                         if (!item.meta) {
                             item.meta = {}
                         }
-                        item.meta.displayName = item.displayName;
-                        item.meta.name = item.name;
+                        item.meta.nameZh = item.nameZh;
+                        item.meta.nameEn = item.nameEn;
+                        item.name = item.nameEn;
                     })
                 })(deepChildRoutes);
 

@@ -103,14 +103,14 @@ export default [
     {
         name: '获取分组树',
         method: 'getGroupsTree',
-        path: '/group/getGroupsTree',
+        path: '/organization/getGroupsTree',
         type: 'post',
         sysModule: global.iam
     },
     {
         name: '保存Group',
         method: 'saveGroup',
-        path: '/group/save',
+        path: '/organization/save',
         type: 'post',
         dataType: 'json',
         sysModule: global.iam
@@ -118,20 +118,20 @@ export default [
     {
         name: '删除Group',
         method: 'delGroup',
-        path: '/group/del',
+        path: '/organization/del',
         type: 'post',
         sysModule: global.iam
     },
     {
         name: 'Group详情',
         method: 'groupDetail',
-        path: '/group/detail',
+        path: '/organization/detail',
         type: 'post',
         sysModule: global.iam
     }, {
         name: 'getOrganizations',
         method: 'getOrganizations',
-        path: '/group/getOrganizations',
+        path: '/organization/getOrganizations',
         type: 'post',
         sysModule: global.iam
     },

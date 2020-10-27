@@ -17,15 +17,19 @@ import i18n from '@/i18n/i18n'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import '@/utils/security/sysmodules'
+import splitPane from 'vue-splitpane'
+
+
 
 Vue.prototype.dictutil = dictutil;
 Vue.prototype.permitutil = permitutil;
 Vue.prototype.GLOBAL = globalVariable;
 Vue.use(ElementUI, { size: 'mini' });
-Vue.use(mavonEditor)
-Vue.use(VueClipboard)
+Vue.use(mavonEditor);
+Vue.use(VueClipboard);
 Vue.component('organization-selector', OrganizationSelector);
-Vue.component('svg-icon', SvgIcon)
+Vue.component('svg-icon', SvgIcon);
+Vue.component('split-pane', splitPane);
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;

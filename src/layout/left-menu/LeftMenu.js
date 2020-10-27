@@ -25,7 +25,7 @@ export default {
   methods: {
 
     getMenuName(item) {
-      return this.$i18n.locale == 'en_US' ? item.name : item.displayName;
+      return this.$i18n.locale == 'en_US' ? item.nameEn : item.nameZh;
     },
 
     setSize() {
@@ -125,10 +125,10 @@ export default {
         var id = self.dictutil.getDictLabelByTypeAndValue("menu_classify_type", item.classify, null);
         if (id) {
           res[id] = res[id] || [];
-          if (self.$i18n.locale === 'zh_CN' && item.displayName.toUpperCase().includes(keyWords) && item.routePath) {
+          if (self.$i18n.locale === 'zh_CN' && item.nameZh.toUpperCase().includes(keyWords) && item.routePath) {
             res[id].push(item);
           }
-          if (self.$i18n.locale === 'en_US' && item.name.toUpperCase().includes(keyWords) && item.routePath) {
+          if (self.$i18n.locale === 'en_US' && item.nameEn.toUpperCase().includes(keyWords) && item.routePath) {
             res[id].push(item);
           }
         }
