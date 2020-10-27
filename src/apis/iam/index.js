@@ -308,8 +308,8 @@ export function getRoutes() {
             fn: data => {
                 resolve(data);
             },
-            errFn: (obj, error) => {
-                reject(error);
+            errFn: (err) => {
+                reject(err);
             }
         });
     });

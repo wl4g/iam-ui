@@ -290,9 +290,9 @@ export default {
                             this.cleanSaveForm();
                             this.$router.push({path:'/ci/pipeline'})
                         },
-                        errFn: (data) => {
+                        errFn: (err) => {
                             this.loading = false;
-                            this.$message.error(data.message);
+                            this.$message.error(err.message);
                         }
                     })
                 } else {

@@ -16,6 +16,14 @@ export default {
           text: i18n.t('message.common.displayName'),
           value: 'nameZh',
         },
+        {
+          text: '组织编码',
+          value: 'organizationCode',
+        },
+        {
+          text: '类型',
+          value: 'type',
+        },
       ],
       //tree-table 行数据
       data: [],

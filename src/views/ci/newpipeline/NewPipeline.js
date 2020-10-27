@@ -261,9 +261,9 @@ export default {
                             this.cleanBuildForm();
                             this.$router.push({path:'/ci/task'})
                         },
-                        errFn: (data) => {
+                        errFn: (err) => {
                             this.loading = false;
-                            this.$message.error(data.message);
+                            this.$message.error(err.message);
                         }
                     })
                 } else {

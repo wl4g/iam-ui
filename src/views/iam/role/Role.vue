@@ -1,31 +1,13 @@
 <template>
-
     <section class="configuration">
         <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
-            <!--<el-form-item label="DisplayName:">
-                <el-input v-model="searchParams.displayName" placeholder="e.g 开发者"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('message.common.name')">
-                <el-input v-model="searchParams.roleCode" placeholder="e.g coder"></el-input>
-            </el-form-item>-->
             <el-form-item>
                 <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
-
             <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + New Role </el-button>
         </el-form>
 
         <!--================================table================================-->
-        <!-- 查询结果数值 -->
-        <!--<div class="query">
-            <div class="query-left">
-                <div class="line"></div>
-                Result Total： <span class="number">{{total}}</span>
-            </div>
-
-            &lt;!&ndash; 新增按钮 &ndash;&gt;
-            <el-button type="primary" @click="addData()" style='float:right;margin:5px'> + New Role </el-button>
-        </div>-->
         <!-- 查询结果表格 -->
         <div class="components-container">
             <split-pane split="vertical" @resize="resize" :min-percent='15' :default-percent='20' >
@@ -70,7 +52,6 @@
 
                             </el-table>
                         </template>
-                        <!--<el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>-->
                         <el-pagination
                                 @size-change="currentChange"
                                 @current-change="currentChange"

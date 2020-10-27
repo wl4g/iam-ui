@@ -60,6 +60,10 @@ body {
     border: 1px solid #DCDFE6;
 }
 
+body .el-loading-mask {
+    background: rgba(250, 250, 250, 0.9) !important;
+}
+
 
 
 
