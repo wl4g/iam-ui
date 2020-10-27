@@ -64,7 +64,6 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column prop="copyright" label="版权信息" min-width="60" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="humanUpdateDate" label="更新时间" min-width="80"></el-table-column>
           <el-table-column :label="$t('message.common.operation')" min-width="140">
             <template slot-scope="scope">
