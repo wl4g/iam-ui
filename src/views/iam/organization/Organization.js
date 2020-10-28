@@ -23,6 +23,7 @@ export default {
         {
           text: '类型',
           value: 'type',
+          dictKey: 'sys_group_type',
         },
       ],
       //tree-table 行数据
