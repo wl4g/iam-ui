@@ -1,11 +1,11 @@
 
-import Vcs from './vcs/'
+import Repository from './repository/'
 import Project from './project/'
 
 
 
 
 export default {
-    Vcs,
+    Repository,
     Project,
 }

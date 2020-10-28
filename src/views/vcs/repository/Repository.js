@@ -1,7 +1,7 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'vcs',
+    name: 'repository',
     data() {
         return {
             //查询条件

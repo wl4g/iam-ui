@@ -12,9 +12,9 @@
         <el-form ref="menuForm" :label-position="labelPosition" :model="formFields" label-width="100px" :rules="rules">
             <el-row>
                 <el-col :span="12">
-                    <el-form-item :label="$t('message.common.enName')" prop="name">
+                    <el-form-item :label="$t('message.common.enName')" prop="nameEn">
                         <el-col :span="22">
-                            <el-input v-model="formFields.name"></el-input>
+                            <el-input v-model="formFields.nameEn"></el-input>
                         </el-col>
                         <el-col :span="2" class="text-center">
                             <el-tooltip placement="top">
@@ -25,9 +25,9 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item :label="$t('message.common.displayName')" prop="displayName">
+                    <el-form-item :label="$t('message.common.displayName')" prop="nameZh">
                         <el-col :span="22">
-                            <el-input v-model="formFields.displayName"></el-input>
+                            <el-input v-model="formFields.nameZh"></el-input>
                         </el-col>
                         <el-col :span="2" class="text-center">
                             <el-tooltip placement="top">
@@ -110,7 +110,10 @@
                         </el-col>
                         <el-col :span="2" class="text-center">
                             <el-tooltip placement="top">
-                                <div slot="content">点击菜单时请求的路由的地址,如:/pipeline<br />最终真实的地址会与所有父级拼接在一齐，得到例如：<br />/ci/pipeline</div>
+                                <div slot="content">
+                                    <!--点击菜单时请求的路由的地址,如:/pipeline<br />最终真实的地址会与所有父级拼接在一齐，得到例如：<br />/ci/pipeline-->
+                                    菜单路径提示（route_namespace）： 点击菜单的请求路径，<br />如：用户编辑路径为：/#/user/edit  那么需要配置为：/edit。<br />注：区别于菜单打开页面路径(page_location)，这类似于Java Serlvet将请求转发到Jsp。
+                                </div>
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </el-col>

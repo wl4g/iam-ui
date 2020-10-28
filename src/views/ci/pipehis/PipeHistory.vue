@@ -41,12 +41,12 @@
 
         <!--================================table================================-->
         <!-- 查询结果数值 -->
-        <div class="query">
+        <!--<div class="query">
             <div class="query-left">
                 <div class="line"></div>
                 {{$t('message.common.total')}}： <span class="number">{{total}}</span>
             </div>
-        </div>
+        </div>-->
         <!-- 查询结果表格 -->
         <div>
             <template>
@@ -83,7 +83,16 @@
                 </el-table>
             </template>
         </div>
-        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
+        <!--<el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>-->
+        <el-pagination
+                @size-change="currentChange"
+                @current-change="currentChange"
+                :current-page.sync="pageNum"
+                :page-size.sync="pageSize"
+                :page-sizes="[10, 20, 50, 100]"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+        </el-pagination>
     </section>
 </template>
 <script>

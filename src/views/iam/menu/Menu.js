@@ -19,13 +19,13 @@ export default {
             columns: [
                 {
                     text: i18n.t('message.common.enName'),
-                    value: 'name',
+                    value: 'nameEn',
                     icon: true,
                     width: 240
                 },
                 {
                     text: i18n.t('message.common.name'),
-                    value: 'displayName',
+                    value: 'nameZh',
                     width: 200,
                 },
                 {
@@ -55,8 +55,8 @@ export default {
             //form 属性
             formFields: {
                 id: '',
-                name: '',
-                displayName: '',
+                nameEn: '',
+                nameZh: '',
                 parentId: '',
                 parentName: '',
                 permission: '',
@@ -72,8 +72,8 @@ export default {
 
             //验证
             rules: {
-                name: [{required: true, message: 'Please input name', trigger: 'blur'}],
-                displayName: [{required: true, message: 'Please input displayName', trigger: 'blur'}],
+                nameEn: [{required: true, message: 'Please input name', trigger: 'blur'}],
+                nameZh: [{required: true, message: 'Please input displayName', trigger: 'blur'}],
                 permission: [{required: true, message: 'Please input permission', trigger: 'blur'}],
                 type: [{required: true, message: 'Please Select Menu Type', trigger: 'blur'}],
                 routeNamespace: [{required: true, message: 'Please input routePath', trigger: 'blur'}],
@@ -98,7 +98,7 @@ export default {
             menuDataList: [],
             defaultProps: {
                 children: 'children',
-                label: 'displayName',
+                label: 'nameZh',
             },
         }
     },
@@ -161,7 +161,7 @@ export default {
             }
 
             this.emptyFormFieldsAndEnableDialogSubmitBtn();
-            this.windowTitle = '添加[' + opts.data.displayName + ']的下级菜单';
+            this.windowTitle = '添加[' + opts.data.nameZh + ']的下级菜单';
             this.dialogVisible = true;
             this.formFields.parentId = opts.data.id;
             this.setParentName();
@@ -171,12 +171,12 @@ export default {
          */
         onClickBtnUpdate(opts) {
             this.emptyFormFieldsAndEnableDialogSubmitBtn();
-            this.windowTitle = '修改[' + opts.data.displayName + ']菜单';
+            this.windowTitle = '修改[' + opts.data.nameZh + ']菜单';
             this.dialogVisible = true;
             this.formFields = {
                 id: opts.data.id,
-                name: opts.data.name,
-                displayName: opts.data.displayName,
+                nameEn: opts.data.nameEn,
+                nameZh: opts.data.nameZh,
                 parentId: opts.data.parentId,
                 permission: opts.data.permission,
                 pageLocation: opts.data.pageLocation,
@@ -197,8 +197,8 @@ export default {
             }
             this.formFields = {
                 id: '',
-                name: '',
-                displayName: '',
+                nameEn: '',
+                nameZh: '',
                 parentId: '',
                 parentName: '',
                 permission: '',
@@ -268,7 +268,7 @@ export default {
             } else {
                 let node = this.getNodeById(this.formFields.parentId);
                 //this.$set(this.formFields,'parentName',node.displayName);
-                this.formFields.parentName = node.displayName
+                this.formFields.parentName = node.nameZh
             }
         },
 

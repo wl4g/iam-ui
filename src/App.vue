@@ -227,10 +227,6 @@ p {
   margin: 0 2px;
 }
 
-body .el-loading-mask {
-  background: rgba(0, 0, 0, 0.4);
-}
-
 ::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 10px;

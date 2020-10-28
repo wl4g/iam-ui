@@ -11,45 +11,6 @@
         <!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
       </div>
 
-
-      <!--<div class="menus">-->
-          <!--<el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" style="height:67px" class="el-menu-demo" mode="horizontal" unique-opened router>-->
-          <!--&lt;!&ndash; v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'&ndash;&gt;-->
-          <!--<el-menu-item-->
-            <!--v-for='(item,index) in routList'-->
-            <!--:index="item.path"-->
-            <!--:key='item.path'-->
-            <!--v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)'>-->
-            <!--&lt;!&ndash;<img src="/static/images/menu/CI_on.png" />&ndash;&gt;-->
-            <!--&lt;!&ndash;<img :src="item.icon?item.icon:'/static/images/menu/UMC_on.png'" onerror="this.style.display='none'"/>&ndash;&gt;-->
-            <!--<svg class="top-menu-iconfont" aria-hidden="true" style="cursor:pointer;">-->
-              <!--<use :xlink:href="'#'+item.icon"></use>-->
-            <!--</svg>-->
-            <!--{{getMenuName(item)}}&lt;!&ndash;{{item.path}}&ndash;&gt;-->
-           <!--</el-menu-item>-->
-        <!--</el-menu>-->
-      <!--</div>-->
-
-        <!--<el-col :span="4" style="text-align: right;">
-          <span class='username'>
-            <el-dropdown trigger="hover" @command='setDialogInfo'>
-              <span class="el-dropdown-link">
-                {{getUsername()}}
-                <i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
-              </span>
-              <el-col :span="3" class='logo-container' style="width:8%;margin-top:-6px;">
-                <img src="static/images/bg_icon/def_user.png" class='logo' alt="" style="height:40px;margin-right:10px;margin-top:10px;border-radius:50%;">
-              </el-col>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
-                <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
-                <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </span>
-        </el-col>-->
-
-
       <div class="pull-right">
         <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
           <span class="el-dropdown-link" style="height: 50px;display: block;">
@@ -65,10 +26,6 @@
       </div>
 
       <div class="pull-right" style="margin-right: 20px;">
-        <!--<el-select v-model="lang" placeholder="请选择" @change="changeLang">
-          <el-option value="cn" label="中文"></el-option>
-          <el-option value="en" label="en"></el-option>
-        </el-select>-->
         <el-dropdown @command="changeLang" style="height:50px;line-height:50px;cursor: pointer">
           <span class="el-dropdown-link" style="height: 50px;display: block;">
             {{display}}<i class="el-icon-caret-bottom el-icon--right"></i>

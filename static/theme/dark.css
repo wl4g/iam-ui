@@ -204,3 +204,14 @@ body .el-dialog__title{
 #app .custom-menu-demo .el-submenu__title:hover {
     background-color: #2b2f3a;
 }
+
+#app .el-tree {
+    background: #232830;
+}
+#app .el-tree-node__content:hover{
+    background-color: #2b2f3a;
+}
+
+body .el-loading-mask {
+    background: rgba(0, 0, 0, 0.4);
+}

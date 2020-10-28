@@ -19,7 +19,13 @@
               <use :xlink:href="'#'+scope.row['icon']"></use>
             </svg>
         </span>
-        {{ scope.row[column.value] }}
+        <span v-if="!column.dictKey">
+          {{ scope.row[column.value] }}
+        </span>
+        <span v-if="column.dictKey">
+          {{dictutil.getDictLabelByTypeAndValue(column.dictKey, scope.row[column.value])}}
+        </span>
+
       </template>
     </el-table-column>
 

@@ -171,9 +171,9 @@
 
 
 <script>
-    import Vcs from './Vcs.js'
+    import Repository from './Repository.js'
 
-    export default Vcs
+    export default Repository
 </script>
 
 <style scoped>

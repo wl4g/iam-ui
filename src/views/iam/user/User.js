@@ -7,7 +7,7 @@ export default {
             //查询条件
             searchParams: {
                 userName: '',
-                displayName: '',
+                nameZh: '',
             },
 
             //分页信息
@@ -17,7 +17,8 @@ export default {
 
             //弹窗表单
             saveForm: {
-                displayName: '',
+                nameEn: '',
+                nameZh: '',
                 userName: '',
                 oldPassword: '',
                 password: '',
@@ -45,7 +46,7 @@ export default {
 
             defaultProps: {
                 children: 'children',
-                label: 'displayName',
+                label: 'nameZh',
             },
             treeShow: false,
 
@@ -53,7 +54,8 @@ export default {
             //验证
             rules: {
                 userName: [{ required: true, message: 'Please input userName', trigger: 'change' }],
-                displayName: [{ required: true, message: 'Please input displayName', trigger: 'change' }],
+                nameEn: [{ required: true, message: 'Please input nameEn', trigger: 'change' }],
+                nameZh: [{ required: true, message: 'Please input displayName', trigger: 'change' }],
                 password: [{ required: true, message: 'Please input password', trigger: 'change' }],
                 roleIds: [{ required: true, message: 'Please select role', trigger: 'change' }],
                 groupNameStrs: [{ required: true, message: 'Please select group', trigger: 'change' }],
@@ -116,7 +118,8 @@ export default {
             this.$$api_iam_userList({
                 data: {
                     userName: this.searchParams.userName,
-                    displayName: this.searchParams.displayName,
+                    nameEn: this.searchParams.nameEn,
+                    nameZh: this.searchParams.nameZh,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -133,7 +136,7 @@ export default {
 
         cleanSaveForm() {
             this.saveForm = {
-                displayName: '',
+                nameZh: '',
                 userName: '',
                 oldPassword: '',
                 password: '',
@@ -272,7 +275,7 @@ export default {
 
             let moduleNameList = [];
             checkedNodes.forEach(function (item) {
-                moduleNameList.push(item.displayName)
+                moduleNameList.push(item.nameZh)
             });
             this.saveForm.groupIds = checkedKeys;
             //this.saveForm.groupNameStrs = moduleNameList.join(',');

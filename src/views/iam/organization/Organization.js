@@ -2,7 +2,7 @@ import i18n from '../../../i18n/i18n'
 import da from "element-ui/src/locale/lang/da";
 
 export default {
-  name: 'manage-group',
+  name: 'organization',
   components: {  },
   data() {
     return {
@@ -10,11 +10,20 @@ export default {
       columns: [
         {
           text: i18n.t('message.common.name'),
-          value: 'name',
+          value: 'nameEn',
         },
         {
           text: i18n.t('message.common.displayName'),
-          value: 'displayName',
+          value: 'nameZh',
+        },
+        {
+          text: '组织编码',
+          value: 'organizationCode',
+        },
+        {
+          text: '类型',
+          value: 'type',
+          dictKey: 'sys_group_type',
         },
       ],
       //tree-table 行数据
@@ -31,9 +40,9 @@ export default {
       //form 属性
       saveForm: {
         id: '',
-        name: '',
+        nameEn: '',
         organizationCode: '',
-        displayName: '',
+        nameZh: '',
         parentId: '',
         type: '',
         menuIds: [],
@@ -51,9 +60,9 @@ export default {
 
       //验证
       rules: {
-        name: [{ required: true, message: 'Please input name', trigger: 'blur' }],
+        nameEn: [{ required: true, message: 'Please input name', trigger: 'blur' }],
         organizationCode: [{ required: true, message: 'Please input organizationCode', trigger: 'blur' }],
-        displayName: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
+        nameZh: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
         //role: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorRules }],
         menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
 
@@ -75,7 +84,7 @@ export default {
       treeShow: false,
       defaultProps: {
         children: 'children',
-        label: 'displayName',
+        label: 'nameZh',
       },
       loading: false
 
@@ -142,7 +151,7 @@ export default {
       this.getMenus();
 
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
-      this.windowTitle = '添加['+opts.data.displayName+']的下级菜单';
+      this.windowTitle = '添加['+opts.data.nameZh+']的下级菜单';
       this.dialogVisible = true;
       this.saveForm.parentId = opts.data.id;
       this.isEdit = false;
@@ -156,7 +165,7 @@ export default {
       this.getMenus();
 
       this.emptyFormFieldsAndEnableDialogSubmitBtn();
-      this.windowTitle = '修改['+opts.data.displayName+']菜单';
+      this.windowTitle = '修改['+opts.data.nameZh+']菜单';
       this.dialogVisible = true;
       this.isEdit = true;
       this.$$api_iam_groupDetail({
@@ -182,21 +191,12 @@ export default {
       this.isEdit = false;
       this.saveForm = {
         id: '',
-        name: '',
+        nameEn: '',
         organizationCode: '',
-        displayName: '',
+        nameZh: '',
         parentId: '',
         type: '',
-        menuIds: [],
-        menuNameStrs: '',
-        roleIds: [],
-        groupExt:{
-          id: '',
-          displayName: '',
-          contact: '',
-          contactPhone: '',
-          address: '',
-        },
+
       };
     },
     /**
@@ -313,7 +313,7 @@ export default {
       let checkedNodes = this.$refs.modulesTree.getCheckedNodes();
       let moduleNameList = [];
       checkedNodes.forEach(function(item){
-        moduleNameList.push(item.displayName)
+        moduleNameList.push(item.nameZh)
       });
       this.saveForm.menuIds = checkedKeys;
       this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
