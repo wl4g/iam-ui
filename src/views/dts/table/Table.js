@@ -108,7 +108,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$router.push({ path: '/dts/project/table/table/edit', query: { id: row.id, projectId: this.projectId } })
+            this.$router.push({ path: '/dts/project/table/edit', query: { id: row.id, projectId: this.projectId } })
         },
 
         setGenTableStatus(row) {
