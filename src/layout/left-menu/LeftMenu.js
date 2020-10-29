@@ -19,7 +19,8 @@ export default {
             maskVisible: false,
             routerGroupByClassify: {},
             keyword: '',
-            isKeyWordFocus: false
+            isKeyWordFocus: false,
+            isLastVisible: false,
         }
     },
     methods: {
@@ -178,7 +179,6 @@ export default {
             this.closeMaskLayer();
         }
 
-
     },
     created() {
         this.setSize()
@@ -193,8 +193,17 @@ export default {
             if (self.$store.state.leftmenu.width === '1px') {
                 return
             }
-            self.lightBoxVisible = !self.lightBoxVisible;
-        })
+            self.lightBoxVisible = !self.lightBoxVisible || this.isLastVisible;
+            this.isLastVisible = self.lightBoxVisible;
+        });
+
+        this.$root.$on('clickLightBoxVisibleChange', function () {
+            if (self.$store.state.leftmenu.width === '1px') {
+                return
+            }
+            self.lightBoxVisible = !self.lightBoxVisible || !this.isLastVisible;
+            this.isLastVisible = self.lightBoxVisible;
+        });
     },
     mounted() {
         this.routList = cache.get('rootDeepChildRoutes');

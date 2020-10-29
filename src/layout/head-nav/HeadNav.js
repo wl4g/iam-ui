@@ -221,12 +221,16 @@ export default {
             })
         },
 
-        // 切换侧边栏菜单汇总页显示状态
+        // 左上角菜单触发切换(@mouseenter)
         toggleSidebarLightbox() {
             let that = this.$root;
             setTimeout(function(){
                 that.$emit('lightBoxVisibleChange');
             }, 300);
+        },
+        // 左上角菜单触发切换(@click)
+        clickToggleSidebarLightbox() {
+            this.$root.$emit('clickLightBoxVisibleChange');
         }
     }
 }
