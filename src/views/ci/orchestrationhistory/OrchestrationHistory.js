@@ -176,7 +176,7 @@ export default {
         },
 
         detail(row) {
-            this.$router.push({path:'/ci/pipehisdetail',query: {id:row.id}})
+            this.$router.push({path:'/ci/pipehis/detail',query: {id:row.id}})
         },
 
         stopTask(id){

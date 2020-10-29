@@ -44,10 +44,9 @@
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="providerKind" :label="$t('message.ci.pipeKind')" width="100"></el-table-column>
-                                <el-table-column prop="createDate" :label="$t('message.common.createDate')" width="160"></el-table-column>
-                                <el-table-column prop="createByName" width="100" :label="$t('message.common.createBy')"></el-table-column>
-                                <el-table-column prop="updateDate" width="160" :label="$t('message.common.updateDate')"></el-table-column>
-                                <el-table-column prop="costTime" :label="$t('message.ci.costTime')">
+                                <el-table-column prop="createDate" label="启动时间" width="160"></el-table-column>
+                                <el-table-column prop="updateDate" width="160" label="最新状态时间"></el-table-column>
+                                <el-table-column prop="costTime" label="耗时(Sec)">
                                     <template slot-scope="scope">
                                         {{scope.row.costTime?formatDuring(scope.row.costTime):''}}
                                     </template>
@@ -73,12 +72,13 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="createDate" width="260" :label="$t('message.common.createDate')"></el-table-column>
-                    <el-table-column prop="updateDate" width="260" :label="$t('message.common.updateDate')"></el-table-column>
+                    <el-table-column prop="updateDate" width="160" :label="$t('message.common.updateDate')"></el-table-column>
                     <el-table-column prop="costTime" :label="$t('message.ci.costTime')">
                         <template slot-scope="scope">
                             {{scope.row.costTime?formatDuring(scope.row.costTime):''}}
                         </template>
                     </el-table-column>
+                    <el-table-column prop="createByName" width="160" :label="$t('message.common.createBy')"></el-table-column>
                 </el-table>
 
 

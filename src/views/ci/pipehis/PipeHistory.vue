@@ -57,6 +57,11 @@
                     <el-table-column prop="pipeName" label="管道名"></el-table-column>
                     <!--<el-table-column prop="branchName" :label="$t('message.ci.branchName')"></el-table-column>-->
                     <el-table-column prop="providerKind" :label="$t('message.ci.pipeKind')" width="100"></el-table-column>
+                    <el-table-column prop="envType" :label="$t('message.ci.env')">
+                        <template slot-scope="scope">
+                            <el-tag :type="dictutil.getDictThemesByTypeAndValue('app_ns_type',scope.row.environment)">{{dictutil.getDictLabelByTypeAndValue('app_ns_type',scope.row.environment)}}</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="status" :label="$t('message.common.status')">
                         <template slot-scope="scope">
                             <el-tag  :color="convertStatusType(scope.row)" style="color: #ffffffeb;border: 1px solid #99bce0;">
