@@ -17,7 +17,7 @@
                 {{$t('message.common.total')}}:<span class="number">{{total}}</span>
             </div>
             <!-- 新增按钮 -->
-            <el-button type="primary" @click="addData()">+ Add&nbsp;</el-button>
+            <el-button v-if="permitutil.hasPermit('ci:orchestration:edit')" type="primary" @click="addData()">+ Add&nbsp;</el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
@@ -40,7 +40,7 @@
                         <template slot-scope="scope">
                             <!--<el-button type="warning" @click="runOrchestration(scope.row)">{{$t('message.ci.run')}}</el-button>-->
                             <el-button type="warning" @click="beforeRunTask(scope.row)">{{$t('message.ci.run')}}</el-button>
-                            <el-button type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('ci:orchestration:edit')" type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>

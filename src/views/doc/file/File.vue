@@ -74,7 +74,7 @@
                     <el-table-column :label="$t('message.common.operation')" min-width="240">
                         <template slot-scope="scope">
                             <!--edit-->
-                            <el-button type="info" icon='edit' @click="edit(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('doc:edit')" type="info" icon='edit' @click="edit(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <!--del-->
                             <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                             <!--compare-->

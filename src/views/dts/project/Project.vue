@@ -68,7 +68,7 @@
           <el-table-column :label="$t('message.common.operation')" min-width="140">
             <template slot-scope="scope">
               <el-button type="primary" icon="edit" @click="generate(scope.row)" :loading="scope.row.generating">{{scope.row.generating?'生成中...':'一键生成'}}</el-button>
-              <el-button
+              <el-button v-if="permitutil.hasPermit('dts:project:edit')"
                 type="text"
                 icon="el-icon-edit"
                 @click="editData(scope.row)"

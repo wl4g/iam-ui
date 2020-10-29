@@ -49,7 +49,7 @@
 
                     <el-table-column :label="$t('message.common.operation')" width="120">
                         <template slot-scope="scope">
-                            <el-button :disabled="scope.row.defaultEnvO==scope.row.defaultEnv && scope.row.defaultBranchO==scope.row.defaultBranch" type="primary" icon='edit' @click="saveData(scope.row)">{{$t('message.common.save')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('ci:clusterextension:edit')" :disabled="scope.row.defaultEnvO==scope.row.defaultEnv && scope.row.defaultBranchO==scope.row.defaultBranch" type="primary" icon='edit' @click="saveData(scope.row)">{{$t('message.common.save')}}</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

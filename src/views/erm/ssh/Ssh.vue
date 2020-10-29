@@ -8,7 +8,7 @@
                 <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
             </el-form-item>
 
-            <el-button type="primary" style='float:right;margin-right:20px' @click="addData()" >+ Add</el-button>
+            <el-button v-if="permitutil.hasPermit('erm:ssh:edit')" type="primary" style='float:right;margin-right:20px' @click="addData()" >+ Add</el-button>
         </el-form>
 
         <!--================================table================================-->
@@ -30,7 +30,7 @@
 
                     <el-table-column :label="$t('message.common.operation')" min-width="120">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('erm:ssh:edit')" type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete'  @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                             <el-button @click="copySsh(scope.row)">{{$t('message.share.copy')}}</el-button>
                             <el-button @click="openTestConnect(scope.row)">{{$t('message.share.connectTest')}}</el-button>

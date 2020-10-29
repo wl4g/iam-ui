@@ -86,7 +86,7 @@
                     </el-table-column>
                     <el-table-column :label="$t('message.common.operation')" min-width="80">
                         <template slot-scope="scope">
-                            <el-button
+                            <el-button v-if="permitutil.hasPermit('dts:table:edit')"
                                 type="text"
                                 icon="el-icon-edit"
                                 @click="editData(scope.row)"

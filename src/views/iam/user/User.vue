@@ -22,7 +22,7 @@
             </div>
 
             <!-- 新增按钮 -->
-            <el-button type="primary" @click="addData()"> + </el-button>
+            <el-button v-if="permitutil.hasPermit('iam:user:edit')" type="primary" @click="addData()"> + </el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
@@ -36,7 +36,7 @@
                     <el-table-column prop="groupNameStrs" :label="$t('message.common.group')" show-overflow-tooltip ></el-table-column>
                     <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('iam:user:edit')" type="info" icon='edit' @click="editData(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>
