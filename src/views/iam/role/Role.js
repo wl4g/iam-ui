@@ -346,7 +346,7 @@ export default {
 
         filterNode(value, data) {
             if (!value) return true;
-            return data.nameZh.indexOf(value) !== -1;
+            return data.nameZh.toLowerCase().indexOf(value.toLowerCase()) !== -1;
         }
 
     }

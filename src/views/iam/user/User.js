@@ -26,8 +26,6 @@ export default {
                 phone: '',
                 remark: '',
                 roleIds: [],
-                groupIds: [],
-                groupNameStrs: '',
 
             },
 
@@ -58,8 +56,6 @@ export default {
                 nameZh: [{ required: true, message: 'Please input displayName', trigger: 'change' }],
                 password: [{ required: true, message: 'Please input password', trigger: 'change' }],
                 roleIds: [{ required: true, message: 'Please select role', trigger: 'change' }],
-                groupNameStrs: [{ required: true, message: 'Please select group', trigger: 'change' }],
-
 
             },
             loading: false
@@ -69,7 +65,6 @@ export default {
     mounted() {
         this.getData();
         this.getRoles();
-        this.getGroupsTree();
     },
 
     methods: {
@@ -92,19 +87,9 @@ export default {
             })
         },
 
-        getGroupsTree() {
-            this.$$api_iam_getGroupsTree({
-                data: {},
-                fn: data => {
-                    this.groupsTreeData = data.data.data;
-                }
-            })
-        },
-
 
         addData() {
             this.getRoles();
-            this.getGroupsTree();
 
             this.isEdit = false;
             this.cleanSaveForm();
@@ -144,8 +129,6 @@ export default {
                 phone: '',
                 remark: '',
                 roleIds: [],
-                groupIds: [],
-                groupNameStrs: '',
             };
         },
 
@@ -202,7 +185,6 @@ export default {
 
         editData(row) {
             this.getRoles();
-            this.getGroupsTree();
 
             this.cleanSaveForm();
             this.isEdit = true;
@@ -216,10 +198,6 @@ export default {
                 fn: data => {
                     this.saveForm = data.data.data;
                     this.saveForm.oldPassword = this.saveForm.password;
-                    if (this.$refs.modulesTree && this.saveForm.groupIds instanceof Array) {
-                        this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds);
-                        this.checkChange();
-                    }
                 }
             });
             this.dialogVisible = true;
@@ -251,36 +229,6 @@ export default {
             }).catch(() => {
                 //do nothing
             });
-        },
-
-
-        //模块权限树展示
-        focusDo() {
-            if (this.$refs.modulesTree && this.saveForm.groupIds instanceof Array) this.$refs.modulesTree.setCheckedKeys(this.saveForm.groupIds)
-            this.treeShow = !this.treeShow;
-            let _self = this;
-            this.$$lib_$(document).bind("click", function (e) {
-                let target = _self.$$lib_$(e.target);
-                if (target.closest(".noHide").length == 0 && _self.treeShow) {
-                    _self.treeShow = false;
-                }
-                e.stopPropagation();
-            })
-        },
-
-        //模块权限树选择
-        checkChange(node, selfChecked, childChecked) {
-            var checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-            var checkedNodes = this.$refs.modulesTree.getCheckedNodes();
-
-            let moduleNameList = [];
-            checkedNodes.forEach(function (item) {
-                moduleNameList.push(item.nameZh)
-            });
-            this.saveForm.groupIds = checkedKeys;
-            //this.saveForm.groupNameStrs = moduleNameList.join(',');
-            this.$set(this.saveForm, 'groupNameStrs', moduleNameList.join(','))
-
         },
 
 

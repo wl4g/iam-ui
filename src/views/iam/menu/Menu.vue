@@ -3,8 +3,8 @@
 */
 <template>
 <div class="">
-    <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">Add Root</el-button>
-    <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.search') }}</el-button>
+    <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.refresh') }}</el-button>
+    <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()" style="float: right">Add Root</el-button>
 
     <tree-table border :data="data" rowKey="id" :columns="columns" :BtnInfo="btn_info" @onClickBtnAdd="onClickBtnAdd" @onClickBtnDelete="onClickBtnDelete" @onClickBtnUpdate="onClickBtnUpdate">
     </tree-table>

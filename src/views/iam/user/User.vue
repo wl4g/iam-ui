@@ -99,29 +99,10 @@
                                 <el-option
                                         v-for="item in rolesData"
                                         :key="item.id"
-                                        :label="item.displayName"
+                                        :label="item.nameZh"
                                         :value="item.id">
                                 </el-option>
                             </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="20">
-                        <el-form-item  :label="$t('message.common.group')"   prop="groupNameStrs">
-                            <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo()'></el-input>
-                            <el-tree
-                                    v-show="treeShow"
-                                    default-expand-all
-                                    :data="groupsTreeData"
-                                    ref="modulesTree"
-                                    show-checkbox
-                                    node-key="id"
-                                    :check-strictly="true"
-                                    @check-change = "checkChange"
-                                    :props="defaultProps">
-                            </el-tree>
                         </el-form-item>
                     </el-col>
                 </el-row>
