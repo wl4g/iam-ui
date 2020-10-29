@@ -25,10 +25,10 @@ body {
 }
 
 #app #left-menu {
-    background: #eae8e4;
+    background: #f6f2f2ef;
 }
 #app .left-fixed-right-auto .left .el-menu {
-    background: #eae8e4;
+    background: #f6f2f2ef;
 }
 #app .left-fixed-right-auto .left .el-menu-item:focus,
 #app .left-fixed-right-auto .left .el-menu-item:hover,
