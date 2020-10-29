@@ -11,7 +11,7 @@
       </el-breadcrumb-item>-->
       <el-breadcrumb-item :to="{ path: item.path }"
         v-for='(item,index) in dealPath($route.path)'
-        :key='index'>{{item.name+item.path}}
+        :key='index'>{{item.name}}
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>

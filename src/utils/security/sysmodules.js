@@ -268,7 +268,6 @@ router.beforeEach(async (to, from, next) => {
                 store.commit('update_routList', { routList: rootDeepChildRoutes });
 
                 // 动态添加路径
-                debugger
                 router.addRoutes(flatOneChildRoutes);
                 cache.set('flatOneChildRoutes', flatOneChildRoutes);
 
