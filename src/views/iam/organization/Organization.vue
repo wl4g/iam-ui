@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()">{{ $t('message.common.addTop') }}</el-button>
-      <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.search') }}</el-button>
+      <el-button class="top-level-btn" type="primary" @click="onGetList()" :loading="loading">{{ $t('message.common.refresh') }}</el-button>
+      <el-button class="top-level-btn" type="primary" @click="addTopLevelModule()" style="float: right">{{ $t('message.common.addTop') }}</el-button>
    <tree-table
       border
       rowKey="organizationCode"

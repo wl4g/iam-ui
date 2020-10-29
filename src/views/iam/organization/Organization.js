@@ -9,7 +9,7 @@ export default {
       //tree-table 标题列数据
       columns: [
         {
-          text: i18n.t('message.common.name'),
+          text: i18n.t('message.common.enName'),
           value: 'nameEn',
         },
         {
@@ -21,7 +21,7 @@ export default {
           value: 'organizationCode',
         },
         {
-          text: '类型',
+          text: '组织类型',
           value: 'type',
           dictKey: 'sys_group_type',
         },
