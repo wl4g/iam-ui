@@ -107,8 +107,8 @@ export default LeftMenu
 
 .sidebar-lightbox-header .el-icon-s-grid {
     margin-right: 4px;
-    color: #909399;
-    font-size: 16px;
+    color: #324a79;
+    font-size: 18px;
 }
 
 .sidebar-lightbox-header .el-icon-arrow-right {

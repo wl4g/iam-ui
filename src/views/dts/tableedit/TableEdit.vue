@@ -12,7 +12,7 @@
                             <el-option
                                     v-for="item in getFilterTables()"
                                     :key="item.tableName"
-                                    :label="item.tableName+'  '+item.comments"
+                                    :label="item.tableName+' ('+item.comments+')'"
                                     :value="item.tableName">
                             </el-option>
                         </el-select>
@@ -24,7 +24,7 @@
                 </el-form>
                 <div style="margin-left: 135px">
                     <el-button type="primary" @click="afterSelectTable">下一步</el-button>
-                    <el-button @click="back()">取消</el-button>
+                    <el-button @click="back()">返回</el-button>
                 </div>
             </el-card>
         </div>
