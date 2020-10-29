@@ -2,7 +2,7 @@
   <div>
 
     <header class="head-nav">
-      <div class="btn-toggle" @click="toggleSidebarLightbox">
+      <div class="btn-toggle" @mouseenter="toggleSidebarLightbox">
         <i class="el-icon-s-fold"></i>
       </div>
 

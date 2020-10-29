@@ -121,7 +121,7 @@ export default LeftMenu
 .menu-list-mask {
     position: fixed;
     top: 50px;
-    /* left: 210px; */ /* refer:/store/leftmenu/mutations.js */
+    left: 220px; /* refer:/store/leftmenu/mutations.js */
     bottom: 0;
     z-index: 1998;
     display: flex;

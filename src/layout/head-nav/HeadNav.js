@@ -223,7 +223,10 @@ export default {
 
         // 切换侧边栏菜单汇总页显示状态
         toggleSidebarLightbox() {
-            this.$root.$emit('lightBoxVisibleChange')
+            let that = this.$root;
+            setTimeout(function(){
+                that.$emit('lightBoxVisibleChange');
+            }, 300);
         }
     }
 }
