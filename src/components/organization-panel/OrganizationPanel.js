@@ -119,12 +119,10 @@ export default {
             for (let i in this.organizationsTree) {
                 this.recursiveTraversalOrganization(this.organizationsTree[i]);
             }
-
+            debugger
             if (this.organizationsTree.length > 1) { // More than one top
                 this.option.series[0].data = [{
-                    name: 'Top', children: [
-                        this.organizationsTree
-                    ]
+                    name: 'Top', children: this.organizationsTree
                 }];
             } else { //  Just one top
                 this.option.series[0].data = this.organizationsTree;
