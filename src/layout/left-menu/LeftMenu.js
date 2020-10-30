@@ -159,7 +159,6 @@ export default {
         },
 
         handleKeyWordSearch(e) {
-            debugger
             this.setRouterGroup();
         },
 

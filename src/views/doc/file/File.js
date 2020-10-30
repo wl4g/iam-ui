@@ -90,10 +90,10 @@ export default {
             })
         },
         add(){
-            this.$router.push({path:'/doc/file/edit'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file:edit')})
         },
         edit(row){
-            this.$router.push({path:'/doc/file/edit',query: {id: row.id}})
+            this.$router.push({path:this.permitutil.getRoutePathByPermission('doc:file:edit'),query: {id: row.id}})
         },
         delData(row){
             if(!row){
@@ -125,7 +125,7 @@ export default {
             })
         },
         compareFile(row){
-            this.$router.push({path:'/doc/file/diff',query: {docCode: row.docCode}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file:diff'),query: {docCode: row.docCode}})
         },
         uploadSuccess(response, file, fileList){
             console.debug(response);

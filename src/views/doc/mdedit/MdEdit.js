@@ -90,13 +90,13 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     if(this.oldContent === this.saveForm.content){// not change , just go back
-                        this.$router.push({path:'/doc/file'})
+                        this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file')})
                     }
                     this.$$api_doc_saveDoc({
                         data:  this.saveForm,
                         fn: data => {
                             this.cleanSaveForm();
-                            this.$router.push({path:'/doc/file'})
+                            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file')})
                         }
                     })
                 } else {
@@ -108,7 +108,7 @@ export default {
 
         },
         goBack(){
-            this.$router.push({path:'/doc/file'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file')})
         },
         detail(){
             this.$$api_doc_docDetail({

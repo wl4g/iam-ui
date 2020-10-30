@@ -101,7 +101,7 @@ export default {
             }
 
             //TODO jump to detail page
-            this.$router.push({path:'/ci/pipeline/edit',query: {command: command}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline:edit'),query: {command: command}})
 
         },
 
@@ -112,7 +112,7 @@ export default {
         },
 
         taskDetail(row){
-            this.$router.push({path:'/ci/pipeline/edit',query: {id:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline:edit'),query: {id:row.id}})
         },
 
         // 获取列表数据
@@ -233,7 +233,7 @@ export default {
                                 cancelButtonText: 'No',
                                 type: 'success'
                             }).then(() => {
-                                this.$router.push('/ci/pipehis');
+                                this.$router.push( this.permitutil.getRoutePathByPermission('ci:pipehis'));
                             }).catch(() => {
                                 //do nothing
                             });

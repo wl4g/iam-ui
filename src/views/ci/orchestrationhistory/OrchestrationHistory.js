@@ -176,7 +176,7 @@ export default {
         },
 
         detail(row) {
-            this.$router.push({path:'/ci/pipehisdir/pipehis/detail',query: {id:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipehis:detail'),query: {id:row.id}})
         },
 
         stopTask(id){

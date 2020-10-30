@@ -39,11 +39,11 @@ export default {
 
     methods: {
         toFs() {
-            this.$router.push({path: '/coss/bucket/fs', query: {cossProvider: this.cossProvider, bucketName: this.bucketName,}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('coss:bucket:fs'), query: {cossProvider: this.cossProvider, bucketName: this.bucketName,}})
         },
 
         back() {
-            this.$router.push({path: '/coss/bucket'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('coss:bucket')})
         },
 
         fixUnit(){

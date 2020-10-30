@@ -141,7 +141,7 @@ export default {
         },
 
         back(){
-            this.$router.push({path:'/umc/custom/datasource'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('umc:custom:datasource')})
         },
 
     }

@@ -76,7 +76,7 @@ export default {
             })
         },
         goBack(){
-            this.$router.push({path:'/doc/file'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file')})
         },
         cleanFile() {
             this.docCode = '';

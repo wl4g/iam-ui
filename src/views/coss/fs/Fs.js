@@ -269,7 +269,7 @@ export default {
         },
 
         back() {
-            this.$router.push({path: '/coss/bucketdetail', query: {cossProvider: this.searchParams.cossProvider, bucketName: this.searchParams.bucketName,}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('coss:bucket:detail'), query: {cossProvider: this.searchParams.cossProvider, bucketName: this.searchParams.bucketName,}})
         },
 
         dateFormat(row, column) {

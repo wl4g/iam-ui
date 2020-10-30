@@ -35,14 +35,14 @@ export default {
         },
 
         addData() {
-            this.$router.push({path:'/umc/custom/engine/edit'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('umc:custom:engine:edit')})
         },
 
         editData(row) {
             if (!row.id) {
                 return;
             }
-            this.$router.push({path:'/umc/custom/engine/edit',query: {id:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('umc:custom:engine:edit'),query: {id:row.id}})
         },
 
         // 获取列表数据

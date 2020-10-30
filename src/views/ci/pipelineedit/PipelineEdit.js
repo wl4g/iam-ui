@@ -288,7 +288,7 @@ export default {
                         fn: data => {
                             this.loading = false;
                             this.cleanSaveForm();
-                            this.$router.push({path:'/ci/pipeline'})
+                            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline')})
                         },
                         errFn: (err) => {
                             this.loading = false;
@@ -412,7 +412,7 @@ export default {
         },
 
         backToTask(){
-            this.$router.push({path:'/ci/pipeline'})
+            this.$router.push({path:this.permitutil.getRoutePathByPermission('ci:pipeline')})
         },
 
         getPcm() {
@@ -424,7 +424,7 @@ export default {
         },
 
         gotoProjectSetting(){
-            this.$router.push({path:'/ci/projectconfig/project',query: {appClusterId: this.saveForm.appClusterId}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:project'), query: {appClusterId: this.saveForm.appClusterId}})
             this.gotoProjectSettingDialog = false;
         },
 

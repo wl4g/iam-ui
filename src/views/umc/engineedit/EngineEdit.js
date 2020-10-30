@@ -143,7 +143,7 @@ export default {
         },
 
         back(){
-            this.$router.push({path:'/umc/custom/engine'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('umc:custom:engine')})
         },
 
         getContactGroupData() {

@@ -384,7 +384,7 @@ export default {
 
         backToPipeline(){
             if(this.appClusterId){
-                this.$router.push({path:'/ci/newpipeline',query: {from: 'project'}})
+                this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline:edit') ,query: {from: 'project'}})
             }
             this.appClusterId = '';
         }

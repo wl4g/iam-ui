@@ -158,7 +158,7 @@ export default {
         },
 
         back(){
-            this.$router.push({ path: '/erm/domain/dnsprivatedomain' })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('erm:dnsprivatedomain') })
         }
 
 

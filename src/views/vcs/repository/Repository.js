@@ -213,7 +213,7 @@ export default {
         },
 
         vcsManager(row){
-            this.$router.push({path:'/vcs/vcs/project',query: {id:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('vcs:project'),query: {id:row.id}})
         },
 
 

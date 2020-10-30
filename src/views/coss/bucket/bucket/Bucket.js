@@ -95,7 +95,7 @@ export default {
         },
 
         detail(row) {
-            this.$router.push({path: '/coss/bucket/detail', query: {cossProvider: this.searchParams.cossProvider, bucketName: row.name,}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('coss:bucket:detail'), query: {cossProvider: this.searchParams.cossProvider, bucketName: row.name,}})
         },
 
         createBucket() {

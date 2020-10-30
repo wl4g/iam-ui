@@ -42,11 +42,11 @@
                 <el-col :span="12">
                     <el-form-item :label="$t('message.iam.permission')" prop="permission">
                         <el-col :span="22">
-                            <el-input v-model="formFields.permission"></el-input>
+                            <el-input :disabled="formFields.id!=''" v-model="formFields.permission"></el-input>
                         </el-col>
                         <el-col :span="2" class="text-center">
                             <el-tooltip placement="top">
-                                <div slot="content">菜单权限标识,如:ci:pipe:list*,ci:pipe:edit</div>
+                                <div slot="content">权限标识符，用于前后端权限检查及校验，如shiro @RequiresPermissions。<br/>因菜单唯一硬编码标识所以暂不支持修改。</div>
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </el-col>
@@ -55,14 +55,14 @@
                 <el-col :span="12">
                     <el-form-item :label="$t('message.common.type')" prop="type">
                         <el-col :span="22">
-                            <el-select v-model="formFields.type" placeholder="Type" style="width: 100%">
+                            <el-select :disabled="formFields.id!=''" v-model="formFields.type" placeholder="Type" style="width: 100%">
                                 <el-option v-for="item in dictutil.getDictListByType('menu_type')" :key="item.value" :label="item.label" :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-col>
                         <el-col :span="2" class="text-center">
                             <el-tooltip placement="top">
-                                <div slot="content">菜单的类型,点击时表现效果不同，具体与页面地址、路由地址相关,见相关说明</div>
+                                <div slot="content">不同类型的菜单按钮点击时打开页面的方式不同，如静态菜单和按钮都只支持打开vue页面，<br/>而若需嵌入外部页面就必须使用动态菜单，暂不支持修改。</div>
                                 <i class="el-icon-question"></i>
                             </el-tooltip>
                         </el-col>

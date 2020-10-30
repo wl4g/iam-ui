@@ -158,7 +158,7 @@ export default {
         },
 
         toDetail(row){
-            this.$router.push({path:'/gw/gateway/detail',query: {id: row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('gw:detail'),query: {id: row.id}})
         }
 
 

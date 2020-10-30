@@ -102,11 +102,11 @@ export default {
         },
 
         back(){
-            this.$router.push({path:'/vcs/vcs'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('vcs:repository')})
         },
 
         toProjectDetail(row){
-            this.$router.push({path:'/vcs/vcs/project/detail',query: {vcsId:this.searchParams.vscId,projectId:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('vcs:project:detail'),query: {vcsId:this.searchParams.vscId,projectId:row.id}})
         },
 
         onChangeGroup(){

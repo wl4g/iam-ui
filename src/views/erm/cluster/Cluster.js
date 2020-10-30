@@ -58,12 +58,12 @@ export default {
 
         addData() {
             //TODO jump to detail page
-            this.$router.push({path:'/erm/app/cluster/edit'})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:cluster:edit')})
         },
 
         editData(row) {
             //TODO jump to detail page
-            this.$router.push({path:'/erm/app/cluster/edit',query: {id: row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:cluster:edit'),query: {id: row.id}})
         },
 
 
