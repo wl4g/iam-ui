@@ -41,6 +41,11 @@
                                 <el-table-column prop="id" label="ID"></el-table-column>
                                 <el-table-column prop="nameZh" :label="$t('message.common.displayName')"></el-table-column>
                                 <el-table-column prop="roleCode" :label="$t('message.iam.roleCode')"></el-table-column>
+                                <el-table-column prop="userCount" label="用户数">
+                                    <template slot-scope="{ row }">
+                                        <el-button type="text" @click="$router.push({path:'/iam/user',query: {roleId:row.id}})">{{row.userCount}}</el-button>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="menusStr" label="菜单权限" :show-overflow-tooltip="true" ></el-table-column>
 
                                 <el-table-column :label="$t('message.common.operation')" min-width="100">

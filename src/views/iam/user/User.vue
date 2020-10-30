@@ -3,10 +3,20 @@
     <section id="configuration" class="configuration">
         <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
             <el-form-item :label="$t('message.common.name')">
-                <el-input v-model="searchParams.displayName" placeholder="e.g zhangsan"></el-input>
+                <el-input v-model="searchParams.displayName" clearable placeholder="e.g zhangsan"></el-input>
             </el-form-item>
             <el-form-item :label="$t('message.common.username')">
-                <el-input v-model="searchParams.userName" placeholder="e.g zhangsan"></el-input>
+                <el-input v-model="searchParams.userName" clearable placeholder="e.g zhangsan"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('message.common.username')">
+                <el-select v-model="searchParams.roleId" :filterable="true" clearable  placeholder="请选择" style="width: 100%">
+                    <el-option
+                            v-for="item in rolesData"
+                            :key="item.id"
+                            :label="item.nameZh"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
             </el-form-item>
             <el-form-item>
                 <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
@@ -30,7 +40,7 @@
                 <el-table :data="tableData" :border="false" style="width: 100%">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID" width="60"></el-table-column>
-                    <el-table-column prop="displayName" :label="$t('message.common.name')"></el-table-column>
+                    <el-table-column prop="nameZh" :label="$t('message.common.name')"></el-table-column>
                     <el-table-column prop="userName" :label="$t('message.common.username')"></el-table-column>
                     <el-table-column prop="roleStrs" :label="$t('message.iam.role')" ></el-table-column>
                     <el-table-column prop="groupNameStrs" :label="$t('message.common.group')" show-overflow-tooltip ></el-table-column>
@@ -53,7 +63,7 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('message.common.name')" prop="displayName">
-                            <el-input v-model="saveForm.displayName" placeholder="e.g:张三"></el-input>
+                            <el-input v-model="saveForm.nameZh" placeholder="e.g:张三"></el-input>
                         </el-form-item>
                     </el-col>
 

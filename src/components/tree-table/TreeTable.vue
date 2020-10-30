@@ -9,7 +9,7 @@
 
 
     <el-table-column v-for="(column, index) in columns" v-else :key="column.value" :label="column.text"
-    :width="column.width" >
+    :width="column.width" :show-overflow-tooltip="true">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" v-if="index === 0" :key="space" class="ms-tree-space"/>
 

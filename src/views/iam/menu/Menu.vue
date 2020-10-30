@@ -105,7 +105,7 @@
                     <el-form-item :label="$t('message.iam.routePath')" prop="routeNamespace">
                         <el-col :span="22">
                             <el-input v-model="formFields.routeNamespace">
-                                <!--<template slot="prepend">/#</template>-->
+                                <template v-if="formFields.parentRoutePath" slot="prepend">/#{{formFields.parentRoutePath}}</template>
                             </el-input>
                         </el-col>
                         <el-col :span="2" class="text-center">

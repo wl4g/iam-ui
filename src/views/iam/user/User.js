@@ -8,6 +8,7 @@ export default {
             searchParams: {
                 userName: '',
                 nameZh: '',
+                roleId: '',
             },
 
             //分页信息
@@ -62,9 +63,18 @@ export default {
         }
     },
 
-    mounted() {
+    activated() {
+        let roleId = this.$route.query.roleId;
+        if(roleId){
+            this.searchParams.roleId = roleId;
+        }
+
         this.getData();
         this.getRoles();
+    },
+
+    mounted() {
+
     },
 
     methods: {
@@ -104,6 +114,7 @@ export default {
                 data: {
                     userName: this.searchParams.userName,
                     nameEn: this.searchParams.nameEn,
+                    roleId: this.searchParams.roleId,
                     nameZh: this.searchParams.nameZh,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,

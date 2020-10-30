@@ -135,9 +135,9 @@
     text-align: center;
   }
   .logo {
-    width: 220px;
-    height: 40px;
-    margin: 5px;
+    width: 160px;
+    height: 30px;
+    margin: 12px;
   }
   .fa-user {
     position: relative;
