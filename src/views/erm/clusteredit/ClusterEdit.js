@@ -90,7 +90,7 @@ export default {
     methods: {
 
         back(){
-            this.$router.push({path:'/erm/cluster'})
+            this.$router.push({path:'/erm/app/cluster'})
         },
         cleanSaveForm() {
             this.saveForm={
@@ -204,7 +204,7 @@ export default {
         },
 
         toInstancesPage(envType){
-            this.$router.push({path:'/erm/instance',query: {
+            this.$router.push({path:'/erm/app/instance',query: {
                 clusterId: this.saveForm.id,envType:envType
                 }})
         },

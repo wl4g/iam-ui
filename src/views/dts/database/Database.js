@@ -80,7 +80,7 @@ export default {
         },
 
         openDataSourceEdit(row) {
-            this.$router.push({ path: '/dts/databaseedit', query: { id: row.id } })
+            this.$router.push({ path: '/dts/codegen/databaseedit', query: { id: row.id } })
         },
 
         // 获取列表数据
@@ -210,9 +210,6 @@ export default {
             }
         },
 
-        back(){
-            this.$router.push({ path: '/erm/host' })
-        }
 
 
     }

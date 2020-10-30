@@ -8,6 +8,7 @@ let defaultTheme = "primary";
 export default {
     //==========判断是否拥有该权限==========
     hasPermit: function (permission) {
+        debugger
         if (!permission) {//type can not be null
             return false;
         }

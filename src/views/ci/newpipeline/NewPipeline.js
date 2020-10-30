@@ -378,7 +378,7 @@ export default {
         },
 
         gotoProjectSetting(){
-            this.$router.push({path:'/ci/project',query: {appClusterId: this.buildForm.appClusterId}})
+            this.$router.push({path:'/ci/projectconfig/project',query: {appClusterId: this.buildForm.appClusterId}})
             this.gotoProjectSettingDialog = false;
         },
 

@@ -70,7 +70,7 @@ export default {
         ///////////
 
         backToChanges() {
-            this.$router.push({ path: '/ci/pipehis' })
+            this.$router.push({ path: '/ci/pipehisdir/pipehis' })
         },
 
         convertStatusType(row) {

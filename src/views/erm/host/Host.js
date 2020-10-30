@@ -241,7 +241,7 @@ export default {
         },
 
         toNetcard(row) {
-            this.$router.push({ path: '/erm/hostnetcard', query: { id: row.id } })
+            this.$router.push({ path: '/erm/cmdb/hostnetcard', query: { id: row.id } })
         },
 
         openTestConnect(row) {

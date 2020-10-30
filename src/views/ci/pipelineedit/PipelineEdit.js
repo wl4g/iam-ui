@@ -424,7 +424,7 @@ export default {
         },
 
         gotoProjectSetting(){
-            this.$router.push({path:'/ci/project',query: {appClusterId: this.saveForm.appClusterId}})
+            this.$router.push({path:'/ci/projectconfig/project',query: {appClusterId: this.saveForm.appClusterId}})
             this.gotoProjectSettingDialog = false;
         },
 

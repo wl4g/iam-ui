@@ -50,11 +50,11 @@ export default {
         },
 
         addData() {
-            this.$router.push({ path: '/dts/project/table/edit', query: { projectId: this.projectId } })
+            this.$router.push({ path: '/dts/codegen/project/table/edit', query: { projectId: this.projectId } })
         },
 
         openTableEdit(row) {
-            this.$router.push({ path: '/dts/project/table/edit', query: { id: row.id, projectId: this.projectId } })
+            this.$router.push({ path: '/dts/codegen/project/table/edit', query: { id: row.id, projectId: this.projectId } })
         },
 
         // 获取列表数据
@@ -108,7 +108,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$router.push({ path: '/dts/project/table/edit', query: { id: row.id, projectId: this.projectId } })
+            this.$router.push({ path: '/dts/codegen/project/table/edit', query: { id: row.id, projectId: this.projectId } })
         },
 
         setGenTableStatus(row) {

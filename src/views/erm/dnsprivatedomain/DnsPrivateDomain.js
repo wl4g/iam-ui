@@ -157,11 +157,11 @@ export default {
         },
 
         toManager(row){
-            this.$router.push({path: '/erm/dnsprivatedomain/resolution', query: {id: row.id,zone:row.zone}})
+            this.$router.push({path: '/erm/domain/dnsprivatedomain/resolution', query: {id: row.id,zone:row.zone}})
         },
 
         toBlacklist(){
-            this.$router.push({path: '/erm/dnsprivatedomain/blacklist'})
+            this.$router.push({path: '/erm/domain/dnsprivatedomain/blacklist'})
         }
 
 

@@ -337,7 +337,7 @@ export default {
             }
         },
         back() {
-            // this.$router.push({ path: '/dts/project/table', query: { id: this.saveForm.projectId } })
+            // this.$router.push({ path: '/dts/codegen/project/table', query: { id: this.saveForm.projectId } })
             history.back(-1);
         },
     }

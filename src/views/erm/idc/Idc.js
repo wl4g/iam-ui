@@ -166,7 +166,7 @@ export default {
         },
 
         back(){
-            this.$router.push({ path: '/erm/host' })
+            this.$router.push({ path: '/erm/cmdb/host' })
         }
 
 
