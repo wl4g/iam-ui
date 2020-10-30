@@ -1,4 +1,4 @@
-import {getDay, transDate} from 'utils/'
+import { getDay, transDate } from 'utils/'
 
 export default {
     name: 'role',
@@ -36,8 +36,8 @@ export default {
             tableData: [],
 
             //rolesData
-            menuData:[],//tree
-            menuDataList:[],//list
+            menuData: [],//tree
+            menuDataList: [],//list
 
             defaultProps: {
                 children: 'children',
@@ -46,13 +46,13 @@ export default {
             treeShow: false,
 
             groupTreeShow: false,
-            groupsTreeData:[],
+            groupsTreeData: [],
 
             rules: {
                 roleCode: [{ required: true, message: 'Please input roleCode', trigger: 'blur' }],
                 nameZh: [{ required: true, message: 'Please input displayName', trigger: 'blur' }],
-                groups: [{required: true, message: 'Please input role', trigger: 'change',validator: this.validatorGroups }],
-                menu: [{required: true, message: 'Please input menu', trigger: 'change',validator: this.validatorMenus }],
+                groups: [{ required: true, message: 'Please input role', trigger: 'change', validator: this.validatorGroups }],
+                menu: [{ required: true, message: 'Please input menu', trigger: 'change', validator: this.validatorMenus }],
 
             },
             loading: false,
@@ -77,7 +77,7 @@ export default {
     methods: {
 
         onSubmit() {
-            if(!this.searchParams.organizationId){
+            if (!this.searchParams.organizationId) {
                 this.tableData = [];
                 this.$message.error('请先选择机构');
                 return;
@@ -90,8 +90,8 @@ export default {
             this.getData();
         },
 
-        validatorGroups(rule, value, callback){
-            if (this.saveForm.groupIds.length<=0) {
+        validatorGroups(rule, value, callback) {
+            if (this.saveForm.groupIds.length <= 0) {
                 callback(new Error('roles is Empty'));
             } else {
                 callback();
@@ -99,8 +99,8 @@ export default {
         },
 
 
-        validatorMenus(rule, value, callback){
-            if (this.saveForm.menuIds.length<=0) {
+        validatorMenus(rule, value, callback) {
+            if (this.saveForm.menuIds.length <= 0) {
                 callback(new Error('menuIds is Empty'));
             } else {
                 callback();
@@ -128,7 +128,7 @@ export default {
 
 
         addData() {
-            if(!this.searchParams.organizationId){
+            if (!this.searchParams.organizationId) {
                 this.$message.error('请先选择机构');
                 return;
             }
@@ -143,7 +143,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            if(!this.searchParams.organizationId){
+            if (!this.searchParams.organizationId) {
                 return;
             }
             this.loading = true;
@@ -195,7 +195,7 @@ export default {
                             this.dialogLoading = false;
                         }
                     });
-                }else {
+                } else {
                     this.dialogLoading = false;
                 }
             });
@@ -239,11 +239,11 @@ export default {
                         id: row.id,
                     },
                     fn: data => {
-                            this.$message({
-                                message: 'del success',
-                                type: 'success'
-                            });
-                            this.getData();
+                        this.$message({
+                            message: 'del success',
+                            type: 'success'
+                        });
+                        this.getData();
 
                     },
                 })
@@ -255,24 +255,24 @@ export default {
 
         //模块权限树展示
         focusDo() {
-            if(this.$refs.modulesTree && this.saveForm.menuIds instanceof Array) this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds)
+            if (this.$refs.modulesTree && this.saveForm.menuIds instanceof Array) this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds)
             this.treeShow = !this.treeShow;
             let _self = this;
-            this.$$lib_$(document).bind("click",function(e){
-                let target  = _self.$$lib_$(e.target);
-                if(target.closest(".noHide").length == 0 && _self.treeShow){
+            this.$$lib_$(document).bind("click", function (e) {
+                let target = _self.$$lib_$(e.target);
+                if (target.closest(".noHide").length == 0 && _self.treeShow) {
                     _self.treeShow = false;
                 }
                 e.stopPropagation();
             })
         },
 
-        getChild(node,list){
-            if(node&&node['children']){
+        getChild(node, list) {
+            if (node && node['children']) {
                 let children = node['children'];
-                for(let i = 0; i<children.length;i++){
+                for (let i = 0; i < children.length; i++) {
                     list.push(children[i]['id']);
-                    this.getChild(children[i],list);
+                    this.getChild(children[i], list);
                 }
             }
             return list;
@@ -281,16 +281,16 @@ export default {
         //模块权限树选择
         checkChange(node, selfChecked, childChecked) {
             let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-            if(selfChecked){
+            if (selfChecked) {
                 let parentList = this.getParent(this.menuDataList, node.parentId, []);
                 checkedKeys = checkedKeys.concat(parentList)
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys)
-            }else{
-                let childList = this.getChild( node, []);
+            } else {
+                let childList = this.getChild(node, []);
                 checkedKeys = checkedKeys.filter(v => {
                     let flag = true;
                     for (var i = 0; i < childList.length; i++) {
-                        if(v == childList[i]){
+                        if (v == childList[i]) {
                             flag = false
                         }
                     }
@@ -300,11 +300,11 @@ export default {
             }
             let checkedNodes = this.$refs.modulesTree.getCheckedNodes();
             let moduleNameList = [];
-            checkedNodes.forEach(function(item){
+            checkedNodes.forEach(function (item) {
                 moduleNameList.push(item.nameZh)
             });
             this.saveForm.menuIds = checkedKeys;
-            this.$set(this.saveForm,'menuNameStrs',moduleNameList.join(','))
+            this.$set(this.saveForm, 'menuNameStrs', moduleNameList.join(','))
         },
 
         getParent(list, parentId, parentList) {
@@ -318,29 +318,44 @@ export default {
             return parentList
         },
 
-        selectAllChildren(node, data){
-            let childList = this.getChild( data, []);
-            let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-            checkedKeys = checkedKeys.concat(data.id);//own
-            checkedKeys = checkedKeys.concat(childList);//child
-            this.$refs.modulesTree.setCheckedKeys(checkedKeys)
+        selectAllChildren(node, data) {
+            if (!node.checked) { // auto select childs
+                let childList = this.getChild(data, []);
+                let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
+                checkedKeys = checkedKeys.concat(data.id);//own
+                checkedKeys = checkedKeys.concat(childList);//child
+                this.$refs.modulesTree.setCheckedKeys(checkedKeys)
+            } else { // auto unselect childs
+                let childList2 = this.getChild(data, []);
+                let checkedKeys2 = this.$refs.modulesTree.getCheckedKeys();
+                // remove childs
+                for (let i = 0; i < childList2.length; i++) {
+                    let id = childList2[i];
+                    let index = checkedKeys2.findIndex(e => e == id);
+                    checkedKeys2.splice(index, index);
+                }
+                // remove own
+                let index2 = checkedKeys2.findIndex(e => e == data.id);
+                checkedKeys2.splice(index2, index2);
+                this.$refs.modulesTree.setCheckedKeys(checkedKeys2)
+            }
         },
 
-        selectOrganization(node, selfChecked, childChecked){
+        selectOrganization(node, selfChecked, childChecked) {
             if (selfChecked) {
                 this.$refs.modulesTree3.setCheckedNodes([node]);
             }
-            let  checkedKeys = this.$refs.modulesTree3.getCheckedKeys();
-            if(checkedKeys && checkedKeys.length > 0){
+            let checkedKeys = this.$refs.modulesTree3.getCheckedKeys();
+            if (checkedKeys && checkedKeys.length > 0) {
                 this.searchParams.organizationId = checkedKeys[0];
                 this.onSubmit();
-            }else{
+            } else {
                 this.searchParams.organizationId = '';
                 this.tableData = [];
             }
         },
 
-        resize(){
+        resize() {
             console.info("resize");
         },
 

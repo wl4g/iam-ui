@@ -110,41 +110,18 @@
                                     <span>{{ node.label }}</span>
                                     <span style="float: right">
                                       <el-button type="primary" size="mini" @click="() => selectAllChildren(node, data)"
-                                                 style="font-size: 12px; line-height: 0; padding: 7px 5px;margin-left: 10px"
-                                      >Child All</el-button>
+                                        style="font-size: 12px; line-height: 0; padding: 7px 5px;margin-left: 10px">All Child</el-button>
                                     </span>
                                 </span>
                             </el-tree>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-
-                <!--<el-row>
-                    <el-col :span="20">
-                        <el-form-item  :label="$t('message.common.group')"   prop="groups">
-                            <el-input type="textarea" :readonly="true" class="noHide"  v-model="saveForm.groupNameStrs" @click.native='focusDo2()'></el-input>
-                            <el-tree
-                                    v-show="groupTreeShow"
-                                    default-expand-all
-                                    :data="groupsTreeData"
-                                    ref="modulesTree2"
-                                    show-checkbox
-                                    node-key="id"
-                                    :check-strictly="true"
-                                    @check-change = "checkChange2"
-                                    :props="defaultProps">
-                            </el-tree>
-                        </el-form-item>
-                    </el-col>
-                </el-row>-->
-
-
             </el-form>
             <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
-                        <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
-                    </span>
+                <el-button type="primary" @click="saveData()" :loading="dialogLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
         </el-dialog>
 
     </section>
