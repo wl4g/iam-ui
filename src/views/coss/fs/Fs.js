@@ -501,11 +501,6 @@ export default {
         },
 
         putObjectMetaData() {
-        debugger
-            /*var map = new Map();
-            for(let i in this.headForm.userMetadata){
-                map.set(this.headForm.userMetadata[i].name,this.headForm.userMetadata[i].value);
-            }*/
             let map = {}
             this.headForm.userMetadata.forEach(row => {
                 map[row.name] = row.value;

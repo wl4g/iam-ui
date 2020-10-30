@@ -21,6 +21,7 @@ export default {
             keyword: '',
             isKeyWordFocus: false,
             isLastVisible: false,
+            isLastVisibleUpdateTime: 0,
         }
     },
     methods: {
@@ -195,14 +196,19 @@ export default {
             }
             self.lightBoxVisible = !self.lightBoxVisible || this.isLastVisible;
             this.isLastVisible = self.lightBoxVisible;
+            this.isLastVisibleUpdateTime = new Date().getTime();
         });
 
         this.$root.$on('clickLightBoxVisibleChange', function () {
             if (self.$store.state.leftmenu.width === '1px') {
                 return
             }
-            self.lightBoxVisible = !self.lightBoxVisible || !this.isLastVisible;
-            this.isLastVisible = self.lightBoxVisible;
+            // 当鼠标移动触发显示指令时，由于需要1s才能完成，若此时点击会触发隐藏指令会出现闪隐，就需要延迟500ms来防止
+            let now = new Date().getTime();
+            if (now-this.isLastVisibleUpdateTime >= 500) {
+                self.lightBoxVisible = !self.lightBoxVisible;
+                this.isLastVisibleUpdateTime = now;
+            }
         });
     },
     mounted() {
