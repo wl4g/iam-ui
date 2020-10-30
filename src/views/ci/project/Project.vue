@@ -117,7 +117,7 @@
                                         filterable
                                         remote
                                         :clearable="true"
-                                        placeholder="请输入关键词"
+                                        :placeholder="$t('message.common.searchInput')"
                                         :remote-method="remoteMethod"
                                         :loading="searchProjectLoading" style="width: 100%">
                                     <el-option

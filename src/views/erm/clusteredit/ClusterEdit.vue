@@ -134,21 +134,6 @@
                         <el-row v-if="saveForm.deployType==2||saveForm.deployType==3">
                             <el-col :span="7">
                                 <el-form-item label="仓库命名空间" prop="repositoryNamespace">
-                                    <!--<el-select
-                                            v-model="item.repositoryNamespace"
-                                            filterable
-                                            remote
-                                            :clearable="true"
-                                            placeholder="请输入关键词"
-                                            :remote-method="((name)=>{getRepositoryProjects(item.repositoryId, item.dockerRepository.registryAddress,name)})"
-                                            :loading="searchRepositoryProjectsLoading" style="width: 100%">
-                                        <el-option
-                                                v-for="item in repositoryProjects"
-                                                :key="item.name"
-                                                :label="item.name"
-                                                :value="item.name">
-                                        </el-option>
-                                    </el-select>-->
                                     <el-autocomplete
                                             v-model="item.repositoryNamespace"
                                             value-key="name"

@@ -59,6 +59,7 @@ const zh_CN = {
             'manager': '管理',
             'startTime': '开始时间',
             'endTime': '结束时间',
+            'searchInput': '请输入关键字',
         },
         'ci': {
             'instances': '实例',

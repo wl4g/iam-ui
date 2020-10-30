@@ -36,7 +36,7 @@
     <transition name="mask-fade">
         <div class="menu-list-mask" v-show="maskVisible">
             <div class="list-mask-search-bar" :class="isKeyWordFocus ? 'active': ''">
-                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword" placeholder="请输入关键字搜索" prefix-icon="el-icon-search" @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true" @blur="isKeyWordFocus=false"></el-input>
+                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword" :placeholder="$t('message.common.searchInput')" prefix-icon="el-icon-search" @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true" @blur="isKeyWordFocus=false"></el-input>
             </div>
             <div class="mask-list">
                 <div class="mask-list-item" v-for="(item,name) of routerGroupByClassify">
@@ -104,10 +104,17 @@ export default LeftMenu
     border-bottom: 1px solid rgb(222, 222, 222);
 }
 
+.sidebar-lightbox-header:hover {
+    .el-icon-s-grid {
+        color: #189cfa;
+    }
+}
+
 .sidebar-lightbox-header .el-icon-s-grid {
     margin-right: 4px;
     color: #324a79;
     font-size: 20px;
+    transition: all 200ms ease 0s;
 }
 
 .sidebar-lightbox-header .el-icon-arrow-right {

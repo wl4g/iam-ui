@@ -204,7 +204,7 @@ export default {
             }
             // 当鼠标移动触发显示指令时，由于需要1s才能完成，若此时点击会触发隐藏指令会出现闪隐，就需要延迟500ms来防止
             let now = new Date().getTime();
-            if (now-this.isLastVisibleUpdateTime >= 500) {
+            if (now-this.isLastVisibleUpdateTime >= 600) {
                 self.lightBoxVisible = !self.lightBoxVisible;
                 this.isLastVisibleUpdateTime = now;
             }

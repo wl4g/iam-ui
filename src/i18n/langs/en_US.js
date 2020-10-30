@@ -59,6 +59,7 @@ const en_US = {
             'manager': 'Manager',
             'startTime': 'StartTime',
             'endTime': 'EndTime',
+            'searchInput': 'Please input keyword',
         },
         'ci': {
             'instances': 'Instances',
