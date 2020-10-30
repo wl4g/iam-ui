@@ -50,10 +50,10 @@ export default {
         getData() {
             var start = '';
             var end = '';
-            if(this.searchParams.startDate!=''){
+            if(this.searchParams.startDate && this.searchParams.startDate!=''){
                 start = this.getDate(this.searchParams.startDate);
             }
-            if(this.searchParams.endDate!=''){
+            if(this.searchParams.endDate && this.searchParams.endDate!=''){
                 end = this.getDate(this.searchParams.endDate);
             }
             this.loading = true;

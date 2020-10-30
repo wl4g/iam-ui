@@ -135,22 +135,13 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            var start = '';
-            var end = '';
-            if(this.searchParams.startDate!=''){
-                start = this.getDate(this.searchParams.startDate);
-            }
-            if(this.searchParams.endDate!=''){
-                end = this.getDate(this.searchParams.endDate);
-            }
-
             this.$$api_ci_pipeHisList({
                 data: {
                     clusterName: this.searchParams.groupName,
                     pipeName: this.searchParams.pipeName,
                     branchName: this.searchParams.branchName,
-                    startDate: start,
-                    endDate: end,
+                    startDate: this.searchParams.startDate,
+                    endDate: this.searchParams.endDate,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     environment: this.searchParams.envType,
@@ -167,12 +158,12 @@ export default {
             })
         },
 
-        getDate(startDate){
+        /*getDate(startDate){
             let Y = startDate.getFullYear() + '-';
             let M = (startDate.getMonth()+1 < 10 ? '0'+(startDate.getMonth()+1) : startDate.getMonth()+1) + '-';
             let D = startDate.getDate() <10 ? '0'+(startDate.getDate()) : startDate.getDate();
             return Y+M+D;
-        },
+        },*/
 
         //Dict convert
         getDatagridDict(category, cellValue) {
