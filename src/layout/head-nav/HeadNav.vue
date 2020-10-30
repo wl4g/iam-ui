@@ -18,9 +18,9 @@
             {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item style="font-size:13px;" command='pass'>Your profile</el-dropdown-item>
-            <el-dropdown-item style="font-size:13px;" command='info'>Help</el-dropdown-item>
-            <el-dropdown-item style="font-size:13px;" command='logout'>Sign out</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='pass'>{{$t('message.common.profile')}}</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='info'>{{$t('message.common.help')}}</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='logout'>{{$t('message.common.logout')}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -37,11 +37,11 @@
         </el-dropdown>
       </div>
 
-      <div class="pull-right" style="margin-right: 12px">
+      <div class="pull-right" style="margin-right:12px">
         <theme-picker></theme-picker>
       </div>
 
-      <organization-panel class="pull-right" style="margin-right: 10px" ></organization-panel>
+      <organization-panel class="pull-right" style="margin-right:8px" ></organization-panel>
 
     </header>
 

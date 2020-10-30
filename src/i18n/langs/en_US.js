@@ -2,6 +2,9 @@ import enLocale from 'element-ui/lib/locale/lang/en'
 const en_US = {
     message: {
         'common': {
+            'profile': 'Your profile',
+            'help': 'Help',
+            'logout': 'Sign out',
             'home': 'home',
             'language': 'Language',
             'createDate': 'CreateDate',
@@ -49,8 +52,8 @@ const en_US = {
             'download': 'Download',
             'accessToken': 'AccessToken',
             'upload': 'Upload',
-            'light': 'Diurnal light',
-            'night': 'Dark night',
+            'light': 'Light',
+            'night': 'Dark',
             'back': 'Back',
             'owner': 'Owner',
             'manager': 'Manager',

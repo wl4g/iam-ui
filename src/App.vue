@@ -333,7 +333,7 @@ p {
 
 /* Organization style */
 .organization-popover {
-  background-color: #092a47 !important;
+  background-color: #303643 !important;
 
   .title-center {
     position: absolute;
