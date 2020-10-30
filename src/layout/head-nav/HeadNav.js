@@ -14,6 +14,9 @@ export default {
     },
     data() {
         return {
+            searchParams: {
+                keyword: '',
+            },
             lang: 'zh_CN',
             display: '',
             dialog: {
@@ -76,6 +79,9 @@ export default {
         this.changeDisplay();
     },
     methods: {
+        change (e) {  // el-input框有时无法输入的问题
+            this.$forceUpdate()
+        },
         getMenuName(item) {
             return this.$i18n.locale == 'en_US' ? item.name : item.displayName;
         },

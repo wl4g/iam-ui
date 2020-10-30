@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <header class="head-nav">
       <div class="btn-toggle" @mouseenter="toggleSidebarLightbox" @click="clickToggleSidebarLightbox">
         <i class="el-icon-s-fold"></i>
@@ -8,7 +7,6 @@
 
       <div class='logo-container'>
         <img data-v-12af00ba="" src="static/images/logo.png" alt="" class="logo">
-        <!-- <a style="font-size:30px;line-height:55px;" width="100%" disabled >&nbsp;DevSecOps</a> -->
       </div>
 
       <div class="pull-right">
@@ -43,6 +41,15 @@
 
       <organization-panel class="pull-right" style="margin-right:8px" ></organization-panel>
 
+      <!-- <div class="pull-right" style="margin:10px 30px 0 0;width:240px;height:35px;">
+        <el-form :model="searchParams" @submit.native.prevent>
+            <el-form-item>
+                <el-input v-model="searchParams.keyword" :placeholder="$t('message.common.searchInput')"
+                    prefix-icon="el-icon-search" style="border-radius:0;"
+                    clearable @input="change($event)" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-form>
+      </div> -->
     </header>
 
     <el-dialog size="small" :title="dialog.title" :visible.sync="dialog.show_pass" :close-on-click-modal="false">
