@@ -17,7 +17,7 @@ export default {
             routList: [],
             lightBoxVisible: false,
             maskVisible: false,
-            routerGroupByClassify: {},
+            menusOfClassify: {},
             keyword: '',
             isKeyWordFocus: false,
             isLastVisible: false,
@@ -25,11 +25,9 @@ export default {
         }
     },
     methods: {
-
         getMenuName(item) {
             return this.$i18n.locale == 'en_US' ? item.nameEn : item.nameZh;
         },
-
         setSize() {
             //this.win_size.height = (this.$$lib_$(window).height()) + 'px'
             this.win_size.height = '100%'
@@ -112,34 +110,45 @@ export default {
             var self = this;
             var keyWords = this.keyword.trim().toUpperCase();
             var routerList = cache.get('deepChildRoutes');
-            var resultSet = {};
+            var result = {};
 
             routerList.forEach(function (item) {
-                var classifyLabel = self.dictutil.getDictLabelByTypeAndValue("menu_classify_type", item.classify, null);
-                if (classifyLabel && item.routePath) {
-                    resultSet[classifyLabel] = resultSet[classifyLabel] || [];
+                if (!item.classify) { // Ignore no classify menu
+                    return;
+                }
+                let classifyDict = self.dictutil.getDictByTypeAndValue("menu_classify_type", item.classify);
+                if (classifyDict && item.routePath) {
+                    let classifyData = result[classifyDict.value] || (result[classifyDict.value] = {});
+                    classifyData['items'] = classifyData['items'] || [];
                     // 使用if-elseif是为了区分只搜索当前语言下的关键字
                     if (self.$i18n.locale === 'zh_CN' && item.nameZh.toUpperCase().includes(keyWords)) {
-                        resultSet[classifyLabel].push(item);
+                        classifyData['items'].push(item);
                     } else if (self.$i18n.locale === 'en_US' && item.nameEn.toUpperCase().includes(keyWords)) {
-                        resultSet[classifyLabel].push(item);
+                        classifyData['items'].push(item);
                     }
+                    classifyData['classifyNameZh'] = classifyDict.label; // TODO rename to labelZh
+                    classifyData['classifyNameEn'] = classifyDict.labelEn;
                 }
-            })
+            });
 
-            // 删除空的数组
-            var keys = Object.keys(resultSet);
-            for (var i = 0, length = keys.length; i < length; i++) {
-                if (!resultSet[keys[i]].length) {
+            // 清除无菜单items的分类
+            var keys = Object.keys(result);
+            for (var i = 0; i < keys.length; i++) {
+                if (!result[keys[i]]['items'].length) {
                     try {
-                        delete resultSet[keys[i]]
+                        delete result[keys[i]]
                     } catch (e) {
-                        console.error(e)
+                        console.error(e);
                     }
                 }
             }
 
-            this.routerGroupByClassify = resultSet;
+            console.debug(result);
+            this.menusOfClassify = result;
+        },
+
+        getClassifyName(classifyData) {
+            return this.$i18n.locale == 'en_US' ? classifyData.classifyNameEn : classifyData.classifyNameZh;
         },
 
         // 遮罩层菜单子项点击事件

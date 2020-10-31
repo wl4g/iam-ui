@@ -42,10 +42,10 @@
                     @blur="isKeyWordFocus=false"></el-input>
             </div>
             <div class="mask-list">
-                <div class="mask-list-item" v-for="(items, name) of routerGroupByClassify">
-                    <p class="mask-list-item-title">{{name}}</p>
+                <div class="mask-list-item" v-for="(classifyData, classifyKey) of menusOfClassify">
+                    <p class="mask-list-item-title">{{getClassifyName(classifyData)}}</p>
                     <ul class="mask-list-item-ul">
-                        <li v-for="item of items">
+                        <li v-for="item of classifyData.items">
                             <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{getMenuName(item)}}</span>
                         </li>
                     </ul>
