@@ -319,13 +319,13 @@ export default {
         },
 
         selectAllChildren(node, data) {
-            if (!node.checked) { // auto select childs
+            if (!node.checked) { // select all childs
                 let childList = this.getChild(data, []);
                 let checkedKeys = this.$refs.modulesTree.getCheckedKeys();
-                checkedKeys = checkedKeys.concat(data.id);//own
-                checkedKeys = checkedKeys.concat(childList);//child
+                checkedKeys = checkedKeys.concat(data.id); // add self
+                checkedKeys = checkedKeys.concat(childList); // add childs
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys)
-            } else { // auto unselect childs
+            } else { // unselect all childs
                 let childList2 = this.getChild(data, []);
                 let checkedKeys2 = this.$refs.modulesTree.getCheckedKeys();
                 // remove childs
@@ -334,7 +334,7 @@ export default {
                     let index = checkedKeys2.findIndex(e => e == id);
                     checkedKeys2.splice(index, index);
                 }
-                // remove own
+                // remove self
                 let index2 = checkedKeys2.findIndex(e => e == data.id);
                 checkedKeys2.splice(index2, index2);
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys2)
