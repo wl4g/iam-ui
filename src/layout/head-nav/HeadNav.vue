@@ -29,8 +29,8 @@
             {{display}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="zh_CN">中文</el-dropdown-item>
-            <el-dropdown-item command="en_US">English</el-dropdown-item>
+            <el-dropdown-item command="zh_CN">简体中文</el-dropdown-item>
+            <el-dropdown-item command="en_US">US English</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

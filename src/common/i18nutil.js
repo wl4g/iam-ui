@@ -16,9 +16,9 @@ export default {
     },
     getDisplayByLang(lang) {
         switch (lang) {
-            case 'zh_CN': return '中文';
-            case 'en_US': return 'English';
-            default: return '中文';
+            case 'zh_CN': return '简体中文';
+            case 'en_US': return 'US English';
+            default: return '简体中文';
         }
     }
 }
