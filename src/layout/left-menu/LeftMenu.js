@@ -56,15 +56,6 @@ export default {
                         }
                     }
                 }
-
-                // 跳转第一个有效路由
-                // if(this.menu_list.length) {
-                //   let target = this.menu_list[0];
-                //   while (target.children){
-                //     target = target.children
-                //   }
-                //   this.$router.push({ path: target.path});
-                // }
             } else {
                 //this.$router.push('/404')
             }
@@ -121,34 +112,34 @@ export default {
             var self = this;
             var keyWords = this.keyword.trim().toUpperCase();
             var routerList = cache.get('deepChildRoutes');
-            var res = {};
+            var resultSet = {};
 
             routerList.forEach(function (item) {
-                var id = self.dictutil.getDictLabelByTypeAndValue("menu_classify_type", item.classify, null);
-                if (id) {
-                    res[id] = res[id] || [];
-                    if (self.$i18n.locale === 'zh_CN' && item.nameZh.toUpperCase().includes(keyWords) && item.routePath) {
-                        res[id].push(item);
-                    }
-                    if (self.$i18n.locale === 'en_US' && item.nameEn.toUpperCase().includes(keyWords) && item.routePath) {
-                        res[id].push(item);
+                var classifyLabel = self.dictutil.getDictLabelByTypeAndValue("menu_classify_type", item.classify, null);
+                if (classifyLabel && item.routePath) {
+                    resultSet[classifyLabel] = resultSet[classifyLabel] || [];
+                    // 使用if-elseif是为了区分只搜索当前语言下的关键字
+                    if (self.$i18n.locale === 'zh_CN' && item.nameZh.toUpperCase().includes(keyWords)) {
+                        resultSet[classifyLabel].push(item);
+                    } else if (self.$i18n.locale === 'en_US' && item.nameEn.toUpperCase().includes(keyWords)) {
+                        resultSet[classifyLabel].push(item);
                     }
                 }
             })
 
             // 删除空的数组
-            var keys = Object.keys(res);
+            var keys = Object.keys(resultSet);
             for (var i = 0, length = keys.length; i < length; i++) {
-                if (!res[keys[i]].length) {
+                if (!resultSet[keys[i]].length) {
                     try {
-                        delete res[keys[i]]
+                        delete resultSet[keys[i]]
                     } catch (e) {
-                        console.log(e)
+                        console.error(e)
                     }
                 }
             }
 
-            this.routerGroupByClassify = res;
+            this.routerGroupByClassify = resultSet;
         },
 
         // 遮罩层菜单子项点击事件
@@ -204,7 +195,7 @@ export default {
             }
             // 当鼠标移动触发显示指令时，由于需要1s才能完成，若此时点击会触发隐藏指令会出现闪隐，就需要延迟500ms来防止
             let now = new Date().getTime();
-            if (now-this.isLastVisibleUpdateTime >= 600) {
+            if (now - this.isLastVisibleUpdateTime >= 600) {
                 self.lightBoxVisible = !self.lightBoxVisible;
                 this.isLastVisibleUpdateTime = now;
             }

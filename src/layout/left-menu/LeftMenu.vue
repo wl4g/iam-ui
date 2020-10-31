@@ -36,14 +36,17 @@
     <transition name="mask-fade">
         <div class="menu-list-mask" v-show="maskVisible">
             <div class="list-mask-search-bar" :class="isKeyWordFocus ? 'active': ''">
-                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword" :placeholder="$t('message.common.searchInput')" prefix-icon="el-icon-search" @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true" @blur="isKeyWordFocus=false"></el-input>
+                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword" 
+                    :placeholder="$t('message.common.searchInput')" prefix-icon="el-icon-search" 
+                    @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true" 
+                    @blur="isKeyWordFocus=false"></el-input>
             </div>
             <div class="mask-list">
-                <div class="mask-list-item" v-for="(item,name) of routerGroupByClassify">
+                <div class="mask-list-item" v-for="(items, name) of routerGroupByClassify">
                     <p class="mask-list-item-title">{{name}}</p>
                     <ul class="mask-list-item-ul">
-                        <li v-for="n of item">
-                            <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{n.nameZh}}</span>
+                        <li v-for="item of items">
+                            <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{getMenuName(item)}}</span>
                         </li>
                     </ul>
                 </div>
