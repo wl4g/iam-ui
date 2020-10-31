@@ -1,7 +1,4 @@
-import {
-    cache
-} from 'utils/'
-
+import { cache } from 'utils/'
 
 export default {
     //==========判断是否拥有该权限==========
@@ -13,14 +10,13 @@ export default {
         let menu = menus.find(n => {
             return n.permission == permission;
         });
-        if(menu){
+        if (menu) {
             return true;
-        }else{
+        } else {
             return false;
         }
     },
-
-    getRoutePathByPermission: function (permission){
+    getRoutePathByPermission: function (permission) {
         if (!permission) {//type can not be null
             return false;
         }
@@ -28,10 +24,9 @@ export default {
         let menu = menus.find(n => {
             return n.permission == permission;
         });
-        if(menu){
+        if (menu) {
             return menu.routePath;
         }
         return null;
     },
-
 }
