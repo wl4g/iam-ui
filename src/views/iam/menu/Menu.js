@@ -99,7 +99,17 @@ export default {
                 type: [{required: true, message: 'Please Select Menu Type', trigger: 'change'}],
                 routeNamespace: [
                     {required: true, message: 'Please input routePath', trigger: 'change'},
-                    {validator: checkRouteNamespace, trigger: 'change'}
+                    {validator: checkRouteNamespace, trigger: 'change'},
+                    {
+                        validator: function (rule, value, callback) {
+                            if (/^\/[a-zA-Z0-9_-]+$/.test(value)) {
+                                callback(); // Pass
+                            } else {
+                                callback(new Error("e.g: /menu"));
+                            }
+                        },
+                        trigger: "change"
+                    }
                     ],
                 sort: [
                     {required: true, message: 'Please input sort', trigger: 'change'},

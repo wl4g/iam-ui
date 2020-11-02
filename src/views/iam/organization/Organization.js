@@ -25,6 +25,14 @@ export default {
           value: 'type',
           dictKey: 'sys_group_type',
         },
+        {
+          text: '角色数量',
+          value: 'roleCount',
+          jump: {
+            path: '/iam/role',
+            query: 'id',
+          },
+        },
       ],
       //tree-table 行数据
       data: [],

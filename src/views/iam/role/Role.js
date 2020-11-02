@@ -67,11 +67,19 @@ export default {
         }
     },
 
-    mounted() {
+    activated() {
+        if(this.$route.query.id){
+            this.searchParams.organizationId = this.$route.query.id;
+            this.$refs.modulesTree3.setCheckedKeys([this.searchParams.organizationId], true);
+            //this.$refs.modulesTree3.setChecked(this.searchParams.organizationId, true, false);
+        }
         this.getData();
+    },
+
+    mounted() {
+
         this.getMenus();
         this.getGroupsTree();
-
     },
 
     methods: {

@@ -19,11 +19,16 @@
               <use :xlink:href="'#'+scope.row['icon']"></use>
             </svg>
         </span>
-        <span v-if="!column.dictKey">
-          {{ scope.row[column.value] }}
-        </span>
+
+
         <span v-if="column.dictKey">
           {{dictutil.getDictLabelByTypeAndValue(column.dictKey, scope.row[column.value])}}
+        </span>
+        <span v-else-if="column.jump">
+          <el-button type="text" @click="$router.push({path: column.jump.path, query: { [column.jump.query] : scope.row[column.jump.query]}})">{{ scope.row[column.value] }}</el-button>
+        </span>
+        <span v-else>
+          {{ scope.row[column.value] }}
         </span>
 
       </template>
