@@ -144,7 +144,7 @@ function transform2OneChildrenRoutes(list) {
                     }
                 }
             } else {
-                console.error("No supported menu type of:", item.type, " - ", item);
+                console.error("No supported menu type of:", item.type, " - ", item.permission);
             }
             // 处理标签栏标题显示
             if (!item.meta) {
@@ -200,8 +200,7 @@ router.beforeEach(async (to, from, next) => {
                 // 设置动态路由对象
                 (function setAsyncRouter(list) {
                     list.forEach((item, index) => {
-                        // 处理静态路由
-                        if (item.type == '1') {
+                        if (item.type == '1') { // 静态菜单路由
                             // 头部一级菜单
                             if (item.level == '1') {
                                 item.path = item.routePath;
@@ -211,7 +210,6 @@ router.beforeEach(async (to, from, next) => {
                                 if (item.children && item.children.length) {
                                     item.redirect = item.children[0].routePath
                                 }
-
                                 item.component = Layout;
                             } else {
                                 // 二级菜单下有子菜单
@@ -225,25 +223,22 @@ router.beforeEach(async (to, from, next) => {
                                     item.component = routePath;
                                 }
                             }
-                        } else if (item.type == '2') {            // 处理动态路由
+                        } else if (item.type == '2') { // 动态菜单路由
                             item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                             item.component = webView;
                             item.meta = {
                                 linkhref: item.pageLocation
                             }
-                        } else if (item.type == '3') {
+                        } else if (item.type == '3') { // 按钮类菜单
                             // 页面按钮权限，必须有pageLocation和routePath
                             if (item.pageLocation && item.routePath) {
                                 item.path = item.routePath;
                                 assertMenu(item); // 校验routePath
-
                                 let routePath = loadView(item.pageLocation);
                                 item.component = routePath;
                             }
-                            //do notthing. @See: MARK1
                         } else {
-                            throw Error("Failed to create dynamic menu, because menu type is required or unsupported!menuType=" + item.type);
-
+                            throw Error("Failure to dynamic render menu, because menu type is required or unsupported! menu.type=" + item.type);
                         }
                         // 处理标签栏标题显示
                         if (!item.meta) {
