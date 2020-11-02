@@ -39,7 +39,7 @@
                 &nbsp;&nbsp;&nbsp;4. 当包含 <b>create_by (bigint), create_date (datetime), update_by (bigint), update_date (datetime)</b> 字段时，调用CRUD方法时才会给相应字段设置值；【可选，建议】</br>
                 &nbsp;&nbsp;&nbsp;<font color=red>* 以上规则2，3，4，除了作为关联中间表以外，应该都遵循。</font>
             </aside>
-            <el-card class="box-card" style="padding: 0 30px 0 30px">
+            <el-card class="box-card" style="padding: 0 30px 0 30px" v-loading="loadGenColumnsLoading">
                 <div slot="header">
                     <el-row>
                         <el-col :span="22">
