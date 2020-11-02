@@ -41,7 +41,14 @@
             </aside>
             <el-card class="box-card" style="padding: 0 30px 0 30px">
                 <div slot="header">
-                    <span><b>基本信息</b></span>
+                    <el-row>
+                        <el-col :span="22">
+                            <span><b>基本信息</b></span>
+                        </el-col>
+                        <el-col :span="2">
+                            <el-button type="primary" @click="loadGenColumns()" size="small" :loading="loadGenColumnsLoading">重新加载</el-button>
+                        </el-col>
+                    </el-row>
                 </div>
                 <el-row>
                     <el-col :span="9">
@@ -162,9 +169,6 @@
                     <el-row>
                         <el-col :span="22">
                             <span><b>字段信息</b></span>
-                        </el-col>
-                        <el-col :span="2">
-                            <el-button type="primary" @click="loadGenColumns()" size="small" :loading="loadGenColumnsLoading">重新加载</el-button>
                         </el-col>
                     </el-row>
                 </div>

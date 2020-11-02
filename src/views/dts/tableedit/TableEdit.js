@@ -205,6 +205,13 @@ export default {
                     if (!data.data.status) {
                         data.data.status = '1';
                     }
+                    if(this.saveForm.id){
+                        data.data.id = this.saveForm.id;
+                    }
+                    if(this.saveForm.moduleName){
+                        data.data.moduleName = this.saveForm.moduleName;
+                    }
+
                     data.data.projectId = this.saveForm.projectId;
                     this.saveForm = data.data;
                     // this.saveForm.genTableColumns = data.data.genTableColumns;
