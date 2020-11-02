@@ -214,6 +214,7 @@ router.beforeEach(async (to, from, next) => {
                             } else {
                                 // 二级菜单下有子菜单
                                 if (item.children && item.children.length) {
+                                    item.path = item.routePath;
                                     item.component = Content;
                                 } else {
                                     // 二级菜单没有子菜单
