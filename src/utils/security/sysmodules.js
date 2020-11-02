@@ -24,6 +24,13 @@ const loadView = (view) => {
     }
 };
 
+// 校验菜单(路由)字段
+function assertMenu(menu) {
+    if ((!menu.path && !menu.routePath) || menu.routeNamespace == '/') {
+        throw Error('Invalid menu routePath or routeNamespace, see e.g: menu.routePath=/iam/user/list, menu.routeNamespace=/list  =>  menu.permission: '+ menu.permission);
+    }
+}
+
 // 按parentId转换成树结构列表
 function transform2TreeRoutes(list) {
     list.forEach(item => {
@@ -89,15 +96,13 @@ function processFirstRedirect(list) {
     list.forEach((item, index) => {
         let firstChild = findFirstChild(list, item.id);
         if (firstChild && firstChild.routePath) {
-            if(firstChild.routeNamespace=='/'){
-                item.redirect = '/' + firstChild.permission.replace(':','_');
-            }else{
-                item.redirect = firstChild.routePath;
-            }
+            assertMenu(firstChild); // 校验routePath
+            item.redirect = firstChild.routePath;
         }
     });
 }
 
+// 转换为只有一级childrens树
 function transform2OneChildrenRoutes(list) {
     processFirstRedirect(list);
 
@@ -105,9 +110,7 @@ function transform2OneChildrenRoutes(list) {
     let flatOneChildRoutes = list.filter(item => {
         if (item.parentId == 0) {//顶级
             item.path = item.routePath;
-            if (!item.path || item.routeNamespace=='/') {
-                item.path = '/' + item.permission.replace(':','_');
-            }
+            assertMenu(item); // 校验routePath
             item.component = Layout;
             return true;
         } else {
@@ -116,35 +119,32 @@ function transform2OneChildrenRoutes(list) {
             if (!parent.children) {
                 parent.children = [];
             }
-            if (item.type == '1') {
+            if (item.type == '1') { // 静态菜单
                 item.path = item.routePath;
-                if (!item.path || item.routeNamespace=='/') {
-                    item.path = '/' + item.permission.replace(':','_');
-                }
+                assertMenu(item); // 校验routePath
                 if (item.pageLocation) {
                     item.component = loadView(item.pageLocation);
                 }
                 parent.children.push(item);
-            } else if (item.type == '2') {
+            } else if (item.type == '2') { // 动态菜单
                 item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                 item.component = webView;
                 item.meta = {
                     linkhref: item.pageLocation
                 };
                 parent.children.push(item);
-            } else { // include item.type == '3'
+            } else if (item.type == '3') { // 按钮类型菜单
                 if (item.pageLocation && item.routePath) {
                     let view = loadView(item.pageLocation);
                     if (view) {
                         item.path = item.routePath;
-                        if (!item.path || item.routeNamespace=='/') {
-                            item.path = '/' + item.permission.replace(':','_');
-                        }
+                        assertMenu(item); // 校验routePath
                         item.component = view;
                         parent.children.push(item);
                     }
                 }
-                console.warn("not support this type" + item.type);
+            } else {
+                console.error("No supported menu type of:", item.type, " - ", item);
             }
             // 处理标签栏标题显示
             if (!item.meta) {
@@ -205,9 +205,7 @@ router.beforeEach(async (to, from, next) => {
                             // 头部一级菜单
                             if (item.level == '1') {
                                 item.path = item.routePath;
-                                if (!item.path || item.routeNamespace=='/') {
-                                    item.path = '/' + item.permission.replace(':','_');
-                                }
+                                assertMenu(item); // 校验routePath
 
                                 // 默认指向第一个子菜单
                                 if (item.children && item.children.length) {
@@ -218,11 +216,11 @@ router.beforeEach(async (to, from, next) => {
                             } else {
                                 // 二级菜单下有子菜单
                                 if (item.children && item.children.length) {
-                                    item.path = item.permission.replace(':','_');
                                     item.component = Content;
                                 } else {
                                     // 二级菜单没有子菜单
                                     item.path = item.routePath;
+                                    assertMenu(item); // 校验routePath
                                     let routePath = loadView(item.pageLocation);
                                     item.component = routePath;
                                 }
@@ -237,9 +235,8 @@ router.beforeEach(async (to, from, next) => {
                             // 页面按钮权限，必须有pageLocation和routePath
                             if (item.pageLocation && item.routePath) {
                                 item.path = item.routePath;
-                                if (!item.path || item.routeNamespace=='/') {
-                                    item.path = '/' + item.permission.replace(':','_');
-                                }
+                                assertMenu(item); // 校验routePath
+
                                 let routePath = loadView(item.pageLocation);
                                 item.component = routePath;
                             }
