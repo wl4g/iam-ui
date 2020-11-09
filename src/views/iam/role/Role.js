@@ -339,12 +339,14 @@ export default {
                 // remove childs
                 for (let i = 0; i < childList2.length; i++) {
                     let id = childList2[i];
+                    debugger
                     let index = checkedKeys2.findIndex(e => e == id);
-                    checkedKeys2.splice(index, index);
+                    checkedKeys2.splice(index, 1);
                 }
+                debugger
                 // remove self
                 let index2 = checkedKeys2.findIndex(e => e == data.id);
-                checkedKeys2.splice(index2, index2);
+                checkedKeys2.splice(index2, 1);
                 this.$refs.modulesTree.setCheckedKeys(checkedKeys2)
             }
         },
