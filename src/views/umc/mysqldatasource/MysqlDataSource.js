@@ -85,7 +85,7 @@ export default {
                             provider: this.saveForm.provider,
                             dataSource: json,
                         },
-                        fn: data => {
+                        fn: json => {
                             this.cleanSaveForm();
                             this.back();
                         },
@@ -104,8 +104,8 @@ export default {
                 data: {
                     id: id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                 }
             });
             this.dialogLoading = false;
@@ -116,8 +116,8 @@ export default {
         getDataSourceProvides() {
             this.$$api_umc_dataSourceProvides({
                 data: {},
-                fn: data => {
-                    this.dataSourceProviders = data.data;
+                fn: json => {
+                    this.dataSourceProviders = json.data;
                 },
             })
         },
@@ -126,14 +126,14 @@ export default {
             this.connecting = true;
             this.$$api_umc_testConnect({
                 data: this.saveForm,
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: '连接成功',
                         type: 'success'
                     });
                     this.connecting = false;
                 },
-                errFn: data => {
+                errFn: json => {
                     this.$message.error(data.message);
                     this.connecting = false;
                 }

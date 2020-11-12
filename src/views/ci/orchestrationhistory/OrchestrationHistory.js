@@ -96,10 +96,10 @@ export default {
                 data: {
                     runId: this.searchParams.runId,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                     this.startRefreshList();
                 },
                 errFn: () => {
@@ -192,7 +192,7 @@ export default {
                     data: {
                         pipeHisId: id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     },
                 })

@@ -45,10 +45,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.page.total;
-                    this.tableData = data.data.list;
+                    this.total = json.data.page.total;
+                    this.tableData = json.data.list;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -80,7 +80,7 @@ export default {
                     data: {
                         clusterId: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'del success',
                             type: 'success'

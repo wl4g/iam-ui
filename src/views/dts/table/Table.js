@@ -67,10 +67,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.tmetadataLoading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.tmetadataLoading = false;
@@ -91,7 +91,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -117,7 +117,7 @@ export default {
                     id: row.id,
                     status: row.status,
                 },
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -145,7 +145,7 @@ export default {
                         id: row.id,
                         force: force,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -165,7 +165,7 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -183,7 +183,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'

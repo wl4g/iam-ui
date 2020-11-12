@@ -118,7 +118,7 @@ export default {
         data: {
           content: this.insidecontent
         },
-        fn: data => {
+        fn: json => {
             this.checkfalg = true;
         },
         errFn: () => {
@@ -145,7 +145,7 @@ export default {
           data: {
             id: id
           },
-          fn: data => {
+          fn: json => {
             this.ruleForm.tableData2.splice(index, 1);
           },
         })
@@ -269,19 +269,19 @@ export default {
               clusterId: clusterId,
               envType: environmentId
             },
-            fn: data => {
+            fn: json => {
 
                 if(flag==0){
-                  this.instanceData = data.data.instances;
+                  this.instanceData = json.data.instances;
                 }else{
                   var title = this.dialogTitle;
                   //var length = this.instancelist.length;
                   if(environmentId!="" && title != "编辑"){
-                    for(let rowData of data.data.instances){
+                    for(let rowData of json.data.instances){
                       this.instancelist.push(rowData.id);
                     }
                   }
-                  this.instanceFormData = data.data.instances;
+                  this.instanceFormData = json.data.instances;
                 }
             }
           })
@@ -290,8 +290,8 @@ export default {
         // 获取分组名称
         getGroup() {
           this.$$api_erm_clusters({
-            fn: data => {
-                this.groupData = data.data.clusters;
+            fn: json => {
+                this.groupData = json.data.clusters;
             }
           })
         },
@@ -302,8 +302,8 @@ export default {
             data: {
               type: 'app_ns_type',
             },
-            fn: data => {
-                this.namespaces = data.data.list;
+            fn: json => {
+                this.namespaces = json.data.list;
             }
           })*/
           this.namespaces = [
@@ -323,10 +323,10 @@ export default {
               pageNum: this.pageNum,
               pageSize: this.pageSize,
             },
-            fn: data => {
+            fn: json => {
               this.loading = false;
-              this.total = data.data.page.total;
-              this.tableData = data.data.list;
+              this.total = json.data.page.total;
+              this.tableData = json.data.list;
             },
             errFn: () => {
               this.loading = false;
@@ -354,10 +354,10 @@ export default {
             data:{
               id: id
             },
-            fn: data => {
+            fn: json => {
               this.dialogLoading = false;
-              this.propertiesData = data.data.configVersions;
-              this.ruleForm.tableData2 = data.data.configVersions;
+              this.propertiesData = json.data.configVersions;
+              this.ruleForm.tableData2 = json.data.configVersions;
               if (!falg) {
                 if (this.propertiesData.length > 0) {
                   this.propertiesid = this.propertiesData[0].id;
@@ -446,7 +446,7 @@ export default {
               content: '',
               appClusterId: this.ruleForm.group
             },
-            fn: data => {
+            fn: json => {
               this.dialogLoading = false;
                 this.dialogVisible = false;
                 this.instancelist = [];

@@ -206,8 +206,8 @@ export default {
                 data: {
 
                 },
-                fn: data => {
-                    this.contactGroupData = data.data;
+                fn: json => {
+                    this.contactGroupData = json.data;
                 },
             })
         },
@@ -215,8 +215,8 @@ export default {
         // 获取分组名称
         getClusters() {
             this.$$api_erm_clusters({
-                fn: data => {
-                    this.clusterData = data.data.clusters;
+                fn: json => {
+                    this.clusterData = json.data.clusters;
                 },
             })
         },
@@ -234,8 +234,8 @@ export default {
                     clusterId: clusterId,
                     envType: environment
                 },
-                fn: data => {
-                    this.instanceData = data.data.instances;
+                fn: json => {
+                    this.instanceData = json.data.instances;
                     this.instanceData2 = [];
                     for (let i = 0; i < this.instanceData.length; i++) {
                         this.instanceData2.push({
@@ -285,7 +285,7 @@ export default {
                 if (valid) {
                     this.$$api_ci_savePipeline({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.loading = false;
                             this.cleanSaveForm();
                             this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline')})
@@ -350,17 +350,17 @@ export default {
                 data: {
                     id: this.saveForm.id,
                 },
-                fn: data => {
+                fn: json => {
                     //fix
-                    if(data.data.instanceIds && data.data.instanceIds.length>0){
-                        data.data.instanceOnOff = 1;
+                    if(json.data.instanceIds && json.data.instanceIds.length>0){
+                        json.data.instanceOnOff = 1;
                     }else {
-                        data.data.instanceOnOff = 0;
+                        json.data.instanceOnOff = 0;
                     }
-                    this.fixData(data.data);
-                    this.saveForm = data.data;
+                    this.fixData(json.data);
+                    this.saveForm = json.data;
 
-                    if(!data.data.pipeStepInstanceCommand){
+                    if(!json.data.pipeStepInstanceCommand){
                         this.saveForm.pipeStepInstanceCommand = {
                             enable: false,
                             preCommand: '',
@@ -389,8 +389,8 @@ export default {
                 data: {
                     clusterId: this.saveForm.clusterId,
                 },
-                fn: data => {
-                    this.saveForm.projectName=data.data.projectName;
+                fn: json => {
+                    this.saveForm.projectName=json.data.projectName;
                 },
             })
         },
@@ -405,8 +405,8 @@ export default {
                     clusterId: this.saveForm.clusterId,
                     refType: this.saveForm.pipeStepBuilding.refType,
                 },
-                fn: data => {
-                    this.saveForm.pipeStepBuilding=data.data;
+                fn: json => {
+                    this.saveForm.pipeStepBuilding=json.data;
                 },
             })
         },
@@ -417,8 +417,8 @@ export default {
 
         getPcm() {
             this.$$api_ci_pcmAll({
-                fn: data => {
-                    this.pcmData = data.data;
+                fn: json => {
+                    this.pcmData = json.data;
                 },
             })
         },
@@ -444,8 +444,8 @@ export default {
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
-                fn: data => {
-                    this.pcmProjects = data.data;
+                fn: json => {
+                    this.pcmProjects = json.data;
                 },
             })
         },
@@ -454,8 +454,8 @@ export default {
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
-                fn: data => {
-                    this.pcmStatuses = data.data;
+                fn: json => {
+                    this.pcmStatuses = json.data;
                 },
             })
         },
@@ -464,8 +464,8 @@ export default {
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
-                fn: data => {
-                    this.pcmTrackers = data.data;
+                fn: json => {
+                    this.pcmTrackers = json.data;
                 },
             })
         },
@@ -474,8 +474,8 @@ export default {
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
-                fn: data => {
-                    this.pcmPriorities = data.data;
+                fn: json => {
+                    this.pcmPriorities = json.data;
                 },
             })
         },

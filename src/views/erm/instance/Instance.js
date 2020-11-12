@@ -117,10 +117,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -153,7 +153,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveInstance({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -179,11 +179,11 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    if(!data.data.hosts){
-                        data.data.hosts = [];
+                fn: json => {
+                    if(!json.data.hosts){
+                        json.data.hosts = [];
                     }
-                    this.saveForm = data.data;
+                    this.saveForm = json.data;
                     if(this.saveForm.deployType){
                         this.saveForm.deployType = this.saveForm.deployType.toString();
                     }
@@ -197,9 +197,9 @@ export default {
         allHost() {
             this.$$api_erm_allHost({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.hosts = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.hosts = json.data;
                     }
                 },
             });
@@ -213,9 +213,9 @@ export default {
                 data: {
                     id: this.saveForm.clusterId,
                 },
-                fn: data => {
-                    if(data.data){
-                        this.saveForm.deployType = data.data.deployType;
+                fn: json => {
+                    if(json.data){
+                        this.saveForm.deployType = json.data.deployType;
                     }
                 },
             });
@@ -224,9 +224,9 @@ export default {
         getClusters() {
             this.$$api_erm_clusters({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.clusters = data.data.clusters;
+                fn: json => {
+                    if(json.data){
+                        this.clusters = json.data.clusters;
                     }
                 },
             });
@@ -235,9 +235,9 @@ export default {
         getK8ss() {
             this.$$api_erm_getK8sForSelect({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.k8ss = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.k8ss = json.data;
                     }
                 },
             });
@@ -246,9 +246,9 @@ export default {
         getDockers() {
             this.$$api_erm_getDockerForSelect({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.dockers = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.dockers = json.data;
                     }
                 },
             });
@@ -270,7 +270,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -286,8 +286,8 @@ export default {
         listBucketsWithProvider(){
             this.$$api_coss_listBucketsWithProvider({
                 data: {},
-                fn: data => {
-                    this.cossBuckets = data.data;
+                fn: json => {
+                    this.cossBuckets = json.data;
                 },
             })
         }

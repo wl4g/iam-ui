@@ -72,10 +72,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -129,7 +129,7 @@ export default {
                 if (valid) {
                     this.$$api_umc_saveTemplat({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -156,8 +156,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data.alarmTemplate;
+                fn: json => {
+                    this.saveForm = json.data.alarmTemplate;
 
                     //
                     this.saveForm.tags = '';
@@ -183,7 +183,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'
@@ -259,8 +259,8 @@ export default {
                 data: {
                     classify: this.searchParams.classify,
                 },
-                fn: data => {
-                    this.metricList = data.data.list;
+                fn: json => {
+                    this.metricList = json.data.list;
                 }
             })
         },
@@ -270,8 +270,8 @@ export default {
                 data: {
                     classify: this.saveForm.classify,
                 },
-                fn: data => {
-                    this.metricList2 = data.data.list;
+                fn: json => {
+                    this.metricList2 = json.data.list;
                 }
             })
         }

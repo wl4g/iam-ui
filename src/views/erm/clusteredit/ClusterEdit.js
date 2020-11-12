@@ -114,8 +114,8 @@ export default {
         //获取主机列表
         getAllHost() {
             this.$$api_erm_allHost({
-                fn: data => {
-                    this.allHost = data.data;
+                fn: json => {
+                    this.allHost = json.data;
                 }
             })
         },
@@ -128,7 +128,7 @@ export default {
                     sshUser: row.sshUser,
                     sshKey: row.sshKey,
                 },
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Connect Success',
                         type: 'success'
@@ -143,7 +143,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveCluster({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.cleanSaveForm();
@@ -164,19 +164,19 @@ export default {
                 data: {
                     id: id,
                 },
-                fn: data => {
-                    if(data.data.deployType){
-                        data.data.deployType = data.data.deployType.toString();
+                fn: json => {
+                    if(json.data.deployType){
+                        json.data.deployType = json.data.deployType.toString();
                     }
-                    for(let i in data.data.environments){
-                        if(!data.data.environments[i].dockerRepository){
-                            data.data.environments[i].dockerRepository = {authConfigModel:{}};
+                    for(let i in json.data.environments){
+                        if(!json.data.environments[i].dockerRepository){
+                            json.data.environments[i].dockerRepository = {authConfigModel:{}};
                         }
-                        if(!data.data.environments[i].dockerRepository.authConfigModel){
-                            data.data.environments[i].dockerRepository.authConfigModel = {};
+                        if(!json.data.environments[i].dockerRepository.authConfigModel){
+                            json.data.environments[i].dockerRepository.authConfigModel = {};
                         }
                     }
-                    this.saveForm = data.data;
+                    this.saveForm = json.data;
                 }
             });
         },
@@ -184,9 +184,9 @@ export default {
         getSshs() {
             this.$$api_erm_getSshForSelect({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.sshs = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.sshs = json.data;
                     }
                 },
             });
@@ -195,9 +195,9 @@ export default {
         getDockerRepositorys() {
             this.$$api_erm_getDockerRepositoryForSelect({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.dockerRepositorys = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.dockerRepositorys = json.data;
                     }
                 },
             });
@@ -217,18 +217,18 @@ export default {
                     address: address,
                     name: name,
                 },
-                fn: data => {
+                fn: json => {
                     this.searchRepositoryProjectsLoading = false;
-                    if(data.data){
-                        // this.repositoryProjects = data.data;
+                    if(json.data){
+                        // this.repositoryProjects = json.data;
                         // let results = [];
-                        // for(let i in data.data){
-                        //     results.push({value: data.data[i].name});
+                        // for(let i in json.data){
+                        //     results.push({value: json.data[i].name});
                         // }
-                        if(!data.data || !(data.data instanceof Array)){
-                            data.data = [];
+                        if(!json.data || !(json.data instanceof Array)){
+                            json.data = [];
                         }
-                        cb(data.data);
+                        cb(json.data);
                     }
                 },
                 errFn: () => {

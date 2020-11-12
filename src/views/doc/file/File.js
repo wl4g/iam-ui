@@ -83,9 +83,9 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                fn: json => {
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 }
             })
         },
@@ -108,7 +108,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     }
                 })
@@ -119,8 +119,8 @@ export default {
         allLabel(){
             this.$$api_doc_allLabel({
                 data: {},
-                fn: data => {
-                    this.labelData = data.data;
+                fn: json => {
+                    this.labelData = json.data;
                 }
             })
         },
@@ -157,7 +157,7 @@ export default {
                 if (valid) {
                     this.$$api_doc_saveUpload({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
@@ -219,8 +219,8 @@ export default {
             this.shareConfirmForm.isEncrypt = isEncrypt;
             this.$$api_doc_shareDoc({
                 data: this.shareConfirmForm,
-                fn: data => {
-                    this.showShareInfo(data.data);
+                fn: json => {
+                    this.showShareInfo(json.data);
                     this.shareConfirmDialogVisible = false;
                 },
             });

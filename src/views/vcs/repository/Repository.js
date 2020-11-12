@@ -108,10 +108,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -141,7 +141,7 @@ export default {
                 if (valid) {
                     this.$$api_vcs_saveVcs({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -165,18 +165,18 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     this.saveForm = {
-                        id: data.data.id,
-                        name: data.data.name,
-                        providerKind: data.data.providerKind,
-                        authType: data.data.authType.toString(),
-                        baseUri: data.data.baseUri,
-                        sshKeyPub: data.data.sshKeyPub,
-                        sshKey: data.data.sshKey,
-                        accessToken: data.data.accessToken,
-                        username: data.data.username,
-                        password: data.data.password,
+                        id: json.data.id,
+                        name: json.data.name,
+                        providerKind: json.data.providerKind,
+                        authType: json.data.authType.toString(),
+                        baseUri: json.data.baseUri,
+                        sshKeyPub: json.data.sshKeyPub,
+                        sshKey: json.data.sshKey,
+                        accessToken: json.data.accessToken,
+                        username: json.data.username,
+                        password: json.data.password,
                     };
                 }
             });
@@ -199,7 +199,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'

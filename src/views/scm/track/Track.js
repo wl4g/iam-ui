@@ -80,7 +80,7 @@ export default {
                 envId: envId,
                 remark: remark
               },
-              fn: data => {
+              fn: json => {
                   this.$message({
                     type: 'success',
                     message: '删除成功!'
@@ -117,10 +117,10 @@ export default {
               pageNum: this.pageNum,
               pageSize: this.pageSize,
             },
-            fn: data => {
+            fn: json => {
               this.loading = false;
-                this.total = parseInt(data.data.page.total);
-                this.tableData = data.data.list;
+                this.total = parseInt(json.data.page.total);
+                this.tableData = json.data.list;
             },
             errFn: () => {
               this.loading = false;
@@ -141,15 +141,15 @@ export default {
           clusterId: clusterId,
           envType: environmentId
         },
-        fn: data => {
-            this.instanceFormData = data.data.instances;
+        fn: json => {
+            this.instanceFormData = json.data.instances;
         }
       })
     },
     getGroup() {
       this.$$api_erm_clusters({
-        fn: data => {
-            this.groupData = data.data.clusters;
+        fn: json => {
+            this.groupData = json.data.clusters;
         },
       })
     },
@@ -172,9 +172,9 @@ export default {
           instanceId: instanceId,
           releaseId: releaseId
         },
-        fn: data => {
+        fn: json => {
             this.dialogLoading = false;
-            this.detail = data.data.detail;
+            this.detail = json.data.detail;
         },
         errFn: () => {
           this.dialogLoading = false;

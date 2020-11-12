@@ -143,8 +143,8 @@ export default {
                 data: {
                     pipeHisId: this.taskHisId,
                 },
-                fn: data => {
-                    this.detailForm.pipelineHistoryInstances = data.data.pipelineHistoryInstances;
+                fn: json => {
+                    this.detailForm.pipelineHistoryInstances = json.data.pipelineHistoryInstances;
                     that.startRefreshList();
                 }
             })
@@ -156,8 +156,8 @@ export default {
                 data: {
                     pipeHisId: id,
                 },
-                fn: data => {
-                    this.detailForm = data.data;
+                fn: json => {
+                    this.detailForm = json.data;
                     // 由于偶尔渲染此页面时，xterm的cavas画出的内容高度变矮了，需要延时？延时暂时显示正常
                     that.readLogTask(id);
                     /*self.setTimeout(function () {
@@ -210,8 +210,8 @@ export default {
                     startPos: that.startPos + 1,
                     size: 10000,
                 },
-                fn: data => {
-                    let logs = data.data.data.lines;
+                fn: json => {
+                    let logs = json.data.data.lines;
                     this.logReadRunning = true;
                     for (let i in logs) {
                         /**
@@ -226,8 +226,8 @@ export default {
                         logLine = logLine.replace('ERROR', '\x1B[31mERROR\x1B[0m');
                         that.term.writeln(logLine);
                     }
-                    that.startPos = data.data.data.endPos;
-                    if (!data.data.data.hasNext) {
+                    that.startPos = json.data.data.endPos;
+                    if (!json.data.data.hasNext) {
                         window.clearTimeout(that.logThread);
                         this.logReadRunning = false;
                         return;
@@ -297,8 +297,8 @@ export default {
                     startPos: that.detailStartPos,
                     size: 10000,
                 },
-                fn: data => {
-                    let logs = data.data.data.lines;
+                fn: json => {
+                    let logs = json.data.data.lines;
                     for (let i in logs) {
                         /**
                          * console.log('\x1B[31m%s\x1B[0m', '错误');
@@ -307,11 +307,11 @@ export default {
                          **/
                         this.detailTerm.writeln(logs[i]);
                     }
-                    if (!data.data.data.hasNext) {
+                    if (!json.data.data.hasNext) {
                         window.clearTimeout(this.detailLogThread);
                         return;
                     }
-                    that.detailStartPos = data.data.data.endPos;
+                    that.detailStartPos = json.data.data.endPos;
                     //console.debug(that.startPos);
                     this.detailLogThread = self.setTimeout(function () {
                         that.readDetailLog(instanceId);

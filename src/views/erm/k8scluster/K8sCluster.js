@@ -73,10 +73,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -101,7 +101,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveK8sCluster({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -126,8 +126,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                     if(!this.saveForm.hostIds){
                         this.saveForm.hostIds = [];
                     }
@@ -140,13 +140,13 @@ export default {
         allHost() {
             this.$$api_erm_allHost({
                 data: {},
-                fn: data => {
-                    if(data.data){
+                fn: json => {
+                    if(json.data){
                         this.hosts = [];
-                        for (let i = 0; i < data.data.length; i++) {
+                        for (let i = 0; i < json.data.length; i++) {
                             this.hosts.push({
-                                label: data.data[i].hostname,
-                                key: data.data[i].id,
+                                label: json.data[i].hostname,
+                                key: json.data[i].id,
                             });
                         }
                     }
@@ -168,7 +168,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'

@@ -127,10 +127,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -154,7 +154,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveHost({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -179,8 +179,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                     if (!this.saveForm.sshIds) {
                         this.saveForm.sshIds = [];
                     }
@@ -193,20 +193,20 @@ export default {
         getIdcForSelect() {
             this.$$api_erm_getIdcForSelect({
                 data: {},
-                fn: data => {
-                    this.idcs = data.data;
+                fn: json => {
+                    this.idcs = json.data;
                 },
             });
         },
         getSshForSelect() {
             this.$$api_erm_getSshForSelect({
                 data: {},
-                fn: data => {
+                fn: json => {
                     this.sshs = [];
-                    for (let i = 0; i < data.data.length; i++) {
+                    for (let i = 0; i < json.data.length; i++) {
                         this.sshs.push({
-                            label: data.data[i].name,
-                            key: data.data[i].id,
+                            label: json.data[i].name,
+                            key: json.data[i].id,
                         });
                     }
                 },
@@ -227,7 +227,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -255,7 +255,7 @@ export default {
                     hostId: this.testConnect.hostId,
                     sshId: this.testConnect.sshId,
                 },
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Connect Success',
                         type: 'success'

@@ -94,7 +94,7 @@ export default {
                     }
                     this.$$api_doc_saveDoc({
                         data:  this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.cleanSaveForm();
                             this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:file')})
                         }
@@ -115,10 +115,10 @@ export default {
                 data: {
                     id: this.saveForm.id,
                 },
-                fn: data => {
-                    if(data.data){
-                        this.saveForm = data.data;
-                        this.oldContent = data.data.content;
+                fn: json => {
+                    if(json.data){
+                        this.saveForm = json.data;
+                        this.oldContent = json.data.content;
                     }
                     this.getChanges();
                 }
@@ -129,8 +129,8 @@ export default {
                 data: {
                     docCode: this.saveForm.docCode
                 },
-                fn: data => {
-                    this.changesData = data.data;
+                fn: json => {
+                    this.changesData = json.data;
                 }
             })
         },
@@ -154,8 +154,8 @@ export default {
         getLabelData(){
             this.$$api_doc_allLabel({
                 data: {},
-                fn: data => {
-                    this.labelData = data.data;
+                fn: json => {
+                    this.labelData = json.data;
                 }
             })
         },
@@ -188,13 +188,13 @@ export default {
                  * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
                  * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
                  */
-                if(!data||!data.data||!data.data.data){
+                if(!data||!json.data||!json.data.data){
                     return;
                 }
-                if(data.data.code !== 200){
+                if(json.data.code !== 200){
                     this.$message.error('上传图片失败');
                 }
-                this.$refs.md.$img2Url(pos, data.data.data);
+                this.$refs.md.$img2Url(pos, json.data.data);
             })
         },
         onFullScreen(status,value){

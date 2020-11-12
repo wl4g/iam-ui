@@ -140,7 +140,7 @@ export default {
                     this.dealPackageName();
                     this.$$api_dts_saveProject({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.back();
                             this.saveLoading = false;
                         },
@@ -156,10 +156,10 @@ export default {
         getDatasources() {
             this.$$api_dts_getDatabaseForSelect({
                 data: {},
-                fn: data => {
-                    this.datasources = data.data;
-                    if (data.data && data.data[0] && !this.saveForm.datasourceId) {
-                        this.saveForm.datasourceId = data.data[0].id;
+                fn: json => {
+                    this.datasources = json.data;
+                    if (json.data && json.data[0] && !this.saveForm.datasourceId) {
+                        this.saveForm.datasourceId = json.data[0].id;
                     }
                 }
             });
@@ -172,14 +172,14 @@ export default {
                 data: {
                     id: this.saveForm.id,
                 },
-                fn: data => {
-                    if (!data.data.extraOptions || !data.data.extraOptions) {
-                        data.data.extraOptions = [];
+                fn: json => {
+                    if (!json.data.extraOptions || !json.data.extraOptions) {
+                        json.data.extraOptions = [];
                     }
-                    if (data.data.organType && data.data.organName && data.data.projectName) {
-                        data.data.packageName = data.data.organType + '.' + data.data.organName + '.' + data.data.projectName;
+                    if (json.data.organType && json.data.organName && json.data.projectName) {
+                        json.data.packageName = json.data.organType + '.' + json.data.organName + '.' + json.data.projectName;
                     }
-                    this.saveForm = data.data;
+                    this.saveForm = json.data;
 
                     this.extraOptions();
                 },
@@ -195,8 +195,8 @@ export default {
         },
         getGenProviderSet() {
             this.$$api_dts_getGenProviderSet({
-                fn: data => {
-                    this.genProviderSet = data.data;
+                fn: json => {
+                    this.genProviderSet = json.data;
                 },
             })
         },
@@ -205,9 +205,9 @@ export default {
                 data: {
                     providerSet: this.saveForm.providerSet,
                 },
-                fn: data => {
-                    this.mergeExtraOption(data.data, this.saveForm.extraOptions);
-                    this.saveForm.extraOptions = data.data;
+                fn: json => {
+                    this.mergeExtraOption(json.data, this.saveForm.extraOptions);
+                    this.saveForm.extraOptions = json.data;
                 },
             })
         },

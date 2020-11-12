@@ -74,9 +74,9 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
-                    this.total = data.data.page.total;
-                    this.tableData = data.data.list;
+                fn: json => {
+                    this.total = json.data.page.total;
+                    this.tableData = json.data.list;
                 }
             })
         },
@@ -100,9 +100,9 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data.notification;
-                    this.saveForm.contacts = data.data.notificationContacts;
+                fn: json => {
+                    this.saveForm = json.data.notification;
+                    this.saveForm.contacts = json.data.notificationContacts;
                 }
             })
             this.dialogVisible = true;

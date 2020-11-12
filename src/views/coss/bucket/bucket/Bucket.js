@@ -88,8 +88,8 @@ export default {
                     prefix: this.searchParams.prefix,
                     marker: null,//TODO
                     maxKeys: 10,
-                }, fn: data => {
-                    this.tableData = data.data.bucketList;
+                }, fn: json => {
+                    this.tableData = json.data.bucketList;
                 }
             });
         },
@@ -101,7 +101,7 @@ export default {
         createBucket() {
             this.$$api_coss_createBucket({
                 data: this.saveForm,
-                fn: data => {
+                fn: json => {
                     this.$message({
                         type: 'success',
                         message: 'Success'
@@ -131,7 +131,7 @@ export default {
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,
-                    }, fn: data => {
+                    }, fn: json => {
                         this.$message({
                             type: 'success',
                             message: 'Success'
@@ -147,8 +147,8 @@ export default {
         getCossProviders(){
             this.$$api_coss_getCossProviders({
                 data: {},
-                fn: data => {
-                    this.cossProviders = data.data;
+                fn: json => {
+                    this.cossProviders = json.data;
                 }
             });
         },
@@ -165,10 +165,10 @@ export default {
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,
-                    }, fn: data => {
-                        this.aclForm.acl = data.data.acl;
-                        this.aclForm.realAcl = data.data.realAcl;
-                        this.aclForm.config = data.data.config;
+                    }, fn: json => {
+                        this.aclForm.acl = json.data.acl;
+                        this.aclForm.realAcl = json.data.realAcl;
+                        this.aclForm.config = json.data.config;
                         this.aclDialog = true;
                     }
                 });
@@ -180,7 +180,7 @@ export default {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.aclForm.bucketName,
                     acl: this.aclForm.acl,
-                }, fn: data => {
+                }, fn: json => {
                     this.aclDialog = false;
                 }
             });
@@ -196,7 +196,7 @@ export default {
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,
-                    }, fn: data => {
+                    }, fn: json => {
                         this.aclDialog = false;
                     }
                 });
