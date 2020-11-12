@@ -103,10 +103,10 @@ export default {
                 data: {
                     name: this.searchParams.name,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -131,7 +131,7 @@ export default {
                 if (valid) {
                     this.$$api_ci_saveOrchestration({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -156,14 +156,14 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     this.saveForm = {
-                        id: data.data.id,
-                        name: data.data.name,
-                        type: data.data.type.toString(),
-                        remark: data.data.remark,
-                        orchestrationPipelines: data.data.orchestrationPipelines,
-                        organizationCode: data.data.organizationCode,
+                        id: json.data.id,
+                        name: json.data.name,
+                        type: json.data.type.toString(),
+                        remark: json.data.remark,
+                        orchestrationPipelines: json.data.orchestrationPipelines,
+                        organizationCode: json.data.organizationCode,
                     };
 
                     this.fixPipelinesShow();
@@ -189,7 +189,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'
@@ -208,8 +208,8 @@ export default {
                 data: {
                     environment: this.saveForm.environment
                 },
-                fn: data => {
-                    this.pipelines = data.data;
+                fn: json => {
+                    this.pipelines = json.data;
                     this.fixPipelinesShow();
                 }
             })
@@ -254,7 +254,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -326,7 +326,7 @@ export default {
                 if (valid) {
                     this.$$api_ci_runOrchestration({
                         data: this.confirmForm,
-                        fn: data => {
+                        fn: json => {
                             this.getData();
                             this.confirmDialog = false;
                             this.saveLoading = false;
@@ -360,8 +360,8 @@ export default {
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
-                fn: data => {
-                    this.users = data.data;
+                fn: json => {
+                    this.users = json.data;
                 },
             })
         },
@@ -370,8 +370,8 @@ export default {
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
-                fn: data => {
-                    this.projects = data.data;
+                fn: json => {
+                    this.projects = json.data;
                 },
             })
         },
@@ -382,8 +382,8 @@ export default {
                     userId: this.confirmForm.userId,
                     projectId: this.confirmForm.projectId,
                 },
-                fn: data => {
-                    this.issues = data.data;
+                fn: json => {
+                    this.issues = json.data;
                 },
             })
         },

@@ -121,10 +121,10 @@ export default {
             this.searchParams.pageSize = this.pageSize;
             this.$$api_ci_pipelineList({
                 data: this.searchParams,
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
             })
         },
@@ -146,7 +146,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     },
                 })
@@ -225,7 +225,7 @@ export default {
                 if (valid) {
                     this.$$api_ci_runPipeline({
                         data: this.confirmForm,
-                        fn: data => {
+                        fn: json => {
                             this.saveLoading = false;
                             this.confirmDialog = false;
                             this.$confirm('Create Task Success,jump to task list?', {
@@ -261,8 +261,8 @@ export default {
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
-                fn: data => {
-                    this.users = data.data;
+                fn: json => {
+                    this.users = json.data;
                 },
             })
         },
@@ -271,8 +271,8 @@ export default {
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
-                fn: data => {
-                    this.projects = data.data;
+                fn: json => {
+                    this.projects = json.data;
                 },
             })
         },
@@ -283,8 +283,8 @@ export default {
                     userId: this.confirmForm.userId,
                     projectId: this.confirmForm.projectId,
                 },
-                fn: data => {
-                    this.issues = data.data;
+                fn: json => {
+                    this.issues = json.data;
                 },
             })
         },

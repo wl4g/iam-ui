@@ -71,10 +71,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -95,7 +95,7 @@ export default {
                 if (valid) {
                     this.$$api_doc_saveLabel({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -119,10 +119,10 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     this.saveForm = {
-                        id: data.data.id,
-                        name: data.data.name,
+                        id: json.data.id,
+                        name: json.data.name,
                     };
                 }
             });
@@ -145,7 +145,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'

@@ -142,8 +142,8 @@ export default {
             }
             this.$$api_dts_findTables({
                 data: { projectId: this.saveForm.projectId },
-                fn: data => {
-                    this.tables = data.data;
+                fn: json => {
+                    this.tables = json.data;
                 }
             });
         },
@@ -200,21 +200,21 @@ export default {
                     projectId: this.saveForm.projectId,
                     tableName: this.saveForm.tableName,
                 },
-                fn: data => {
+                fn: json => {
                     this.loadGenColumnsLoading = false;
-                    if (!data.data.status) {
-                        data.data.status = '1';
+                    if (!json.data.status) {
+                        json.data.status = '1';
                     }
                     if(this.saveForm.id){
-                        data.data.id = this.saveForm.id;
+                        json.data.id = this.saveForm.id;
                     }
                     if(this.saveForm.moduleName){
-                        data.data.moduleName = this.saveForm.moduleName;
+                        json.data.moduleName = this.saveForm.moduleName;
                     }
 
-                    data.data.projectId = this.saveForm.projectId;
-                    this.saveForm = data.data;
-                    // this.saveForm.genTableColumns = data.data.genTableColumns;
+                    json.data.projectId = this.saveForm.projectId;
+                    this.saveForm = json.data;
+                    // this.saveForm.genTableColumns = json.data.genTableColumns;
 
                     this.$nextTick(() => {
                         this.setSort()
@@ -246,7 +246,7 @@ export default {
                 if (valid) {
                     this.$$api_dts_saveGenConfig({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.saveLoading = false;
                             this.back();
                         },
@@ -264,8 +264,8 @@ export default {
                 data: {
                     tableId: this.saveForm.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                     this.$nextTick(() => {
                         this.setSort()
                     });
@@ -293,9 +293,9 @@ export default {
                 data: {
                     providerSet: this.saveForm.providerSet,
                 },
-                fn: data => {
-                    this.mergeExtraOption(data.data, this.saveForm.extraOptions);
-                    this.saveForm.extraOptions = data.data;
+                fn: json => {
+                    this.mergeExtraOption(json.data, this.saveForm.extraOptions);
+                    this.saveForm.extraOptions = json.data;
                 },
             })
         },
@@ -321,8 +321,8 @@ export default {
         allDictType() {
             this.$$api_iam_allDictType({
                 data: {},
-                fn: data => {
-                    this.dictTypes = data.data.list;
+                fn: json => {
+                    this.dictTypes = json.data.list;
                 }
             })
         },
@@ -330,8 +330,8 @@ export default {
         getAttrTypes() {
             this.$$api_dts_getAttrTypes({
                 data: { projectId: this.saveForm.projectId },
-                fn: data => {
-                    this.attrTypes = data.data;
+                fn: json => {
+                    this.attrTypes = json.data;
                 }
             })
         },

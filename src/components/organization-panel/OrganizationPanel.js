@@ -95,10 +95,10 @@ export default {
         //get data from server
         getOrganizations() {
             this.$$api_iam_getOrganizations({
-                data: {},
+                json: {},
                 fn: data => {
-                    this.organizationsList = data.data.list;
-                    this.organizationsTree = data.data.tree;
+                    this.organizationsList = json.data.list;
+                    this.organizationsTree = json.data.tree;
 
                     this.handleData();
                     this.createEchart();
@@ -283,9 +283,9 @@ export default {
         getAreaTree() {
             this.$$api_iam_getAreaTree({
                 data: {},
-                fn: data => {
-                    this.handleData(data.data);
-                    this.areaTree = data.data;
+                fn: json => {
+                    this.handleData(json.data);
+                    this.areaTree = json.data;
                 },
             })
         },

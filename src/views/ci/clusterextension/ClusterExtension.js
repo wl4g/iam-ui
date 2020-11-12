@@ -71,16 +71,15 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
-
-                    for(let i in data.data.records){
-                        data.data.records[i]['defaultEnvO'] = data.data.records[i]['defaultEnv']
-                        data.data.records[i]['defaultBranchO'] = data.data.records[i]['defaultBranch']
+                fn: json => {
+                    for(let i in json.data.records){
+                        json.data.records[i]['defaultEnvO'] = json.data.records[i]['defaultEnv']
+                        json.data.records[i]['defaultBranchO'] = json.data.records[i]['defaultBranch']
                     }
 
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -97,7 +96,7 @@ export default {
                     defaultEnv: row.defaultEnv,
                     defaultBranch: row.defaultBranch,
                 },
-                fn: data => {
+                fn: json => {
                     row.defaultEnvO=row.defaultEnv;
                     row.defaultBranchO=row.defaultBranch;
                     this.$message.success('修改成功！')

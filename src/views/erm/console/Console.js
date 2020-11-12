@@ -132,8 +132,8 @@ export default {
         // 获取分组名称
         getGroup() {
             this.$$api_erm_clusters({
-                fn: data => {
-                    this.groupData = data.data.clusters;
+                fn: json => {
+                    this.groupData = json.data.clusters;
                 }
             })
         },
@@ -310,8 +310,8 @@ export default {
                     endTime: end,
                     limit: limit,
                 },
-                fn: data => {
-                    let list = data.data;
+                fn: json => {
+                    let list = json.data;
                     if (!isAppend) {
                         _self.textarea = "";
                         _self.term.clear();

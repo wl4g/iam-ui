@@ -17,10 +17,10 @@ export default {
     methods: {
         getAreaTree() {
             this.$$api_iam_getAreaTree({
-                data: {},
+                json: {},
                 fn: data => {
-                    this.handleData(data.data);
-                    this.options = data.data;
+                    this.handleData(json.data);
+                    this.options = json.data;
                 },
             })
         },

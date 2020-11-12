@@ -146,10 +146,10 @@ export default {
                     pageSize: this.pageSize,
                     environment: this.searchParams.envType,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                     this.startRefreshList();
                 },
                 errFn: () => {
@@ -245,7 +245,7 @@ export default {
                     data: {
                         pipeHisId: id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     },
                 })
@@ -271,7 +271,7 @@ export default {
                     data: {
                         pipeHisId: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             type: 'success',
                             message: '操作成功!'

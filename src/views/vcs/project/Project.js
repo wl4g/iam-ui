@@ -70,9 +70,9 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                fn: json => {
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -86,8 +86,8 @@ export default {
                     id: this.searchParams.vscId,
                     groupName: this.searchParams.groupName,
                 },
-                fn: data => {
-                    this.vcsGroups = data.data;
+                fn: json => {
+                    this.vcsGroups = json.data;
                 },
             })
         },

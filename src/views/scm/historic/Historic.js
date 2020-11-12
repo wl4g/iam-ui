@@ -77,8 +77,8 @@ export default {
         data:{
           id: id
         },
-        fn: data => {
-            this.propertiesData = data.data.configVersions;
+        fn: json => {
+            this.propertiesData = json.data.configVersions;
             if(!falg){
               if(this.propertiesData.length>0){
                 this.propertiesid = this.propertiesData[0].id;
@@ -133,10 +133,10 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
         },
-        fn: data => {
+        fn: json => {
           this.loading = false;
-            this.total = data.data.total;
-            this.tableData = data.data.records;
+            this.total = json.data.total;
+            this.tableData = json.data.records;
         },
         errFn: () => {
           this.loading = false;
@@ -172,7 +172,7 @@ export default {
             id: row.id,
             tag: row.tag
           },
-          fn: data => {
+          fn: json => {
               this.getData();
               this.$message({
                 type: 'success',
@@ -207,7 +207,7 @@ export default {
           data: {
             id: id
           },
-          fn: data => {
+          fn: json => {
               this.$message({
                 type: 'success',
                 message: '删除成功!'
@@ -231,7 +231,7 @@ export default {
         data: {
           id: id
         },
-        fn: data => {
+        fn: json => {
             this.getData();
         },
         errFn: () => {

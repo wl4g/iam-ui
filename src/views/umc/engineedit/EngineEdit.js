@@ -91,8 +91,8 @@ export default {
                 data: {
                     id: id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                     if(!this.saveForm.notifyGroupIds){
                         this.saveForm.notifyGroupIds = [];
                     }
@@ -104,7 +104,7 @@ export default {
             this.dialogLoading = true;
             this.$$api_umc_saveEngine({
                 data: this.saveForm,
-                fn: data => {
+                fn: json => {
                     this.dialogLoading = false;
                     this.dialogVisible = false;
                     this.getData();
@@ -149,8 +149,8 @@ export default {
         getContactGroupData() {
             this.$$api_iam_groupList({
                 data: {},
-                fn: data => {
-                    this.contactGroupData = data.data;
+                fn: json => {
+                    this.contactGroupData = json.data;
                 },
             })
         },
@@ -158,8 +158,8 @@ export default {
         getDataSources() {
             this.$$api_umc_dataSources({
                 data: {},
-                fn: data => {
-                    this.dataSources = data.data;
+                fn: json => {
+                    this.dataSources = json.data;
                 },
             })
         },
@@ -170,9 +170,9 @@ export default {
                     expression: this.saveForm.cron,
                     numTimes: 5,
                 },
-                fn: data => {
-                    if (data.data.validExpression) {
-                        this.checkResult = data.data.nextExecTime;
+                fn: json => {
+                    if (json.data.validExpression) {
+                        this.checkResult = json.data.nextExecTime;
                     } else {
                         this.checkResult = 'Expression unvalid';
                     }

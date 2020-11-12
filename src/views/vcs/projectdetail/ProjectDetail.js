@@ -70,8 +70,8 @@ export default {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
                 },
-                fn: data => {
-                    this.projectDetail = data.data;
+                fn: json => {
+                    this.projectDetail = json.data;
                 },
             })
         },
@@ -82,8 +82,8 @@ export default {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
                 },
-                fn: data => {
-                    this.branchs = data.data;
+                fn: json => {
+                    this.branchs = json.data;
                 },
             })
         },
@@ -94,8 +94,8 @@ export default {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
                 },
-                fn: data => {
-                    this.tags = data.data;
+                fn: json => {
+                    this.tags = json.data;
                 },
             })
         },
@@ -128,7 +128,7 @@ export default {
         createBranch() {
             this.$$api_vcs_createBranch({
                 data: this.newBranchForm,
-                fn: data => {
+                fn: json => {
                     this.getBranchs();
                     this.newBranchDialog = false;
                     this.$message.success('添加成功！')
@@ -139,7 +139,7 @@ export default {
         createTag() {
             this.$$api_vcs_createTag({
                 data: this.newTagForm,
-                fn: data => {
+                fn: json => {
                     this.getTags();
                     this.newTagDialog = false;
                     this.$message.success('添加成功！')

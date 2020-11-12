@@ -120,8 +120,8 @@ export default {
         // 获取分组名称
         getVcs() {
             this.$$api_vcs_vcsAll({
-                fn: data => {
-                    this.vcsData = data.data;
+                fn: json => {
+                    this.vcsData = json.data;
                     if(this.vcsData && this.vcsData[0] && !this.saveForm.vcsId){
                         this.saveForm.vcsId = this.vcsData[0]['id'];
                     }
@@ -132,8 +132,8 @@ export default {
         // 获取分组名称
         getProject() {
             this.$$api_ci_getProjectBySelect({
-                fn: data => {
-                    this.ProjectData = data.data.list;
+                fn: json => {
+                    this.ProjectData = json.data.list;
                 },
             })
         },
@@ -161,9 +161,9 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     //this.loading = false;
-                    this.saveForm = data.data.project;
+                    this.saveForm = json.data.project;
                     this.remoteMethod(this.saveForm.projectName);
                 },
             });
@@ -188,10 +188,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -202,8 +202,8 @@ export default {
         // 获取分组名称
         getGroup() {
             this.$$api_erm_clusters({
-                fn: data => {
-                    this.groupData = data.data.clusters;
+                fn: json => {
+                    this.groupData = json.data.clusters;
                     //this.saveForm.appClusterId = this.appClusterId;
                 },
             })
@@ -229,7 +229,7 @@ export default {
                             isBoot: this.saveForm.isBoot,
                             organizationCode: this.saveForm.organizationCode,
                         },
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -284,7 +284,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     },
                 })
@@ -322,7 +322,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             type: 'success',
                             message: '操作成功!'
@@ -353,8 +353,8 @@ export default {
                     vcsId: this.saveForm.vcsId,
                     projectName: query,
                 },
-                fn: data => {
-                    this.vcsProjectData = data.data;
+                fn: json => {
+                    this.vcsProjectData = json.data;
                     this.searchProjectLoading = false;
                     this.changeProject();
                 },

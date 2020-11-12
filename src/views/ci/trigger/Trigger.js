@@ -125,16 +125,16 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm.id = data.data.id;
-                    this.saveForm.taskId = data.data.taskId;
-                    this.saveForm.name = data.data.name;
-                    this.saveForm.remark = data.data.remark;
-                    this.saveForm.enable = data.data.enable;
-                    this.saveForm.type = data.data.type;
-                    this.saveForm.cron = data.data.cron;
-                    this.saveForm.group = data.data.appClusterId;
-                    this.saveForm.organizationCode = data.data.organizationCode;
+                fn: json => {
+                    this.saveForm.id = json.data.id;
+                    this.saveForm.taskId = json.data.taskId;
+                    this.saveForm.name = json.data.name;
+                    this.saveForm.remark = json.data.remark;
+                    this.saveForm.enable = json.data.enable;
+                    this.saveForm.type = json.data.type;
+                    this.saveForm.cron = json.data.cron;
+                    this.saveForm.group = json.data.appClusterId;
+                    this.saveForm.organizationCode = json.data.organizationCode;
                 }
             })
         },
@@ -167,10 +167,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -191,8 +191,8 @@ export default {
                 data: {
                     isBoot: 1
                 },
-                fn: data => {
-                    this.ProjectData = data.data.list;
+                fn: json => {
+                    this.ProjectData = json.data.list;
                 }
             })
         },
@@ -212,7 +212,7 @@ export default {
                             type: this.saveForm.type,
                             cron: this.saveForm.cron,
                         },
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -257,7 +257,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.getData();
                     }
                 })
@@ -270,8 +270,8 @@ export default {
         // 获取分组名称
         getGroup() {
             this.$$api_erm_clusters({
-                fn: data => {
-                    this.groupData = data.data.clusters;
+                fn: json => {
+                    this.groupData = json.data.clusters;
                 }
             })
         },
@@ -283,9 +283,9 @@ export default {
                     expression: this.saveForm.cron,
                     numTimes: 5,
                 },
-                fn: data => {
-                    if (data.data.validExpression) {
-                        this.checkResult = data.data.nextExecTime;
+                fn: json => {
+                    if (json.data.validExpression) {
+                        this.checkResult = json.data.nextExecTime;
                     } else {
                         this.checkResult = 'Expression unvalid';
                     }
@@ -302,8 +302,8 @@ export default {
                 data: {
                     clusterId: this.saveForm.group,
                 },
-                fn: data => {
-                    this.tasksData = data.data;
+                fn: json => {
+                    this.tasksData = json.data;
                 },
             })
         },

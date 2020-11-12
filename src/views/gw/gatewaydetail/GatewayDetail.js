@@ -60,7 +60,7 @@ export default {
                 if (valid) {
                     this.$$api_gw_saveGateway({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.$message({
                                 message: '保存成功',
                                 type: 'success'
@@ -85,8 +85,8 @@ export default {
                 data: {
                     id: this.gatewayId,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                 },
             });
             this.dialogVisible = true;

@@ -78,10 +78,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -103,7 +103,7 @@ export default {
                 if (valid) {
                     this.$$api_gw_saveUpstreamGroup({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -128,11 +128,11 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    if(!data.data.gwUpstreamGroupRefs){
-                        data.data.gwUpstreamGroupRefs = [];
+                fn: json => {
+                    if(!json.data.gwUpstreamGroupRefs){
+                        json.data.gwUpstreamGroupRefs = [];
                     }
-                    this.saveForm = data.data;
+                    this.saveForm = json.data;
 
                     this.fixUpstreamsShow();
                 },
@@ -155,7 +155,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -172,8 +172,8 @@ export default {
         getUpstreams() {
             this.$$api_gw_getUpstreamsForSelect({
                 data: {},
-                fn: data => {
-                    this.upstreams = data.data;
+                fn: json => {
+                    this.upstreams = json.data;
                     this.fixUpstreamsShow();
                 }
             })

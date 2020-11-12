@@ -45,14 +45,14 @@ export default {
                     oldChangesId: this.file1,
                     newChangesId: this.file2
                 },
-                fn: data => {
-                    if(data.data){
-                        this.file1Str = data.data.oldFileChanges.content;
-                        this.file2Str = data.data.newFileChanges.content;
-                        this.file1dec = data.data.oldFileChanges.description;
-                        this.file2dec = data.data.newFileChanges.description;
-                        this.file1lang = data.data.oldFileChanges.lang;
-                        this.file2lang = data.data.newFileChanges.lang;
+                fn: json => {
+                    if(json.data){
+                        this.file1Str = json.data.oldFileChanges.content;
+                        this.file2Str = json.data.newFileChanges.content;
+                        this.file1dec = json.data.oldFileChanges.description;
+                        this.file2dec = json.data.newFileChanges.description;
+                        this.file1lang = json.data.oldFileChanges.lang;
+                        this.file2lang = json.data.newFileChanges.lang;
                     }
                 }
             })
@@ -62,8 +62,8 @@ export default {
                 data: {
                     docCode: this.docCode
                 },
-                fn: data => {
-                    this.changesData = data.data;
+                fn: json => {
+                    this.changesData = json.data;
                     if(this.changesData && this.changesData.length>=2){// 默认选择最后两条记录
                         this.file1 = this.changesData[1].id;
                         this.file2 = this.changesData[0].id;

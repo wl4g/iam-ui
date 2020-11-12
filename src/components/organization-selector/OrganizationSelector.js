@@ -31,10 +31,10 @@ export default {
         getOrganizations() {
             this.$$api_iam_getOrganizations({
                 data: {},
-                fn: data => {
-                    //this.handleData(data.data.tree);
-                    this.data = data.data.tree;
-                    this.dataList = data.data.list;
+                fn: json => {
+                    //this.handleData(json.data.tree);
+                    this.data = json.data.tree;
+                    this.dataList = json.data.list;
                     this.$nextTick(() => {
                         this.setKeys();
                     });

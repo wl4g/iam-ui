@@ -118,10 +118,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -149,7 +149,7 @@ export default {
                             provider: this.saveForm.provider,
                             dataSource: json,
                         },
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -185,7 +185,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: '删除成功',
                             type: 'success'
@@ -201,8 +201,8 @@ export default {
         getDataSourceProvides() {
             this.$$api_umc_dataSourceProvides({
                 data: {},
-                fn: data => {
-                    this.dataSourceProviders = data.data;
+                fn: json => {
+                    this.dataSourceProviders = json.data;
                 },
             })
         },
@@ -211,14 +211,14 @@ export default {
             this.connecting = true;
             this.$$api_umc_testConnect({
                 data: this.saveForm,
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: '连接成功',
                         type: 'success'
                     });
                     this.connecting = false;
                 },
-                errFn: data => {
+                errFn: json => {
                     this.$message.error(data.message);
                     this.connecting = false;
                 }

@@ -56,15 +56,15 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    for (let i in data.data.records) {
-                        if (!data.data.records[i].generating) {
-                            data.data.records[i].generating = false;
+                    this.total = json.data.total;
+                    for (let i in json.data.records) {
+                        if (!json.data.records[i].generating) {
+                            json.data.records[i].generating = false;
                         }
                     }
-                    this.tableData = data.data.records;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -90,7 +90,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -116,15 +116,15 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
+                fn: json => {
                     row.generating = false;
                     this.$message({
                         message: '生成成功，下载中...',
                         type: 'success'
                     });
-                    window.open(this.downloadUrl + data.data, '_self')
+                    window.open(this.downloadUrl + json.data, '_self')
                 },
-                errFn: data => {
+                errFn: json => {
                     row.generating = false;
                     if (data && data.message) {
                         this.$message.error(data.message);

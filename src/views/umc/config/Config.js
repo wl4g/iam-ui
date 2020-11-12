@@ -74,9 +74,9 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                fn: json => {
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 }
             })
         },
@@ -84,8 +84,8 @@ export default {
         allContactGroup() {
             this.$$api_iam_groupList({
                 data: {},
-                fn: data => {
-                    this.contactGroups = data.data;
+                fn: json => {
+                    this.contactGroups = json.data;
                 }
             })
         },
@@ -95,8 +95,8 @@ export default {
                 data: {
                     classify: this.saveForm.classify
                 },
-                fn: data => {
-                    this.templates = data.data.list;
+                fn: json => {
+                    this.templates = json.data.list;
                 }
             })
         },
@@ -119,7 +119,7 @@ export default {
                     //this.dialogLoading = true;
                     this.$$api_umc_saveConfig({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
@@ -137,8 +137,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data.alarmConfig;
+                fn: json => {
+                    this.saveForm = json.data.alarmConfig;
                 }
             });
             this.dialogVisible = true;
@@ -159,8 +159,8 @@ export default {
                     clusterId: clusterId,
                     envType: environmentId
                 },
-                fn: data => {
-                    this.instanceData = data.data.instances;
+                fn: json => {
+                    this.instanceData = json.data.instances;
                     //判断要不要清空选中
                     var needClean = true;
                     for (let i = 0; i < this.instanceData.length; i++) {
@@ -179,8 +179,8 @@ export default {
         // 获取分组名称
         getGroup() {
             this.$$api_erm_clusters({
-                fn: data => {
-                    this.groupData = data.data.clusters;
+                fn: json => {
+                    this.groupData = json.data.clusters;
                 }
             })
         },
@@ -198,7 +198,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
 
                         this.$message({
                             message: '删除成功',

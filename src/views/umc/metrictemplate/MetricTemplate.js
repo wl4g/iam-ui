@@ -69,10 +69,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -84,8 +84,8 @@ export default {
         getAllHost() {
             this.$$api_erm_allHost({
                 data: {},
-                fn: data => {
-                    this.allHost = data.data;
+                fn: json => {
+                    this.allHost = json.data;
                 }
             })
         },
@@ -113,7 +113,7 @@ export default {
                 if (valid) {
                     this.$$api_umc_saveMetric({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -157,8 +157,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                 }
             });
 
@@ -180,7 +180,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'

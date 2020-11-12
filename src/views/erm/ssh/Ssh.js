@@ -85,10 +85,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -114,7 +114,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveSsh({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -138,8 +138,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                 },
             });
             this.dialogVisible = true;
@@ -160,7 +160,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'
@@ -189,9 +189,9 @@ export default {
         generateSshKey(){
             this.$$api_erm_generateSshKeyPair({
                 data: {},
-                fn: data => {
-                    this.saveForm.sshKey = data.data.privateKey;
-                    this.saveForm.sshKeyPub = data.data.publicKey;
+                fn: json => {
+                    this.saveForm.sshKey = json.data.privateKey;
+                    this.saveForm.sshKeyPub = json.data.publicKey;
                     this.$message({
                         message: 'Generate SSH Key Pair Success',
                         type: 'success'
@@ -203,9 +203,9 @@ export default {
         allHost() {
             this.$$api_erm_allHost({
                 data: {},
-                fn: data => {
-                    if(data.data){
-                        this.hosts = data.data;
+                fn: json => {
+                    if(json.data){
+                        this.hosts = json.data;
                     }
                 },
             });
@@ -223,7 +223,7 @@ export default {
                     sshUser: this.testConnect.ssh.username,
                     sshKey: this.testConnect.ssh.sshKey,
                 },
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Connect Success',
                         type: 'success'
@@ -241,8 +241,8 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
+                fn: json => {
+                    this.saveForm = json.data;
                     this.saveForm.id = '';
                 },
             });

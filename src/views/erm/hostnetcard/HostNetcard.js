@@ -91,10 +91,10 @@ export default {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
-                fn: data => {
+                fn: json => {
                     this.loading = false;
-                    this.total = data.data.total;
-                    this.tableData = data.data.records;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
                 },
                 errFn: () => {
                     this.loading = false;
@@ -126,7 +126,7 @@ export default {
                 if (valid) {
                     this.$$api_erm_saveNetcard({
                         data: this.saveForm,
-                        fn: data => {
+                        fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
                             this.getData();
@@ -151,9 +151,9 @@ export default {
                 data: {
                     id: row.id,
                 },
-                fn: data => {
-                    this.saveForm = data.data;
-                    this.saveForm.vpnTunnelType = data.data.vpnTunnelType.toString();
+                fn: json => {
+                    this.saveForm = json.data;
+                    this.saveForm.vpnTunnelType = json.data.vpnTunnelType.toString();
                 },
             });
             this.dialogVisible = true;
@@ -163,13 +163,13 @@ export default {
         getHostTunnelByType() {
             this.$$api_erm_getHostTunnel({
                 data: {},
-                fn: data => {
-                    this.saveForm = data.data;
-                    if (data.data.openvpn) {
-                        this.openvpns = data.data.openvpn;
+                fn: json => {
+                    this.saveForm = json.data;
+                    if (json.data.openvpn) {
+                        this.openvpns = json.data.openvpn;
                     }
-                    if (data.data.pptp) {
-                        this.pptps = data.data.pptp;
+                    if (json.data.pptp) {
+                        this.pptps = json.data.pptp;
                     }
                 },
             });
@@ -178,9 +178,9 @@ export default {
         allHost() {
             this.$$api_erm_allHost({
                 data: {},
-                fn: data => {
-                    if (data.data) {
-                        this.hosts = data.data;
+                fn: json => {
+                    if (json.data) {
+                        this.hosts = json.data;
                     }
                 },
             });
@@ -200,7 +200,7 @@ export default {
                     data: {
                         id: row.id,
                     },
-                    fn: data => {
+                    fn: json => {
                         this.$message({
                             message: 'Success',
                             type: 'success'

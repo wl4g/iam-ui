@@ -30,8 +30,8 @@ export default {
             data: {
                 cossProvider: this.cossProvider,
                 bucketName: this.bucketName,
-            }, fn: data => {
-                this.indexData = data.data;
+            }, fn: json => {
+                this.indexData = json.data;
                 this.fixUnit();
             }
         });

@@ -142,11 +142,11 @@ export default {
                     bucketName: this.searchParams.bucketName,
                     marker: null,//TODO
                     maxKeys: 10,
-                }, fn: data => {
+                }, fn: json => {
                     this.tableData = [
-                        {key: ['/', data.data.bucketName]},
+                        {key: ['/', json.data.bucketName]},
                     ];
-                    this.tableData = this.tableData.concat(data.data.objectSummaries);
+                    this.tableData = this.tableData.concat(json.data.objectSummaries);
                     console.info(this.tableData);
                     this.loading = false;
                 }
@@ -160,8 +160,8 @@ export default {
                     cossProvider: this.searchParams.cossProvider,
                     marker: null,//TODO
                     maxKeys: 10,
-                }, fn: data => {
-                    this.bucketList = data.data.bucketList;
+                }, fn: json => {
+                    this.bucketList = json.data.bucketList;
                 }
             });
         },
@@ -327,7 +327,7 @@ export default {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: this.searchParams.bucketName,
                         key: row.key,
-                    }, fn: data => {
+                    }, fn: json => {
                         this.$message({
                             type: 'success',
                             message: 'Success'
@@ -343,8 +343,8 @@ export default {
         getACLs() {
             this.$$api_coss_getACLs({
                 data: {},
-                fn: data => {
-                    this.acls = data.data;
+                fn: json => {
+                    this.acls = json.data;
                 }
             });
         },
@@ -361,9 +361,9 @@ export default {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: this.searchParams.bucketName,
                         key: key,
-                    }, fn: data => {
-                        this.aclForm.acl = data.data.acl;
-                        this.aclForm.realAcl = data.data.realAcl;
+                    }, fn: json => {
+                        this.aclForm.acl = json.data.acl;
+                        this.aclForm.realAcl = json.data.realAcl;
                         this.aclForm.key = key;
                         this.aclDialog = openDialog;
 
@@ -396,7 +396,7 @@ export default {
                     bucketName: this.searchParams.bucketName,
                     key: this.aclForm.key,
                     acl: this.aclForm.acl,
-                }, fn: data => {
+                }, fn: json => {
                     this.aclDialog = false;
                     if (!this.isDir(this.aclForm.key)) {
                         this.getObject(this.aclForm.key);
@@ -416,9 +416,9 @@ export default {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.searchParams.bucketName,
                     key: key,
-                }, fn: data => {
-                    data.data.expireSec = 32400;
-                    this.detailData = data.data;
+                }, fn: json => {
+                    json.data.expireSec = 32400;
+                    this.detailData = json.data;
                     //this.detailData.downloadUrl = global.getBaseUrl(global.coss,false)+'/webservice/download' + "?bucketName=" +this.searchParams.bucketName +"&key="+key+"&cossProvider="+this.searchParams.cossProvider;
                     this.getAcl(key, false, true);
                     //this.shareObject(key);
@@ -437,7 +437,7 @@ export default {
                     bucketName: this.searchParams.bucketName,
                     currentPath: this.currentPath,
                     dirName: this.dirName,
-                }, fn: data => {
+                }, fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -530,7 +530,7 @@ export default {
             this.detailData.metadata.userMetadata = map;
             this.$$api_coss_putObjectMetaData({
                 data: this.detailData.metadata,
-                fn: data => {
+                fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -549,7 +549,7 @@ export default {
                     sourceKey: this.currentPath + row.key,
                     destinationBucketName: this.targetBucket,
                     destinationKey: this.targetObject,
-                }, fn: data => {
+                }, fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -568,7 +568,7 @@ export default {
                     destinationBucketName: this.targetBucket,
                     destinationKey: this.targetObject,
 
-                }, fn: data => {
+                }, fn: json => {
                     this.$message({
                         message: 'Success',
                         type: 'success'
@@ -609,9 +609,9 @@ export default {
                     presigned: presigned,
                     expireSec: this.detailData.expireSec,
 
-                }, fn: data => {
-                    this.shareData = data.data;
-                    this.isImageURL(data.data.url);
+                }, fn: json => {
+                    this.shareData = json.data;
+                    this.isImageURL(json.data.url);
                 }
             });
         },
@@ -646,8 +646,8 @@ export default {
             }
             this.$$api_coss_selectObjectContent({
                 data: this.selectObjectContentData,
-                fn: data => {
-                    this.selectObjectContentData.result = data.data;
+                fn: json => {
+                    this.selectObjectContentData.result = json.data;
                 }
             });
         },
