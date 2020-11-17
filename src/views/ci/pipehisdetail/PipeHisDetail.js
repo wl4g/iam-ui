@@ -211,7 +211,7 @@ export default {
                     size: 10000,
                 },
                 fn: json => {
-                    let logs = json.json.data.lines;
+                    let logs = json.data.data.lines;
                     this.logReadRunning = true;
                     for (let i in logs) {
                         /**
@@ -226,8 +226,8 @@ export default {
                         logLine = logLine.replace('ERROR', '\x1B[31mERROR\x1B[0m');
                         that.term.writeln(logLine);
                     }
-                    that.startPos = json.json.data.endPos;
-                    if (!json.json.data.hasNext) {
+                    that.startPos = json.data.data.endPos;
+                    if (!json.data.data.hasNext) {
                         window.clearTimeout(that.logThread);
                         this.logReadRunning = false;
                         return;
@@ -298,7 +298,7 @@ export default {
                     size: 10000,
                 },
                 fn: json => {
-                    let logs = json.json.data.lines;
+                    let logs = json.data.data.lines;
                     for (let i in logs) {
                         /**
                          * console.log('\x1B[31m%s\x1B[0m', '错误');
@@ -307,11 +307,11 @@ export default {
                          **/
                         this.detailTerm.writeln(logs[i]);
                     }
-                    if (!json.json.data.hasNext) {
+                    if (!json.data.data.hasNext) {
                         window.clearTimeout(this.detailLogThread);
                         return;
                     }
-                    that.detailStartPos = json.json.data.endPos;
+                    that.detailStartPos = json.data.data.endPos;
                     //console.debug(that.startPos);
                     this.detailLogThread = self.setTimeout(function () {
                         that.readDetailLog(instanceId);

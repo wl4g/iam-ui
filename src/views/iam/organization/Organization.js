@@ -107,7 +107,7 @@ export default {
       this.$$api_iam_getGroupsTree({
         fn: json => {
           this.loading = false;
-          this.data = json.json.data;
+          this.data = json.data.data;
         },
         errFn: () => {
           this.loading = false;
@@ -181,7 +181,7 @@ export default {
           id: opts.data.id,
         },
         fn: json => {
-          this.saveForm = json.json.data;
+          this.saveForm = json.data.data;
           if(this.$refs.modulesTree && this.saveForm.menuIds instanceof Array){
             this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
             this.checkChange();
@@ -256,7 +256,7 @@ export default {
 
         },
         fn: json => {
-            this.rolesData = json.json.data;
+            this.rolesData = json.data.data;
         },
       })
     },
@@ -266,8 +266,8 @@ export default {
         data: {
         },
         fn: json => {
-            this.menuData = json.json.data;
-            this.menuDataList = json.json.data2;
+            this.menuData = json.data.data;
+            this.menuDataList = json.data.data2;
         }
       })
     },

@@ -92,7 +92,7 @@ export default {
             this.$$api_iam_getRoles({
                 data: {},
                 fn: json => {
-                    this.rolesData = json.json.data;
+                    this.rolesData = json.data.data;
                 }
             })
         },
@@ -207,7 +207,7 @@ export default {
                     userId: row.id,
                 },
                 fn: json => {
-                    this.saveForm = json.json.data;
+                    this.saveForm = json.data.data;
                     this.saveForm.oldPassword = this.saveForm.password;
                 }
             });

@@ -119,8 +119,8 @@ export default {
             this.$$api_iam_getMenuTree({
                 data: {},
                 fn: json => {
-                    this.menuData = json.json.data;
-                    this.menuDataList = json.json.data2;
+                    this.menuData = json.data.data;
+                    this.menuDataList = json.data.data2;
                 }
             })
         },
@@ -129,7 +129,7 @@ export default {
             this.$$api_iam_getGroupsTree({
                 data: {},
                 fn: json => {
-                    this.groupsTreeData = json.json.data;
+                    this.groupsTreeData = json.data.data;
                 }
             })
         },
@@ -222,7 +222,7 @@ export default {
                     id: row.id,
                 },
                 fn: json => {
-                    this.saveForm = json.json.data;
+                    this.saveForm = json.data.data;
                     if (this.$refs.modulesTree && this.saveForm.menuIds instanceof Array) {
                         this.$refs.modulesTree.setCheckedKeys(this.saveForm.menuIds);
                         this.checkChange();

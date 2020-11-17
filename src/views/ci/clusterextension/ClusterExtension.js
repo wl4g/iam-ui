@@ -1,4 +1,4 @@
-import {transDate, getDay} from 'utils/'
+import { transDate, getDay } from 'utils/'
 
 export default {
     name: 'clusterExtension',
@@ -33,8 +33,8 @@ export default {
             // 表单规则
             rules: {
                 name: [
-                    {required: true, message: 'Please Input name', trigger: 'blur'},
-                    {min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur'}
+                    { required: true, message: 'Please Input name', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
             },
             loading: false
@@ -72,7 +72,7 @@ export default {
                     pageSize: this.pageSize,
                 },
                 fn: json => {
-                    for(let i in json.data.records){
+                    for (let i in json.data.records) {
                         json.data.records[i]['defaultEnvO'] = json.data.records[i]['defaultEnv']
                         json.data.records[i]['defaultBranchO'] = json.data.records[i]['defaultBranch']
                     }
@@ -97,8 +97,8 @@ export default {
                     defaultBranch: row.defaultBranch,
                 },
                 fn: json => {
-                    row.defaultEnvO=row.defaultEnv;
-                    row.defaultBranchO=row.defaultBranch;
+                    row.defaultEnvO = row.defaultEnv;
+                    row.defaultBranchO = row.defaultBranch;
                     this.$message.success('修改成功！')
                     //this.getData();
                 },
@@ -108,9 +108,5 @@ export default {
             });
 
         },
-
-
-
-
     }
 }

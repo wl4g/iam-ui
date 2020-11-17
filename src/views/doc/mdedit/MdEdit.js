@@ -188,13 +188,13 @@ export default {
                  * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
                  * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
                  */
-                if(!data||!json.data||!json.json.data){
+                if(!data||!json.data||!json.data.data){
                     return;
                 }
                 if(json.data.code !== 200){
                     this.$message.error('上传图片失败');
                 }
-                this.$refs.md.$img2Url(pos, json.json.data);
+                this.$refs.md.$img2Url(pos, json.data.data);
             })
         },
         onFullScreen(status,value){

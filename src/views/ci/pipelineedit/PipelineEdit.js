@@ -1,10 +1,10 @@
-import {transDate, getDay} from 'utils/'
+import { transDate, getDay } from 'utils/'
 
 export default {
     name: 'pipelineEdit',
     data() {
         var validateInstances = (rule, value, callback) => {
-            if (value.length<=0) {
+            if (value.length <= 0) {
                 callback(new Error('Instances is Empty'));
             } else {
                 callback();
@@ -24,15 +24,15 @@ export default {
                 assetsPath3: '{clusterName}-{version}-bin.tar',
                 parentAppHome: '',
 
-                pipeStepBuilding:{
-                    pipeStepBuildingProjects:[],
+                pipeStepBuilding: {
+                    pipeStepBuildingProjects: [],
                     preCommand: '',
                     postCommand: '',
                     refType: 1,
                 },
 
-                commandOnOff:false,
-                pipeStepInstanceCommand:{
+                commandOnOff: false,
+                pipeStepInstanceCommand: {
                     preCommand: '',
                     postCommand: '',
                 },
@@ -56,7 +56,7 @@ export default {
                 },
 
                 contactOnOff: false,
-                pipeStepNotification:{
+                pipeStepNotification: {
                     enable: 0,
                     contactGroupId: [],
                 },
@@ -75,7 +75,7 @@ export default {
             contactGroupData: [],
             pcmData: [],
             //projectData:[],
-            clusterData:[],
+            clusterData: [],
 
             pcmProjects: [],
 
@@ -86,17 +86,17 @@ export default {
             // 表单规则
             rules: {
                 pipeName: [
-                    {required: true, message: 'Please Input pipeName', trigger: 'change' },
+                    { required: true, message: 'Please Input pipeName', trigger: 'change' },
                     { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
                 ],
                 clusterId: [
-                    {required: true, message: 'Please select Cluster', trigger: 'change' },
+                    { required: true, message: 'Please select Cluster', trigger: 'change' },
                 ],
                 providerKind: [
-                    {type:'number', required: true, message: 'Please select tar type', trigger: 'change' },
+                    { type: 'number', required: true, message: 'Please select tar type', trigger: 'change' },
                 ],
                 instanceIds: [
-                    { validator: validateInstances,required: true, trigger: 'change' },
+                    { validator: validateInstances, required: true, trigger: 'change' },
                 ],
 
             },
@@ -108,23 +108,23 @@ export default {
 
     activated() {
         const from = this.$route.query.from;
-        if(!from || from==='task'){
+        if (!from || from === 'task') {
             this.cleanSaveForm();
             this.saveForm.id = this.$route.query.id;
             let command = this.$route.query.command;
-            if(command){
+            if (command) {
                 this.saveForm.providerKind = command;
             }
             this.getClusters();
             this.groupList();
             this.getPcm();
-            if(this.saveForm.id){
+            if (this.saveForm.id) {
                 this.isEdit = true;
                 this.pipelineDetail(this.taskId);
-            }else{
+            } else {
                 this.isEdit = false;
             }
-        }else{
+        } else {
             this.gotoProjectSettingDialog = false;
             this.onChangeCluster(this.saveForm.clusterId);
         }
@@ -148,15 +148,15 @@ export default {
                 assetsPath3: '{clusterName}-{version}-bin.tar',
                 parentAppHome: '',
 
-                pipeStepBuilding:{
-                    pipeStepBuildingProjects:[],
+                pipeStepBuilding: {
+                    pipeStepBuildingProjects: [],
                     preCommand: '',
                     postCommand: '',
                     refType: 1,
                 },
 
-                commandOnOff:false,
-                pipeStepInstanceCommand:{
+                commandOnOff: false,
+                pipeStepInstanceCommand: {
                     preCommand: '',
                     postCommand: '',
                 },
@@ -181,7 +181,7 @@ export default {
 
 
                 contactOnOff: false,
-                pipeStepNotification:{
+                pipeStepNotification: {
                     enable: 0,
                     contactGroupId: [],
                 },
@@ -189,14 +189,14 @@ export default {
             }
         },
 
-        refreshClusterData(){
+        refreshClusterData() {
             //this.getProject();
             this.getClusters();
         },
-        refreshPcmtData(){
+        refreshPcmtData() {
             this.getPcm();
         },
-        refreshInstanceData(){
+        refreshInstanceData() {
             this.getinstance();
         },
 
@@ -265,13 +265,13 @@ export default {
             this.getPipeStepBuilding();
             this.getinstance();
 
-            this.saveForm.assetsPath3 = '/'+this.getClusterNameById(id) + '-{version}-bin.tar';
+            this.saveForm.assetsPath3 = '/' + this.getClusterNameById(id) + '-{version}-bin.tar';
             this.getProjectByAppClusterId();
         },
 
-        getClusterNameById(id){
-            for(let i in this.clusterData){
-                if(this.clusterData[i].id === id){
+        getClusterNameById(id) {
+            for (let i in this.clusterData) {
+                if (this.clusterData[i].id === id) {
                     return this.clusterData[i].name;
                 }
             }
@@ -288,7 +288,7 @@ export default {
                         fn: json => {
                             this.loading = false;
                             this.cleanSaveForm();
-                            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipeline')})
+                            this.$router.push({ path: this.permitutil.getRoutePathByPermission('ci:pipeline') })
                         },
                         errFn: (err) => {
                             this.loading = false;
@@ -303,28 +303,28 @@ export default {
             });
         },
 
-        fixData(data){
-            if (!data.pipeStepBuilding){
+        fixData(data) {
+            if (!data.pipeStepBuilding) {
                 data.pipeStepBuilding = {
-                    pipeStepBuildingProjects:[],
+                    pipeStepBuildingProjects: [],
                     preCommand: '',
                     postCommand: '',
                     refType: 1,
                 }
             }
 
-            if (!data.pipeStepInstanceCommand){
+            if (!data.pipeStepInstanceCommand) {
                 data.pipeStepInstanceCommand = {
                     preCommand: '',
                     postCommand: '',
                 }
             }
 
-            if (!data.instanceIds){
+            if (!data.instanceIds) {
                 data.instanceIds = [];
             }
 
-            if (!data.pipeStepPcm){
+            if (!data.pipeStepPcm) {
                 data.pipeStepPcm = {
                     enable: 0,
                     pipeId: '',
@@ -336,7 +336,7 @@ export default {
                 }
             }
 
-            if (!data.pipeStepNotification){
+            if (!data.pipeStepNotification) {
                 data.pipeStepNotification = {
                     enable: 0,
                     contactGroupId: [],
@@ -344,7 +344,7 @@ export default {
             }
         },
 
-        pipelineDetail(){
+        pipelineDetail() {
             this.isEdit = true;
             this.$$api_ci_pipelineDetail({
                 data: {
@@ -352,15 +352,15 @@ export default {
                 },
                 fn: json => {
                     //fix
-                    if(json.data.instanceIds && json.data.instanceIds.length>0){
+                    if (json.data.instanceIds && json.data.instanceIds.length > 0) {
                         json.data.instanceOnOff = 1;
-                    }else {
+                    } else {
                         json.data.instanceOnOff = 0;
                     }
                     this.fixData(json.data);
                     this.saveForm = json.data;
 
-                    if(!json.data.pipeStepInstanceCommand){
+                    if (!json.data.pipeStepInstanceCommand) {
                         this.saveForm.pipeStepInstanceCommand = {
                             enable: false,
                             preCommand: '',
@@ -373,7 +373,7 @@ export default {
                     this.getPipeStepBuilding();
                     this.onChangePcm();
 
-                    this.saveForm.assetsPath3 = '/'+this.getClusterNameById(this.saveForm.clusterId) + '-{version}-bin.tar';
+                    this.saveForm.assetsPath3 = '/' + this.getClusterNameById(this.saveForm.clusterId) + '-{version}-bin.tar';
                 },
             })
 
@@ -381,8 +381,8 @@ export default {
 
 
 
-        getProjectByAppClusterId(){
-            if(this.saveForm.clusterId==''){
+        getProjectByAppClusterId() {
+            if (this.saveForm.clusterId == '') {
                 return;
             }
             this.$$api_ci_getProjectByAppClusterId({
@@ -390,13 +390,13 @@ export default {
                     clusterId: this.saveForm.clusterId,
                 },
                 fn: json => {
-                    this.saveForm.projectName= json.data.projectName;
+                    this.saveForm.projectName = json.data.projectName;
                 },
             })
         },
 
-        getPipeStepBuilding(){
-            if(!this.saveForm.clusterId){
+        getPipeStepBuilding() {
+            if (!this.saveForm.clusterId) {
                 return
             }
             this.$$api_ci_getPipeStepBuilding({
@@ -406,13 +406,13 @@ export default {
                     refType: this.saveForm.pipeStepBuilding.refType,
                 },
                 fn: json => {
-                    this.saveForm.pipeStepBuilding= json.data;
+                    this.saveForm.pipeStepBuilding = json.data;
                 },
             })
         },
 
-        backToTask(){
-            this.$router.push({path:this.permitutil.getRoutePathByPermission('ci:pipeline')})
+        backToTask() {
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('ci:pipeline') })
         },
 
         getPcm() {
@@ -423,15 +423,15 @@ export default {
             })
         },
 
-        gotoProjectSetting(){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:project'), query: {appClusterId: this.saveForm.appClusterId}})
+        gotoProjectSetting() {
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('ci:project'), query: { appClusterId: this.saveForm.appClusterId } })
             this.gotoProjectSettingDialog = false;
         },
 
 
         //pcm
-        onChangePcm(){
-            if(!this.saveForm.pipeStepPcm.pcmId){
+        onChangePcm() {
+            if (!this.saveForm.pipeStepPcm.pcmId) {
                 return;
             }
             this.getPcmStatuses();
@@ -439,7 +439,7 @@ export default {
             this.getPcmPriorities();
             this.getProjectsByPcmId();
         },
-        getProjectsByPcmId(){
+        getProjectsByPcmId() {
             this.$$api_ci_getProjectsByPcmId({
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
@@ -480,11 +480,11 @@ export default {
             })
         },
 
-        clickStep(id){
+        clickStep(id) {
             //this.$message.success(''+id);
             // Way1
-            const anchor = this.$el.querySelector("#pipe_step"+id);
-            document.documentElement.scrollTop = anchor.offsetTop-80;
+            const anchor = this.$el.querySelector("#pipe_step" + id);
+            document.documentElement.scrollTop = anchor.offsetTop - 80;
             this.activeStep = id - 1;
             // Way2
             //document.querySelector("#testjump").scrollIntoView(true);

@@ -160,8 +160,8 @@ export default {
             this.$$api_iam_getMenuTree({
                 fn: json => {
                     this.loading = false;
-                    this.data = json.json.data;
-                    this.menuDataList = json.json.data2;
+                    this.data = json.data.data;
+                    this.menuDataList = json.data.data2;
                 },
                 errFn: () => {
                     this.loading = false;
