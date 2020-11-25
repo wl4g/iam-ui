@@ -17,8 +17,8 @@ export default {
     methods: {
         getAreaTree() {
             this.$$api_iam_getAreaTree({
-                json: {},
-                fn: data => {
+                data: {},
+                fn: json => {
                     this.handleData(json.data);
                     this.options = json.data;
                 },

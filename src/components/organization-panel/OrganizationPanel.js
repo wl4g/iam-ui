@@ -95,8 +95,8 @@ export default {
         //get data from server
         getOrganizations() {
             this.$$api_iam_getOrganizations({
-                json: {},
-                fn: data => {
+                data: {},
+                fn: json => {
                     this.organizationsList = json.data.list;
                     this.organizationsTree = json.data.tree;
 
