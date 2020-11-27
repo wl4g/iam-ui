@@ -1,5 +1,12 @@
 import global from "../../common/global_variable";
 
+import enterpriseApi from "./enterpriseApi"
+import enterpriseDocument from "./enterpriseDocument"
+import enterpriseGroup from "./enterpriseGroup"
+import enterpriseProject from "./enterpriseProject"
+import enterpriseProjectVersion from "./enterpriseProjectVersion"
+import enterpriseTeam from "./enterpriseTeam"
+
 export default [
     //doc file
     {
@@ -102,4 +109,6 @@ export default [
     },
 
 
-]
+].concat(enterpriseApi).concat(enterpriseGroup)
+    .concat(enterpriseDocument).concat(enterpriseProject)
+    .concat(enterpriseProjectVersion).concat(enterpriseTeam)
