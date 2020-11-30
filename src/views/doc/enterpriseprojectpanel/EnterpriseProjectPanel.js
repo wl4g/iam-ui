@@ -5,6 +5,17 @@ export default {
     name: 'enterpriseProjectPanel',
     data() {
         return {
+
+            //group part
+            groupDialogVisible: false,
+            groupSaveForm: {
+                name: '',
+            },
+
+
+            //project part
+
+
             //查询条件
             searchParams: {
                 groupId: '',
@@ -14,10 +25,11 @@ export default {
             //分页信息
             total: 0,
             pageNum: 1,
-            pageSize: 10,
+            pageSize: 999,
 
             //弹窗表单
             saveForm: {
+                name: '',
                 groupId: '',
                 teamId: '',
                 visibility: '',
@@ -33,8 +45,11 @@ export default {
 
             // 表单规则
             rules: {
-                groupId: [
-                    {required: true, message: 'groupId is empty', trigger: 'change' },
+                name: [
+                    {required: true, message: 'name is empty', trigger: 'change' },
+                ],
+                visibility: [
+                    {required: true, message: 'visibility is empty', trigger: 'change' },
                 ],
             },
             loading: false
@@ -42,9 +57,106 @@ export default {
     },
 
     mounted() {
-        this.getData();
+        this.getGroup();
     },
     methods: {
+
+        //==================== Group part start ====================
+        getGroup(){
+            this.loading = true;
+            this.searchParams.pageNum = this.pageNum;
+            this.searchParams.pageSize = this.pageSize;
+            this.$$api_doc_enterpriseGroupList({
+                data: this.searchParams,
+                fn: json => {
+                    this.loading = false;
+                    this.total = json.data.total;
+                    this.tableData = json.data.records;
+                },
+                errFn: () => {
+                    this.loading = false;
+                }
+            })
+        },
+        addGroup(){
+            this.cleanGroupForm();
+            this.dialogTitle = '新增'
+            this.groupDialogVisible = true;
+        },
+        saveGroup() {
+            this.dialogLoading = true;
+            this.$refs['groupSaveForm'].validate((valid) => {
+                if (valid) {
+                    this.$$api_doc_saveEnterpriseGroup({
+                        data: this.groupSaveForm,
+                        fn: json => {
+                            this.dialogLoading = false;
+                            this.groupDialogVisible = false;
+                            this.cleanGroupForm();
+                            this.getGroup();
+                        },
+                        errFn: () => {
+                            this.dialogLoading = false;
+                        }
+                    });
+                }else {
+                    this.dialogLoading = false;
+                }
+            });
+        },
+        cleanGroupForm() {
+            this.groupSaveForm = {
+                name: '',
+            };
+        },
+        editGroup(item) {
+            if (!item.id) {
+                return;
+            }
+            this.cleanSaveForm();
+            this.$$api_doc_enterpriseGroupDetail({
+                data: {
+                    id: item.id,
+                },
+                fn: json => {
+                    this.groupSaveForm = json.data;
+                },
+            });
+            this.groupDialogVisible = true;
+            this.dialogTitle = 'Edit';
+        },
+        delGroup(item) {
+            if (!item.id) {
+                return;
+            }
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_doc_delEnterpriseGroup({
+                    data: {
+                        id: item.id,
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getGroup();
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
+        },
+
+
+        //==================== Group part end ====================
+
+
+        //==================== Project part start ====================
+
         onSubmit() {
             this.getData();
         },
@@ -52,13 +164,14 @@ export default {
             this.pageNum = i;
             this.getData();
         },
-        addData() {
+        addData(item) {
             this.cleanSaveForm();
+            this.saveForm.groupId = item.id;
             this.dialogVisible = true;
             this.dialogTitle = 'Add';
         },
         // 获取列表数据
-        getData() {
+        /*getData() {
             this.loading = true;
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
@@ -73,7 +186,7 @@ export default {
                     this.loading = false;
                 }
             })
-        },
+        },*/
         cleanSaveForm() {
             this.saveForm = {
                 groupId: '',
@@ -93,7 +206,7 @@ export default {
                         fn: json => {
                             this.dialogLoading = false;
                             this.dialogVisible = false;
-                            this.getData();
+                            this.getGroup();
                             this.cleanSaveForm();
                         },
                         errFn: () => {
@@ -139,12 +252,21 @@ export default {
                             message: 'Success',
                             type: 'success'
                         });
-                        this.getData();
+                        this.getGroup();
                     },
                 })
             }).catch(() => {
                 //do nothing
             });
+        },
+
+        //==================== Project part end ====================
+
+        toProjectDetail(){
+            alert('into project detail');
+        },
+        deltest(){
+            alert('into deltest');
         },
     }
 }
