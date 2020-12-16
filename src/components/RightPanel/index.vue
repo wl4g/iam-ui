@@ -126,6 +126,8 @@
         transform: translate(110%);
         background: #f8f8f8;
         z-index: 2002;
+        overflow-x: hidden; /*x轴禁止滚动*/
+        overflow-y: scroll; /*y轴滚动*/
         /*border: 1px solid #eee;*/
         //left: 16vw;
 
@@ -153,9 +155,6 @@
 
     .rightPanel-items {
         padding: 8px 8px 0;
-        height: 100%;
-        overflow-x: hidden; /*x轴禁止滚动*/
-        overflow-y: scroll; /*y轴滚动*/
     }
 
     .rightPanel-items::-webkit-scrollbar {

@@ -43,6 +43,8 @@ export default {
 
             tableData: [],
 
+            teams: [],
+
             // 表单规则
             rules: {
                 name: [
@@ -165,28 +167,26 @@ export default {
             this.getData();
         },
         addData(item) {
+            this.getTeam();
             this.cleanSaveForm();
             this.saveForm.groupId = item.id;
             this.dialogVisible = true;
             this.dialogTitle = 'Add';
         },
         // 获取列表数据
-        /*getData() {
-            this.loading = true;
-            this.searchParams.pageNum = this.pageNum;
-            this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseProjectList({
-                data: this.searchParams,
+        getTeam() {
+            this.$$api_doc_enterpriseTeamList({
+                data: {
+                    pageSize: 999,
+                },
                 fn: json => {
-                    this.loading = false;
-                    this.total = json.data.total;
-                    this.tableData = json.data.records;
+                    this.teams = json.data.records;
                 },
                 errFn: () => {
-                    this.loading = false;
+
                 }
             })
-        },*/
+        },
         cleanSaveForm() {
             this.saveForm = {
                 groupId: '',
@@ -222,6 +222,7 @@ export default {
             if (!row.id) {
                 return;
             }
+            this.getTeam();
             this.cleanSaveForm();
             this.$$api_doc_enterpriseProjectDetail({
                 data: {

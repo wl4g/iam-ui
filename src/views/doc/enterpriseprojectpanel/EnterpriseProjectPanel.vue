@@ -18,7 +18,7 @@
             </div>
             <div>
                 <!--TODO v-for-->
-                <div v-for="(jtem ,j) in item.enterpriseProjectList" class="groups-con" style="" @click="toProjectDetail()">
+                <div v-for="(jtem ,j) in item.enterpriseRepositories" class="groups-con" style="" @click="toProjectDetail()">
                     <div style="margin: 6px 0 0 6px;">
                         <span class="groups-con-title">
                             {{jtem.name}}
@@ -30,7 +30,7 @@
                         </span>
                     </div>
                     <div style="background-color: rgba(0, 0, 0, 0.1);position: absolute;bottom: 0;width: 100%;text-align:center;line-height: 30px; ">
-                        {{jtem.humanUpdateDate}}
+                        {{jtem.updateDate}}
                     </div>
                     <div class="groups-con-tools">
                         <a class="el-icon-edit" @click.stop="editData(jtem)"></a>
@@ -95,7 +95,26 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="teamId" prop="teamId">
+                            <span slot="label">
+                                <span>团队</span>
+                                <el-tooltip class="item" effect="dark" content="团队" placement="right">
+                                    <i class="el-icon-question"></i>
+                                </el-tooltip>
+                            </span>
+                            <el-select v-model="saveForm.teamId" placeholder="可选" style="width: 100%">
+                                <el-option
+                                        v-for="item in teams"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
 
                 <el-row>
