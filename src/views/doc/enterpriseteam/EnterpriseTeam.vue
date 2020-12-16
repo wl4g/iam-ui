@@ -35,6 +35,14 @@
                             <span>{{row.name}}</span>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="remark">
+                        <template slot="header" slot-scope="scope">
+                            <span>备注</span>
+                        </template>
+                        <template slot-scope="{row}">
+                            <span>{{row.remark}}</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column :label="$t('message.common.operation')" min-width="120">
                         <template slot-scope="scope">
                             <el-button type="text" icon="el-icon-edit" @click="editData(scope.row)" :title="$t('message.common.edit')"></el-button>
@@ -57,6 +65,16 @@
                                 <span>名称</span>
                             </span>
                             <el-input v-model="saveForm.name" placeholder="" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="remark" prop="remark">
+                            <span slot="label">
+                                <span>备注</span>
+                            </span>
+                            <el-input v-model="saveForm.remark" placeholder="" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>

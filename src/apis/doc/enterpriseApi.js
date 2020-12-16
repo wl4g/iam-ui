@@ -11,6 +11,13 @@ export default [
         sysModule: global.doc
     },
     {
+        name: 'getApisByVersionid',
+        method: 'getApisByVersionid',
+        path: '/enterpriseapi/getApisByVersionid',
+        type: 'get',
+        sysModule: global.doc
+    },
+    {
         name: 'saveEnterpriseApi',
         method: 'saveEnterpriseApi',
         path: '/enterpriseapi/save',

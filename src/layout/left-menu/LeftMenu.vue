@@ -1,5 +1,5 @@
 <template>
-<div class="left" :style="{'height':win_size.height,'width':$store.state.leftmenu.width}" id='admin-left'>
+<div class="left" :style="{'height':'calc(100% - 50px)','width':$store.state.leftmenu.width}" id='admin-left'>
     <div id='left-menu' class="dynamic-menus">
         <el-row class="tac">
             <el-col :span="24">
@@ -36,9 +36,9 @@
     <transition name="mask-fade">
         <div class="menu-list-mask" v-show="maskVisible">
             <div class="list-mask-search-bar" :class="isKeyWordFocus ? 'active': ''">
-                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword" 
-                    :placeholder="$t('message.common.searchInput')" prefix-icon="el-icon-search" 
-                    @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true" 
+                <el-input class="list-mask-search-input" ref="maskSearchInput" v-model="keyword"
+                    :placeholder="$t('message.common.searchInput')" prefix-icon="el-icon-search"
+                    @keyup.native="handleKeyWordSearch" @focus="isKeyWordFocus=true"
                     @blur="isKeyWordFocus=false"></el-input>
             </div>
             <div class="mask-list">

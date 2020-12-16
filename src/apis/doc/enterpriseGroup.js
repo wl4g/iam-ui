@@ -6,14 +6,14 @@ export default [
     {
         name: 'enterpriseGroupList',
         method: 'enterpriseGroupList',
-        path: '/enterprisegroup/list',
+        path: '/enterpriserepositorygroup/list',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'saveEnterpriseGroup',
         method: 'saveEnterpriseGroup',
-        path: '/enterprisegroup/save',
+        path: '/enterpriserepositorygroup/save',
         type: 'post',
         dataType: 'json',
         sysModule: global.doc
@@ -21,14 +21,14 @@ export default [
     {
         name: 'enterpriseGroupDetail',
         method: 'enterpriseGroupDetail',
-        path: '/enterprisegroup/detail',
+        path: '/enterpriserepositorygroup/detail',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'delEnterpriseGroup',
         method: 'delEnterpriseGroup',
-        path: '/enterprisegroup/del',
+        path: '/enterpriserepositorygroup/del',
         type: 'post',
         sysModule: global.doc
     },

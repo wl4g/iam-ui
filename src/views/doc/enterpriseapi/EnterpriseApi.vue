@@ -2,123 +2,167 @@
 
 <template>
     <section id="configuration" class="configuration">
-        <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
-            <el-form-item label="">
-                <el-input v-model="searchParams.versionId" placeholder="" style="width:165px"></el-input>
-            </el-form-item>
-            <el-form-item label="">
-                <el-input v-model="searchParams.address" placeholder="" style="width:165px"></el-input>
-            </el-form-item>
-            <input hidden />
-            <el-form-item>
-                <el-button @click="onSubmit" type="success" :loading="loading">{{$t('message.common.search')}}</el-button>
-            </el-form-item>
-            <el-button type="primary" style='float:right;margin-right:20px' @click="addData()" >+ </el-button>
-        </el-form>
 
-        <!--================================table================================-->
-        <!-- 查询结果数值 -->
-        <div class="query">
-            <div class="query-left">
-                <div class="line"></div>
-                Result Total： <span class="number">{{total}}</span>
+        <!--api module-->
+        <div style="width: 100%">
+            <div class="left">
+                <el-button class="el-icon-plus" @click="addDir()">新增目录</el-button>
+                <el-button class="el-icon-plus" @click="addApi()">新增接口</el-button>
+                <el-button class="el-icon-refresh" @click="getData()">刷新</el-button>
+                <el-tree :data="apiList" :props="defaultProps" @node-click="handleNodeClick">
+                    <span class="custom-tree-node" slot-scope="{ node, data }">
+                        <span>{{ node.label }}</span>
+                        <span>
+                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data)">子目录</el-button>
+                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addApi(data, node)">接口</el-button>
+                          <el-button v-if="isApi(data) || !data.children || data.children.length <= 0 " type="text" size="mini" @click="() => delApiOrDir(data, node)">删除</el-button>
+                        </span>
+                      </span>
+                </el-tree>
+            </div>
+            <div class="right">
+                <!--base info-->
+                <div style="width: 70%;">
+                    <el-form label-width="100px"  :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+                        <el-row>
+                            <el-col :span="24">
+                                <el-form-item label="name" prop="name">
+                                    <span slot="label">
+                                        <span>name</span>
+                                    </span>
+                                    <el-input v-model="saveForm.name" placeholder="name" ></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="24">
+                                <el-form-item label="address" prop="address">
+                                    <span slot="label">
+                                        <span>address</span>
+                                    </span>
+                                    <el-input v-model="saveForm.address" placeholder="address" ></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="8">
+                                <el-form-item label="apiVersion" prop="apiVersion">
+                                    <span slot="label">
+                                        <span>version</span>
+                                    </span>
+                                    <el-input v-model="saveForm.apiVersion" placeholder="version" ></el-input>
+                                </el-form-item>
+                            </el-col>
+
+                            <el-col :span="8">
+                                <el-form-item label="protocolType" prop="protocolType">
+                            <span slot="label">
+                                <span>protocol</span>
+                                <el-tooltip class="item" effect="dark" content="protocol" placement="right">
+                                    <i class="el-icon-question"></i>
+                                </el-tooltip>
+                            </span>
+                                    <el-select v-model="saveForm.protocolType" placeholder="Please Select Protocol" style="width:100%" :filterable="true">
+                                        <el-option label="http" value="1"></el-option>
+                                        <el-option label="tcp" value="2"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="type" prop="type">
+                            <span slot="label">
+                                <span>type</span>
+                                <el-tooltip class="item" effect="dark" content="type" placement="right">
+                                    <i class="el-icon-question"></i>
+                                </el-tooltip>
+                            </span>
+                                    <el-select v-model="messageStructKey" placeholder="Please Select Type" style="width:100%" :filterable="true">
+                                        <el-option label="GET" value="GET"></el-option>
+                                        <el-option label="POST" value="POST"></el-option>
+                                        <el-option label="HEAD" value="HEAD"></el-option>
+                                        <el-option label="PUT" value="PUT"></el-option>
+                                        <el-option label="PATCH" value="PATCH"></el-option>
+                                        <el-option label="DELETE" value="DELETE"></el-option>
+                                        <el-option label="TRACE" value="TRACE"></el-option>
+                                        <el-option label="OPTIONS" value="OPTIONS"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="24">
+                                <el-form-item label="remark" prop="remark">
+                                    <span slot="label">
+                                        <span>remark</span>
+                                    </span>
+                                    <el-input type="textarea" :rows="2" v-model="saveForm.remark" placeholder="remark" ></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                </div>
+                <div style="position: absolute;right: 30px;top: 30px">
+                    <el-button>保存</el-button>
+                    <el-button>取消</el-button>
+                </div>
+
+                <!-- 请求参数 等。。。 -->
+                <div>
+                    <!--<drag-tree-table border :data="messageStructObj.parameters" rowKey="name" :columns="columns"
+                                     :option_btns_width="300"
+                                     :option_btns="option_btns">
+                    </drag-tree-table>-->
+
+                    <dragTreeTable
+                            :data="treeData"
+                            :onDrag="onTreeDataChange"
+                            fixed
+                            border>
+                    </dragTreeTable>
+                </div>
+
             </div>
         </div>
-        <!-- 查询结果表格 -->
-        <div>
-            <template>
-                <el-table :data="tableData" :border="false" style="width:100%">
-                    <!--<el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>-->
-                    <!--<el-table-column width="100" prop="id" label="ID"></el-table-column>-->
-                    <el-table-column prop="versionId">
-                        <template slot="header" slot-scope="scope">
-                            <span></span>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.versionId}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="address">
-                        <template slot="header" slot-scope="scope">
-                            <span></span>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.address}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="protocolType">
-                        <template slot="header" slot-scope="scope">
-                            <span>http,tcp</span>
-                            <el-tooltip class="item" effect="dark" content="http,tcp" placement="right">
-                                <i class="el-icon-question"></i>
-                            </el-tooltip>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.protocolType}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="updateDate">
-                        <template slot="header" slot-scope="scope">
-                            <span></span>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.updateDate}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="updateBy">
-                        <template slot="header" slot-scope="scope">
-                            <span></span>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.updateBy}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="organizationCode">
-                        <template slot="header" slot-scope="scope">
-                            <span>组织编码</span>
-                            <el-tooltip class="item" effect="dark" content="组织编码" placement="right">
-                                <i class="el-icon-question"></i>
-                            </el-tooltip>
-                        </template>
-                        <template slot-scope="{row}">
-                            <span>{{row.organizationCode}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column :label="$t('message.common.operation')" min-width="120">
-                        <template slot-scope="scope">
-                            <el-button type="text" icon="el-icon-edit" @click="editData(scope.row)" :title="$t('message.common.edit')"></el-button>
-                            <el-button type="text" icon="el-icon-delete" @click="delData(scope.row)" :title="$t('message.common.del')"></el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </template>
-        </div>
-        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible"  v-loading='dialogLoading'>
-            <el-form label-width="150px" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
- 
+            <el-form label-width="100px" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+
                 <el-row>
-                    <el-col :span="11">
-                        <el-form-item label="versionId" prop="versionId">
+                    <el-col :span="24">
+                        <el-form-item label="name" prop="name">
                             <span slot="label">
-                                <span></span>
+                                <span>name</span>
                             </span>
-                            <el-input v-model="saveForm.versionId" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="11">
-                        <el-form-item label="address" prop="address">
-                            <span slot="label">
-                                <span></span>
-                            </span>
-                            <el-input v-model="saveForm.address" placeholder="" ></el-input>
+                            <el-input v-model="saveForm.name" placeholder="name" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
- 
+
                 <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="address" prop="address">
+                            <span slot="label">
+                                <span>address</span>
+                            </span>
+                            <el-input v-model="saveForm.address" placeholder="address" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item label="apiVersion" prop="apiVersion">
+                            <span slot="label">
+                                <span>version</span>
+                            </span>
+                            <el-input v-model="saveForm.apiVersion" placeholder="version" ></el-input>
+                        </el-form-item>
+                    </el-col>
+
                     <el-col :span="11">
                         <el-form-item label="protocolType" prop="protocolType">
                             <span slot="label">
@@ -127,29 +171,21 @@
                                     <i class="el-icon-question"></i>
                                 </el-tooltip>
                             </span>
-                            <el-input v-model="saveForm.protocolType" placeholder="http,tcp" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="11">
-                        <el-form-item label="messageStruct" prop="messageStruct">
-                            <span slot="label">
-                                <span>请求响应消息结构定义</span>
-                                <el-tooltip class="item" effect="dark" content="请求响应消息结构定义" placement="right">
-                                    <i class="el-icon-question"></i>
-                                </el-tooltip>
-                            </span>
-                            <el-input v-model="saveForm.messageStruct" placeholder="请求响应消息结构定义" ></el-input>
+                            <el-select v-model="saveForm.protocolType" placeholder="Please Select Protocol" style="width:100%" :filterable="true">
+                                <el-option label="http" value="1"></el-option>
+                                <el-option label="tcp" value="2"></el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
- 
+
                 <el-row>
-                    <el-col :span="11">
+                    <el-col :span="24">
                         <el-form-item label="remark" prop="remark">
                             <span slot="label">
-                                <span></span>
+                                <span>remark</span>
                             </span>
-                            <el-input v-model="saveForm.remark" placeholder="" ></el-input>
+                            <el-input v-model="saveForm.remark" placeholder="remark" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -159,6 +195,8 @@
                 <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
             </span>
         </el-dialog>
+
+
     </section>
 </template>
 <script>
@@ -167,6 +205,32 @@
     export default EnterpriseApi
 </script>
 <style scoped>
+    .left {
+        float: left;
+        width: 29%;
+        height: calc(100vh - 88px);
+        overflow: auto;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
+    .right {
+        margin-left: 30%;
+        height: calc(100vh - 88px);
+        overflow-scrolling: auto;
+        overflow: auto;
+        position: relative;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
+
+    .custom-tree-node {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        padding-right: 8px;
+    }
 
 </style>
 

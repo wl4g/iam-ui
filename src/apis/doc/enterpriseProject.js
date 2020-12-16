@@ -6,14 +6,14 @@ export default [
     {
         name: 'enterpriseProjectList',
         method: 'enterpriseProjectList',
-        path: '/enterpriseproject/list',
+        path: '/enterpriserepository/list',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'saveEnterpriseProject',
         method: 'saveEnterpriseProject',
-        path: '/enterpriseproject/save',
+        path: '/enterpriserepository/save',
         type: 'post',
         dataType: 'json',
         sysModule: global.doc
@@ -21,14 +21,14 @@ export default [
     {
         name: 'enterpriseProjectDetail',
         method: 'enterpriseProjectDetail',
-        path: '/enterpriseproject/detail',
+        path: '/enterpriserepository/detail',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'delEnterpriseProject',
         method: 'delEnterpriseProject',
-        path: '/enterpriseproject/del',
+        path: '/enterpriserepository/del',
         type: 'post',
         sysModule: global.doc
     },
