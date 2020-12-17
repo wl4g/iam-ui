@@ -6,16 +6,32 @@
         <!--api module-->
         <div style="width: 100%">
             <div class="left">
-                <el-button class="el-icon-plus" @click="addDir()">新增目录</el-button>
-                <el-button class="el-icon-plus" @click="addApi()">新增接口</el-button>
-                <el-button class="el-icon-refresh" @click="getData()">刷新</el-button>
-                <el-tree :data="apiList" :props="defaultProps" @node-click="handleNodeClick">
-                    <span class="custom-tree-node" slot-scope="{ node, data }">
+                <el-row>
+                    <el-col :span="16">
+                        <el-button class="el-icon-plus" @click="addDir()">新增顶级目录</el-button>
+                        <el-button class="el-icon-refresh" @click="reloadApiTree()">刷新</el-button>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-select v-model="versionId" placeholder="Version" style="width:100%" :filterable="true" @change="reloadApiTree()">
+                            <el-option
+                                    v-for="item in versions"
+                                    :key="item.id"
+                                    :label="item.version"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                </el-row>
+
+
+                <el-tree ref="apiTree" node-key="key" :props="defaultProps" :load="loadModule" lazy @node-click="handleNodeClick">
+                    <span class="custom-tree-node" slot-scope="{ data, node  }">
                         <span>{{ node.label }}</span>
                         <span>
-                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data)">子目录</el-button>
+                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data, node)">子目录</el-button>
                           <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addApi(data, node)">接口</el-button>
-                          <el-button v-if="isApi(data) || !data.children || data.children.length <= 0 " type="text" size="mini" @click="() => delApiOrDir(data, node)">删除</el-button>
+                          <el-button type="text" size="mini" class="el-icon-refresh" @click="() => refreshByNode(node)"></el-button>
+                          <el-button v-if="isApi(data) || !data.children || data.children.length <= 0 " class="el-icon-delete" type="text" size="mini" @click="() => delApiOrDir(data, node)"></el-button>
                         </span>
                       </span>
                 </el-tree>
@@ -25,7 +41,7 @@
                 <div style="width: 70%;">
                     <el-form label-width="100px"  :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                         <el-row>
-                            <el-col :span="24">
+                            <el-col :span="16">
                                 <el-form-item label="name" prop="name">
                                     <span slot="label">
                                         <span>name</span>
@@ -33,52 +49,15 @@
                                     <el-input v-model="saveForm.name" placeholder="name" ></el-input>
                                 </el-form-item>
                             </el-col>
-                        </el-row>
-
-                        <el-row>
-                            <el-col :span="24">
-                                <el-form-item label="address" prop="address">
-                                    <span slot="label">
-                                        <span>address</span>
-                                    </span>
-                                    <el-input v-model="saveForm.address" placeholder="address" ></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-
-                        <el-row>
                             <el-col :span="8">
-                                <el-form-item label="apiVersion" prop="apiVersion">
-                                    <span slot="label">
-                                        <span>version</span>
-                                    </span>
-                                    <el-input v-model="saveForm.apiVersion" placeholder="version" ></el-input>
-                                </el-form-item>
-                            </el-col>
-
-                            <el-col :span="8">
-                                <el-form-item label="protocolType" prop="protocolType">
+                                <el-form-item label="method" prop="method">
                             <span slot="label">
-                                <span>protocol</span>
-                                <el-tooltip class="item" effect="dark" content="protocol" placement="right">
-                                    <i class="el-icon-question"></i>
-                                </el-tooltip>
-                            </span>
-                                    <el-select v-model="saveForm.protocolType" placeholder="Please Select Protocol" style="width:100%" :filterable="true">
-                                        <el-option label="http" value="1"></el-option>
-                                        <el-option label="tcp" value="2"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="type" prop="type">
-                            <span slot="label">
-                                <span>type</span>
+                                <span>method</span>
                                 <el-tooltip class="item" effect="dark" content="type" placement="right">
                                     <i class="el-icon-question"></i>
                                 </el-tooltip>
                             </span>
-                                    <el-select v-model="messageStructKey" placeholder="Please Select Type" style="width:100%" :filterable="true">
+                                    <el-select v-model="saveForm.method" placeholder="Please Select Type" style="width:100%" :filterable="true">
                                         <el-option label="GET" value="GET"></el-option>
                                         <el-option label="POST" value="POST"></el-option>
                                         <el-option label="HEAD" value="HEAD"></el-option>
@@ -94,19 +73,30 @@
 
                         <el-row>
                             <el-col :span="24">
-                                <el-form-item label="remark" prop="remark">
+                                <el-form-item label="url" prop="url">
                                     <span slot="label">
-                                        <span>remark</span>
+                                        <span>url</span>
                                     </span>
-                                    <el-input type="textarea" :rows="2" v-model="saveForm.remark" placeholder="remark" ></el-input>
+                                    <el-input v-model="saveForm.url" placeholder="url" ></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+
+                        <el-row>
+                            <el-col :span="24">
+                                <el-form-item label="description" prop="description">
+                                    <span slot="label">
+                                        <span>description</span>
+                                    </span>
+                                    <el-input type="textarea" :rows="2" v-model="saveForm.description" placeholder="description" ></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
                     </el-form>
                 </div>
                 <div style="position: absolute;right: 30px;top: 30px">
-                    <el-button>保存</el-button>
-                    <el-button>取消</el-button>
+                    <el-button @click="saveData()">保存</el-button>
+                    <el-button @click="handleNodeClick({id: saveForm.id})">取消</el-button>
                 </div>
 
                 <!-- 请求参数 等。。。 -->
@@ -208,14 +198,14 @@
     .left {
         float: left;
         width: 29%;
-        height: calc(100vh - 88px);
+        height: calc(100vh - 96px);
         overflow: auto;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
         padding: 10px;
     }
     .right {
         margin-left: 30%;
-        height: calc(100vh - 88px);
+        height: calc(100vh - 96px);
         overflow-scrolling: auto;
         overflow: auto;
         position: relative;

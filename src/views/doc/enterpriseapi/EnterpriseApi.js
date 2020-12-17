@@ -10,11 +10,26 @@ export default {
     },
     data() {
         return {
+
+            repositoryId: 1,
+
+            versions: [],
+            versionId: 1,
+
+
+            //module part
+            modules: [],
+            node_had: {},
+            resolve_had: {},
+
+            tempNode: null,
+
             //api part
             apiList: [],
             defaultProps: {
                 children: 'children',
-                label: 'label'
+                label: 'name',
+                isLeaf: 'leaf'
             },
 
             //查询条件
@@ -30,13 +45,11 @@ export default {
 
             //弹窗表单
             saveForm: {
+                moduleId: '',
                 name: '',
-                tags: '',
-                apiVersion: '',
-                address: '',
-                protocolType: '',
-                messageStruct: '',
-                remark: '',
+                url: '',
+                method: '',
+                description: '',
             },
 
             dialogVisible: false,
@@ -57,315 +70,57 @@ export default {
             },
             loading: false,
 
-
-            //right panel part
-            messageStructKey: '',//Type: get|post...
-            messageStructObj: {
-                parameters:[//TODO
-                    {
-                        "name":"complete",
-                        "in":"query",
-                        "required":false,
-                        "type":"boolean"
-                    },
-                    {
-                        "name":"id",
-                        "in":"query",
-                        "required":false,
-                        "type":"integer",
-                        "format":"int64"
-                    },
-                    {
-                        "name":"identifier",
-                        "in":"query",
-                        "required":false,
-                        "type":"integer",
-                        "format":"int64"
-                    },
-                    {
-                        "User":{
-                            "type":"object",
-                            "properties":{
-                                "pageNum":{
-                                    "type":"integer",
-                                    "format":"int32"
-                                },
-                                "pageSize":{
-                                    "type":"integer",
-                                    "format":"int32"
-                                },
-                                "records":{
-                                    "type":"array",
-                                    "readOnly":true,
-                                    "items":{
-                                        "$ref":"#/definitions/发布文章"
-                                    }
-                                },
-                                "total":{
-                                    "type":"integer",
-                                    "format":"int64"
-                                }
-                            },
-                        }
-                    },
-                ],
-
-            },
-
-
             treeData: {
+                custom_field: {
+                    //id: 'id',
+                    //order: 'sort',
+                    lists: 'children',
+                    parent_id: 'parentId'
+                },
                 columns: [
                     {
-                        type: "checkbox",
-                        isContainChildren: true,
-                        width: 100,
-                        align: "center",
-                        onChange: (item)=>{
-                            console.log(item)
-                            alert('您选中了'+ item.length + '条数据');
-                        }
-                    },
-                    {
                         type: "selection",
-                        title: "<a>菜单名称</a>",
+                        title: "属性名",
                         field: "name",
                         width: 200,
-                        align: "left",
-                        titleAlign: "left",
+                        align: "center",
                         editable: true,
-                        /*formatter: item => {
-                          return "<span>" + item.name + "</span>";
-                        }*/
                     },
                     {
-                        title: "ID",
-                        field: "id",
+                        title: "scope",
+                        field: "scope",
                         width: 100,
                         align: "center"
-                    }
+                    },
+                    {
+                        title: "type",
+                        field: "type",
+                        width: 100,
+                        align: "center"
+                    },{
+                        title: "pos",
+                        field: "pos",
+                        width: 100,
+                        align: "center"
+                    },{
+                        title: "rule",
+                        field: "rule",
+                        width: 100,
+                        align: "center"
+                    },{
+                        title: "value",
+                        field: "value",
+                        width: 100,
+                        align: "center",
+                        editable: true,
+                    },{
+                        title: "required",
+                        field: "required",
+                        width: 100,
+                        align: "center"
+                    },
                 ],
-                lists: [
-                    {
-                        id: 110,
-                        parent_id: 0,
-                        order: 0,
-                        name: "客户管理",
-                        uri: "无",
-                        open: true,
-                        lists: [
-                            {
-                                id: 201,
-                                parent_id: 110,
-                                order: 0,
-                                name: "联系人",
-                                uri: "/customer/contacts",
-                                lists: null,
-                                isShowCheckbox: false,
-                                highlight: true
-                            },
-                            {
-                                id: 173,
-                                parent_id: 110,
-                                order: 1,
-                                name: "客户",
-                                uri: "/customer/customerList",
-                                lists: null,
-                                checked: true,
-                            },
-                            {
-                                id: 117,
-                                parent_id: 110,
-                                order: 2,
-                                name: "客户维护记录",
-                                uri: "/customer/maintain",
-                                lists: null
-                            },
-                            {
-                                id: 383,
-                                parent_id: 110,
-                                order: 3,
-                                name: "客户冲突",
-                                uri: "无",
-                                lists: [
-                                    {
-                                        id: 390,
-                                        parent_id: 383,
-                                        order: 0,
-                                        name: "个人冲突",
-                                        uri: "/customer/personalConflict",
-                                        lists: null
-                                    },
-                                    {
-                                        id: 397,
-                                        parent_id: 383,
-                                        order: 1,
-                                        name: "团队冲突",
-                                        uri: "/customer/teamConflict",
-                                        lists: null
-                                    },
-                                    {
-                                        id: 215,
-                                        parent_id: 383,
-                                        order: 2,
-                                        name: "客户查询",
-                                        uri: "/customer/inquiry",
-                                        lists: null
-                                    }
-                                ]
-                            },
-                            {
-                                id: 138,
-                                parent_id: 110,
-                                order: 4,
-                                name: "线索管理",
-                                uri: "/customer/clue",
-                                lists: null
-                            },
-                            {
-                                id: 159,
-                                parent_id: 110,
-                                order: 5,
-                                name: "集团信息",
-                                uri: "/customer/agent",
-                                lists: null
-                            }
-                        ]
-                    },
-                    {
-                        id: 404,
-                        parent_id: 0,
-                        order: 1,
-                        name: "审核中心",
-                        uri: "无",
-                        lists: [
-                            {
-                                id: 187,
-                                parent_id: 404,
-                                order: 0,
-                                name: "资质审核",
-                                uri: "/customer/qualifications",
-                                lists: null
-                            }
-                        ]
-                    },
-                    {
-                        id: 306,
-                        parent_id: 0,
-                        order: 2,
-                        name: "数据统计",
-                        uri: "无",
-                        lists: [
-                            {
-                                id: 222,
-                                parent_id: 306,
-                                order: 0,
-                                name: "线索",
-                                uri: "/customer/clueStatistics",
-                                lists: null
-                            },
-                            {
-                                id: 124,
-                                parent_id: 306,
-                                order: 1,
-                                name: "客户",
-                                uri: "/customer/statistics",
-                                lists: null
-                            }
-                        ]
-                    },
-                    {
-                        id: 334,
-                        parent_id: 0,
-                        order: 3,
-                        name: "基础数据",
-                        uri: "",
-                        lists: [
-                            {
-                                id: 152,
-                                parent_id: 334,
-                                order: 0,
-                                name: "行业信息",
-                                uri: "/customer/industry",
-                                lists: null
-                            },
-                            {
-                                id: 166,
-                                parent_id: 334,
-                                order: 1,
-                                name: "客户部门",
-                                uri: "/customer/departmentType",
-                                lists: null
-                            }
-                        ]
-                    },
-                    {
-                        id: 9,
-                        parent_id: 0,
-                        order: 4,
-                        name: "系统管理",
-                        uri: "",
-                        open: false,
-                        lists: [
-                            {
-                                id: 313,
-                                parent_id: 9,
-                                order: 0,
-                                name: "员工管理",
-                                uri: "/rbac/userManagement",
-                                lists: [
-                                    {
-                                        id: 412,
-                                        parent_id: 313,
-                                        order: 0,
-                                        name: "员工管理-子节点",
-                                        uri: "/rbac/userManagement",
-                                        lists: null
-                                    }
-                                ]
-                            },
-                            {
-                                id: 320,
-                                parent_id: 9,
-                                order: 1,
-                                name: "部门管理",
-                                uri: "/rbac/departmentManagement",
-                                lists: null
-                            },
-                            {
-                                id: 23,
-                                parent_id: 9,
-                                order: 2,
-                                name: "角色管理",
-                                uri: "/rbac/roleManagement",
-                                lists: null
-                            },
-                            {
-                                id: 16,
-                                parent_id: 9,
-                                order: 3,
-                                name: "权限管理",
-                                uri: "/rbac/authorityManagement",
-                                lists: null
-                            },
-                            {
-                                id: 2,
-                                parent_id: 9,
-                                order: 4,
-                                name: "菜单管理",
-                                uri: "/menu/menuManagement",
-                                lists: null
-                            },
-                            {
-                                id: 107,
-                                parent_id: 9,
-                                order: 5,
-                                name: "操作日志",
-                                uri: "/operation/log",
-                                lists: null
-                            }
-                        ]
-                    }
-                ]
+                lists: []
             },
 
 
@@ -375,47 +130,138 @@ export default {
 
     mounted() {
         this.getData();
+        this.getVersionsByRepositoryId();
     },
     methods: {
         //api tree part
         isApi(data){
-            return !!(data && data.name);
+            return !!(data && data.moduleId);
         },
 
-        addDir(parent){
+        getVersionsByRepositoryId(){
+            this.$$api_doc_getVersionsByRepositoryId({
+                data: {
+                    repositoryId: this.versionId,
+                },
+                fn: json => {
+                    this.versions = json.data;
+                    this.versionId = json.data[0].id;
+                }
+            });
+        },
+
+        loadModule(node, resolve){
+            if (node.level === 0) {
+                this.node_had = node;
+                this.resolve_had = resolve;
+            }
+
+            let parentId = 0;
+            if(node.data && node.data.id ){
+                parentId = node.data.id;
+            }
+            this.$$api_doc_getByVersionIdAndParentId({
+                data: {
+                    versionId: this.versionId,
+                    parentId: parentId,
+                },
+                fn: json => {
+                    let data = json.data;
+                    for(let i in data){
+                        data[i].key = 'module_'+data[i].id;
+                    }
+
+                    if(parentId !== 0){
+                        this.$$api_doc_getByModuleId({
+                            data: {
+                                versionId: this.versionId,
+                                moduleId: parentId,
+                            },
+                            fn: json2 => {
+                                if(json2.data && json2.data.length>0){
+                                    for(let i in json2.data){
+                                        json2.data[i].leaf = true;
+                                        json2.data[i].key = 'api_' + json2.data[i].id;
+                                    }
+                                    data = data.concat(json2.data);
+                                    resolve(data);
+                                }else{
+                                    resolve(data);
+                                }
+                            },
+                        })
+                    }else{
+                        resolve(data);
+                    }
+                },
+            })
+        },
+
+        reloadApiTree() {
+                this.node_had.childNodes = [];//把存起来的node的子节点清空，不然会界面会出现重复树！
+                this.loadModule(this.node_had, this.resolve_had);//再次执行懒加载的方法
+        },
+
+        refreshByNode(node, key) {
+            if(!node){
+                let node = this.$refs.asyncTree.getNode(key);// 通过节点id找到对应树节点对象
+            }
+            node.loaded = false;
+            node.expand(); // 主动调用展开节点方法，重新查询该节点下的所有子节点
+        },
+
+
+
+        addDir(parent,node){
             this.$prompt('请输入目录名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                //inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                //inputErrorMessage: '邮箱格式不正确'
             }).then(({ value }) => {
                 if(parent){
-                    parent.children.push({
-                        label: value,
-                        children: [],
-                    });
+                    this.$$api_doc_saveEnterpriseApiModule({
+                        data: {
+                            name: value,
+                            versionId: this.versionId,
+                            parentId: parent.id,
+                        },
+                        fn: json => {
+                            this.refreshByNode(node);
+                        },
+                    })
                 }else{
-                    this.apiList.push({
-                        label: value,
-                        children: [],
-                    });
+                    this.$$api_doc_saveEnterpriseApiModule({
+                        data: {
+                            name: value,
+                            versionId: this.versionId,
+                            parentId: 0,
+                        },
+                        fn: json => {
+                            this.reloadApiTree();
+                        },
+                    })
                 }
             }).catch(() => {
                 //do nothing
             });
         },
 
-        addApi(parent, node){
-            this.cleanSaveForm();
-            this.dialogVisible = true;
-            this.dialogTitle = 'ADD';
-            if(parent){
-                let tags = [];
-                this.getTags(node,tags);
-                this.saveForm.tags = tags.join(',');
-            }else{
-                this.saveForm.tags = '';
-            }
+        addApi(parent, node) {
+            this.$prompt('请输入接口名称', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+            }).then(({value}) => {
+                this.$$api_doc_saveEnterpriseApi({
+                    data: {
+                        name: value,
+                        moduleId: parent.id,
+                    },
+                    fn: json => {
+                        this.refreshByNode(node);
+                    }
+                });
+            }).catch(() => {
+                //do nothing
+            });
         },
 
         getTags(node, tags){
@@ -432,19 +278,18 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.saveForm = data;
-            //TODO http module
-            if(!data.messageStruct){
+            if (!data.id) {
                 return;
             }
-            let messageStructObj = JSON.parse(data.messageStruct);
-            for(var d in messageStructObj) {
-                this.messageStructKey = d; // type
-                this.messageStructObj = messageStructObj[d]; //属性值gao
-                break;
-            }
-
-
+            this.$$api_doc_enterpriseApiDetail({
+                data: {
+                    id: data.id,
+                },
+                fn: json => {
+                    this.saveForm = json.data;
+                    this.treeData.lists = json.data.properties;
+                },
+            });
         },
 
         onSubmit() {
@@ -558,27 +403,26 @@ export default {
         },
         cleanSaveForm() {
             this.saveForm = {
+                moduleId: '',
                 name: '',
-                tags: '',
-                apiVersion: '',
-                address: '',
-                protocolType: '',
-                messageStruct: '',
-                remark: '',
+                url: '',
+                method: '',
+                description: '',
             };
         },
         saveData() {
             this.dialogLoading = true;
-            this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
+                    this.saveForm.properties = this.treeData.lists;
                     this.$$api_doc_saveEnterpriseApi({
                         data: this.saveForm,
                         fn: json => {
+                            this.$message({
+                                message: '保存成功',
+                                type: 'success'
+                            });
                             this.dialogLoading = false;
-                            this.dialogVisible = false;
-                            this.getData();
-                            this.cleanSaveForm();
                         },
                         errFn: () => {
                             this.dialogLoading = false;
@@ -589,22 +433,7 @@ export default {
                 }
             });
         },
-        editData(row) {
-            if (!row.id) {
-                return;
-            }
-            this.cleanSaveForm();
-            this.$$api_doc_enterpriseApiDetail({
-                data: {
-                    id: row.id,
-                },
-                fn: json => {
-                    this.saveForm = json.data;
-                },
-            });
-            this.dialogVisible = true;
-            this.dialogTitle = 'Edit';
-        },
+
         delData(row) {
             if (!row.id) {
                 return;
@@ -634,15 +463,10 @@ export default {
         clickBtn(row){
             debugger
             console.info(row);
-
-            //TEST
-
-            debugger
-            console.info(obj);
         },
 
         onTreeDataChange(list) {
-
+            this.treeData.lists = list;
         },
 
 

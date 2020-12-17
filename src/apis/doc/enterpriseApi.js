@@ -18,6 +18,13 @@ export default [
         sysModule: global.doc
     },
     {
+        name: 'getByModuleId',
+        method: 'getByModuleId',
+        path: '/enterpriseapi/getByModuleId',
+        type: 'get',
+        sysModule: global.doc
+    },
+    {
         name: 'saveEnterpriseApi',
         method: 'saveEnterpriseApi',
         path: '/enterpriseapi/save',

@@ -6,14 +6,20 @@ export default [
     {
         name: 'enterpriseProjectVersionList',
         method: 'enterpriseProjectVersionList',
-        path: '/enterpriseprojectversion/list',
+        path: '/enterpriserepositoryversion/list',
+        type: 'get',
+        sysModule: global.doc
+    },{
+        name: 'getVersionsByRepositoryId',
+        method: 'getVersionsByRepositoryId',
+        path: '/enterpriserepositoryversion/getVersionsByRepositoryId',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'saveEnterpriseProjectVersion',
         method: 'saveEnterpriseProjectVersion',
-        path: '/enterpriseprojectversion/save',
+        path: '/enterpriserepositoryversion/save',
         type: 'post',
         dataType: 'json',
         sysModule: global.doc
@@ -21,14 +27,14 @@ export default [
     {
         name: 'enterpriseProjectVersionDetail',
         method: 'enterpriseProjectVersionDetail',
-        path: '/enterpriseprojectversion/detail',
+        path: '/enterpriserepositoryversion/detail',
         type: 'get',
         sysModule: global.doc
     },
     {
         name: 'delEnterpriseProjectVersion',
         method: 'delEnterpriseProjectVersion',
-        path: '/enterpriseprojectversion/del',
+        path: '/enterpriserepositoryversion/del',
         type: 'post',
         sysModule: global.doc
     },
