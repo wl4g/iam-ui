@@ -23,20 +23,19 @@
                     </el-col>
                 </el-row>
 
-
                 <el-tree ref="apiTree" node-key="key" :props="defaultProps" :load="loadModule" lazy @node-click="handleNodeClick">
                     <span class="custom-tree-node" slot-scope="{ data, node  }">
                         <span>{{ node.label }}</span>
                         <span>
                           <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data, node)">子目录</el-button>
                           <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addApi(data, node)">接口</el-button>
-                          <el-button type="text" size="mini" class="el-icon-refresh" @click="() => refreshByNode(node)"></el-button>
+                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-refresh" @click="() => refreshByNode(node)"></el-button>
                           <el-button v-if="isApi(data) || !data.children || data.children.length <= 0 " class="el-icon-delete" type="text" size="mini" @click="() => delApiOrDir(data, node)"></el-button>
                         </span>
                       </span>
                 </el-tree>
             </div>
-            <div class="right">
+            <div class="right" v-loading="loading">
                 <!--base info-->
                 <div style="width: 70%;">
                     <el-form label-width="100px"  :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
@@ -96,7 +95,7 @@
                 </div>
                 <div style="position: absolute;right: 30px;top: 30px">
                     <el-button @click="saveData()">保存</el-button>
-                    <el-button @click="handleNodeClick({id: saveForm.id})">取消</el-button>
+                    <el-button @click="handleNodeClick({id: saveForm.id,moduleId: saveForm.moduleId})">取消</el-button>
                 </div>
 
                 <!-- 请求参数 等。。。 -->

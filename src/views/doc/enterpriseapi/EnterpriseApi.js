@@ -58,8 +58,6 @@ export default {
 
             tableData: [],
 
-            enterpriseOas3Components: [],
-            enterpriseOas3Tags: [],
 
             // 表单规则
             rules: {
@@ -79,6 +77,27 @@ export default {
                 },
                 columns: [
                     {
+                        title: '<i class="el-icon-plus"></i>',
+                        titleOnClick: () => {
+                            this.treeData.lists.push({
+                                name: '',
+                                scope: '',
+                                type: '',
+                                pos: '',
+                                rule: '',
+                                value: '',
+                                required: '0',
+                            });
+                        },
+                        field: "scope",
+                        width: 20,
+                        align: "center",
+                        isdraggable: true,
+                        formatter: item => {
+                            return '<i style="cursor: move" class="el-icon-rank"></i>';
+                        }
+                    },
+                    {
                         type: "selection",
                         title: "属性名",
                         field: "name",
@@ -90,23 +109,33 @@ export default {
                         title: "scope",
                         field: "scope",
                         width: 100,
-                        align: "center"
+                        align: "center",
+                        isdraggable: true,
                     },
                     {
                         title: "type",
                         field: "type",
                         width: 100,
-                        align: "center"
+                        align: "center",
+                        editable: true,
+                        input:{
+                            type: 'select', // text | select | checkbox
+                            selectData: {
+                                list: [{label: 'aaa',value: '1'},{label: 'bbb',value: '2'}],
+                            }
+                        },
                     },{
                         title: "pos",
                         field: "pos",
                         width: 100,
-                        align: "center"
+                        align: "center",
+                        editable: true,
                     },{
                         title: "rule",
                         field: "rule",
                         width: 100,
-                        align: "center"
+                        align: "center",
+                        editable: true,
                     },{
                         title: "value",
                         field: "value",
@@ -114,11 +143,71 @@ export default {
                         align: "center",
                         editable: true,
                     },{
-                        title: "required",
+                        title: "必填",
                         field: "required",
-                        width: 100,
-                        align: "center"
+                        width: 20,
+                        align: "center",
+                        editable: true,
+                        input:{
+                            type: 'checkbox', // text | select | checkbox
+                        },
                     },
+                    {
+                        title: "操作",
+                        type: "action",
+                        flex: 1,
+                        align: "center",
+                        actions: [
+                            {
+                                text: "添加子节点",
+                                onclick: (item) => {
+                                    console.info('into add');
+                                    if(!item.children){
+                                        item.children = [];
+                                    }
+                                    item.children.push({
+                                        name: '',
+                                        scope: '',
+                                        type: '',
+                                        pos: '',
+                                        rule: '',
+                                        value: '',
+                                        required: '0',
+                                    });
+                                },
+                                formatter: item => {
+                                    return "<i class='el-icon-plus'></i>";
+                                }
+                            },
+                            {
+                                text: "删除",
+                                onclick: (item, parentModel) => {
+                                    console.info('into del')
+                                    if(parentModel){
+                                        for(let i in parentModel.children){
+                                            let li = parentModel.children[i];
+                                            if(item == li){
+                                                parentModel.children.splice(i,1);
+                                                return;
+                                            }
+                                        }
+                                    }else{
+                                        for(let i in this.treeData.lists){
+                                            let li = this.treeData.lists[i];
+                                            if(item == li){
+                                                this.treeData.lists.splice(i,1);
+                                                return;
+                                            }
+                                        }
+                                    }
+
+                                },
+                                formatter: item => {
+                                    return "<i class='el-icon-delete'></i>";
+                                }
+                            }
+                        ]
+                    }
                 ],
                 lists: []
             },
@@ -264,15 +353,6 @@ export default {
             });
         },
 
-        getTags(node, tags){
-            if(node.parent){
-                this.getTags(node.parent, tags);
-            }
-            if(node.data.label){
-                tags.push(node.data.label);
-            }
-        },
-
         handleNodeClick(data) {
             if(!this.isApi(data)){
                 return;
@@ -281,14 +361,19 @@ export default {
             if (!data.id) {
                 return;
             }
+            this.loading = true;
             this.$$api_doc_enterpriseApiDetail({
                 data: {
                     id: data.id,
                 },
                 fn: json => {
+                    this.loading = false;
                     this.saveForm = json.data;
                     this.treeData.lists = json.data.properties;
                 },
+                errFn: () => {
+                    this.loading = false;
+                }
             });
         },
 
@@ -323,63 +408,6 @@ export default {
             })
         },
 
-        getApisByVersionid() {
-            this.loading = true;
-            this.$$api_doc_getApisByVersionid({
-                data: {
-                    versionId: '',
-                },
-                fn: json => {
-                    this.loading = false;
-
-                    //TODO
-                    this.tableData = json.data.enterpriseOas3Apis;
-                    this.enterpriseOas3Components = json.data.enterpriseOas3Components;
-                    this.enterpriseOas3Tags = json.data.enterpriseOas3Tags;
-
-                    this.dealWithApiList();
-                },
-                errFn: () => {
-                    this.loading = false;
-                }
-            })
-        },
-
-
-
-        dealWithApiList(){
-            this.apiList = [];
-            for(let i in this.tableData){
-                let item = this.tableData[i];
-                if(item.tags && item.tags.length>0){
-                    let tags = item.tags.split(',');
-                    let currentList = this.apiList;
-                    for(let j in tags){
-                        let tag = tags[j];
-                        currentList = this.findNodeAndBuild(currentList, tag);
-                    }
-                    item.label = item.name;
-                    currentList.push(item);
-                }else{
-                    item.label = item.name;//TODO rename
-                    this.apiList.push(item);
-                }
-            }
-        },
-
-        findNodeAndBuild(list, label){
-            let node = list.find(n => {
-                return n.label === label && !this.isApi(n);
-            });
-            if(!node){
-                node = {
-                    label: label,
-                    children: [],
-                };
-                list.push(node);
-            }
-            return node.children;
-        },
         delApiOrDir(data, node){
             if(this.isApi(data)){
                 this.delData(data);
@@ -409,9 +437,10 @@ export default {
                 method: '',
                 description: '',
             };
+            this.treeData.lists = [];
         },
         saveData() {
-            this.dialogLoading = true;
+            this.loading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.saveForm.properties = this.treeData.lists;
@@ -422,14 +451,14 @@ export default {
                                 message: '保存成功',
                                 type: 'success'
                             });
-                            this.dialogLoading = false;
+                            this.loading = false;
                         },
                         errFn: () => {
-                            this.dialogLoading = false;
+                            this.loading = false;
                         }
                     });
                 }else {
-                    this.dialogLoading = false;
+                    this.loading = false;
                 }
             });
         },
@@ -461,7 +490,6 @@ export default {
         },
 
         clickBtn(row){
-            debugger
             console.info(row);
         },
 
