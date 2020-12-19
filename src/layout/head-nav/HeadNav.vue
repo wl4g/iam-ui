@@ -204,5 +204,11 @@
   }
   .btn-toggle .el-icon-s-fold {
     font-size: 24px;
+    transition-duration: .8s;
+  }
+  .btn-toggle:hover {
+    .el-icon-s-fold {
+        transform: rotate(360deg);
+    }
   }
 </style>
