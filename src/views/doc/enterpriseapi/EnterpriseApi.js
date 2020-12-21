@@ -2,19 +2,21 @@
 import {transDate, getDay} from 'utils/'
 import i18n from "../../../i18n/i18n";
 import dragTreeTable from "xcloud-vue-drag-tree-table";
+import RightPanel from '@/components/RightPanel'
 
 export default {
     name: 'enterpriseApi',
     components: {
-        dragTreeTable
+        dragTreeTable,
+        RightPanel,
     },
     data() {
         return {
 
-            repositoryId: 1,
+            repositoryId: '',
 
             versions: [],
-            versionId: 1,
+            versionId: '',
 
 
             //module part
@@ -57,6 +59,8 @@ export default {
             dialogLoading: false,
 
             tableData: [],
+
+            versionDialog: false,
 
 
             // 表单规则
@@ -216,10 +220,22 @@ export default {
 
         }
     },
+    activated() {
+        let id = this.$route.query.id;
+        if(id){
+            this.repositoryId = id;
+        }
+        //TODO clean panel
+        this.node_had.childNodes = [];
+        this.versionId = '';
+        this.cleanSaveForm();
+
+        this.getVersionsByRepositoryId();
+    },
 
     mounted() {
-        this.getData();
-        this.getVersionsByRepositoryId();
+        /*this.getData();
+        this.getVersionsByRepositoryId();*/
     },
     methods: {
         //api tree part
@@ -230,11 +246,22 @@ export default {
         getVersionsByRepositoryId(){
             this.$$api_doc_getVersionsByRepositoryId({
                 data: {
-                    repositoryId: this.versionId,
+                    repositoryId: this.repositoryId,
                 },
                 fn: json => {
                     this.versions = json.data;
-                    this.versionId = json.data[0].id;
+
+                    if(json.data && json.data.length > 0){
+                        this.versionId = json.data[0].id;
+                        // TODO getByVersionIdAndParentId
+                        this.loadModule(this.node_had,this.resolve_had);
+                    }else{
+                        //TODO clean panel
+                        /*this.node_had.childNodes = [];
+                        this.versionId = '';
+                        this.cleanSaveForm();*/
+                    }
+
                 }
             });
         },
@@ -243,6 +270,10 @@ export default {
             if (node.level === 0) {
                 this.node_had = node;
                 this.resolve_had = resolve;
+            }
+            if(!this.versionId || !this.versionId>0){
+                console.info('not version yet')
+                return;
             }
 
             let parentId = 0;
@@ -298,8 +329,6 @@ export default {
             node.loaded = false;
             node.expand(); // 主动调用展开节点方法，重新查询该节点下的所有子节点
         },
-
-
 
         addDir(parent,node){
             this.$prompt('请输入目录名称', '提示', {
@@ -377,36 +406,6 @@ export default {
             });
         },
 
-        onSubmit() {
-            this.getData();
-        },
-        currentChange(i) {
-            this.pageNum = i;
-            this.getData();
-        },
-        addData() {
-            this.cleanSaveForm();
-            this.dialogVisible = true;
-            this.dialogTitle = 'Add';
-        },
-        // 获取列表数据
-        getData() {
-            this.loading = true;
-            this.searchParams.pageNum = this.pageNum;
-            this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseApiList({
-                data: this.searchParams,
-                fn: json => {
-                    this.loading = false;
-                    this.total = json.data.total;
-                    this.tableData = json.data.records;
-                    this.dealWithApiList();
-                },
-                errFn: () => {
-                    this.loading = false;
-                }
-            })
-        },
 
         delApiOrDir(data, node){
             if(this.isApi(data)){
@@ -496,6 +495,59 @@ export default {
         onTreeDataChange(list) {
             this.treeData.lists = list;
         },
+
+        versionList(){
+            this.getVersionsByRepositoryId();
+        },
+
+        addVersion(){
+            this.$prompt('请输入版本', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+            }).then(({ value }) => {
+                this.$$api_doc_saveEnterpriseProjectVersion({
+                    data: {
+                        repositoryId: this.repositoryId,
+                        version: value
+                    },
+                    fn: json => {
+                        this.versionList();
+                    },
+                    errFn: () => {
+                    }
+                });
+            }).catch(() => {
+                //do nothing
+            });
+        },
+
+        delVersion(row){
+            if (!row.id) {
+                return;
+            }
+            this.$confirm('Confirm?', 'warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.$$api_doc_delEnterpriseProjectVersion({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getData();
+                    },
+                })
+            }).catch(() => {
+                //do nothing
+            });
+        },
+
+
 
 
     }

@@ -18,7 +18,7 @@
             </div>
             <div>
                 <!--TODO v-for-->
-                <div v-for="(jtem ,j) in item.enterpriseRepositories" class="groups-con" style="" @click="toProjectDetail()">
+                <div v-for="(jtem ,j) in item.enterpriseRepositories" class="groups-con" style="" @click="toProjectDetail(jtem.id)">
                     <div style="margin: 6px 0 0 6px;">
                         <span class="groups-con-title">
                             {{jtem.name}}

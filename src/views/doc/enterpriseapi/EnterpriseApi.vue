@@ -11,7 +11,7 @@
                         <el-button class="el-icon-plus" @click="addDir()">新增顶级目录</el-button>
                         <el-button class="el-icon-refresh" @click="reloadApiTree()">刷新</el-button>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="7">
                         <el-select v-model="versionId" placeholder="Version" style="width:100%" :filterable="true" @change="reloadApiTree()">
                             <el-option
                                     v-for="item in versions"
@@ -20,6 +20,9 @@
                                     :value="item.id">
                             </el-option>
                         </el-select>
+                    </el-col>
+                    <el-col :span="1">
+                        <i class="el-icon-setting" style="line-height: 28px;font-size: 16px;cursor: pointer" @click="versionDialog = true"></i>
                     </el-col>
                 </el-row>
 
@@ -184,6 +187,19 @@
                 <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
             </span>
         </el-dialog>
+
+        <!-- ========== version manager ========== -->
+        <right-panel :show="versionDialog" @close="versionDialog = false">
+            <el-button @click="addVersion">ADD</el-button>
+            <el-table :data="versions" :border="false" style="width:100%">
+                <el-table-column prop="version" label="version"></el-table-column>
+                <el-table-column :label="$t('message.common.operation')" width="100">
+                    <template slot-scope="scope">
+                        <el-button type="text" icon="el-icon-delete" @click="delVersion(scope.row)" :title="$t('message.common.del')"></el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </right-panel>
 
 
     </section>

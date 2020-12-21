@@ -4,7 +4,7 @@
         <div class="rightPanel">
             <div style="margin-bottom: 8px;height: 30px;margin-top: 10px"><!--head-->
                 <span style="font-size: 20px;margin-left: 20px;">{{title}}</span>
-                <i class="el-icon-close" style="float:right;font-size: 30px;margin-right: 10px" @click="clickClose"></i>
+                <i class="el-icon-close" style="float:right;font-size: 30px;margin-right: 10px;cursor: pointer" @click="clickClose"></i>
             </div>
             <div class="rightPanel-items">
                 <slot/>

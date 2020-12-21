@@ -263,11 +263,9 @@ export default {
 
         //==================== Project part end ====================
 
-        toProjectDetail(){
-            alert('into project detail');
+        toProjectDetail(id){
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:enterpriseapi'),query: {id:id}})
         },
-        deltest(){
-            alert('into deltest');
-        },
+
     }
 }
