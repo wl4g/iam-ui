@@ -15,7 +15,7 @@
     "lint-fix": "eslint --fix .js,.vue src"
   },
   "dependencies": {
-    "xcloud-vue-drag-tree-table": "git+https://github.com/wl4g/xcloud-vue-drag-tree-table.git",
+    "@toast-ui/vue-editor": "^2.5.1",
     "axios": "^0.20.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "echarts": "^4.7.0",
@@ -37,6 +37,7 @@
     "vue-splitpane": "^1.0.6",
     "vuex": "^2.4.0",
     "wangeditor": "^3.0.9",
+    "xcloud-vue-drag-tree-table": "git+https://github.com/wl4g/xcloud-vue-drag-tree-table.git",
     "xterm": "^4.3.0",
     "xterm-addon-fit": "^0.3.0",
     "xterm-addon-search": "^0.3.0"

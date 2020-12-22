@@ -8,7 +8,7 @@
             <div class="left">
                 <el-row>
                     <el-col :span="16">
-                        <el-button class="el-icon-plus" @click="addDir()">新增顶级目录</el-button>
+                        <el-button class="el-icon-plus" @click="addDir()">新增模块</el-button>
                         <el-button class="el-icon-refresh" @click="reloadApiTree()">刷新</el-button>
                     </el-col>
                     <el-col :span="7">
@@ -30,7 +30,7 @@
                     <span class="custom-tree-node" slot-scope="{ data, node  }">
                         <span>{{ node.label }}</span>
                         <span>
-                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data, node)">子目录</el-button>
+                          <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addDir(data, node)">子模块</el-button>
                           <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-plus" @click="() => addApi(data, node)">接口</el-button>
                           <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-refresh" @click="() => refreshByNode(node)"></el-button>
                           <el-button v-if="isApi(data) || !data.children || data.children.length <= 0 " class="el-icon-delete" type="text" size="mini" @click="() => delApiOrDir(data, node)"></el-button>

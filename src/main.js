@@ -18,7 +18,11 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import '@/utils/security/sysmodules'
 import splitPane from 'vue-splitpane'
-
+/*toastui-editor*/
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/vue-editor';
+import '@toast-ui/editor/dist/i18n/zh-cn.js';
 
 
 Vue.prototype.dictutil = dictutil;
@@ -27,9 +31,11 @@ Vue.prototype.GLOBAL = globalVariable;
 Vue.use(ElementUI, { size: 'mini' });
 Vue.use(mavonEditor);
 Vue.use(VueClipboard);
+Vue.use(Editor);
 Vue.component('organization-selector', OrganizationSelector);
 Vue.component('svg-icon', SvgIcon);
 Vue.component('split-pane', splitPane);
+Vue.component('editor', Editor);
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
