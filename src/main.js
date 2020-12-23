@@ -25,6 +25,8 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/vue-editor';
 import '@toast-ui/editor/dist/i18n/zh-cn.js';
 
+import Contextmenu from "vue-contextmenujs"
+Vue.use(Contextmenu);
 
 Vue.prototype.dictutil = dictutil;
 Vue.prototype.permitutil = permitutil;

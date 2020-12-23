@@ -24,7 +24,7 @@
                 @node-drop="handleDrop"
                 :allow-drop="allowDrop"
                 :allow-drag="allowDrag">
-            <span class="custom-tree-node" slot-scope="{ node, data }" @contextmenu.prevent="showMenu()">
+            <span class="custom-tree-node" slot-scope="{ node, data }" @contextmenu.prevent="onContextmenu">
                 <span>{{ node.label }}</span>
                 <span>
                   <el-button
@@ -233,9 +233,34 @@
                 return true;
             },
 
-            showMenu(){
-                console.info('showMenu')
-            }
+            onContextmenu(event) {
+                this.$contextmenu({
+                    items: [
+                        {
+                            label: "新建",
+                            onClick: () => {
+                                this.message = "新建";
+                                console.log("新建");
+                            }
+                        },
+                        { label: "前进(F)", disabled: true },
+                        { label: "重新加载(R)", divided: true, icon: "el-icon-refresh" },
+                        {
+                            label: "使用网页翻译(T)",
+                            divided: true,
+                            minWidth: 0,
+                            children: [{ label: "翻译成简体中文" }, { label: "翻译成繁体中文" }]
+                        },
+                    ],
+                    event,
+                    //x: event.clientX,
+                    //y: event.clientY,
+                    customClass: "class-a",
+                    zIndex: 3,
+                    minWidth: 230
+                });
+                return false;
+            },
         }
     }
 </script>
