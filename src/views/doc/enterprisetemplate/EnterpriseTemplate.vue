@@ -3,7 +3,15 @@
 <template>
     <section id="configuration" class="configuration" style="height: calc(100vh - 100px)">
 
-        <fsviewer></fsviewer>
+
+        <div class="left">
+            <fsviewer></fsviewer>
+        </div>
+
+        <div class="right">
+
+        </div>
+
 
 
 
@@ -15,7 +23,27 @@
 
     export default EnterpriseTemplate
 </script>
+
 <style scoped>
+    .left {
+        background-color: #ecf5ff;
+        float: left;
+        width: 29%;
+        height: 100%;
+        overflow: auto;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
+    .right {
+        background-color: #8c8c8c;
+        margin-left: 30%;
+        height: 100%;
+        overflow-scrolling: auto;
+        overflow: auto;
+        position: relative;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
 
 </style>
 

@@ -1,10 +1,11 @@
 <template>
-    <div>
+    <div style="height: 100%;box-sizing: border-box" @contextmenu.prevent="(event) => {onContextmenuOnOutside(event)}">
         <el-input
                 placeholder="输入关键字进行过滤"
                 v-model="filterText">
         </el-input>
         <el-tree
+                style=""
                 class="fsviewer"
                 ref="fsviewerref"
                 :data="fileData"
@@ -15,7 +16,6 @@
                 draggable
                 @node-expand="handleNodeExpand"
                 @node-collapse="handleNodeCollapse"
-
                 @node-drag-start="handleDragStart"
                 @node-drag-enter="handleDragEnter"
                 @node-drag-leave="handleDragLeave"
@@ -24,23 +24,15 @@
                 @node-drop="handleDrop"
                 :allow-drop="allowDrop"
                 :allow-drag="allowDrag">
-            <span class="custom-tree-node" slot-scope="{ node, data }" @contextmenu.prevent="onContextmenu">
-                <span>{{ node.label }}</span>
-                <span>
-                  <el-button
-                          type="text"
-                          size="mini"
-                          @click="() => append(data)">
-                    Append
-                  </el-button>
-                  <el-button
-                          type="text"
-                          class="el-icon-delete"
-                          @click="() => del(node, data)">
-                  </el-button>
-                </span>
-              </span>
+            <div slot-scope="{ node, data }"
+                 style="width: 100%;height: 100%;display: flex;flex: 1;align-items: center;justify-content: space-between;"
+                 @contextmenu.prevent.stop="(event) => {onContextmenu(event, data)}">
+                    <span>{{ node.label }}</span>
+            </div>
+
         </el-tree>
+
+        <div style=" width: 100%;height: 50px;"></div>
     </div>
 
 </template>
@@ -65,54 +57,10 @@
         },
         data() {
             return {
-                //show: false
+
                 filterText: '',
                 defaultExpandedKeys: [],
-                fileData: [{
-                    id: 1,
-                    label: '一级 1',
-                    children: [{
-                        id: 4,
-                        label: '二级 1-1',
-                        children: [{
-                            id: 9,
-                            label: '三级 1-1-1'
-                        }, {
-                            id: 10,
-                            label: '三级 1-1-2'
-                        }]
-                    }]
-                }, {
-                    id: 2,
-                    label: '一级 2',
-                    children: [{
-                        id: 5,
-                        label: '二级 2-1'
-                    }, {
-                        id: 6,
-                        label: '二级 2-2'
-                    }]
-                }, {
-                    id: 3,
-                    label: '一级 3',
-                    children: [{
-                        id: 7,
-                        label: '二级 3-1'
-                    }, {
-                        id: 8,
-                        label: '二级 3-2',
-                        children: [{
-                            id: 11,
-                            label: '三级 3-2-1'
-                        }, {
-                            id: 12,
-                            label: '三级 3-2-2'
-                        }, {
-                            id: 13,
-                            label: '三级 3-2-3'
-                        }]
-                    }]
-                }],
+                fileData: [],
 
                 defaultProps: {
                     children: 'children',
@@ -122,15 +70,11 @@
         },
         computed: {},
         watch: {
-            show(value) {
-
-            },
             filterText(val) {
                 this.$refs.fsviewerref.filter(val);
             }
         },
         mounted() {
-            //this.insertToBody()
             this.getTreeFiles();
         },
         beforeDestroy() {
@@ -155,25 +99,13 @@
                 return data.fileName.indexOf(value) !== -1;
             },
 
-            del(note, data){
-                console.info(note,data)
-                this.$$api_doc_delFile({
-                    data: {
-                        path: data.path
-                    },
-                    fn: json => {
-                        this.$message({
-                            message: '删除成功',
-                            type: 'success'
-                        });
-                        this.getTreeFiles();
-                    },
-                    errFn: () => {
-                        this.$message.error('删除失败');
-                    }
-                })
+            isDir(data){
+                return data.isDir;
             },
 
+
+
+            //==================== 记录展开节(start) ====================
             // 树节点展开
             handleNodeExpand (data) {
                 // 保存当前展开的节点
@@ -198,8 +130,10 @@
                     }
                 })
             },
+            //==================== 记录展开节(end) ====================
 
 
+            //==================== 拖拽事件(start) ====================
             handleDragStart(node, ev) {
                 console.log('drag start', node);
             },
@@ -232,24 +166,75 @@
                 //return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
                 return true;
             },
+            //==================== 拖拽事件(end) ====================
 
-            onContextmenu(event) {
+            //==================== 右键点击事件(start) ====================
+            onContextmenu(event,data) {
+                console.info(data);
                 this.$contextmenu({
                     items: [
                         {
-                            label: "新建",
+                            label: "新建文件",
                             onClick: () => {
-                                this.message = "新建";
-                                console.log("新建");
-                            }
+                                this.$prompt('请输入名称', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                }).then(({ value }) => {
+                                    this.addFile(data.path + '/' +value)
+                                }).catch(() => {
+                                    //do nothing
+                                });
+                            },
+                            disabled: !data.dir
                         },
-                        { label: "前进(F)", disabled: true },
-                        { label: "重新加载(R)", divided: true, icon: "el-icon-refresh" },
                         {
+                            label: "新建文件夹",
+                            onClick: () => {
+                                this.$prompt('请输入名称', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                }).then(({ value }) => {
+                                    this.addDir(data.path + '/' + value)
+                                }).catch(() => {
+                                    //do nothing
+                                });
+                            },
+                            disabled: !data.dir,
+                            divided: true,
+                        },
+                        /*{
                             label: "使用网页翻译(T)",
                             divided: true,
                             minWidth: 0,
                             children: [{ label: "翻译成简体中文" }, { label: "翻译成繁体中文" }]
+                        },*/
+                        {
+                            label: "重命名",
+                            onClick: () => {
+                                this.$prompt('请输入名称', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                    inputPlaceholder: data.fileName,
+                                    inputValue: data.fileName,
+                                }).then(({ value }) => {
+                                    debugger
+                                    let parentPath = data.path.substring(0, data.path.lastIndexOf('/'));
+                                    if(!parentPath){
+                                        parentPath = '';
+                                    }
+                                    this.renameFile(data.path, parentPath + '/' + value);
+                                }).catch(() => {
+                                    //do nothing
+                                });
+
+                            },
+                        },
+                        {
+                            label: "删除",
+                            icon: "el-icon-delete",
+                            onClick: () => {
+                                this.del(data.path);
+                            },
                         },
                     ],
                     event,
@@ -261,6 +246,130 @@
                 });
                 return false;
             },
+
+            onContextmenuOnOutside(event) {
+                console.info('into onContextmenu2');
+                this.$contextmenu({
+                    items: [
+                        {
+                            label: "新建文件",
+                            onClick: () => {
+                                this.$prompt('请输入名称', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                }).then(({ value }) => {
+                                    this.addFile('/'+value)
+                                }).catch(() => {
+                                    //do nothing
+                                });
+                            },
+                        },
+                        {
+                            label: "新建文件夹",
+                            onClick: () => {
+                                this.$prompt('请输入名称', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                }).then(({ value }) => {
+                                    this.addDir('/'+value)
+                                }).catch(() => {
+                                    //do nothing
+                                });
+                            },
+                        },
+                    ],
+                    event,
+                    //x: event.clientX,
+                    //y: event.clientY,
+                    customClass: "class-a",
+                    zIndex: 3,
+                    minWidth: 230
+                });
+                return false;
+            },
+            //==================== 右键点击事件(end) ====================
+
+
+            //==================== 操作事件(start) ====================
+            addDir(path){
+                this.$$api_doc_addDir({
+                    data: {
+                        path: path
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getTreeFiles();
+                    },
+                    errFn: () => {
+                        this.$message.error('Fail');
+                    }
+                })
+            },
+
+            addFile(path){
+                this.$$api_doc_addFile({
+                    data: {
+                        path: path
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getTreeFiles();
+                    },
+                    errFn: () => {
+                        this.$message.error('Fail');
+                    }
+                })
+            },
+
+            renameFile(path, toPath){
+                this.$$api_doc_renameFile({
+                    data: {
+                        path: path,
+                        toPath: toPath,
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Success',
+                            type: 'success'
+                        });
+                        this.getTreeFiles();
+                    },
+                    errFn: () => {
+                        this.$message.error('Fail');
+                    }
+                })
+            },
+
+
+            del(path){
+                //console.info(note,data)
+                this.$$api_doc_delFile({
+                    data: {
+                        path: path
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
+                        this.getTreeFiles();
+                    },
+                    errFn: () => {
+                        this.$message.error('删除失败');
+                    }
+                })
+            },
+
+            //==================== 操作事件(end) ====================
+
+
+
         }
     }
 </script>
@@ -274,6 +383,8 @@
         font-size: 14px;
         padding-right: 8px;
     }
+
+
 </style>
 
 <style lang="scss" scoped>

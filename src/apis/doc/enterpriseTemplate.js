@@ -12,6 +12,30 @@ export default [
     },
 
     {
+        name: 'addFile',
+        method: 'addFile',
+        path: '/fs/addFile',
+        type: 'post',
+        sysModule: global.doc
+    },
+
+    {
+        name: 'addDir',
+        method: 'addDir',
+        path: '/fs/addDir',
+        type: 'post',
+        sysModule: global.doc
+    },
+
+    {
+        name: 'renameFile',
+        method: 'renameFile',
+        path: '/fs/renameFile',
+        type: 'post',
+        sysModule: global.doc
+    },
+
+    {
         name: 'delFile',
         method: 'delFile',
         path: '/fs/delFile',
