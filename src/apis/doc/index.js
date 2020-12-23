@@ -7,6 +7,7 @@ import enterpriseProject from "./enterpriseProject"
 import enterpriseProjectVersion from "./enterpriseProjectVersion"
 import enterpriseTeam from "./enterpriseTeam"
 import enterpriseApiModule from "./enterpriseApiModule"
+import enterpriseTemplate from "./enterpriseTemplate"
 
 export default [
     //doc file
@@ -110,6 +111,11 @@ export default [
     },
 
 
-].concat(enterpriseApi).concat(enterpriseGroup)
-    .concat(enterpriseDocument).concat(enterpriseProject)
-    .concat(enterpriseProjectVersion).concat(enterpriseTeam).concat(enterpriseApiModule)
+].concat(enterpriseApi)
+    .concat(enterpriseGroup)
+    .concat(enterpriseDocument)
+    .concat(enterpriseProject)
+    .concat(enterpriseProjectVersion)
+    .concat(enterpriseTeam)
+    .concat(enterpriseApiModule)
+    .concat(enterpriseTemplate)

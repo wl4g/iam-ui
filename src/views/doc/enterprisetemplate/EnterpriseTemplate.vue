@@ -3,6 +3,9 @@
 <template>
     <section id="configuration" class="configuration" style="height: calc(100vh - 100px)">
 
+        <fsviewer></fsviewer>
+
+
 
 
     </section>

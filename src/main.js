@@ -12,6 +12,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueClipboard from 'vue-clipboard2'
 import OrganizationSelector from './components/organization-selector';
+import fsviewer from './components/fsviewer';
 import SvgIcon from './layout/left-menu/svgIcon'
 import i18n from '@/i18n/i18n'
 import mavonEditor from 'mavon-editor'
@@ -31,8 +32,8 @@ Vue.prototype.GLOBAL = globalVariable;
 Vue.use(ElementUI, { size: 'mini' });
 Vue.use(mavonEditor);
 Vue.use(VueClipboard);
-Vue.use(Editor);
 Vue.component('organization-selector', OrganizationSelector);
+Vue.component('fsviewer', fsviewer);
 Vue.component('svg-icon', SvgIcon);
 Vue.component('split-pane', splitPane);
 Vue.component('editor', Editor);
