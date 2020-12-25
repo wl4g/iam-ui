@@ -12,6 +12,7 @@
                 :default-expanded-keys="defaultExpandedKeys"
                 :props="defaultProps"
                 :filter-node-method="filterNode"
+                :expand-on-click-node="false"
                 node-key="path"
                 draggable
                 @node-expand="handleNodeExpand"
@@ -24,10 +25,26 @@
                 @node-drop="handleDrop"
                 :allow-drop="allowDrop"
                 :allow-drag="allowDrag">
-            <div slot-scope="{ node, data }"
+            <div @dblclick="expandNode(node, data)" slot-scope="{ node, data }"
                  style="width: 100%;height: 100%;display: flex;flex: 1;align-items: center;justify-content: space-between;"
                  @contextmenu.prevent.stop="(event) => {onContextmenu(event, data)}">
-                    <span>{{ node.label }}</span>
+                <span>{{ node.label }}</span>
+                <el-upload
+                        :with-credentials="true"
+                        name="file"
+                        :before-upload="beforeUpload"
+                        :data="uploadData"
+                        :headers="uploadHeaders"
+                        :on-error="uploadError"
+                        :on-success="uploadSuccess"
+                        :ref="'upload_'+ data.path"
+                        :action="uploadUrl"
+                        :show-file-list="false"
+                        :auto-upload="true">
+                    <div slot="trigger" :ref="'uploadTrigger_'+data.path"></div>
+                    <!--<el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
+                </el-upload>
+
             </div>
 
         </el-tree>
@@ -38,7 +55,7 @@
 </template>
 
 <script>
-
+    import global from "@/common/global_variable";
     export default {
         name: 'fsviewer',
         props: {
@@ -65,6 +82,12 @@
                 defaultProps: {
                     children: 'children',
                     label: 'fileName'
+                },
+
+                uploadUrl: global.getBaseUrl(global.doc,false)+'/fs/uploadFile',
+                uploadHeaders:{},
+                uploadData: {
+                    path: ''
                 }
             }
         },
@@ -103,9 +126,15 @@
                 return data.isDir;
             },
 
+            //==================== 展开节点(start) ====================
+
+            expandNode(node, data) {
+                node.expanded = !node.expanded;
+            },
+            //==================== 展开节点(end) ====================
 
 
-            //==================== 记录展开节(start) ====================
+            //==================== 记录展开节点(start) ====================
             // 树节点展开
             handleNodeExpand (data) {
                 // 保存当前展开的节点
@@ -130,7 +159,7 @@
                     }
                 })
             },
-            //==================== 记录展开节(end) ====================
+            //==================== 记录展开节点(end) ====================
 
 
             //==================== 拖拽事件(start) ====================
@@ -170,6 +199,7 @@
 
             //==================== 右键点击事件(start) ====================
             onContextmenu(event,data) {
+                let that = this;
                 console.info(data);
                 this.$contextmenu({
                     items: [
@@ -201,6 +231,17 @@
                             },
                             disabled: !data.dir,
                             divided: true,
+                        },
+                        {
+                            label: "上传",
+                            onClick: () => {
+                                //debugger
+                                //that.$refs.upload.submit();
+                                //that.$refs['uploadTrigger_'+data.path].click();
+                                this.uploadData.path = data.path;
+                                that.$refs['upload_'+data.path].$children[0].$refs.input.click();
+                            },
+                            disabled: !data.dir
                         },
                         /*{
                             label: "使用网页翻译(T)",
@@ -369,12 +410,44 @@
             //==================== 操作事件(end) ====================
 
 
+            beforeUpload(){
+                var iamCore = new IAMCore({
+                    deploy: {
+                        defaultTwoDomain: "doc",
+                        defaultServerPort: 14060,
+                        defaultContextPath: "/doc-manager",
+                    }
+                });
+                var replayToken = iamCore.generateReplayToken();
+                this.uploadHeaders[replayToken.headerName] = replayToken.value;
+                var xsrfToken = iamCore.getXsrfToken();
+                this.uploadHeaders[xsrfToken.headerName] = xsrfToken.value;
+            },
+
+            uploadSuccess(){
+                this.$message({
+                    message: 'Success',
+                    type: 'success'
+                });
+                this.getTreeFiles();
+            },
+            uploadError(){
+                this.$message.error('Fail');
+            },
 
         }
     }
 </script>
 
 <style>
+    .el-upload__input {
+        display: none !important;
+    }
+
+
+</style>
+
+<style lang="scss" scoped>
     .custom-tree-node {
         flex: 1;
         display: flex;
@@ -383,10 +456,5 @@
         font-size: 14px;
         padding-right: 8px;
     }
-
-
-</style>
-
-<style lang="scss" scoped>
 
 </style>
