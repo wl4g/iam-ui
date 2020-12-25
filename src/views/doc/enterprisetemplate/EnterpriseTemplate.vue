@@ -9,6 +9,7 @@
         </div>
 
         <div class="right">
+            <div style="height: 100%" id="container"></div>
 
         </div>
 
