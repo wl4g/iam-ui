@@ -50,6 +50,14 @@ export default [
         sysModule: global.doc
     },
 
+    {
+        name: 'saveFile',
+        method: 'saveFile',
+        path: '/fs/saveFile',
+        type: 'post',
+        sysModule: global.doc
+    },
+
 ]
 
 

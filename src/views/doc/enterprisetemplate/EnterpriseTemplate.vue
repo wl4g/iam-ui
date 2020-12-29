@@ -9,7 +9,11 @@
         </div>
 
         <div class="right">
-            <div style="height: 100%" id="container"></div>
+            <div>
+                <el-button style="float: right;margin-right: 10px" type="primary" @click="saveFile">保存</el-button>
+            </div>
+
+            <div style="height: calc(100% - 28px)" id="container"></div>
 
         </div>
 
@@ -36,14 +40,11 @@
         padding: 10px;
     }
     .right {
-        background-color: #8c8c8c;
         margin-left: 30%;
         height: 100%;
         overflow-scrolling: auto;
-        overflow: auto;
         position: relative;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-        padding: 10px;
     }
 
 </style>

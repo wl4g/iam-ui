@@ -8,7 +8,10 @@ export default {
     name: 'enterpriseTemplate',
     data() {
         return {
-            editor: null
+            editor: null,
+
+            path: '',
+            content: '',
         }
     },
 
@@ -34,20 +37,22 @@ export default {
 
         openFile(path){
             console.info(path)
+            this.path = path;
             this.$$api_doc_getFileInfo({
                 data: {
                     path: path,
                 },
                 fn: json => {
                     //this.editor.setValue(json.content);
+                    this.content = json.data.content;
                     this.changeModel(json.data.content);
+
                 },
             })
         },
 
         changeModel(value){
             let oldModel = this.editor.getModel();//获取旧模型
-            debugger
 
             //var value = this.editor.getValue();//获取旧的文本
             //创建新模型，value为旧文本，id为modeId，即语言（language.id）
@@ -64,6 +69,23 @@ export default {
             }
             //设置新模型
             this.editor.setModel(newModel);
+        },
+
+        saveFile(){
+            let content = this.editor.getValue();
+            this.$$api_doc_saveFile({
+                data: {
+                    path: this.path,
+                    content: content,
+                },
+                fn: json => {
+                    //this.editor.setValue(json.content);
+                    this.$message({
+                        message: 'Success',
+                        type: 'success'
+                    });
+                },
+            })
         }
 
 
