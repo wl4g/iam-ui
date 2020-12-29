@@ -25,7 +25,7 @@
                 @node-drop="handleDrop"
                 :allow-drop="allowDrop"
                 :allow-drag="allowDrag">
-            <div @dblclick="expandNode(node, data)" slot-scope="{ node, data }"
+            <div @dblclick="expandNode(node, data)" @click="clickFile(data)" slot-scope="{ node, data }"
                  style="width: 100%;height: 100%;display: flex;flex: 1;align-items: center;justify-content: space-between;"
                  @contextmenu.prevent.stop="(event) => {onContextmenu(event, data)}">
                 <span>{{ node.label }}</span>
@@ -433,6 +433,13 @@
             },
             uploadError(){
                 this.$message.error('Fail');
+            },
+
+            clickFile(data){
+                if(data.dir){
+                    return;
+                }
+                this.$emit('openFile',data.path);
             },
 
         }

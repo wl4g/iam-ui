@@ -10,6 +10,13 @@ export default [
         type: 'get',
         sysModule: global.doc
     },
+    {
+        name: 'getFileInfo',
+        method: 'getFileInfo',
+        path: '/fs/getFileInfo',
+        type: 'get',
+        sysModule: global.doc
+    },
 
     {
         name: 'addFile',

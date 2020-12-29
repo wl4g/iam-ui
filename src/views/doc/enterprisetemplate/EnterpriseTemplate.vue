@@ -5,7 +5,7 @@
 
 
         <div class="left">
-            <fsviewer></fsviewer>
+            <fsviewer @openFile="openFile"></fsviewer>
         </div>
 
         <div class="right">
