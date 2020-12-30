@@ -28,6 +28,9 @@ import '@toast-ui/editor/dist/i18n/zh-cn.js';
 import Contextmenu from "vue-contextmenujs"
 Vue.use(Contextmenu);
 
+import ace from 'ace-builds'
+Vue.use(ace)
+
 Vue.prototype.dictutil = dictutil;
 Vue.prototype.permitutil = permitutil;
 Vue.prototype.GLOBAL = globalVariable;

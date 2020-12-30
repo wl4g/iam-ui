@@ -15,6 +15,7 @@
     "lint-fix": "eslint --fix .js,.vue src"
   },
   "dependencies": {
+    "ace-builds": "^1.4.12",
     "@toast-ui/vue-editor": "^2.5.1",
     "axios": "^0.20.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -24,8 +25,6 @@
     "jquery": "^3.5.1",
     "mavon-editor": "^2.7.7",
     "moment": "^2.24.0",
-    "monaco-editor": "^0.19.3",
-    "monaco-editor-webpack-plugin": "^1.8.2",
     "net": "^1.0.2",
     "nprogress": "0.2.0",
     "sortablejs": "1.8.4",
