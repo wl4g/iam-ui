@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%;box-sizing: border-box" @contextmenu.prevent="(event) => {onContextmenuOnOutside(event)}">
+    <div style="height: 100%;box-sizing: border-box;" @contextmenu.prevent="(event) => {onContextmenuOnOutside(event)}">
         <el-input
                 placeholder="输入关键字进行过滤"
                 v-model="filterText">
@@ -50,6 +50,10 @@
         </el-tree>
 
         <div style=" width: 100%;height: 50px;"></div>
+
+        <!--<div class="toggle-menu" @click='toggleMenu' style='left: 100px'>
+            <i :class="show?'el-icon-arrow-left':'el-icon-arrow-right'"></i>
+        </div>-->
     </div>
 
 </template>
@@ -85,6 +89,7 @@
                 },
 
                 uploadUrl: global.getBaseUrl(global.doc,false)+'/fs/uploadFile',
+                downloaddUrl: global.getBaseUrl(global.doc,false)+'/fs/downloadFile',
                 uploadHeaders:{},
                 uploadData: {
                     path: ''
@@ -268,6 +273,13 @@
                                     //do nothing
                                 });
 
+                            },
+                        },
+                        {
+                            label: "下载",
+                            //icon: "el-icon-delete",
+                            onClick: () => {
+                                window.location.href = this.downloaddUrl+ '?path='+ data.path;
                             },
                         },
                         {
@@ -462,6 +474,24 @@
         justify-content: space-between;
         font-size: 14px;
         padding-right: 8px;
+    }
+
+    .toggle-menu{
+        height: 66px;
+        position: absolute;
+        top: 50%;
+        z-index: 1000;
+        transform: translate(2px, -50%);
+        cursor: pointer;
+        text-align: center;
+        color: #fff;
+        font-size: 12px;
+        opacity: .7;
+        transition: all 0.3s ease-out;
+        border-bottom: 8px solid transparent;
+        border-right: none;
+        border-left: 12px solid #EBEBEB;
+        border-top: 8px solid transparent;
     }
 
 </style>

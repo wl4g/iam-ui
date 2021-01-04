@@ -23,6 +23,7 @@ export default {
 
             path: '',
             content: '',
+            data: {},
 
             aceEditor: null,
             themePath: 'ace/theme/eclipse', // 不导入 webpack-resolver，该模块路径会报错 (ace/theme/github)
@@ -30,7 +31,13 @@ export default {
         }
     },
 
+    activated() {
+        this.$store.dispatch('set_menu_close')
+    },
+
     mounted() {
+
+
 
         this.aceEditor = ace.edit(this.$refs.ace, {
             //maxLines: 20, // 最大行数，超过会自动出现滚动条
@@ -68,6 +75,7 @@ export default {
 
                     this.aceEditor.setValue(json.data.content, -1)// 赋值后光标位置：-1头 ｜ 1尾
 
+                    this.data= json.data;
                     //TODO 继续拓展。。。
                     if(path.endsWith('.java') || path.endsWith('.java.ftl')){
                         this.aceEditor.getSession().setMode("ace/mode/java")
@@ -91,6 +99,7 @@ export default {
                         message: 'Success',
                         type: 'success'
                     });
+                    this.openFile(this.path);
                 },
             })
         }

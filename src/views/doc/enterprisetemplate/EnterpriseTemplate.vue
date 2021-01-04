@@ -3,22 +3,56 @@
 <template>
     <section id="configuration" class="templateEdit" style="height: calc(100vh - 100px)">
 
-
         <div class="left">
-            <fsviewer @openFile="openFile"></fsviewer>
+            <div class="top-card" style="height: 28px;margin-bottom: 8px">
+
+            </div>
+            <div class="card" style="height: calc(100% - 36px); overflow: auto;">
+                <fsviewer @openFile="openFile"></fsviewer>
+            </div>
+
         </div>
 
         <div class="right">
-            <div style="">
-                <el-button style="position: absolute;right: 20px;top: 10px" type="primary" @click="saveFile">保存</el-button>
+
+            <div class="top-card" style="height: 28px;margin-bottom: 8px">
+                <el-row>
+                    <el-col :span="18" >
+                        <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 28px !important;line-height: 28px !important;">
+                            <el-breadcrumb-item v-for="item in path.split('/')" v-if="item && item != ''">
+                                {{item}}
+                            </el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </el-col>
+                    <el-col :span="4">
+                        <span style="line-height: 28px">
+                            {{data.updateTime}}
+                        </span>
+
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button  type="primary" @click="saveFile">保存</el-button>
+                    </el-col>
+                </el-row>
+
             </div>
 
-            <!--<div style="height: calc(100% - 28px)" id="container"></div>-->
-            <div style="height: 100%; width: 100%;">
-                <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
+            <div class="card" style="height: calc(100% - 36px)">
+                <div style="">
 
-                <div class="ace-editor" style="height: 100%" ref="ace"></div>
+                </div>
+
+                <!--<div style="height: calc(100% - 28px)" id="container"></div>-->
+                <div style="height: 100%; width: 100%;">
+                    <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
+
+                    <div class="ace-editor" style="height: 100%" ref="ace"></div>
+                </div>
             </div>
+
+
+
+
 
         </div>
 
@@ -34,19 +68,22 @@
 
 <style scoped>
     .left {
-        background-color: #ecf5ff;
         float: left;
-        width: 29%;
+        width: 300px;
         height: 100%;
-        overflow: auto;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-        padding: 10px;
     }
     .right {
-        margin-left: 30%;
+        margin-left: 310px;
         height: 100%;
         overflow-scrolling: auto;
         position: relative;
+
+    }
+    .top-card{
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .card{
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
     }
 
