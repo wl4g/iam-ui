@@ -288,7 +288,7 @@
                             </el-col>
                             <el-col :span="1">
                                 <el-tooltip placement="top">
-                                    <div slot="content">后置命令，deploy后执行，在远程目标机器(instance)执行，可以是应用的重启命令,e.g: /etc/init.d/iam-server restart</div>
+                                    <div slot="content">后置命令，deploy后执行，在远程目标机器(instance)执行，可以是应用的重启命令,e.g: /etc/init.d/iam-web restart</div>
                                     <i class="el-icon-question"></i>
                                 </el-tooltip>
                             </el-col>
