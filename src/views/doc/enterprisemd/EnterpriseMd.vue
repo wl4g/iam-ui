@@ -8,7 +8,7 @@
 
             </div>
             <div class="card" style="height: calc(100% - 36px); overflow: auto;">
-                <fsviewer :sub-path="'/template'" @openFile="openFile"></fsviewer>
+                <fsviewer :sub-path="'/md'" @openFile="openFile"></fsviewer>
             </div>
 
         </div>
@@ -38,15 +38,20 @@
             </div>
 
             <div class="card" style="height: calc(100% - 36px)">
-                <div style="">
-
-                </div>
 
                 <!--<div style="height: calc(100% - 28px)" id="container"></div>-->
                 <div style="height: 100%; width: 100%;">
                     <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
 
-                    <div class="ace-editor" style="height: 100%" ref="ace"></div>
+                    <editor
+                            ref="myToastEditor"
+                            :initialValue="editorText"
+                            height="100%"
+                            previewStyle="vertical"
+                            language="zh-CN"
+                            :options="editorOptions"
+                    >
+                    </editor>
                 </div>
             </div>
 
@@ -61,9 +66,9 @@
     </section>
 </template>
 <script>
-    import EnterpriseTemplate from './EnterpriseTemplate.js'
+    import EnterpriseMd from './EnterpriseMd.js'
 
-    export default EnterpriseTemplate
+    export default EnterpriseMd
 </script>
 
 <style scoped>

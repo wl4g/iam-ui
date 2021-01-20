@@ -63,6 +63,10 @@
     export default {
         name: 'fsviewer',
         props: {
+            subPath: {
+                default: '',
+                type: String
+            },
             clickNotClose: {
                 default: false,
                 type: Boolean
@@ -112,7 +116,9 @@
 
             getTreeFiles(){
                 this.$$api_doc_getTreeFiles({
-                    data: {},
+                    data: {
+                        subPath: this.subPath
+                    },
                     fn: json => {
                         this.fileData = json.data;
                     },
@@ -244,6 +250,10 @@
                                 //that.$refs.upload.submit();
                                 //that.$refs['uploadTrigger_'+data.path].click();
                                 this.uploadData.path = data.path;
+                                this.uploadData = {
+                                    path: data.path,
+                                    subPath: that.subPath
+                                };
                                 that.$refs['upload_'+data.path].$children[0].$refs.input.click();
                             },
                             disabled: !data.dir
@@ -279,7 +289,7 @@
                             label: "下载",
                             //icon: "el-icon-delete",
                             onClick: () => {
-                                window.location.href = this.downloaddUrl+ '?path='+ data.path;
+                                window.location.href = this.downloaddUrl+ '?path='+ data.path+ '&subPath='+ that.subPath;
                             },
                         },
                         {
@@ -347,6 +357,7 @@
             addDir(path){
                 this.$$api_doc_addDir({
                     data: {
+                        subPath: this.subPath,
                         path: path
                     },
                     fn: json => {
@@ -365,6 +376,7 @@
             addFile(path){
                 this.$$api_doc_addFile({
                     data: {
+                        subPath: this.subPath,
                         path: path
                     },
                     fn: json => {
@@ -383,6 +395,7 @@
             renameFile(path, toPath){
                 this.$$api_doc_renameFile({
                     data: {
+                        subPath: this.subPath,
                         path: path,
                         toPath: toPath,
                     },
@@ -404,6 +417,7 @@
                 //console.info(note,data)
                 this.$$api_doc_delFile({
                     data: {
+                        subPath: this.subPath,
                         path: path
                     },
                     fn: json => {
