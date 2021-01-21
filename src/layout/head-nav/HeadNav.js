@@ -231,11 +231,13 @@ export default {
         toggleSidebarLightbox() {
             let that = this.$root;
             setTimeout(function(){
+                that.$store.dispatch('set_menu_open')
                 that.$emit('lightBoxVisibleChange');
             }, 300);
         },
         // 左上角菜单触发切换(@click)
         clickToggleSidebarLightbox() {
+            this.$store.dispatch('set_menu_open')
             this.$root.$emit('clickLightBoxVisibleChange');
         }
     }

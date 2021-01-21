@@ -4,37 +4,34 @@
     <section id="configuration" class="templateEdit" style="height: calc(100vh - 100px)">
 
         <div class="left">
-            <div class="top-card" style="height: 28px;margin-bottom: 8px">
+            <!--<div class="top-card" style="height: 28px;margin-bottom: 8px">
 
-            </div>
-            <div class="card" style="height: calc(100% - 36px); overflow: auto;">
+            </div>-->
+            <div class="card" style="height: 100%; overflow: auto;">
                 <fsviewer :sub-path="'/md'" @openFile="openFile"></fsviewer>
             </div>
 
         </div>
 
         <div class="right">
-
-            <div class="top-card" style="height: 28px;margin-bottom: 8px">
+            <div class="top-card" style="height: 28px;margin-bottom: 8px;width: 100%">
                 <el-row>
-                    <el-col :span="18" >
+                    <el-col :span="18" style="min-height: 1px">
                         <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 28px !important;line-height: 28px !important;">
                             <el-breadcrumb-item v-for="item in path.split('/')" v-if="item && item != ''">
                                 {{item}}
                             </el-breadcrumb-item>
                         </el-breadcrumb>
                     </el-col>
-                    <el-col :span="4">
+                    <el-col :span="4" style="min-height: 1px">
                         <span style="line-height: 28px">
                             {{data.updateTime}}
                         </span>
-
                     </el-col>
                     <el-col :span="2">
-                        <el-button  type="primary" @click="saveFile">保存</el-button>
+                        <el-button style="float: right"  type="primary" @click="saveFile">保存</el-button>
                     </el-col>
                 </el-row>
-
             </div>
 
             <div class="card" style="height: calc(100% - 36px)">
@@ -55,11 +52,68 @@
                 </div>
             </div>
 
-
-
-
-
         </div>
+
+
+        <el-dialog title="API" :visible.sync="apiDialogVisible" width="50%" >
+            <el-row>
+                <el-col :span="12">
+                    <el-select v-model="project" placeholder="请选择项目" style="width: 100%" @change="getVersionsByRepositoryId">
+                        <el-option
+                                v-for="item in projects"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="12">
+                    <el-select v-model="versionId" placeholder="请选择版本" style="width: 100%" @change="reloadApiTree">
+                        <el-option
+                                v-for="item in versions"
+                                :key="item.id"
+                                :label="item.version"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <div style="max-height: 300px;overflow: auto">
+
+                        <el-tree ref="apiTree" node-key="key" :props="defaultProps" :load="loadModule" lazy @node-click="handleNodeClick">
+                            <span class="custom-tree-node" slot-scope="{ data, node  }">
+                                <span>{{ node.label }}</span>
+                                <span>
+                                  <el-button v-if="!isApi(data)" type="text" size="mini" class="el-icon-refresh" @click="() => refreshByNode(node)"></el-button>
+                                </span>
+                            </span>
+                        </el-tree>
+
+
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row style="border: 1px solid #DCDFE6;">
+                <el-col :span="8">
+                    <div >
+                        <span v-if="apiId && apiId != ''" style="font-size: 16px;color: #8c8c8c">
+                            ```api<br>
+                            {{apiId}}<br>
+                            ```
+                        </span>
+                    </div>
+                </el-col>
+            </el-row>
+
+
+
+            <span slot="footer" class="dialog-footer">
+                <el-button :disabled="!apiId || apiId == ''" type="primary" @click="insertApi()">插入</el-button>
+                <el-button @click="apiDialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
+        </el-dialog>
 
 
 
