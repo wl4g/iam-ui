@@ -32,6 +32,16 @@ export default [
         type: 'post',
         sysModule: global.doc
     },
+
+    {
+        name: 'mdToHtml',
+        method: 'mdToHtml',
+        path: '/md/mdToHtml',
+        type: 'post',
+        sysModule: global.doc
+    },
+
+
 ]
 
 

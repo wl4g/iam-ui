@@ -3,19 +3,16 @@
 <template>
     <section id="configuration" class="templateEdit" style="height: calc(100vh - 100px)">
 
-        <div class="left">
-            <!--<div class="top-card" style="height: 28px;margin-bottom: 8px">
+        <el-row style="height: 100%" :gutter="10">
 
-            </div>-->
-            <div class="card" style="height: 100%; overflow: auto;">
-                <fsviewer :sub-path="'/md'" @openFile="openFile"></fsviewer>
-            </div>
+            <el-col :span="6" style="height: 100%">
+                <div class="card" style="height: 100%; overflow: auto;">
+                    <fsviewer :sub-path="'/md'" @openFile="openFile"></fsviewer>
+                </div>
+            </el-col>
 
-        </div>
-
-        <div class="right">
-            <div class="top-card" style="height: 28px;margin-bottom: 8px;width: 100%">
-                <el-row>
+            <el-col :span="18" style="height: 100%">
+                <el-row style="margin-bottom: 10px;box-shadow: 0 0 8px rgba(0, 0, 0, 0.4) ">
                     <el-col :span="18" style="min-height: 1px">
                         <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 28px !important;line-height: 28px !important;">
                             <el-breadcrumb-item v-for="item in path.split('/')" v-if="item && item != ''">
@@ -32,27 +29,36 @@
                         <el-button style="float: right"  type="primary" @click="saveFile">保存</el-button>
                     </el-col>
                 </el-row>
-            </div>
 
-            <div class="card" style="height: calc(100% - 36px)">
+                <el-row style="height: calc(100% - 38px);box-shadow: 0 0 8px rgba(0, 0, 0, 0.4)">
+                    <el-col :span="12" style="height: 100%">
+                        <div style="height: 100%; width: 100%;">
+                            <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
 
-                <!--<div style="height: calc(100% - 28px)" id="container"></div>-->
-                <div style="height: 100%; width: 100%;">
-                    <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
+                            <editor
+                                    ref="myToastEditor"
+                                    :initialValue="editorText"
+                                    height="100%"
+                                    previewStyle="none"
+                                    language="zh-CN"
+                                    :options="editorOptions"
+                                    @change="onEditorChange"
+                            >
+                            </editor>
+                        </div>
+                    </el-col>
 
-                    <editor
-                            ref="myToastEditor"
-                            :initialValue="editorText"
-                            height="100%"
-                            previewStyle="vertical"
-                            language="zh-CN"
-                            :options="editorOptions"
-                    >
-                    </editor>
-                </div>
-            </div>
+                    <el-col :span="12" style="height: 100%">
+                        <div id="myMdView" class="markdown-body" style="height: 100%; width: 100%;overflow: auto">
+                            <!--<textarea ref="mycode" class="codesql" v-model="code" style="height: 100%;width: 100%"></textarea>-->
 
-        </div>
+                        </div>
+                    </el-col>
+                </el-row>
+
+            </el-col>
+        </el-row>
+
 
 
         <el-dialog title="API" :visible.sync="apiDialogVisible" width="50%" >
@@ -99,9 +105,7 @@
                 <el-col :span="8">
                     <div >
                         <span v-if="apiId && apiId != ''" style="font-size: 16px;color: #8c8c8c">
-                            ```api<br>
-                            {{apiId}}<br>
-                            ```
+                            {#api_info_{{apiId}}}
                         </span>
                     </div>
                 </el-col>

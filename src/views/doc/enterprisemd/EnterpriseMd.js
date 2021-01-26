@@ -17,7 +17,7 @@ export default {
 
             editorOptions: {
                 language: 'zh-CN',
-                plugins: [this.youtubePlugin,this.apiPlugin]
+                plugins: [this.youtubePlugin]
             },
 
 
@@ -67,6 +67,8 @@ export default {
                     this.data = json.data;
                     that.$refs["myToastEditor"].invoke("setMarkdown", json.data.content);
 
+                    that.onEditorChange();
+
                 },
             })
         },
@@ -90,6 +92,23 @@ export default {
                 },
             })
         },
+
+        onEditorChange(){
+            let md = this.$refs["myToastEditor"].invoke("getMarkdown");
+            this.$$api_doc_mdToHtml({
+                data: {
+                    md: md,
+                },
+                fn: json => {
+                    console.info(json.data);
+
+                    const el = document.querySelector(`#myMdView`);
+                    el.innerHTML = json.data;
+                },
+            })
+
+        },
+
 
         //==========自定义插件部分==========
         //YouTube
@@ -126,10 +145,30 @@ export default {
         renderApi(wrapperId, apiId) {
             const el = document.querySelector(`#${wrapperId}`);
 
-            let html = `<span>Hello<a>`+apiId+`</a></span>`;
+            this.$$api_doc_md2html({
+                data: {
+                    md: apiId,
+                },
+                fn: json => {
+
+                    /*let html = `<span>Hello<a>`+apiId+`</a></span><br>`;
+
+                    for(let i =0 ; i<10 ; i++){
+                        html += `<span>Hello<a>`+apiId+`</a></span><br>`;
+                    }*/
+
+                    //el.innerHTML = json.data;
+                    el.innerHTML = `|column1|column2|column3|
+|-|-|-|
+|content1|content2|content3|`;
 
 
-            el.innerHTML = html;
+                    //el.innerHTML = html
+                },
+            })
+
+
+
         },
 
 
@@ -139,7 +178,11 @@ export default {
             const that = this;
             const editor = this.$refs["myToastEditor"].editor;
 
-            const toolbar = editor.getUI().getToolbar();
+            const defaultUI = editor.getUI();
+            const toolbar = defaultUI.getToolbar();
+
+            const modeSwitch = defaultUI.getModeSwitch();
+            modeSwitch.hide();
 
             editor.eventManager.addEventType('clickCustomButton');
             editor.eventManager.listen('clickCustomButton', function() {
@@ -147,7 +190,18 @@ export default {
                 //editor.insertText('123');
             });
 
-            toolbar.addItem({
+            /*toolbar.addItem({
+                type: 'button',
+                options: {
+                    className: 'el-icon-plus',//
+                    event: 'clickCustomButton',
+                    tooltip: 'Custom Button',
+                    text: 'API',
+                    style: 'background:none;color: #555555;width: 38px;font-weight: bold;'
+                }
+            });*/
+
+            toolbar.insertItem(0, {
                 type: 'button',
                 options: {
                     className: 'el-icon-plus',//
@@ -168,7 +222,7 @@ export default {
         insertApi(){
             const editor = this.$refs["myToastEditor"].editor;
 
-            let inertText = '```api\n' +this.apiId+ '\n```\n';
+            let inertText = '{#api_info_' +this.apiId+ '}';
 
             editor.insertText(inertText);
             this.apiDialogVisible = false;
