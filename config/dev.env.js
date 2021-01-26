@@ -1,6 +1,7 @@
 var merge = require('webpack-merge')
-var prodEnv = require('./prod.env')
+var baseEnv = require('./base.env')
 
-module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"'
+module.exports = merge(baseEnv, {
+  NODE_ENV: '"development"',
+  RUNNING_MODE: `"local"`, // cluster | local
 })

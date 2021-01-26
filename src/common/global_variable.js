@@ -44,6 +44,15 @@ export default {
         cluster: 'dts-manager',
     },
     getBaseUrl: function (sysModule) {
+
+        const mode = process.env.RUNNING_MODE;
+        //console.info("running mode : "+mode);
+        if(mode == "local" && sysModule.cluster != this.iam.cluster){
+            sysModule = {
+                cluster: 'devops-server',
+            }
+        }
+
         if (!sysModule) { return null; }
 
         let baseUri = null;
