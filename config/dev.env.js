@@ -2,6 +2,7 @@ var merge = require('webpack-merge')
 var baseEnv = require('./base.env')
 
 module.exports = merge(baseEnv, {
-  NODE_ENV: '"development"',
-  RUNNING_MODE: `"local"`, // cluster | local
+    NODE_ENV: '"development"',
+    // 为了开发环境简单方便可使用local模式，可自行调整，与后端对应模式启动即可。
+    RUNTIME_MODE: `"local"`,
 })

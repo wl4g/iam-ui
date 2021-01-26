@@ -44,16 +44,14 @@ export default {
         cluster: 'dts-manager',
     },
     getBaseUrl: function (sysModule) {
-
-        const mode = process.env.RUNNING_MODE;
-        //console.info("running mode : "+mode);
-        if(mode == "local" && sysModule.cluster != this.iam.cluster){
-            sysModule = {
-                cluster: 'devops-server',
-            }
-        }
-
         if (!sysModule) { return null; }
+
+        // Check the runtime mode and switch the request base path info automatically.
+        const rtMode = process.env.RUNTIME_MODE;
+        console.info("Currently runtime mode: ", rtMode);
+        if (rtMode.toLowerCase() == "local" && sysModule.cluster != this.iam.cluster) {
+            sysModule = { cluster: 'devops-server' }
+        }
 
         let baseUri = null;
         // Extract baseUri from store.
@@ -61,11 +59,11 @@ export default {
         if (sysModuleCache && sysModuleCache[sysModule.cluster] && sysModuleCache[sysModule.cluster]['extranetBaseUri']) {
             baseUri = sysModuleCache[sysModule.cluster]['extranetBaseUri'];
         }
-        // If it is an IAM app, fallback get.
+        // If is IAM server, use fallback.
         else if (sysModule.cluster == this.iam.cluster) {
             baseUri = new IAMCore(this.iam).getIamBaseUri();
         } else {
-            console.error("Cannot get baseUri from store, No such sysModule: " + sysModule);
+            console.error("Cannot get baseUri from store, No such sysModule: ", sysModule);
         }
         console.debug("Got sysModule baseUri: ", baseUri);
         return baseUri;
