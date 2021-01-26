@@ -43,14 +43,18 @@ export default {
     dts: {
         cluster: 'dts-manager',
     },
+    // local模式的应用名
+    localDevOpsServer: {
+        cluster: 'devops-server',
+    },
     getBaseUrl: function (sysModule) {
         if (!sysModule) { return null; }
 
         // Check the runtime mode and switch the request base path info automatically.
         const rtMode = process.env.RUNTIME_MODE;
-        console.info("Currently runtime mode: ", rtMode);
+        console.debug("Currently runtime mode: ", rtMode);
         if (rtMode.toLowerCase() == "local" && sysModule.cluster != this.iam.cluster) {
-            sysModule = { cluster: 'devops-server' }
+            sysModule = this.localDevOpsServer;
         }
 
         let baseUri = null;

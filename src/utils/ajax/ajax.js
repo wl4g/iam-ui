@@ -74,14 +74,17 @@ export default function ({
      * Case3:
      * @RequestMapping("save") // default by 'application/x-www-form-urlencoded'
      * public Object save(MyBean mybean, String str) {...}
-     *
      */
     if (!dataType || dataType == 'query') {
         if (reqDataKey == 'params') {
             if (typeof data == 'object') {
                 options[reqDataKey] = data;
             } else {
-                options.url = options.url.indexOf('?') > 0 ? (options.url + data) : (options.url + "?" + data);
+                var additionParams = '';
+                if(data && data != undefined && data != null) {
+                    additionParams = ("?" + data);
+                }
+                options.url = options.url.indexOf('?') > 0 ? (options.url + additionParams) : (options.url + additionParams);
             }
         } else if (typeof data == 'object') {
             // To flat URL parameters.
