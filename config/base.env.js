@@ -4,5 +4,5 @@ module.exports = {
     // 当服务器规模足够大时可采用 cluster 模式（后端以分布式模式多个模块独立进程启动）
     // 建议：这个值最好是跨环境的，如：dev/fat/uat/pro等多个环境统一
     // 可选值: standalone|cluster
-    RUNTIME_MODE: `"standalone"`, // 默认: standalone
+    RUNTIME_MODE: `"cluster"`, // 默认: standalone
 }
