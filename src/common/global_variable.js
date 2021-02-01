@@ -43,7 +43,10 @@ export default {
     dts: {
         cluster: 'dts-manager',
     },
-    // Standalone模式的应用名
+    // 'standalone' mode definition.
+    standaloneIamServer: {
+        cluster: 'iam-server',
+    },
     standaloneDevOpsServer: {
         cluster: 'devops-server',
     },
@@ -53,8 +56,12 @@ export default {
         // Check the runtime mode and switch the request base path info automatically.
         const rtMode = process.env.RUNTIME_MODE;
         console.debug("Currently runtime mode: ", rtMode);
-        if (rtMode.toLowerCase() == "standalone" && sysModule.cluster != this.iam.cluster) {
-            sysModule = this.standaloneDevOpsServer;
+        if (rtMode.toLowerCase() == "standalone") {
+            if (sysModule.cluster == this.iam.cluster) {
+                sysModule = this.standaloneIamServer;
+            } else {
+                sysModule = this.standaloneDevOpsServer;
+            }
         }
 
         let baseUri = null;
