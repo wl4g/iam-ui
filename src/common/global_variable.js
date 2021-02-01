@@ -44,8 +44,8 @@ export default {
         cluster: 'dts-manager',
     },
     // 'standalone' mode definition.
-    standaloneIamServer: {
-        cluster: 'iam-server',
+    standaloneIamWeb: {
+        cluster: 'iam-web',
     },
     standaloneDevOpsServer: {
         cluster: 'devops-server',
@@ -58,7 +58,7 @@ export default {
         console.debug("Currently runtime mode: ", rtMode);
         if (rtMode.toLowerCase() == "standalone") {
             if (sysModule.cluster == this.iam.cluster) {
-                sysModule = this.standaloneIamServer;
+                sysModule = this.standaloneIamWeb;
             } else {
                 sysModule = this.standaloneDevOpsServer;
             }
