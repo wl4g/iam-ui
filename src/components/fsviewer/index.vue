@@ -67,6 +67,10 @@
                 default: '',
                 type: String
             },
+            getClusterContextmenus: {
+                type: Function
+            },
+
             clickNotClose: {
                 default: false,
                 type: Boolean
@@ -299,7 +303,7 @@
                                 this.del(data.path);
                             },
                         },
-                    ],
+                    ].concat(that.getClusterContextmenus?that.getClusterContextmenus(data):[]),
                     event,
                     //x: event.clientX,
                     //y: event.clientY,

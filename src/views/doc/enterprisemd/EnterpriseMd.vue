@@ -7,7 +7,7 @@
 
             <el-col :span="6" style="height: 100%">
                 <div class="card" style="height: 100%; overflow: auto;">
-                    <fsviewer :sub-path="'/md'" @openFile="openFile"></fsviewer>
+                    <fsviewer :sub-path="'/md'" @openFile="openFile" :getClusterContextmenus="getClusterContextmenus"></fsviewer>
                 </div>
             </el-col>
 
@@ -116,6 +116,27 @@
             <span slot="footer" class="dialog-footer">
                 <el-button :disabled="!apiId || apiId == ''" type="primary" @click="insertApi()">插入</el-button>
                 <el-button @click="apiDialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
+        </el-dialog>
+
+
+        <el-dialog title="API" :visible.sync="beforeFormatDialogVisible" width="50%" >
+            <el-row>
+                <el-col :span="24">
+                    <el-select v-model="selectedTemplate" placeholder="请选择模版" style="width: 100%">
+                        <el-option
+                                v-for="item in templates"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-row>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button :disabled="!selectedTemplate || selectedTemplate == ''" type="primary" @click="formatTotal">发布</el-button>
+                <el-button @click="beforeFormatDialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
             </span>
         </el-dialog>
 
