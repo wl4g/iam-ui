@@ -46,6 +46,13 @@ export default [
         type: 'post',
         sysModule: global.doc
     },
+    {
+        name: 'importApi',
+        method: 'importApi',
+        path: '/enterpriseapi/importApi',
+        type: 'post',
+        sysModule: global.doc
+    },
 ]
 
 
