@@ -3,6 +3,7 @@ import {transDate, getDay} from 'utils/'
 import i18n from "../../../i18n/i18n";
 import dragTreeTable from "xcloud-vue-drag-tree-table";
 import RightPanel from '@/components/RightPanel'
+import global from "../../../common/global_variable";
 
 export default {
     name: 'enterpriseApi',
@@ -69,7 +70,19 @@ export default {
                 moduleId: '',
                 dataFormat: 'JSON',
             },
+            importLoading: false,
 
+            exportApiDialogVisible: false,
+            exportApiSaveForm: {
+                kind: 'OAS3',
+                moduleId: '',
+                dataFormat: 'JSON',
+            },
+            exportLoading: false,
+
+            exportUrl: global.getBaseUrl(global.doc, false) + '/enterpriseapi/exportApi',
+
+            converterProviderKinds: [],
 
             // 表单规则
             rules: {
@@ -79,8 +92,6 @@ export default {
                 protocolType: [{ required: true, message: 'protocolType is required', trigger: 'change' }],
             },
             loading: false,
-            importLoading: false,
-
 
             treeData: {
                 custom_field: {
@@ -385,6 +396,7 @@ export default {
         this.cleanSaveForm();
 
         this.getVersionsByRepositoryId();
+        this.getConverterProviderKind();
     },
 
     mounted() {
@@ -539,6 +551,7 @@ export default {
         handleNodeClick(data) {
             if(!this.isApi(data)){
                 this.importApiSaveForm.moduleId = data.id;
+                this.exportApiSaveForm.moduleId = data.id;
                 return;
             }
             this.cleanSaveForm();
@@ -748,6 +761,43 @@ export default {
                 errFn: () =>  {
                     this.importLoading = false;
                 }
+            })
+        },
+
+        handleCommand(command){
+            switch (command){
+                case 'import':
+                    this.openImportApiDialog();
+                    break;
+                case 'export':
+                    this.openExportApiDialog();
+                    break;
+                default: break;
+            }
+        },
+
+        openExportApiDialog(){
+            if(!this.exportApiSaveForm.moduleId || this.exportApiSaveForm.moduleId == ''){
+                this.$message.error("请先选择要导出模块或目录")
+                return;
+            }
+
+            this.exportApiSaveForm.kind = 'OAS3';
+            this.exportApiDialogVisible = true;
+        },
+
+        exportApi(){
+            debugger
+            let exportUrl = this.exportUrl+"?kind=" + this.exportApiSaveForm.kind + "&moduleId="+ this.exportApiSaveForm.moduleId;
+            window.location.href = exportUrl;
+        },
+
+        getConverterProviderKind(){
+            this.$$api_doc_getConverterProviderKind({
+                data: {},
+                fn: json => {
+                    this.converterProviderKinds = json.data;
+                },
             })
         },
 

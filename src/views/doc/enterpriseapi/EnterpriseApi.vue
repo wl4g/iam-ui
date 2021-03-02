@@ -8,9 +8,20 @@
             <div class="left">
                 <el-row>
                     <el-col :span="17">
-                        <el-button class="el-icon-plus" @click="addDir()">新增模块</el-button>
-                        <el-button class="el-icon-refresh" @click="reloadApiTree()" style="margin-left: 0">刷新</el-button>
-                        <el-button @click="openImportApiDialog()" style="margin-left: 0">导入</el-button>
+                        <el-button type="primary" @click="addDir()">新增模块</el-button>
+                        <el-button type="primary"  @click="reloadApiTree()" style="margin-left: 0">刷新</el-button>
+<!--                        <el-button @click="openImportApiDialog()" style="margin-left: 0">导入</el-button>-->
+                      <el-dropdown @command="handleCommand">
+                        <el-button type="primary">
+                          更多<i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item command="import">导入</el-dropdown-item>
+                          <el-dropdown-item command="export">导出</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+
+
                     </el-col>
                     <el-col :span="6">
                         <el-select v-model="versionId" placeholder="Version" style="width:100%" :filterable="true" @change="reloadApiTree()">
@@ -207,9 +218,12 @@
                                 <span>文档类型</span>
                             </span>
                 <el-select v-model="importApiSaveForm.kind" placeholder="Please Select Kind" style="width:100%" :filterable="true">
-                  <el-option label="SWAGGER2" value="SWAGGER2"></el-option>
-                  <el-option label="RAP2" value="RAP2"></el-option>
-                  <el-option label="OAS3" value="OAS3"></el-option>
+                  <el-option
+                      v-for="item in converterProviderKinds"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                  </el-option>
                 </el-select>
               </el-form-item>
 
@@ -240,6 +254,44 @@
         <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="importApi()" :loading="importLoading">{{$t('message.common.save')}}</el-button>
                 <el-button @click="importApiDialogVisible = false;importLoading = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
+      </el-dialog>
+
+      <el-dialog :close-on-click-modal="false" title="导入" :visible.sync="exportApiDialogVisible" >
+        <el-form label-width="100px" :model="exportApiSaveForm" ref="exportApiSaveForm" :rules="rules">
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>文档类型</span>
+                            </span>
+                <el-select v-model="exportApiSaveForm.kind" placeholder="Please Select Kind" style="width:100%" :filterable="true">
+                  <el-option
+                      v-for="item in converterProviderKinds"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>数据格式</span>
+                            </span>
+                <el-select v-model="exportApiSaveForm.dataFormat" placeholder="Please Select DataFormat" style="width:100%" :filterable="true">
+                  <el-option label="JSON" value="JSON"></el-option>
+                  <el-option label="YAML" value="YAML"></el-option>
+                  <el-option label="XML" value="XML" disabled></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="exportApi()" :loading="exportLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="exportApiDialogVisible = false;exportLoading = false;">{{$t('message.common.cancel')}}</el-button>
             </span>
       </el-dialog>
 

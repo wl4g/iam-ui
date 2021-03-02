@@ -53,6 +53,13 @@ export default [
         type: 'post',
         sysModule: global.doc
     },
+    {
+        name: 'getConverterProviderKind',
+        method: 'getConverterProviderKind',
+        path: '/enterpriseapi/getConverterProviderKind',
+        type: 'get',
+        sysModule: global.doc
+    },
 ]
 
 
