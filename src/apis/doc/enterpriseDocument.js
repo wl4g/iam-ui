@@ -41,6 +41,22 @@ export default [
         sysModule: global.doc
     },
 
+    {
+        name: 'getTemplate',
+        method: 'getTemplate',
+        path: '/md/getTemplate',
+        type: 'post',
+        sysModule: global.doc
+    },
+
+    {
+        name: 'formatTemplate',
+        method: 'formatTemplate',
+        path: '/md/formatTemplate',
+        type: 'post',
+        sysModule: global.doc
+    },
+
 
 ]
 

@@ -3,6 +3,7 @@ import {transDate, getDay} from 'utils/'
 import i18n from "../../../i18n/i18n";
 import dragTreeTable from "xcloud-vue-drag-tree-table";
 import RightPanel from '@/components/RightPanel'
+import global from "../../../common/global_variable";
 
 export default {
     name: 'enterpriseApi',
@@ -62,6 +63,26 @@ export default {
 
             versionDialog: false,
 
+            importApiDialogVisible: false,
+            importApiSaveForm: {
+                kind: 'OAS3',
+                json: '',
+                moduleId: '',
+                dataFormat: 'JSON',
+            },
+            importLoading: false,
+
+            exportApiDialogVisible: false,
+            exportApiSaveForm: {
+                kind: 'OAS3',
+                moduleId: '',
+                dataFormat: 'JSON',
+            },
+            exportLoading: false,
+
+            exportUrl: global.getBaseUrl(global.doc, false) + '/enterpriseapi/exportApi',
+
+            converterProviderKinds: [],
 
             // 表单规则
             rules: {
@@ -73,6 +94,150 @@ export default {
             loading: false,
 
             treeData: {
+                custom_field: {
+                    //id: 'id',
+                    //order: 'sort',
+                    lists: 'children',
+                    parent_id: 'parentId'
+                },
+                columns: [
+                    {
+                        title: '<i class="el-icon-plus"></i>',
+                        titleOnClick: () => {
+                            this.treeData.lists.push({
+                                name: '',
+                                scope: '',
+                                type: '',
+                                pos: '',
+                                rule: '',
+                                value: '',
+                                required: '0',
+                            });
+                        },
+                        field: "scope",
+                        width: 20,
+                        align: "center",
+                        isdraggable: true,
+                        formatter: item => {
+                            return '<i style="cursor: move" class="el-icon-rank"></i>';
+                        }
+                    },
+                    {
+                        type: "selection",
+                        title: "属性名",
+                        field: "name",
+                        width: 200,
+                        align: "center",
+                        editable: true,
+                    },
+                    {
+                        title: "scope",
+                        field: "scope",
+                        width: 100,
+                        align: "center",
+                        isdraggable: true,
+                    },
+                    {
+                        title: "type",
+                        field: "type",
+                        width: 100,
+                        align: "center",
+                        editable: true,
+                        input:{
+                            type: 'select', // text | select | checkbox
+                            selectData: {
+                                list: [{label: 'aaa',value: '1'},{label: 'bbb',value: '2'}],
+                            }
+                        },
+                    },{
+                        title: "pos",
+                        field: "pos",
+                        width: 100,
+                        align: "center",
+                        editable: true,
+                    },{
+                        title: "rule",
+                        field: "rule",
+                        width: 100,
+                        align: "center",
+                        editable: true,
+                    },{
+                        title: "value",
+                        field: "value",
+                        width: 100,
+                        align: "center",
+                        editable: true,
+                    },{
+                        title: "必填",
+                        field: "required",
+                        width: 20,
+                        align: "center",
+                        editable: true,
+                        input:{
+                            type: 'checkbox', // text | select | checkbox
+                        },
+                    },
+                    {
+                        title: "操作",
+                        type: "action",
+                        flex: 1,
+                        align: "center",
+                        actions: [
+                            {
+                                text: "添加子节点",
+                                onclick: (item) => {
+                                    console.info('into add');
+                                    if(!item.children){
+                                        item.children = [];
+                                    }
+                                    item.children.push({
+                                        name: '',
+                                        scope: '',
+                                        type: '',
+                                        pos: '',
+                                        rule: '',
+                                        value: '',
+                                        required: '0',
+                                    });
+                                },
+                                formatter: item => {
+                                    return "<i class='el-icon-plus'></i>";
+                                }
+                            },
+                            {
+                                text: "删除",
+                                onclick: (item, parentModel) => {
+                                    console.info('into del')
+                                    if(parentModel){
+                                        for(let i in parentModel.children){
+                                            let li = parentModel.children[i];
+                                            if(item == li){
+                                                parentModel.children.splice(i,1);
+                                                return;
+                                            }
+                                        }
+                                    }else{
+                                        for(let i in this.treeData.lists){
+                                            let li = this.treeData.lists[i];
+                                            if(item == li){
+                                                this.treeData.lists.splice(i,1);
+                                                return;
+                                            }
+                                        }
+                                    }
+
+                                },
+                                formatter: item => {
+                                    return "<i class='el-icon-delete'></i>";
+                                }
+                            }
+                        ]
+                    }
+                ],
+                lists: []
+            },
+
+            treeData2: {
                 custom_field: {
                     //id: 'id',
                     //order: 'sort',
@@ -231,6 +396,7 @@ export default {
         this.cleanSaveForm();
 
         this.getVersionsByRepositoryId();
+        this.getConverterProviderKind();
     },
 
     mounted() {
@@ -384,6 +550,8 @@ export default {
 
         handleNodeClick(data) {
             if(!this.isApi(data)){
+                this.importApiSaveForm.moduleId = data.id;
+                this.exportApiSaveForm.moduleId = data.id;
                 return;
             }
             this.cleanSaveForm();
@@ -398,7 +566,23 @@ export default {
                 fn: json => {
                     this.loading = false;
                     this.saveForm = json.data;
-                    this.treeData.lists = json.data.properties;
+                    //this.treeData.lists = json.data.properties;
+
+                    //TODO
+                    let requestList = [];
+                    let responseList = [];
+                    for(let i in json.data.properties){
+                        let item = json.data.properties[i];
+                        if(item.scope == 'Request'){
+                            requestList.push(item);
+                        }else{
+                            responseList.push(item);
+                        }
+                    }
+
+                    this.treeData.lists = requestList;
+                    this.treeData2.lists = responseList;
+
                 },
                 errFn: () => {
                     this.loading = false;
@@ -442,7 +626,7 @@ export default {
             this.loading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.saveForm.properties = this.treeData.lists;
+                    this.saveForm.properties = this.treeData.lists.concat(this.treeData2.lists);
                     this.$$api_doc_saveEnterpriseApi({
                         data: this.saveForm,
                         fn: json => {
@@ -480,7 +664,7 @@ export default {
                             message: 'Success',
                             type: 'success'
                         });
-                        this.getData();
+                        //this.getData();
                     },
                 })
             }).catch(() => {
@@ -494,6 +678,10 @@ export default {
 
         onTreeDataChange(list) {
             this.treeData.lists = list;
+        },
+
+        onTreeDataChange2(list) {
+            this.treeData2.lists = list;
         },
 
         versionList(){
@@ -539,12 +727,78 @@ export default {
                             message: 'Success',
                             type: 'success'
                         });
-                        this.getData();
+                        //this.getData();
                     },
                 })
             }).catch(() => {
                 //do nothing
             });
+        },
+
+        openImportApiDialog(){
+            if(!this.importApiSaveForm.moduleId || this.importApiSaveForm.moduleId == ''){
+                this.$message.error("请先选择要导入模块或目录")
+                return;
+            }
+
+            this.importApiSaveForm.kind = 'OAS3';
+            this.importApiSaveForm.json = '';
+            this.importApiDialogVisible = true;
+        },
+
+        importApi(){
+            this.importLoading = true;
+            this.$$api_doc_importApi({
+                data: this.importApiSaveForm,
+                fn: json => {
+                    this.$message({
+                        message: 'Success',
+                        type: 'success'
+                    });
+                    this.importLoading = false;
+                    //this.getData();
+                },
+                errFn: () =>  {
+                    this.importLoading = false;
+                }
+            })
+        },
+
+        handleCommand(command){
+            switch (command){
+                case 'import':
+                    this.openImportApiDialog();
+                    break;
+                case 'export':
+                    this.openExportApiDialog();
+                    break;
+                default: break;
+            }
+        },
+
+        openExportApiDialog(){
+            if(!this.exportApiSaveForm.moduleId || this.exportApiSaveForm.moduleId == ''){
+                this.$message.error("请先选择要导出模块或目录")
+                return;
+            }
+
+            this.exportApiSaveForm.kind = 'OAS3';
+            this.exportApiDialogVisible = true;
+        },
+
+        exportApi(){
+            debugger
+            let exportUrl = this.exportUrl+"?kind=" + this.exportApiSaveForm.kind + "&moduleId="+ this.exportApiSaveForm.moduleId;
+            window.location.href = exportUrl;
+        },
+
+        getConverterProviderKind(){
+            this.$$api_doc_getConverterProviderKind({
+                data: {},
+                fn: json => {
+                    this.converterProviderKinds = json.data;
+                },
+            })
         },
 
 

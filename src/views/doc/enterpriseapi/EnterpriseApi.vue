@@ -7,11 +7,23 @@
         <div style="width: 100%">
             <div class="left">
                 <el-row>
-                    <el-col :span="16">
-                        <el-button class="el-icon-plus" @click="addDir()">新增模块</el-button>
-                        <el-button class="el-icon-refresh" @click="reloadApiTree()">刷新</el-button>
+                    <el-col :span="17">
+                        <el-button type="primary" @click="addDir()">新增模块</el-button>
+                        <el-button type="primary"  @click="reloadApiTree()" style="margin-left: 0">刷新</el-button>
+<!--                        <el-button @click="openImportApiDialog()" style="margin-left: 0">导入</el-button>-->
+                      <el-dropdown @command="handleCommand">
+                        <el-button type="primary">
+                          更多<i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item command="import">导入</el-dropdown-item>
+                          <el-dropdown-item command="export">导出</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+
+
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="6">
                         <el-select v-model="versionId" placeholder="Version" style="width:100%" :filterable="true" @change="reloadApiTree()">
                             <el-option
                                     v-for="item in versions"
@@ -107,13 +119,21 @@
                                      :option_btns_width="300"
                                      :option_btns="option_btns">
                     </drag-tree-table>-->
-
+                    <span style="font-size: 16px;font-weight: bold">请求参数</span>
                     <dragTreeTable
                             :data="treeData"
                             :onDrag="onTreeDataChange"
                             fixed
                             border>
                     </dragTreeTable>
+
+                  <span style="font-size: 16px;font-weight: bold">返回参数</span>
+                  <dragTreeTable
+                      :data="treeData2"
+                      :onDrag="onTreeDataChange2"
+                      fixed
+                      border>
+                  </dragTreeTable>
                 </div>
 
             </div>
@@ -187,6 +207,93 @@
                 <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
             </span>
         </el-dialog>
+
+      <el-dialog :close-on-click-modal="false" title="导入" :visible.sync="importApiDialogVisible" >
+        <el-form label-width="100px" :model="importApiSaveForm" ref="importApiSaveForm" :rules="rules">
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>文档类型</span>
+                            </span>
+                <el-select v-model="importApiSaveForm.kind" placeholder="Please Select Kind" style="width:100%" :filterable="true">
+                  <el-option
+                      v-for="item in converterProviderKinds"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>数据格式</span>
+                            </span>
+                <el-select v-model="importApiSaveForm.dataFormat" placeholder="Please Select DataFormat" style="width:100%" :filterable="true">
+                  <el-option label="JSON" value="JSON"></el-option>
+                  <el-option label="YAML" value="YAML"></el-option>
+                  <el-option label="XML" value="XML" disabled></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="content" prop="json">
+                            <span slot="label">
+                                <span>内容</span>
+                            </span>
+                <el-input type="textarea" v-model="importApiSaveForm.json" placeholder="content" ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="importApi()" :loading="importLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="importApiDialogVisible = false;importLoading = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
+      </el-dialog>
+
+      <el-dialog :close-on-click-modal="false" title="导入" :visible.sync="exportApiDialogVisible" >
+        <el-form label-width="100px" :model="exportApiSaveForm" ref="exportApiSaveForm" :rules="rules">
+
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>文档类型</span>
+                            </span>
+                <el-select v-model="exportApiSaveForm.kind" placeholder="Please Select Kind" style="width:100%" :filterable="true">
+                  <el-option
+                      v-for="item in converterProviderKinds"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="kind" prop="kind">
+                            <span slot="label">
+                                <span>数据格式</span>
+                            </span>
+                <el-select v-model="exportApiSaveForm.dataFormat" placeholder="Please Select DataFormat" style="width:100%" :filterable="true">
+                  <el-option label="JSON" value="JSON"></el-option>
+                  <el-option label="YAML" value="YAML"></el-option>
+                  <el-option label="XML" value="XML" disabled></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="exportApi()" :loading="exportLoading">{{$t('message.common.save')}}</el-button>
+                <el-button @click="exportApiDialogVisible = false;exportLoading = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
+      </el-dialog>
 
         <!-- ========== version manager ========== -->
         <right-panel :show="versionDialog" @close="versionDialog = false">
