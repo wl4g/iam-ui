@@ -1,15 +1,23 @@
 ### 快速开始
 
+1. 编译安装
 ```
-# 下载依赖包
 npm install
-
-# 运行项目，Serve with hot reload at localhost:8090
+# 开发环境启动
 npm run dev
-
-# 项目打包， Build for production with minification
+# 生产环境打包
 npm run build
 ```
+
+2. 配置hosts
+C:\Windows\System32\drivers\etc 或 vim /etc/hosts
+```
+127.0.0.1  wl4g.debug
+```
+
+3. 浏览器访问
+http://wl4g.debug
+
 
 ### 项目结构:
 - /src 主要编辑代码
@@ -19,4 +27,4 @@ npm run build
 - /config 生产环境和开发环境下的配置
 - /config/index.js 可配置开发环境的端口,代理地址等
 
-[后端项目](../../../super-devops)
+[对应后端项目](../../../xcloud-devops)
