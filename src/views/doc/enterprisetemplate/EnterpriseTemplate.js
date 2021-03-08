@@ -21,6 +21,8 @@ export default {
     data() {
         return {
 
+            subPath: '/template',
+
             path: '',
             content: '',
             data: {},
@@ -69,6 +71,7 @@ export default {
             this.path = path;
             this.$$api_doc_getFileInfo({
                 data: {
+                    subPath: this.subPath,
                     path: path,
                 },
                 fn: json => {
@@ -91,6 +94,7 @@ export default {
             let content = this.aceEditor.getValue();
             this.$$api_doc_saveFile({
                 data: {
+                    subPath: this.subPath,
                     path: this.path,
                     content: content,
                 },

@@ -756,6 +756,7 @@ export default {
                         type: 'success'
                     });
                     this.importLoading = false;
+                    this.importApiDialogVisible = false;
                     //this.getData();
                 },
                 errFn: () =>  {
@@ -787,9 +788,9 @@ export default {
         },
 
         exportApi(){
-            debugger
             let exportUrl = this.exportUrl+"?kind=" + this.exportApiSaveForm.kind + "&moduleId="+ this.exportApiSaveForm.moduleId;
             window.location.href = exportUrl;
+            this.exportApiDialogVisible = false;
         },
 
         getConverterProviderKind(){
