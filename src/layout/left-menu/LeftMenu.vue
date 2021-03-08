@@ -46,7 +46,7 @@
                     <p class="mask-list-item-title">{{getClassifyName(classifyData)}}</p>
                     <ul class="mask-list-item-ul">
                         <li v-for="item of classifyData.items">
-                            <span class="mask-list-item-link" @click="handleRouteLinkClick(n.routePath)"> {{getMenuName(item)}}</span>
+                            <span class="mask-list-item-link" @click="handleRouteLinkClick(item.routePath)"> {{getMenuName(item)}}</span>
                         </li>
                     </ul>
                 </div>
