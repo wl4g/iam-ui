@@ -8,7 +8,7 @@ export default [
         method: 'enterpriseTeamList',
         path: '/enterpriseteam/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseTeam',
@@ -16,21 +16,21 @@ export default [
         path: '/enterpriseteam/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseTeamDetail',
         method: 'enterpriseTeamDetail',
         path: '/enterpriseteam/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseTeam',
         method: 'delEnterpriseTeam',
         path: '/enterpriseteam/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 ]
 

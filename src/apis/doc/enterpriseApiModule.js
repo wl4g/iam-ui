@@ -8,14 +8,14 @@ export default [
         method: 'enterpriseApiModuleList',
         path: '/enterpriseapimodule/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'getByVersionIdAndParentId',
         method: 'getByVersionIdAndParentId',
         path: '/enterpriseapimodule/getByVersionIdAndParentId',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseApiModule',
@@ -23,21 +23,21 @@ export default [
         path: '/enterpriseapimodule/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseApiModuleDetail',
         method: 'enterpriseApiModuleDetail',
         path: '/enterpriseapimodule/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseApiModule',
         method: 'delEnterpriseApiModule',
         path: '/enterpriseapimodule/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 ]
 

@@ -8,14 +8,14 @@ export default [
         method: 'getTreeFiles',
         path: '/fs/getTreeFiles',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'getFileInfo',
         method: 'getFileInfo',
         path: '/fs/getFileInfo',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -23,7 +23,7 @@ export default [
         method: 'addFile',
         path: '/fs/addFile',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -31,7 +31,7 @@ export default [
         method: 'addDir',
         path: '/fs/addDir',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -39,7 +39,7 @@ export default [
         method: 'renameFile',
         path: '/fs/renameFile',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -47,7 +47,7 @@ export default [
         method: 'delFile',
         path: '/fs/delFile',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -55,7 +55,7 @@ export default [
         method: 'saveFile',
         path: '/fs/saveFile',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
 ]

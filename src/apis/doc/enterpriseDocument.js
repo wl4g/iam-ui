@@ -8,7 +8,7 @@ export default [
         method: 'enterpriseDocumentList',
         path: '/enterprisedocument/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseDocument',
@@ -16,21 +16,21 @@ export default [
         path: '/enterprisedocument/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseDocumentDetail',
         method: 'enterpriseDocumentDetail',
         path: '/enterprisedocument/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseDocument',
         method: 'delEnterpriseDocument',
         path: '/enterprisedocument/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -38,7 +38,7 @@ export default [
         method: 'mdToHtml',
         path: '/md/mdToHtml',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -46,7 +46,7 @@ export default [
         method: 'getTemplate',
         path: '/md/getTemplate',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
     {
@@ -54,7 +54,7 @@ export default [
         method: 'formatTemplate',
         path: '/md/formatTemplate',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 
 

@@ -8,13 +8,13 @@ export default [
         method: 'enterpriseProjectVersionList',
         path: '/enterpriserepositoryversion/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },{
         name: 'getVersionsByRepositoryId',
         method: 'getVersionsByRepositoryId',
         path: '/enterpriserepositoryversion/getVersionsByRepositoryId',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseProjectVersion',
@@ -22,21 +22,21 @@ export default [
         path: '/enterpriserepositoryversion/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseProjectVersionDetail',
         method: 'enterpriseProjectVersionDetail',
         path: '/enterpriserepositoryversion/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseProjectVersion',
         method: 'delEnterpriseProjectVersion',
         path: '/enterpriserepositoryversion/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 ]
 

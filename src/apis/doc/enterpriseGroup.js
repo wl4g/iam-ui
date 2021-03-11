@@ -8,7 +8,7 @@ export default [
         method: 'enterpriseGroupList',
         path: '/enterpriserepositorygroup/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseGroup',
@@ -16,21 +16,21 @@ export default [
         path: '/enterpriserepositorygroup/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseGroupDetail',
         method: 'enterpriseGroupDetail',
         path: '/enterpriserepositorygroup/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseGroup',
         method: 'delEnterpriseGroup',
         path: '/enterpriserepositorygroup/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 ]
 

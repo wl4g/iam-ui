@@ -16,32 +16,32 @@ export default {
         defaultServerPort: '14040',
     },
     // 以下其他应用默认配置属性已弃用并删除(具体地址等值统一仅从store缓存中获取.)。
-    ci: {
-        cluster: 'ci-server',
+    uci: {
+        cluster: 'uci-server',
     },
-    scm: {
-        cluster: 'scm-server',
+    ucm: {
+        cluster: 'ucm-server',
     },
     umc: {
         cluster: 'umc-manager',
     },
-    erm: {
-        cluster: 'erm-manager',
+    cmdb: {
+        cluster: 'cmdb-manager',
     },
-    doc: {
-        cluster: 'doc-manager',
+    udm: {
+        cluster: 'udm-manager',
     },
     coss: {
         cluster: 'coss-manager',
     },
-    vcs: {
-        cluster: 'vcs-manager',
+    urm: {
+        cluster: 'urm-manager',
     },
     gw: {
         cluster: 'gateway-manager',
     },
-    dts: {
-        cluster: 'dts-manager',
+    udc: {
+        cluster: 'udc-manager',
     },
     // 'standalone' mode definition.
     standaloneIamWeb: {

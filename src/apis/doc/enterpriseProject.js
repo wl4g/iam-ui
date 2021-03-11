@@ -8,7 +8,7 @@ export default [
         method: 'enterpriseProjectList',
         path: '/enterpriserepository/list',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'saveEnterpriseProject',
@@ -16,21 +16,21 @@ export default [
         path: '/enterpriserepository/save',
         type: 'post',
         dataType: 'json',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'enterpriseProjectDetail',
         method: 'enterpriseProjectDetail',
         path: '/enterpriserepository/detail',
         type: 'get',
-        sysModule: global.doc
+        sysModule: global.udm
     },
     {
         name: 'delEnterpriseProject',
         method: 'delEnterpriseProject',
         path: '/enterpriserepository/del',
         type: 'post',
-        sysModule: global.doc
+        sysModule: global.udm
     },
 ]
 
