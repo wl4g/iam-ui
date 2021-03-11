@@ -105,6 +105,7 @@ export default {
                         title: '<i class="el-icon-plus"></i>',
                         titleOnClick: () => {
                             this.treeData.lists.push({
+                                id: Math.floor(Math.random()*10000000001),
                                 name: '',
                                 scope: '',
                                 type: '',
@@ -248,7 +249,8 @@ export default {
                     {
                         title: '<i class="el-icon-plus"></i>',
                         titleOnClick: () => {
-                            this.treeData.lists.push({
+                            this.treeData2.lists.push({
+                                id: Math.floor(Math.random()*10000000001),
                                 name: '',
                                 scope: '',
                                 type: '',
