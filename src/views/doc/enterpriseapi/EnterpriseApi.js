@@ -205,6 +205,7 @@ export default {
                                         required: '0',
                                         children: [],
                                     });
+                                    item.open = true;
                                 },
                                 formatter: item => {
                                     return "<i class='el-icon-plus'></i>";
@@ -353,6 +354,7 @@ export default {
                                         required: '0',
                                         children: [],
                                     });
+                                    item.open = true;
                                     console.info('finish add');
                                 },
                                 formatter: item => {
