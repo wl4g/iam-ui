@@ -87,6 +87,8 @@ export default {
             // 表单规则
             rules: {
                 name: [{ required: true, message: 'name is required', trigger: 'change' }],
+                method: [{ required: true, message: 'method is required', trigger: 'change' }],
+                url: [{ required: true, message: 'url is required', trigger: 'change' }],
                 address: [{ required: true, message: 'address is required', trigger: 'change' }],
                 apiVersion: [{ required: true, message: 'apiVersion is required', trigger: 'change' }],
                 protocolType: [{ required: true, message: 'protocolType is required', trigger: 'change' }],
@@ -113,6 +115,7 @@ export default {
                                 rule: '',
                                 value: '',
                                 required: '0',
+                                children: [],
                             });
                         },
                         field: "scope",
@@ -192,6 +195,7 @@ export default {
                                         item.children = [];
                                     }
                                     item.children.push({
+                                        id: Math.floor(Math.random()*10000000001),
                                         name: '',
                                         scope: '',
                                         type: '',
@@ -199,6 +203,7 @@ export default {
                                         rule: '',
                                         value: '',
                                         required: '0',
+                                        children: [],
                                     });
                                 },
                                 formatter: item => {
@@ -258,6 +263,7 @@ export default {
                                 rule: '',
                                 value: '',
                                 required: '0',
+                                children: [],
                             });
                         },
                         field: "scope",
@@ -337,6 +343,7 @@ export default {
                                         item.children = [];
                                     }
                                     item.children.push({
+                                        id: Math.floor(Math.random()*10000000001),
                                         name: '',
                                         scope: '',
                                         type: '',
@@ -344,7 +351,9 @@ export default {
                                         rule: '',
                                         value: '',
                                         required: '0',
+                                        children: [],
                                     });
+                                    console.info('finish add');
                                 },
                                 formatter: item => {
                                     return "<i class='el-icon-plus'></i>";
@@ -499,6 +508,11 @@ export default {
         },
 
         addDir(parent,node){
+
+            if(!this.versionId || this.versionId == ''){
+                this.$message.error("请先选择Version")
+            }
+
             this.$prompt('请输入目录名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
