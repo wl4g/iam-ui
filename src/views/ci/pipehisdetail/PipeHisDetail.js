@@ -70,7 +70,7 @@ export default {
         ///////////
 
         backToChanges() {
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('ci:pipehis')})
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('uci:pipehis')})
         },
 
         convertStatusType(row) {

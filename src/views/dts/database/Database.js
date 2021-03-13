@@ -81,7 +81,7 @@ export default {
 
         openDataSourceEdit(row) {
             //TODO ??
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('dts:codegen:database'), query: { id: row.id } })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:codegen:database'), query: { id: row.id } })
         },
 
         // 获取列表数据

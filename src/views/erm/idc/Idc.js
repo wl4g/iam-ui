@@ -166,7 +166,7 @@ export default {
         },
 
         back(){
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('erm:host') })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('cmdb:host') })
         }
 
 

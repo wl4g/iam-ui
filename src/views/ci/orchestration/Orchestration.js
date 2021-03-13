@@ -335,7 +335,7 @@ export default {
                                 cancelButtonText: 'No',
                                 type: 'success'
                             }).then(() => {
-                                this.$router.push(this.permitutil.getRoutePathByPermission('ci:orchestrationhistory'));
+                                this.$router.push(this.permitutil.getRoutePathByPermission('uci:orchestrationhistory'));
                             }).catch(() => {
                                 //do nothing
                             });

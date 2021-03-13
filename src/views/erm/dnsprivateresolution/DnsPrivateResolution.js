@@ -174,7 +174,7 @@ export default {
         },
 
         back(){
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('erm:dnsprivatedomain') })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('cmdb:dnsprivatedomain') })
         }
 
 

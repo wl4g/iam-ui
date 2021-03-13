@@ -226,7 +226,7 @@ export default {
         },
         //双击
         doubleClickRow(row, column, event) {
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('ci:pipehis:detail'),query: {id:row.id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('uci:pipehis:detail'),query: {id:row.id}})
         },
         detail(row) {
             this.doubleClickRow(row);

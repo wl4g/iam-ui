@@ -340,7 +340,7 @@ export default {
 
         gotoCluster(){
             this.dialogVisible = false;
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('erm:cluster')})
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('cmdb:cluster')})
         }
     }
 }

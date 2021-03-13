@@ -264,7 +264,7 @@ export default {
         //==================== Project part end ====================
 
         toProjectDetail(id){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('doc:enterpriseapi'),query: {id:id}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('udm:enterpriseapi'),query: {id:id}})
         },
 
     }

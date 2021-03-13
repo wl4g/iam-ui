@@ -41,7 +41,7 @@
                                   <el-button type="text">更多<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                               </span>
                                 <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item v-if="permitutil.hasPermit('erm:host:edit')" :command="{action:'editData',row: scope.row}">{{$t('message.common.edit')}}</el-dropdown-item>
+                                    <el-dropdown-item v-if="permitutil.hasPermit('cmdb:host:edit')" :command="{action:'editData',row: scope.row}">{{$t('message.common.edit')}}</el-dropdown-item>
                                     <el-dropdown-item :command="{action:'toNetcard',row: scope.row}">网卡管理</el-dropdown-item>
                                     <el-dropdown-item :command="{action:'delData',row: scope.row}">{{$t('message.common.del')}}</el-dropdown-item>
                                 </el-dropdown-menu>

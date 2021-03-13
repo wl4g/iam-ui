@@ -90,7 +90,7 @@ export default {
     methods: {
 
         back(){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:cluster')})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('cmdb:cluster')})
         },
         cleanSaveForm() {
             this.saveForm={
@@ -204,7 +204,7 @@ export default {
         },
 
         toInstancesPage(envType){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:instance'),query: {
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('cmdb:instance'),query: {
                 clusterId: this.saveForm.id,envType:envType
                 }})
         },

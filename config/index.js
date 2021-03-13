@@ -32,39 +32,46 @@ module.exports = {
     cacheBusting: false,
     // @Deprecated
     proxyTable: {
-      /*'/scm-server': {
-        target: 'http://localhost:14043',
+      /*'/cmdb-manager': {
+        target: 'http://localhost:17010',
         changeOrigin: true,
         pathRewrite: {
-          '^/scm': 'scm-server'
+          '^/cmdb-manager': 'cmdb-manager'
         }
       },
-      '/ci-server': {
-        target: 'http://localhost:14046',
+      '/uci-server': {
+        target: 'http://localhost:17020',
         changeOrigin: true,
         pathRewrite: {
-          '^/ci-server': 'ci-server'
+          '^/uci-server': 'uci-server'
+        }
+      },
+      '/ucm-server': {
+        target: 'http://localhost:17030',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ucm-server': 'ucm-server'
+        }
+      },
+      '/udc-manager': {
+        target: 'http://localhost:17040',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/udc-manager': 'udc-manager'
+        }
+      },
+      '/udm-manager': {
+        target: 'http://localhost:17050',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/udm-manager': 'udm-manager'
         }
       },
       '/umc-manager': {
-        target: 'http://localhost:14048',
+        target: 'http://localhost:17060',
         changeOrigin: true,
         pathRewrite: {
           '^/umc-manager': 'umc-manager'
-        }
-      },
-      '/share-manager': {
-        target: 'http://localhost:14051',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/share-manager': 'share-manager'
-        }
-      },
-      '/srm': {
-        target: 'http://localhost:15050',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/srm': 'srm-manager'
         }
       },*/
     },

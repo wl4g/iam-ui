@@ -23,7 +23,7 @@
                 {{$t('message.common.total')}}： <span class="number">{{total}}</span>
             </div>
             <!-- 新增按钮 -->
-            <el-button v-if="permitutil.hasPermit('ci:project:edit')" type="primary" @click="addPriject()" >+ New Project</el-button>
+            <el-button v-if="permitutil.hasPermit('uci:project:edit')" type="primary" @click="addPriject()" >+ New Project</el-button>
         </div>
         <!-- 查询结果表格 -->
         <div>
@@ -46,7 +46,7 @@
 
                     <el-table-column :label="$t('message.common.operation')" min-width="100">
                         <template slot-scope="scope">
-                            <el-button v-if="permitutil.hasPermit('ci:project:edit')" type="info" icon='edit' @click="editPriject(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('uci:project:edit')" type="info" icon='edit' @click="editPriject(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' @click="delProject(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>

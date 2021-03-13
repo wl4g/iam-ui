@@ -86,7 +86,7 @@
                     <el-table-column :label="$t('message.common.operation')" width="230">
                         <template slot-scope="scope">
                             <el-button type="warning" @click="beforeRunTask(scope.row)">{{$t('message.ci.build')}}</el-button>
-                            <el-button v-if="permitutil.hasPermit('ci:pipeline:edit')" type="info" icon='edit' @click="taskDetail(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('uci:pipeline:edit')" type="info" icon='edit' @click="taskDetail(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <el-button type="danger" icon='delete' @click="delTask(scope.row)">{{$t('message.common.del')}}</el-button>
                         </template>
                     </el-table-column>

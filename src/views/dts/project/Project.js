@@ -45,7 +45,7 @@ export default {
             this.getData();
         },
         addData() {
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('dts:project:edit') })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:project:edit') })
         },
         // 获取列表数据
         getData() {
@@ -75,7 +75,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('dts:project:edit'), query: { id: row.id } })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:project:edit'), query: { id: row.id } })
         },
         delData(row) {
             if (!row.id) {
@@ -104,7 +104,7 @@ export default {
         },
 
         toTable(row) {
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('dts:table'), query: { id: row.id } })
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:table'), query: { id: row.id } })
         },
 
         generate(row) {

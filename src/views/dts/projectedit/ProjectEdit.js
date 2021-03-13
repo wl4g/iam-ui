@@ -191,7 +191,7 @@ export default {
             return cache.get('login_username')
         },
         back() {
-            this.$router.push({ path: this.permitutil.getRoutePathByPermission('dts:codegen:project')})
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:codegen:project')})
         },
         getGenProviderSet() {
             this.$$api_dts_getGenProviderSet({

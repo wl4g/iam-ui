@@ -157,11 +157,11 @@ export default {
         },
 
         toManager(row){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:dns:resolution'), query: {id: row.id,zone:row.zone}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('cmdb:dns:resolution'), query: {id: row.id,zone:row.zone}})
         },
 
         toBlacklist(){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('erm:dns:blacklist')})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('cmdb:dns:blacklist')})
         }
 
 

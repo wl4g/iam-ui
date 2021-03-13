@@ -101,7 +101,7 @@ export default {
         },
 
         back(){
-            this.$router.push({path: this.permitutil.getRoutePathByPermission('vcs:project'),query: {id:this.searchParams.vcsId}})
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('urm:project'),query: {id:this.searchParams.vcsId}})
         },
 
         handleCommand(command){
