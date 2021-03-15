@@ -6,14 +6,14 @@ import { cache } from "../utils";
 export default {
     // 因为IAM接口特殊(登录时就需要地址)
     iam: {
-        // e.g. http://127.0.0.1:14040/iam-web
-        // e.g. http://localhost:14040/iam-web
+        // e.g. http://127.0.0.1:18080/iam-web
+        // e.g. http://localhost:18080/iam-web
         // e.g. http://iam.wl4g.debug/iam-web
-        //baseUri: "http://localhost:14040/iam-web",
+        //baseUri: "http://localhost:18080/iam-web",
         cluster: 'iam-web',
         defaultTwoDomain: 'iam',
         defaultContextPath: '/iam-web',
-        defaultServerPort: '14040',
+        defaultServerPort: '18080',
     },
     // 以下其他应用默认配置属性已弃用并删除(具体地址等值统一仅从store缓存中获取.)。
     uci: {
@@ -48,7 +48,7 @@ export default {
         cluster: 'iam-web',
     },
     standaloneDevOpsServer: {
-        cluster: 'devops-server',
+        cluster: 'dopaas-server',
     },
     getBaseUrl: function (sysModule) {
         if (!sysModule) { return null; }

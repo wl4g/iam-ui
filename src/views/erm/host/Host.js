@@ -99,6 +99,10 @@ export default {
         },
 
         addData() {
+
+            this.getSshForSelect();
+            this.getIdcForSelect();
+
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = 'Add VCS information';
