@@ -1,7 +1,7 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link :to="resolvePath(onlyOneChild.path)">
+      <app-link :to="resolvePath(onlyOneChild.path)" :item="item">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
           <item :icon="onlyOneChild.icon" :title="getMenuName(onlyOneChild)" />
         </el-menu-item>
@@ -84,6 +84,10 @@ export default {
       return false
     },
     resolvePath(routePath) {
+      /*if(item && item.renderTarget && item.renderTarget == '_blank'){
+        return item.pageLocation;
+      }*/
+
       if (routePath) {
         return routePath
       }
