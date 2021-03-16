@@ -48,6 +48,8 @@ export default {
                     {required: true, message: 'Please Input name', trigger: 'blur'},
                     {min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur'}
                 ],
+                hostId: [{required: true, message: 'Please Select Host', trigger: 'change'},],
+                ipv4: [{required: true, message: 'Please Input ipv4', trigger: 'change'},],
             },
             loading: false
         }
@@ -79,6 +81,8 @@ export default {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = 'Add Host Netcard information';
+
+            this.saveForm.hostId = this.searchParams.hostId;
         },
 
         // 获取列表数据
@@ -121,7 +125,6 @@ export default {
 
         saveData() {
             this.dialogLoading = true;
-            this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.$$api_erm_saveNetcard({

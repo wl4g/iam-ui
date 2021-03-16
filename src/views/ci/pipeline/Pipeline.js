@@ -65,7 +65,7 @@ export default {
             projects: [],
             issues: [],
 
-            uploadUrl: global.getBaseUrl(global.ci,false)+'/fs/upload',
+            uploadUrl: global.getBaseUrl(global.uci,false)+'/fs/upload',
 
         }
     },

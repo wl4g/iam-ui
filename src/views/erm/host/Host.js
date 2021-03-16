@@ -57,8 +57,8 @@ export default {
             loading: false,
 
             importDialogVisible: false,
-            downloadTemplateUrl: global.getBaseUrl(global.erm, false) + '/host/createAndDownloadTemplate',
-            uploadImportFileUrl: global.getBaseUrl(global.erm, false) + '/host/importHost',
+            downloadTemplateUrl: global.getBaseUrl(global.cmdb, false) + '/host/createAndDownloadTemplate',
+            uploadImportFileUrl: global.getBaseUrl(global.cmdb, false) + '/host/importHost',
             uploadHeaders: {},
 
 

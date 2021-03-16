@@ -73,7 +73,7 @@
                                     v-model="saveForm.hostIds"
                                     :data="hosts">
                                 <i class="el-icon-refresh" slot="left-footer" style="cursor:pointer;margin-left: 16px" @click="allHost"></i>
-                                <router-link slot="left-footer" to="/erm/host" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
+                                <router-link slot="left-footer" :to="permitutil.getRoutePathByPermission('cmdb:host')" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
                             </el-transfer>
                         </el-form-item>
                     </el-col>

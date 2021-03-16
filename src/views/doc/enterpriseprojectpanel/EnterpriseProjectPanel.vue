@@ -97,27 +97,6 @@
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="teamId" prop="teamId">
-                            <span slot="label">
-                                <span>团队</span>
-                                <el-tooltip class="item" effect="dark" content="团队" placement="right">
-                                    <i class="el-icon-question"></i>
-                                </el-tooltip>
-                            </span>
-                            <el-select v-model="saveForm.teamId" placeholder="可选" style="width: 100%">
-                                <el-option
-                                        v-for="item in teams"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
                     <el-col :span="24">
                         <el-form-item label="remark" prop="remark">
                             <span slot="label">

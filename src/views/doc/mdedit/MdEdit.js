@@ -30,7 +30,7 @@ export default {
 
             labelData: [],
 
-            uploadUrl: global.getBaseUrl(global.erm,false)+'/fs/uploadImg',
+            uploadUrl: global.getBaseUrl(global.cmdb,false)+'/fs/uploadImg',
 
             rules: {
                 name: [
@@ -54,7 +54,7 @@ export default {
 
         const  md = this.$refs.md.markdownIt;
         let defaultRender = md.renderer.rules.image;
-        let baseUrl = global.getBaseUrl(global.erm,false);
+        let baseUrl = global.getBaseUrl(global.cmdb,false);
         md.renderer.rules.image = function (tokens, idx, options, env, self) {
             if(!tokens){
                 return defaultRender(tokens, idx, options, env, self);

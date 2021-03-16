@@ -77,7 +77,8 @@ export default {
         this.getClusters();
         this.getK8ss();
         this.getDockers();
-        this.listBucketsWithProvider();
+        //coss 服务不见了
+        //this.listBucketsWithProvider();
     },
 
     methods: {

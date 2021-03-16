@@ -16,7 +16,7 @@ export default {
 
             tableData: [],
 
-            browseUrl: global.getBaseUrl(global.erm,false)+'/view/index.html',
+            browseUrl: global.getBaseUrl(global.cmdb,false)+'/view/index.html',
         }
     },
 

@@ -45,7 +45,7 @@ export default {
             selectedTemplate: '',
             mdPath: '',
             beforeFormatDialogVisible: false,
-            exportUrl: global.getBaseUrl(global.doc, false) + '/md/formatTemplate',
+            exportUrl: global.getBaseUrl(global.udm, false) + '/md/formatTemplate',
         }
     },
 

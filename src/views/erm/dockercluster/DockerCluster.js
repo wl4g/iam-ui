@@ -179,6 +179,10 @@ export default {
             });
         },
 
+        getHostPath(){
+            this.permitutil.getRoutePathByPermission('cmdb:cluster:edit')
+        },
+
 
 
     }

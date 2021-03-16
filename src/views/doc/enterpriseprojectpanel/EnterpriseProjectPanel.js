@@ -19,7 +19,6 @@ export default {
             //查询条件
             searchParams: {
                 groupId: '',
-                teamId: '',
             },
 
             //分页信息
@@ -31,7 +30,6 @@ export default {
             saveForm: {
                 name: '',
                 groupId: '',
-                teamId: '',
                 visibility: '',
                 json: '',
                 remark: '',
@@ -43,7 +41,6 @@ export default {
 
             tableData: [],
 
-            teams: [],
 
             // 表单规则
             rules: {
@@ -167,30 +164,17 @@ export default {
             this.getData();
         },
         addData(item) {
-            this.getTeam();
+
             this.cleanSaveForm();
             this.saveForm.groupId = item.id;
             this.dialogVisible = true;
             this.dialogTitle = 'Add';
         },
         // 获取列表数据
-        getTeam() {
-            this.$$api_doc_enterpriseTeamList({
-                data: {
-                    pageSize: 999,
-                },
-                fn: json => {
-                    this.teams = json.data.records;
-                },
-                errFn: () => {
 
-                }
-            })
-        },
         cleanSaveForm() {
             this.saveForm = {
                 groupId: '',
-                teamId: '',
                 visibility: '',
                 json: '',
                 remark: '',
@@ -222,7 +206,6 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.getTeam();
             this.cleanSaveForm();
             this.$$api_doc_enterpriseProjectDetail({
                 data: {

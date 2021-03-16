@@ -56,7 +56,7 @@ export default {
             users: [],
             projects: [],
             issues: [],
-            uploadUrl: global.getBaseUrl(global.ci, false) + '/fs/upload',
+            uploadUrl: global.getBaseUrl(global.uci, false) + '/fs/upload',
             buildRules: {
                 trackType: [
                     { required: true, message: 'Please select trackType', trigger: 'change' },

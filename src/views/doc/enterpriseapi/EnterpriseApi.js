@@ -80,7 +80,7 @@ export default {
             },
             exportLoading: false,
 
-            exportUrl: global.getBaseUrl(global.doc, false) + '/enterpriseapi/exportApi',
+            exportUrl: global.getBaseUrl(global.udm, false) + '/enterpriseapi/exportApi',
 
             converterProviderKinds: [],
 

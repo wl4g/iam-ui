@@ -30,8 +30,8 @@ export default {
                 fileList: [],
             },
 
-            uploadUrl: global.getBaseUrl(global.doc,false)+'/doc/upload',
-            browseUrl: global.getBaseUrl(global.doc,false)+'/view/index.html',
+            uploadUrl: global.getBaseUrl(global.udm,false)+'/doc/upload',
+            browseUrl: global.getBaseUrl(global.udm,false)+'/view/index.html',
 
             shareDialogVisible: false,
             shareText: '',

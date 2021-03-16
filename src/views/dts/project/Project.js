@@ -17,7 +17,7 @@ export default {
             dialogTitle: '',
             dialogLoading: false,
             tableData: [],
-            downloadUrl: global.getBaseUrl(global.dts, false) + '/gen/configure/download?jobId=',
+            downloadUrl: global.getBaseUrl(global.udc, false) + '/gen/configure/download?jobId=',
             // 表单规则
             rules: {
                 projectName: [
