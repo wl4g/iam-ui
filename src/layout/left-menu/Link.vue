@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     linkProps(url) {
-      debugger
       if (this.item && this.item && this.item.renderTarget && this.item.renderTarget == '_blank' && this.item.pageLocation.startsWith('http')) {
         return {
           is: 'a',

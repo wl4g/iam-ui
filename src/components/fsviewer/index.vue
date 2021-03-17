@@ -277,7 +277,6 @@
                                     inputPlaceholder: data.fileName,
                                     inputValue: data.fileName,
                                 }).then(({ value }) => {
-                                    debugger
                                     let parentPath = data.path.substring(0, data.path.lastIndexOf('/'));
                                     if(!parentPath){
                                         parentPath = '';
