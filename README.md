@@ -1,30 +1,30 @@
-### 快速开始
+### Quick start
 
-1. 编译安装
+1. Compile installation
 ```
+git clone https://github.com/wl4g/xcloud-dopaas-view.git # 上游最新(推荐)
+# or: git clone https://gitee.com/wl4g/xcloud-dopaas-view.git # CN大陆最快(可能延迟)
 npm install
-# 开发环境启动
+# Development environment startup
 npm run dev
-# 生产环境打包
+# Production environment packaging
 npm run build
 ```
 
-2. 配置hosts
-C:\Windows\System32\drivers\etc 或 vim /etc/hosts
+2. Hosts configuration
+C:\Windows\System32\drivers\etc or vim /etc/hosts
 ```
 127.0.0.1  wl4g.debug
 ```
 
-3. 浏览器访问
+3. Browser access
 http://wl4g.debug
 
 
-### 项目结构:
-- /src 主要编辑代码
-- /build 打包配置代码
-- /node_modules 依赖包文件夹
-- /static 某些静态文件
-- /config 生产环境和开发环境下的配置
-- /config/index.js 可配置开发环境的端口,代理地址等
+### Project structure:
+- /src Main logic source code directory
+- /build Package configuration code directory
+- /node_modules Dependent package directory
+- /static Rely on static files
 
-[对应后端项目](../../../xcloud-devops)
+Corresponded backend project [XCloud DoPaaS](../../../xcloud-dopaas)
