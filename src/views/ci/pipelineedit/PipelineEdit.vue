@@ -409,6 +409,59 @@
                 </el-row>
             </el-card>
 
+
+          <!--====================API 配置 start====================-->
+          <el-card class="box-card" id="pipe_step7" style="width: 90%" shadow="hover">
+            <div slot="header">
+              <span class="pipe-step-title">文档构建配置</span>
+              <el-switch style="padding: 3px 0" :active-value="1" :inactive-value="0" v-model="saveForm.pipeStepNotification.enable"></el-switch>
+            </div>
+            <el-row v-if="saveForm.pipeStepNotification.enable===1">
+              <el-col :span="7">
+                <el-form-item label="仓库" prop="repositoryId">
+                  <el-select v-model="saveForm.pipeStepApi.repositoryId" @change="changeRepository" placeholder="请选择" style="width: 100%">
+                    <el-option
+                        v-for="item in apiRepositorys"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+              </el-col>
+              <el-col :span="7">
+                <el-form-item label="版本" prop="versionId">
+                  <el-select v-model="saveForm.pipeStepApi.versionId" @change="changeVersion" placeholder="请选择" style="width: 100%">
+                    <el-option
+                        v-for="item in apiVersions"
+                        :key="item.id"
+                        :label="item.version"
+                        :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="7">
+                <el-form-item label="模块" prop="moduleId">
+                  <el-select v-model="saveForm.pipeStepApi.moduleId" placeholder="请选择" style="width: 100%">
+                    <el-option
+                        v-for="item in apiModules"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+
+
+
+
+              </el-col>
+            </el-row>
+          </el-card>
+
             <el-row>
                 <el-col :span="4" :offset="20">
                     <el-button type="primary" @click="save()" :loading="loading">{{$t('message.common.save')}}</el-button>

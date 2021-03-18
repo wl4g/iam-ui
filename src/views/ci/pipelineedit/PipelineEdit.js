@@ -55,6 +55,13 @@ export default {
                     xPriority: '',
                 },
 
+                pipeStepApi:{
+                    enable: 0,
+                    repositoryId: '',
+                    versionId: '',
+                    moduleId: '',
+                },
+
                 contactOnOff: false,
                 pipeStepNotification: {
                     enable: 0,
@@ -103,6 +110,11 @@ export default {
             loading: false,
 
             activeStep: 0,
+
+
+            apiRepositorys: [],
+            apiVersions: [],
+            apiModules: [],
         }
     },
 
@@ -118,6 +130,8 @@ export default {
             this.getClusters();
             this.groupList();
             this.getPcm();
+            this.getApiRepositorys();
+
             if (this.saveForm.id) {
                 this.isEdit = true;
                 this.pipelineDetail(this.taskId);
@@ -179,6 +193,12 @@ export default {
                     xPriority: '',
                 },
 
+                pipeStepApi:{
+                    enable: 0,
+                    repositoryId: '',
+                    versionId: '',
+                    moduleId: '',
+                },
 
                 contactOnOff: false,
                 pipeStepNotification: {
@@ -368,6 +388,23 @@ export default {
                         };
                     }
 
+                    if (!json.data.pipeStepApi) {
+                        this.saveForm.pipeStepApi = {
+                            enable: 0,
+                            repositoryId: '',
+                            versionId: '',
+                            moduleId: '',
+                        };
+                    }
+                    if(this.saveForm.pipeStepApi.repositoryId){
+                        this.getApiModules(this.saveForm.pipeStepApi.repositoryId);
+                    }
+                    if(this.saveForm.pipeStepApi.versionId){
+                        this.getApiVersions(this.saveForm.pipeStepApi.versionId);
+                    }
+
+
+
                     this.getProjectByAppClusterId();
                     this.getinstance();
                     this.getPipeStepBuilding();
@@ -488,6 +525,57 @@ export default {
             this.activeStep = id - 1;
             // Way2
             //document.querySelector("#testjump").scrollIntoView(true);
+        },
+
+
+        getApiRepositorys(){
+            this.$$api_doc_enterpriseProjectList({
+                data: {
+                    pageNum: 1,
+                    pageSize: 100,
+                },
+                fn: json => {
+                    this.apiRepositorys = json.data.records;
+                },
+            })
+        },
+
+        getApiVersions(repositoryId){
+            this.$$api_doc_enterpriseProjectVersionList({
+                data: {
+                    pageNum: 1,
+                    pageSize: 100,
+                    repositoryId: repositoryId
+                },
+                fn: json => {
+                    this.apiVersions = json.data.records;
+                },
+            })
+        },
+
+        getApiModules(versionId){
+            this.$$api_doc_enterpriseApiModuleList({
+                data: {
+                    pageNum: 1,
+                    pageSize: 100,
+                    versionId: versionId,
+                },
+                fn: json => {
+                    this.apiModules = json.data.records;
+                },
+            })
+        },
+
+        changeRepository(){
+            if(this.saveForm.pipeStepApi.repositoryId){
+                this.getApiVersions(this.saveForm.pipeStepApi.repositoryId);
+            }
+        },
+
+        changeVersion(){
+            if(this.saveForm.pipeStepApi.versionId){
+                this.getApiModules(this.saveForm.pipeStepApi.versionId);
+            }
         }
 
     }
