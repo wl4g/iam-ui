@@ -433,7 +433,8 @@ export default {
                     if(json.data && json.data.length > 0){
                         this.versionId = json.data[0].id;
                         // TODO getByVersionIdAndParentId
-                        this.loadModule(this.node_had,this.resolve_had);
+                        //this.loadModule(this.node_had,this.resolve_had);
+                        this.reloadApiTree();
                     }else{
                         //TODO clean panel
                         /*this.node_had.childNodes = [];

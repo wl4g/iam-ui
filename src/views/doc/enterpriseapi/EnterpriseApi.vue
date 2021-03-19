@@ -297,7 +297,8 @@
 
         <!-- ========== version manager ========== -->
         <right-panel :show="versionDialog" @close="versionDialog = false">
-            <el-button @click="addVersion">ADD</el-button>
+            <el-button type="primary" @click="addVersion">ADD</el-button>
+            <el-button type="primary" @click="getVersionsByRepositoryId">Refresh</el-button>
             <el-table :data="versions" :border="false" style="width:100%">
                 <el-table-column prop="version" label="version"></el-table-column>
                 <el-table-column :label="$t('message.common.operation')" width="100">
