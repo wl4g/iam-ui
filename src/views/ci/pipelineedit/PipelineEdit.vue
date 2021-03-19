@@ -188,7 +188,7 @@
 
                 <el-row>
                     <el-form-item :label="$t('message.ci.assetsPath')" prop="assetsDir">
-                        <el-col :span="16">
+                        <el-col :span="20">
                             <el-input placeholder="tar path e.g: /portal-start/target" v-model="saveForm.assetsDir">
                                 <template slot="prepend">{{'{WORKSPACE}/sources/'+saveForm.projectName}}</template>
                                 <template slot="append">{{saveForm.assetsPath3}}</template>
@@ -430,7 +430,7 @@
                 </el-form-item>
 
               </el-col>
-              <el-col :span="7">
+<!--              <el-col :span="7">
                 <el-form-item label="版本" prop="versionId">
                   <el-select v-model="saveForm.pipeStepApi.versionId" @change="changeVersion" placeholder="请选择" style="width: 100%">
                     <el-option
@@ -453,12 +453,8 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
+              </el-col>-->
 
-
-
-
-
-              </el-col>
             </el-row>
           </el-card>
 

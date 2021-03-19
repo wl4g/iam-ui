@@ -284,7 +284,6 @@ export default {
         onChangeCluster(id) {
             this.getPipeStepBuilding();
             this.getinstance();
-
             this.saveForm.assetsPath3 = '/' + this.getClusterNameById(id) + '-{version}-bin.tar';
             this.getProjectByAppClusterId();
         },
