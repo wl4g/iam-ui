@@ -82,7 +82,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_coss_listBuckets({
+            this.$$api_uos_listBuckets({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     prefix: this.searchParams.prefix,
@@ -99,7 +99,7 @@ export default {
         },
 
         createBucket() {
-            this.$$api_coss_createBucket({
+            this.$$api_uos_createBucket({
                 data: this.saveForm,
                 fn: json => {
                     this.$message({
@@ -127,7 +127,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$$api_coss_deleteBucket({
+                this.$$api_uos_deleteBucket({
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,
@@ -145,7 +145,7 @@ export default {
         },
 
         getCossProviders(){
-            this.$$api_coss_getCossProviders({
+            this.$$api_uos_getCossProviders({
                 data: {},
                 fn: json => {
                     this.cossProviders = json.data;
@@ -161,7 +161,7 @@ export default {
                 realAcl: '',
                 config: '',
             },
-                this.$$api_coss_getBucketAcl({
+                this.$$api_uos_getBucketAcl({
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,
@@ -175,7 +175,7 @@ export default {
         },
 
         setAcl(){
-            this.$$api_coss_setBucketAcl({
+            this.$$api_uos_setBucketAcl({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.aclForm.bucketName,
@@ -192,7 +192,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$$api_coss_resetBucketAcl({
+                this.$$api_uos_resetBucketAcl({
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: row.name,

@@ -56,7 +56,7 @@ export default {
             this.loading = true;
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseProjectVersionList({
+            this.$$api_udm_enterpriseProjectVersionList({
                 data: this.searchParams,
                 fn: json => {
                     this.loading = false;
@@ -79,7 +79,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveEnterpriseProjectVersion({
+                    this.$$api_udm_saveEnterpriseProjectVersion({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -101,7 +101,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_doc_enterpriseProjectVersionDetail({
+            this.$$api_udm_enterpriseProjectVersionDetail({
                 data: {
                     id: row.id,
                 },
@@ -121,7 +121,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseProjectVersion({
+                this.$$api_udm_delEnterpriseProjectVersion({
                     data: {
                         id: row.id,
                     },

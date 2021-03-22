@@ -119,7 +119,7 @@ export default {
         getData() {
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
-            this.$$api_ci_pipelineList({
+            this.$$api_uci_pipelineList({
                 data: this.searchParams,
                 fn: json => {
                     this.loading = false;
@@ -142,7 +142,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_delPipeline({
+                this.$$api_uci_delPipeline({
                     data: {
                         id: row.id,
                     },
@@ -223,7 +223,7 @@ export default {
             this.saveLoading = true;
             this.$refs['confirmForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_runPipeline({
+                    this.$$api_uci_runPipeline({
                         data: this.confirmForm,
                         fn: json => {
                             this.saveLoading = false;
@@ -257,7 +257,7 @@ export default {
             }
         },
         getUsers(){
-            this.$$api_ci_getUsers({
+            this.$$api_uci_getUsers({
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
@@ -267,7 +267,7 @@ export default {
             })
         },
         getProjects(){
-            this.$$api_ci_getPcmProjects({
+            this.$$api_uci_getPcmProjects({
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
@@ -277,7 +277,7 @@ export default {
             })
         },
         getIssues(){
-            this.$$api_ci_getIssues({
+            this.$$api_uci_getIssues({
                 data: {
                     pcmId: this.confirmForm.pcmId,
                     userId: this.confirmForm.userId,

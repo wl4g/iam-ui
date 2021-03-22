@@ -92,7 +92,7 @@ export default {
                     if(this.oldContent === this.saveForm.content){// not change , just go back
                         this.$router.push({path: this.permitutil.getRoutePathByPermission('udm:file')})
                     }
-                    this.$$api_doc_saveDoc({
+                    this.$$api_udm_saveDoc({
                         data:  this.saveForm,
                         fn: json => {
                             this.cleanSaveForm();
@@ -111,7 +111,7 @@ export default {
             this.$router.push({path: this.permitutil.getRoutePathByPermission('udm:file')})
         },
         detail(){
-            this.$$api_doc_docDetail({
+            this.$$api_udm_docDetail({
                 data: {
                     id: this.saveForm.id,
                 },
@@ -125,7 +125,7 @@ export default {
             })
         },
         getChanges(){
-            this.$$api_doc_getHistoryByDocCode({
+            this.$$api_udm_getHistoryByDocCode({
                 data: {
                     docCode: this.saveForm.docCode
                 },
@@ -152,7 +152,7 @@ export default {
             this.detail();
         },
         getLabelData(){
-            this.$$api_doc_allLabel({
+            this.$$api_udm_allLabel({
                 data: {},
                 fn: json => {
                     this.labelData = json.data;

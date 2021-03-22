@@ -26,7 +26,7 @@ export default {
         this.cossProvider = this.$route.query.cossProvider;
         this.bucketName = this.$route.query.bucketName;
 
-        this.$$api_coss_getBucketIndex({
+        this.$$api_uos_getBucketIndex({
             data: {
                 cossProvider: this.cossProvider,
                 bucketName: this.bucketName,

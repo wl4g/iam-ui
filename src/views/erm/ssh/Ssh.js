@@ -79,7 +79,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_sshList({
+            this.$$api_cmdb_sshList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -112,7 +112,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveSsh({
+                    this.$$api_cmdb_saveSsh({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -134,7 +134,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_sshDetail({
+            this.$$api_cmdb_sshDetail({
                 data: {
                     id: row.id,
                 },
@@ -156,7 +156,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delSsh({
+                this.$$api_cmdb_delSsh({
                     data: {
                         id: row.id,
                     },
@@ -187,7 +187,7 @@ export default {
         },
 
         generateSshKey(){
-            this.$$api_erm_generateSshKeyPair({
+            this.$$api_cmdb_generateSshKeyPair({
                 data: {},
                 fn: json => {
                     this.saveForm.sshKey = json.data.privateKey;
@@ -201,7 +201,7 @@ export default {
         },
 
         allHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -217,7 +217,7 @@ export default {
         },
 
         testConnecting(){
-            this.$$api_erm_connectTest({
+            this.$$api_cmdb_connectTest({
                 data: {
                     hostId: this.testConnect.hostId,
                     sshUser: this.testConnect.ssh.username,
@@ -237,7 +237,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_sshDetail({
+            this.$$api_cmdb_sshDetail({
                 data: {
                     id: row.id,
                 },

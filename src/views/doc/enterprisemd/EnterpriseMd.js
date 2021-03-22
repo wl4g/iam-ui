@@ -64,7 +64,7 @@ export default {
             console.info(path)
             let that = this;
             this.path = path;
-            this.$$api_doc_getFileInfo({
+            this.$$api_udm_getFileInfo({
                 data: {
                     subPath: this.subPath,
                     path: path,
@@ -83,7 +83,7 @@ export default {
             //TODO
             let content = this.$refs["myToastEditor"].invoke("getMarkdown");
 
-            this.$$api_doc_saveFile({
+            this.$$api_udm_saveFile({
                 data: {
                     subPath: this.subPath,
                     path: this.path,
@@ -101,7 +101,7 @@ export default {
 
         onEditorChange(){
             let md = this.$refs["myToastEditor"].invoke("getMarkdown");
-            this.$$api_doc_mdToHtml({
+            this.$$api_udm_mdToHtml({
                 data: {
                     md: md,
                 },
@@ -144,7 +144,7 @@ export default {
 
             this.beforeFormatDialogVisible = false;
 
-            /*this.$$api_doc_formatTemplate({
+            /*this.$$api_udm_formatTemplate({
                 data: {
                     md: this.mdPath,
                     template: this.selectedTemplate,
@@ -157,7 +157,7 @@ export default {
 
 
         getTemplates(){
-            this.$$api_doc_getTemplate({
+            this.$$api_udm_getTemplate({
                 data: {},
                 fn: json => {
                     this.templates = json.data;
@@ -201,7 +201,7 @@ export default {
         renderApi(wrapperId, apiId) {
             const el = document.querySelector(`#${wrapperId}`);
 
-            this.$$api_doc_md2html({
+            this.$$api_udm_md2html({
                 data: {
                     md: apiId,
                 },
@@ -290,7 +290,7 @@ export default {
                 pageNum: 1,
                 pageSize: 999,
             }
-            this.$$api_doc_enterpriseProjectList({
+            this.$$api_udm_enterpriseProjectList({
                 data: searchParams,
                 fn: json => {
                     this.projects = json.data.records;
@@ -315,7 +315,7 @@ export default {
             if(node.data && node.data.id ){
                 parentId = node.data.id;
             }
-            this.$$api_doc_getByVersionIdAndParentId({
+            this.$$api_udm_getByVersionIdAndParentId({
                 data: {
                     versionId: this.versionId,
                     parentId: parentId,
@@ -327,7 +327,7 @@ export default {
                     }
 
                     if(parentId !== 0){
-                        this.$$api_doc_getByModuleId({
+                        this.$$api_udm_getByModuleId({
                             data: {
                                 versionId: this.versionId,
                                 moduleId: parentId,
@@ -364,7 +364,7 @@ export default {
         },
 
         getVersionsByRepositoryId(){
-            this.$$api_doc_getVersionsByRepositoryId({
+            this.$$api_udm_getVersionsByRepositoryId({
                 data: {
                     repositoryId: this.project,
                 },

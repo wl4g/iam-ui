@@ -109,7 +109,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_instanceList({
+            this.$$api_cmdb_instanceList({
                 data: {
                     name: this.searchParams.name,
                     clusterId: this.searchParams.clusterId,
@@ -152,7 +152,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveInstance({
+                    this.$$api_cmdb_saveInstance({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -176,7 +176,7 @@ export default {
             }
             this.cleanSaveForm();
             this.isEdit = true;
-            this.$$api_erm_instanceDetail({
+            this.$$api_cmdb_instanceDetail({
                 data: {
                     id: row.id,
                 },
@@ -196,7 +196,7 @@ export default {
         },
 
         allHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -210,7 +210,7 @@ export default {
             if(!this.saveForm.clusterId){
                 return;
             }
-            this.$$api_erm_clusterDetail({
+            this.$$api_cmdb_clusterDetail({
                 data: {
                     id: this.saveForm.clusterId,
                 },
@@ -223,7 +223,7 @@ export default {
         },
 
         getClusters() {
-            this.$$api_erm_clusters({
+            this.$$api_cmdb_clusters({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -234,7 +234,7 @@ export default {
         },
 
         getK8ss() {
-            this.$$api_erm_getK8sForSelect({
+            this.$$api_cmdb_getK8sForSelect({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -245,7 +245,7 @@ export default {
         },
 
         getDockers() {
-            this.$$api_erm_getDockerForSelect({
+            this.$$api_cmdb_getDockerForSelect({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -267,7 +267,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delInstance({
+                this.$$api_cmdb_delInstance({
                     data: {
                         id: row.id,
                     },
@@ -285,7 +285,7 @@ export default {
         },
 
         listBucketsWithProvider(){
-            this.$$api_coss_listBucketsWithProvider({
+            this.$$api_uos_listBucketsWithProvider({
                 data: {},
                 fn: json => {
                     this.cossBuckets = json.data;

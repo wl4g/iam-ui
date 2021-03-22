@@ -66,7 +66,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dockerRepositoryList({
+            this.$$api_cmdb_dockerRepositoryList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -100,7 +100,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveDockerRepository({
+                    this.$$api_cmdb_saveDockerRepository({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -123,7 +123,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dockerRepositoryDetail({
+            this.$$api_cmdb_dockerRepositoryDetail({
                 data: {
                     id: row.id,
                 },
@@ -151,7 +151,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDockerRepository({
+                this.$$api_cmdb_delDockerRepository({
                     data: {
                         id: row.id,
                     },

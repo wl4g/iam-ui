@@ -92,7 +92,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_orchestrationHistoryList({
+            this.$$api_uci_orchestrationHistoryList({
                 data: {
                     runId: this.searchParams.runId,
                 },
@@ -188,7 +188,7 @@ export default {
                 cancelButtonText: 'cancel',
                 type: 'info'
             }).then(() => {
-                this.$$api_ci_stopTask({
+                this.$$api_uci_stopTask({
                     data: {
                         pipeHisId: id,
                     },

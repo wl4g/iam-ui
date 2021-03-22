@@ -88,7 +88,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_netcardList({
+            this.$$api_cmdb_netcardList({
                 data: {
                     name: this.searchParams.name,
                     hostId: this.searchParams.hostId,
@@ -127,7 +127,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveNetcard({
+                    this.$$api_cmdb_saveNetcard({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -150,7 +150,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_netcardDetail({
+            this.$$api_cmdb_netcardDetail({
                 data: {
                     id: row.id,
                 },
@@ -164,7 +164,7 @@ export default {
         },
 
         getHostTunnelByType() {
-            this.$$api_erm_getHostTunnel({
+            this.$$api_cmdb_getHostTunnel({
                 data: {},
                 fn: json => {
                     this.saveForm = json.data;
@@ -179,7 +179,7 @@ export default {
         },
 
         allHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     if (json.data) {
@@ -199,7 +199,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delNetcard({
+                this.$$api_cmdb_delNetcard({
                     data: {
                         id: row.id,
                     },

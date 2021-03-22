@@ -423,7 +423,7 @@ export default {
         },
 
         getVersionsByRepositoryId(){
-            this.$$api_doc_getVersionsByRepositoryId({
+            this.$$api_udm_getVersionsByRepositoryId({
                 data: {
                     repositoryId: this.repositoryId,
                 },
@@ -460,7 +460,7 @@ export default {
             if(node.data && node.data.id ){
                 parentId = node.data.id;
             }
-            this.$$api_doc_getByVersionIdAndParentId({
+            this.$$api_udm_getByVersionIdAndParentId({
                 data: {
                     versionId: this.versionId,
                     parentId: parentId,
@@ -472,7 +472,7 @@ export default {
                     }
 
                     if(parentId !== 0){
-                        this.$$api_doc_getByModuleId({
+                        this.$$api_udm_getByModuleId({
                             data: {
                                 versionId: this.versionId,
                                 moduleId: parentId,
@@ -521,7 +521,7 @@ export default {
                 cancelButtonText: '取消',
             }).then(({ value }) => {
                 if(parent){
-                    this.$$api_doc_saveEnterpriseApiModule({
+                    this.$$api_udm_saveEnterpriseApiModule({
                         data: {
                             name: value,
                             versionId: this.versionId,
@@ -532,7 +532,7 @@ export default {
                         },
                     })
                 }else{
-                    this.$$api_doc_saveEnterpriseApiModule({
+                    this.$$api_udm_saveEnterpriseApiModule({
                         data: {
                             name: value,
                             versionId: this.versionId,
@@ -553,7 +553,7 @@ export default {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
             }).then(({value}) => {
-                this.$$api_doc_saveEnterpriseApi({
+                this.$$api_udm_saveEnterpriseApi({
                     data: {
                         name: value,
                         moduleId: parent.id,
@@ -578,7 +578,7 @@ export default {
                 return;
             }
             this.loading = true;
-            this.$$api_doc_enterpriseApiDetail({
+            this.$$api_udm_enterpriseApiDetail({
                 data: {
                     id: data.id,
                 },
@@ -646,7 +646,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.saveForm.properties = this.treeData.lists.concat(this.treeData2.lists);
-                    this.$$api_doc_saveEnterpriseApi({
+                    this.$$api_udm_saveEnterpriseApi({
                         data: this.saveForm,
                         fn: json => {
                             this.$message({
@@ -674,7 +674,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseApi({
+                this.$$api_udm_delEnterpriseApi({
                     data: {
                         id: row.id,
                     },
@@ -712,7 +712,7 @@ export default {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
             }).then(({ value }) => {
-                this.$$api_doc_saveEnterpriseProjectVersion({
+                this.$$api_udm_saveEnterpriseProjectVersion({
                     data: {
                         repositoryId: this.repositoryId,
                         version: value
@@ -737,7 +737,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseProjectVersion({
+                this.$$api_udm_delEnterpriseProjectVersion({
                     data: {
                         id: row.id,
                     },
@@ -767,7 +767,7 @@ export default {
 
         importApi(){
             this.importLoading = true;
-            this.$$api_doc_importApi({
+            this.$$api_udm_importApi({
                 data: this.importApiSaveForm,
                 fn: json => {
                     this.$message({
@@ -813,7 +813,7 @@ export default {
         },
 
         getConverterProviderKind(){
-            this.$$api_doc_getConverterProviderKind({
+            this.$$api_udm_getConverterProviderKind({
                 data: {},
                 fn: json => {
                     this.converterProviderKinds = json.data;

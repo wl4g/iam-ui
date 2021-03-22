@@ -75,7 +75,7 @@ export default {
             this.getData();
         },
         getData() {
-            this.$$api_doc_docList({
+            this.$$api_udm_docList({
                 data: {
                     name: this.searchParams.name,
                     lang: this.searchParams.lang,
@@ -104,7 +104,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delDoc({
+                this.$$api_udm_delDoc({
                     data: {
                         id: row.id,
                     },
@@ -117,7 +117,7 @@ export default {
             });
         },
         allLabel(){
-            this.$$api_doc_allLabel({
+            this.$$api_udm_allLabel({
                 data: {},
                 fn: json => {
                     this.labelData = json.data;
@@ -155,7 +155,7 @@ export default {
         saveData(){
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveUpload({
+                    this.$$api_udm_saveUpload({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogVisible = false;
@@ -217,7 +217,7 @@ export default {
 
         shareDoc(isEncrypt){
             this.shareConfirmForm.isEncrypt = isEncrypt;
-            this.$$api_doc_shareDoc({
+            this.$$api_udm_shareDoc({
                 data: this.shareConfirmForm,
                 fn: json => {
                     this.showShareInfo(json.data);

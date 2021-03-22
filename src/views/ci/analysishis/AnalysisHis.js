@@ -37,7 +37,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_ci_analysisList({
+            this.$$api_uci_analysisList({
                 data: {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,

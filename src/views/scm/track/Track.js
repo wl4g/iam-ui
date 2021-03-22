@@ -136,7 +136,7 @@ export default {
       if(environmentId==""||clusterId==""){
         return;
       }
-      this.$$api_erm_instances({
+      this.$$api_cmdb_instances({
         data: {
           clusterId: clusterId,
           envType: environmentId
@@ -147,7 +147,7 @@ export default {
       })
     },
     getGroup() {
-      this.$$api_erm_clusters({
+      this.$$api_cmdb_clusters({
         fn: json => {
             this.groupData = json.data.clusters;
         },

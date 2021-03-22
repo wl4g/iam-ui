@@ -138,7 +138,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.dealPackageName();
-                    this.$$api_dts_saveProject({
+                    this.$$api_lcdp_saveProject({
                         data: this.saveForm,
                         fn: json => {
                             this.back();
@@ -154,7 +154,7 @@ export default {
             });
         },
         getDatasources() {
-            this.$$api_dts_getDatabaseForSelect({
+            this.$$api_lcdp_getDatabaseForSelect({
                 data: {},
                 fn: json => {
                     this.datasources = json.data;
@@ -168,7 +168,7 @@ export default {
             this.saveForm.packageName = this.saveForm.organType + '.' + this.saveForm.organName + '.' + this.saveForm.projectName;
         },
         editData() {
-            this.$$api_dts_projectDetail({
+            this.$$api_lcdp_projectDetail({
                 data: {
                     id: this.saveForm.id,
                 },
@@ -194,14 +194,14 @@ export default {
             this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:codegen:project')})
         },
         getGenProviderSet() {
-            this.$$api_dts_getGenProviderSet({
+            this.$$api_lcdp_getGenProviderSet({
                 fn: json => {
                     this.genProviderSet = json.data;
                 },
             })
         },
         extraOptions() {
-            this.$$api_dts_extraOptions({
+            this.$$api_lcdp_extraOptions({
                 data: {
                     providerSet: this.saveForm.providerSet,
                 },

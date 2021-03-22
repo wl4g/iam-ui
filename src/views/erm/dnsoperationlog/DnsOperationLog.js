@@ -68,7 +68,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_idcList({
+            this.$$api_cmdb_idcList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -103,7 +103,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveIdc({
+                    this.$$api_cmdb_saveIdc({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -126,7 +126,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_idcDetail({
+            this.$$api_cmdb_idcDetail({
                 data: {
                     id: row.id,
                 },
@@ -148,7 +148,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delIdc({
+                this.$$api_cmdb_delIdc({
                     data: {
                         id: row.id,
                     },

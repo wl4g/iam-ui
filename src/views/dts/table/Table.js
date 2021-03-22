@@ -60,7 +60,7 @@ export default {
         // 获取列表数据
         getData() {
             this.tmetadataLoading = true;
-            this.$$api_dts_genConfigList({
+            this.$$api_lcdp_genConfigList({
                 data: {
                     tableName: this.searchParams.tableName,
                     projectId: this.projectId,
@@ -87,7 +87,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_delGenConfig({
+                this.$$api_lcdp_delGenConfig({
                     data: {
                         id: row.id,
                     },
@@ -112,7 +112,7 @@ export default {
         },
 
         setGenTableStatus(row) {
-            this.$$api_dts_setTableEnable({
+            this.$$api_lcdp_setTableEnable({
                 data: {
                     id: row.id,
                     status: row.status,
@@ -140,7 +140,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_syncGenTableConfig({
+                this.$$api_lcdp_syncGenTableConfig({
                     data: {
                         id: row.id,
                         force: force,
@@ -161,7 +161,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_dts_generate({
+            this.$$api_lcdp_generate({
                 data: {
                     id: row.id,
                 },
@@ -179,7 +179,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_generate({
+                this.$$api_lcdp_generate({
                     data: {
                         id: row.id,
                     },

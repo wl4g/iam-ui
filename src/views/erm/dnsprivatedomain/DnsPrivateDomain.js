@@ -63,7 +63,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dnsPrivateDomainList({
+            this.$$api_cmdb_dnsPrivateDomainList({
                 data: {
                     zone: this.searchParams.zone,
                     pageNum: this.pageNum,
@@ -94,7 +94,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveDnsPrivateDomain({
+                    this.$$api_cmdb_saveDnsPrivateDomain({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -117,7 +117,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dnsPrivateDomainDetail({
+            this.$$api_cmdb_dnsPrivateDomainDetail({
                 data: {
                     id: row.id,
                 },
@@ -139,7 +139,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDnsPrivateDomain({
+                this.$$api_cmdb_delDnsPrivateDomain({
                     data: {
                         id: row.id,
                     },

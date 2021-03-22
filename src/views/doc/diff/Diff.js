@@ -40,7 +40,7 @@ export default {
             if(!this.file1 || !this.file2){
                 return;
             }
-            this.$$api_doc_fileCompareWith({
+            this.$$api_udm_fileCompareWith({
                 data: {
                     oldChangesId: this.file1,
                     newChangesId: this.file2
@@ -58,7 +58,7 @@ export default {
             })
         },
         getChanges(){
-            this.$$api_doc_getHistoryByDocCode({
+            this.$$api_udm_getHistoryByDocCode({
                 data: {
                     docCode: this.docCode
                 },

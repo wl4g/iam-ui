@@ -65,7 +65,7 @@ export default {
 
         // project detail
         getProjectById() {
-            this.$$api_vcs_getProjectById({
+            this.$$api_urm_getProjectById({
                 data: {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
@@ -77,7 +77,7 @@ export default {
         },
 
         getBranchs() {
-            this.$$api_vcs_getBranchs({
+            this.$$api_urm_getBranchs({
                 data: {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
@@ -89,7 +89,7 @@ export default {
         },
 
         getTags() {
-            this.$$api_vcs_getTags({
+            this.$$api_urm_getTags({
                 data: {
                     vcsId: this.searchParams.vcsId,
                     projectId: this.searchParams.projectId,
@@ -126,7 +126,7 @@ export default {
         },
 
         createBranch() {
-            this.$$api_vcs_createBranch({
+            this.$$api_urm_createBranch({
                 data: this.newBranchForm,
                 fn: json => {
                     this.getBranchs();
@@ -137,7 +137,7 @@ export default {
         },
 
         createTag() {
-            this.$$api_vcs_createTag({
+            this.$$api_urm_createTag({
                 data: this.newTagForm,
                 fn: json => {
                     this.getTags();

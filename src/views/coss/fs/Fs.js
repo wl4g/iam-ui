@@ -135,7 +135,7 @@ export default {
         getData() {
             this.total = 4;
             this.loading = true;
-            this.$$api_coss_listObjects({
+            this.$$api_uos_listObjects({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     prefix: this.currentPath + this.searchParams.prefix,
@@ -155,7 +155,7 @@ export default {
 
 
         getListBuckets() {
-            this.$$api_coss_listBuckets({
+            this.$$api_uos_listBuckets({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     marker: null,//TODO
@@ -322,7 +322,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$$api_coss_deleteObject({
+                this.$$api_uos_deleteObject({
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: this.searchParams.bucketName,
@@ -341,7 +341,7 @@ export default {
         },
 
         getACLs() {
-            this.$$api_coss_getACLs({
+            this.$$api_uos_getACLs({
                 data: {},
                 fn: json => {
                     this.acls = json.data;
@@ -356,7 +356,7 @@ export default {
                 realAcl: '',
                 key: '',
             },
-                this.$$api_coss_getObjectAcl({
+                this.$$api_uos_getObjectAcl({
                     data: {
                         cossProvider: this.searchParams.cossProvider,
                         bucketName: this.searchParams.bucketName,
@@ -390,7 +390,7 @@ export default {
         },
 
         setAcl() {
-            this.$$api_coss_setObjectAcl({
+            this.$$api_uos_setObjectAcl({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.searchParams.bucketName,
@@ -411,7 +411,7 @@ export default {
                 expireSec: 32400,
             };
             this.shareData = {};
-            this.$$api_coss_getObject({
+            this.$$api_uos_getObject({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.searchParams.bucketName,
@@ -432,7 +432,7 @@ export default {
         },
 
         createDir() {
-            this.$$api_coss_createDir({
+            this.$$api_uos_createDir({
                 data: {
                     bucketName: this.searchParams.bucketName,
                     currentPath: this.currentPath,
@@ -528,7 +528,7 @@ export default {
             this.detailData.metadata.param = {};
             this.detailData.metadata.param.cossProvider = this.searchParams.cossProvider;
             this.detailData.metadata.userMetadata = map;
-            this.$$api_coss_putObjectMetaData({
+            this.$$api_uos_putObjectMetaData({
                 data: this.detailData.metadata,
                 fn: json => {
                     this.$message({
@@ -542,7 +542,7 @@ export default {
         },
 
         copyObject(row) {
-            this.$$api_coss_copyObject({
+            this.$$api_uos_copyObject({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     sourceBucketName: this.searchParams.bucketName,
@@ -560,7 +560,7 @@ export default {
         },
 
         moveObject(row) {
-            this.$$api_coss_moveObject({
+            this.$$api_uos_moveObject({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     sourceBucketName: this.searchParams.bucketName,
@@ -601,7 +601,7 @@ export default {
 
             let presigned = this.isPresigned();
 
-            this.$$api_coss_shareObject({
+            this.$$api_uos_shareObject({
                 data: {
                     cossProvider: this.searchParams.cossProvider,
                     bucketName: this.searchParams.bucketName,
@@ -644,7 +644,7 @@ export default {
             }else{
                 this.selectObjectContentData.recordDelimiter = this.selectObjectContentData.recordDelimiter1;
             }
-            this.$$api_coss_selectObjectContent({
+            this.$$api_uos_selectObjectContent({
                 data: this.selectObjectContentData,
                 fn: json => {
                     this.selectObjectContentData.result = json.data;

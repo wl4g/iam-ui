@@ -131,7 +131,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_erm_clusters({
+            this.$$api_cmdb_clusters({
                 fn: json => {
                     this.groupData = json.data.clusters;
                 }
@@ -301,7 +301,7 @@ export default {
 
         getlog(start, end, isAppend, queryList, limit) {
             let _self = this;
-            this.$$api_erm_getlog({
+            this.$$api_cmdb_getlog({
                 data: {
                     queryList: queryList,
                     level: _self.formInline.loglevle,

@@ -124,7 +124,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_hostList({
+            this.$$api_cmdb_hostList({
                 data: {
                     name: this.searchParams.name,
                     hostname: this.searchParams.hostname,
@@ -156,7 +156,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveHost({
+                    this.$$api_cmdb_saveHost({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -179,7 +179,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_hostDetail({
+            this.$$api_cmdb_hostDetail({
                 data: {
                     id: row.id,
                 },
@@ -195,7 +195,7 @@ export default {
         },
 
         getIdcForSelect() {
-            this.$$api_erm_getIdcForSelect({
+            this.$$api_cmdb_getIdcForSelect({
                 data: {},
                 fn: json => {
                     this.idcs = json.data;
@@ -203,7 +203,7 @@ export default {
             });
         },
         getSshForSelect() {
-            this.$$api_erm_getSshForSelect({
+            this.$$api_cmdb_getSshForSelect({
                 data: {},
                 fn: json => {
                     this.sshs = [];
@@ -227,7 +227,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delHost({
+                this.$$api_cmdb_delHost({
                     data: {
                         id: row.id,
                     },
@@ -254,7 +254,7 @@ export default {
         },
 
         testConnecting() {
-            this.$$api_erm_connectTest({
+            this.$$api_cmdb_connectTest({
                 data: {
                     hostId: this.testConnect.hostId,
                     sshId: this.testConnect.sshId,

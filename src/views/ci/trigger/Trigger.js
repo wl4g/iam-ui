@@ -121,7 +121,7 @@ export default {
             this.dialogTitle = '编辑';
             this.dialogLoading = false;
 
-            this.$$api_ci_triggerDetail({
+            this.$$api_uci_triggerDetail({
                 data: {
                     id: row.id,
                 },
@@ -156,7 +156,7 @@ export default {
                 end = this.getDate(this.searchParams.endDate);
             }
 
-            this.$$api_ci_triggerList({
+            this.$$api_uci_triggerList({
                 data: {
                     id: this.searchParams.id,
                     name: this.searchParams.name,
@@ -187,7 +187,7 @@ export default {
 
         // 获取分组名称
         getProject() {
-            this.$$api_ci_getProjectBySelect({
+            this.$$api_uci_getProjectBySelect({
                 data: {
                     isBoot: 1
                 },
@@ -201,7 +201,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_saveTrigger({
+                    this.$$api_uci_saveTrigger({
                         data: {
                             id: this.saveForm.id,
                             appClusterId: this.saveForm.group,
@@ -253,7 +253,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_delTrigger({
+                this.$$api_uci_delTrigger({
                     data: {
                         id: row.id,
                     },
@@ -269,7 +269,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_erm_clusters({
+            this.$$api_cmdb_clusters({
                 fn: json => {
                     this.groupData = json.data.clusters;
                 }
@@ -278,7 +278,7 @@ export default {
 
 
         checkCron() {
-            this.$$api_ci_checkCron({
+            this.$$api_uci_checkCron({
                 data: {
                     expression: this.saveForm.cron,
                     numTimes: 5,
@@ -298,7 +298,7 @@ export default {
             if(!this.saveForm.group){
                 return;
             }
-            this.$$api_ci_getPipesByAppClusterId({
+            this.$$api_uci_getPipesByAppClusterId({
                 data: {
                     clusterId: this.saveForm.group,
                 },

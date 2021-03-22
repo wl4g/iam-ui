@@ -66,7 +66,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dockerClusterList({
+            this.$$api_cmdb_dockerClusterList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -97,7 +97,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveDockerCluster({
+                    this.$$api_cmdb_saveDockerCluster({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -120,7 +120,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dockerClusterDetail({
+            this.$$api_cmdb_dockerClusterDetail({
                 data: {
                     id: row.id,
                 },
@@ -136,7 +136,7 @@ export default {
         },
 
         allHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -162,7 +162,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDockerCluster({
+                this.$$api_cmdb_delDockerCluster({
                     data: {
                         id: row.id,
                     },

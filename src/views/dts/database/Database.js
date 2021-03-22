@@ -87,7 +87,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_dts_databaseList({
+            this.$$api_lcdp_databaseList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -123,7 +123,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_dts_saveDatabase({
+                    this.$$api_lcdp_saveDatabase({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -146,7 +146,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_dts_databaseDetail({
+            this.$$api_lcdp_databaseDetail({
                 data: {
                     id: row.id,
                 },
@@ -168,7 +168,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_delDatabase({
+                this.$$api_lcdp_delDatabase({
                     data: {
                         id: row.id,
                     },
@@ -187,7 +187,7 @@ export default {
 
         testConnectDb(row) {
             if (!row || !row.id) {
-                this.$$api_dts_testConnectDb({
+                this.$$api_lcdp_testConnectDb({
                     data: this.saveForm,
                     fn: json => {
                         this.$message({
@@ -197,7 +197,7 @@ export default {
                     },
                 });
             }else{
-                this.$$api_dts_testConnectDb({
+                this.$$api_lcdp_testConnectDb({
                     data: {
                         id: row.id,
                     },

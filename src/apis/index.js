@@ -9,15 +9,15 @@ import system from './system/'
 import scm from './scm/'
 import historic from './historic/'
 import track from './track/'
-import ci from './ci/'
+import uci from './uci/'
 import umc from './umc/'
-import erm from './erm/'
+import cmdb from './cmdb/'
 import iam from './iam/'
-import doc from './doc/'
-import coss from './coss/'
-import vcs from './vcs/'
+import udm from './udm/'
+import uos from './uos/'
+import urm from './urm/'
 import gw from './gw/'
-import dts from './dts/'
+import lcdp from './lcdp/'
 
 export default [
     {
@@ -41,40 +41,40 @@ export default [
         name: '版本管理',
         list: track
     }, {
-        module: 'ci',
+        module: 'uci',
         name: '部署管理',
-        list: ci
+        list: uci
     }, {
         module: 'umc',
         name: '部署管理',
         list: umc
     }, {
-        module: 'erm',
+        module: 'cmdb',
         name: '公共管理',
-        list: erm
+        list: cmdb
     }, {
         module: 'iam',
         name: '权限管理',
         list: iam
     }, {
-        module: 'doc',
+        module: 'udm',
         name: '文档管理',
-        list: doc
+        list: udm
     }, {
-        module: 'coss',
+        module: 'uos',
         name: '文件系统',
-        list: coss
+        list: uos
     }, {
-        module: 'vcs',
+        module: 'urm',
         name: '文件系统',
-        list: vcs
+        list: urm
     }, {
         module: 'gw',
         name: '文件系统',
         list: gw
     }, {
-        module: 'dts',
+        module: 'lcdp',
         name: '开发者套件',
-        list: dts
+        list: lcdp
     }
 ]

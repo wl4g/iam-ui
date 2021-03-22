@@ -139,7 +139,7 @@ export default {
 
         detailRefresh() {
             let that = this;
-            this.$$api_ci_pipeHisDetail({
+            this.$$api_uci_pipeHisDetail({
                 data: {
                     pipeHisId: this.taskHisId,
                 },
@@ -152,7 +152,7 @@ export default {
 
         detail(id) {
             let that = this;
-            this.$$api_ci_pipeHisDetail({
+            this.$$api_uci_pipeHisDetail({
                 data: {
                     pipeHisId: id,
                 },
@@ -204,7 +204,7 @@ export default {
         readLog(taskHisId) {
             console.debug("read log taskHisId=" + taskHisId + " pipeHisReadLog=" + this.startPos);
             let that = this;
-            this.$$api_ci_pipeHisReadLog({
+            this.$$api_uci_pipeHisReadLog({
                 data: {
                     pipeHisId: taskHisId,
                     startPos: that.startPos + 1,
@@ -290,7 +290,7 @@ export default {
 
         readDetailLog(instanceId) {
             var that = this;
-            this.$$api_ci_pipeHisReadDetailLog({
+            this.$$api_uci_pipeHisReadDetailLog({
                 data: {
                     pipeHisId: this.taskHisId,
                     instanceId: instanceId,

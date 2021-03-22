@@ -86,7 +86,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_pcmList({
+            this.$$api_uci_pcmList({
                 data: {
                     name: this.searchParams.name,
                     providerKind: this.searchParams.providerKind,
@@ -123,7 +123,7 @@ export default {
 
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_savePcm({
+                    this.$$api_uci_savePcm({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -145,7 +145,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_pcmDetail({
+            this.$$api_uci_pcmDetail({
                 data: {
                     id: row.id,
                 },
@@ -178,7 +178,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_delPcm({
+                this.$$api_uci_delPcm({
                     data: {
                         id: row.id,
                     },

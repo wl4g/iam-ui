@@ -38,7 +38,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_clusterList({
+            this.$$api_cmdb_clusterList({
                 data: {
                     clusterName: this.searchParams.clusterName,
                     deployType: this.searchParams.deployType,
@@ -76,7 +76,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delCluster({
+                this.$$api_cmdb_delCluster({
                     data: {
                         clusterId: row.id,
                     },

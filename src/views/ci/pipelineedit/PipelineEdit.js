@@ -234,7 +234,7 @@ export default {
 
         // 获取分组名称
         getClusters() {
-            this.$$api_erm_clusters({
+            this.$$api_cmdb_clusters({
                 fn: json => {
                     this.clusterData = json.data.clusters;
                 },
@@ -249,7 +249,7 @@ export default {
             if (!environment || environment == "" || !clusterId || clusterId == "") {
                 return;
             }
-            this.$$api_erm_instances({
+            this.$$api_cmdb_instances({
                 data: {
                     clusterId: clusterId,
                     envType: environment
@@ -302,7 +302,7 @@ export default {
             this.loading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_savePipeline({
+                    this.$$api_uci_savePipeline({
                         data: this.saveForm,
                         fn: json => {
                             this.loading = false;
@@ -365,7 +365,7 @@ export default {
 
         pipelineDetail() {
             this.isEdit = true;
-            this.$$api_ci_pipelineDetail({
+            this.$$api_uci_pipelineDetail({
                 data: {
                     id: this.saveForm.id,
                 },
@@ -421,7 +421,7 @@ export default {
             if (this.saveForm.clusterId == '') {
                 return;
             }
-            this.$$api_ci_getProjectByAppClusterId({
+            this.$$api_uci_getProjectByAppClusterId({
                 data: {
                     clusterId: this.saveForm.clusterId,
                 },
@@ -435,7 +435,7 @@ export default {
             if (!this.saveForm.clusterId) {
                 return
             }
-            this.$$api_ci_getPipeStepBuilding({
+            this.$$api_uci_getPipeStepBuilding({
                 data: {
                     pipeId: this.saveForm.id,
                     clusterId: this.saveForm.clusterId,
@@ -452,7 +452,7 @@ export default {
         },
 
         getPcm() {
-            this.$$api_ci_pcmAll({
+            this.$$api_uci_pcmAll({
                 fn: json => {
                     this.pcmData = json.data;
                 },
@@ -476,7 +476,7 @@ export default {
             this.getProjectsByPcmId();
         },
         getProjectsByPcmId() {
-            this.$$api_ci_getProjectsByPcmId({
+            this.$$api_uci_getProjectsByPcmId({
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
@@ -486,7 +486,7 @@ export default {
             })
         },
         getPcmStatuses() {
-            this.$$api_ci_getPcmStatuses({
+            this.$$api_uci_getPcmStatuses({
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
@@ -496,7 +496,7 @@ export default {
             })
         },
         getPcmTrackers() {
-            this.$$api_ci_getPcmTrackers({
+            this.$$api_uci_getPcmTrackers({
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
@@ -506,7 +506,7 @@ export default {
             })
         },
         getPcmPriorities() {
-            this.$$api_ci_getPcmPriorities({
+            this.$$api_uci_getPcmPriorities({
                 data: {
                     pcmId: this.saveForm.pipeStepPcm.pcmId,
                 },
@@ -528,7 +528,7 @@ export default {
 
 
         getApiRepositorys(){
-            this.$$api_doc_enterpriseProjectList({
+            this.$$api_udm_enterpriseProjectList({
                 data: {
                     pageNum: 1,
                     pageSize: 100,
@@ -540,7 +540,7 @@ export default {
         },
 
         getApiVersions(repositoryId){
-            this.$$api_doc_enterpriseProjectVersionList({
+            this.$$api_udm_enterpriseProjectVersionList({
                 data: {
                     pageNum: 1,
                     pageSize: 100,
@@ -553,7 +553,7 @@ export default {
         },
 
         getApiModules(versionId){
-            this.$$api_doc_enterpriseApiModuleList({
+            this.$$api_udm_enterpriseApiModuleList({
                 data: {
                     pageNum: 1,
                     pageSize: 100,

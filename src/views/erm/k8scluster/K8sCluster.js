@@ -67,7 +67,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_k8sClusterList({
+            this.$$api_cmdb_k8sClusterList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -99,7 +99,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveK8sCluster({
+                    this.$$api_cmdb_saveK8sCluster({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -122,7 +122,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_k8sClusterDetail({
+            this.$$api_cmdb_k8sClusterDetail({
                 data: {
                     id: row.id,
                 },
@@ -138,7 +138,7 @@ export default {
         },
 
         allHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -164,7 +164,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delK8sCluster({
+                this.$$api_cmdb_delK8sCluster({
                     data: {
                         id: row.id,
                     },

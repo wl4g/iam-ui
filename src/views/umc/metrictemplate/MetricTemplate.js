@@ -82,7 +82,7 @@ export default {
 
         // 获取列表数据
         getAllHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 data: {},
                 fn: json => {
                     this.allHost = json.data;

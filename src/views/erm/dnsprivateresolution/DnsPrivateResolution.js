@@ -74,7 +74,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dnsPrivateResolutionList({
+            this.$$api_cmdb_dnsPrivateResolutionList({
                 data: {
                     domainId: this.searchParams.domainId,
                     host: this.searchParams.host,
@@ -111,7 +111,7 @@ export default {
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     this.saveForm.domainId = this.searchParams.domainId;
-                    this.$$api_erm_saveDnsPrivateResolution({
+                    this.$$api_cmdb_saveDnsPrivateResolution({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -134,7 +134,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dnsPrivateResolutionDetail({
+            this.$$api_cmdb_dnsPrivateResolutionDetail({
                 data: {
                     id: row.id,
                 },
@@ -156,7 +156,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDnsPrivateResolution({
+                this.$$api_cmdb_delDnsPrivateResolution({
                     data: {
                         id: row.id,
                     },

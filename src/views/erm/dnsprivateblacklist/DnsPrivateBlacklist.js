@@ -63,7 +63,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dnsPrivateBlacklistList({
+            this.$$api_cmdb_dnsPrivateBlacklistList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -95,7 +95,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveDnsPrivateBlacklist({
+                    this.$$api_cmdb_saveDnsPrivateBlacklist({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -118,7 +118,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dnsPrivateBlacklistDetail({
+            this.$$api_cmdb_dnsPrivateBlacklistDetail({
                 data: {
                     id: row.id,
                 },
@@ -140,7 +140,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDnsPrivateBlacklist({
+                this.$$api_cmdb_delDnsPrivateBlacklist({
                     data: {
                         id: row.id,
                     },

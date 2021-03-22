@@ -39,7 +39,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_doc_shareList({
+            this.$$api_udm_shareList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -66,7 +66,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_cancelShare({
+                this.$$api_udm_cancelShare({
                     data: {
                         id: row.id,
                     },

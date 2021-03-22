@@ -119,7 +119,7 @@
         methods: {
 
             getTreeFiles(){
-                this.$$api_doc_getTreeFiles({
+                this.$$api_udm_getTreeFiles({
                     data: {
                         subPath: this.subPath
                     },
@@ -358,7 +358,7 @@
 
             //==================== 操作事件(start) ====================
             addDir(path){
-                this.$$api_doc_addDir({
+                this.$$api_udm_addDir({
                     data: {
                         subPath: this.subPath,
                         path: path
@@ -377,7 +377,7 @@
             },
 
             addFile(path){
-                this.$$api_doc_addFile({
+                this.$$api_udm_addFile({
                     data: {
                         subPath: this.subPath,
                         path: path
@@ -396,7 +396,7 @@
             },
 
             renameFile(path, toPath){
-                this.$$api_doc_renameFile({
+                this.$$api_udm_renameFile({
                     data: {
                         subPath: this.subPath,
                         path: path,
@@ -418,7 +418,7 @@
 
             del(path){
                 //console.info(note,data)
-                this.$$api_doc_delFile({
+                this.$$api_udm_delFile({
                     data: {
                         subPath: this.subPath,
                         path: path

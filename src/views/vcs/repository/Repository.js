@@ -100,7 +100,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_vcs_vcsList({
+            this.$$api_urm_vcsList({
                 data: {
                     name: this.searchParams.name,
                     providerKind: this.searchParams.providerKind,
@@ -139,7 +139,7 @@ export default {
 
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_vcs_saveVcs({
+                    this.$$api_urm_saveVcs({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -161,7 +161,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_vcs_vcsDetail({
+            this.$$api_urm_vcsDetail({
                 data: {
                     id: row.id,
                 },
@@ -195,7 +195,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_vcs_delVcs({
+                this.$$api_urm_delVcs({
                     data: {
                         id: row.id,
                     },

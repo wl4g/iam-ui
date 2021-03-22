@@ -65,7 +65,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_doc_labelList({
+            this.$$api_udm_labelList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -93,7 +93,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveLabel({
+                    this.$$api_udm_saveLabel({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -115,7 +115,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_doc_labelDetail({
+            this.$$api_udm_labelDetail({
                 data: {
                     id: row.id,
                 },
@@ -141,7 +141,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delLabel({
+                this.$$api_udm_delLabel({
                     data: {
                         id: row.id,
                     },

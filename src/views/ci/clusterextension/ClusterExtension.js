@@ -65,7 +65,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_clusterExtensionList({
+            this.$$api_uci_clusterExtensionList({
                 data: {
                     clusterName: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -89,7 +89,7 @@ export default {
 
 
         saveData(row) {
-            this.$$api_ci_saveClusterExtension({
+            this.$$api_uci_saveClusterExtension({
                 data: {
                     id: row.id,
                     clusterId: row.clusterId,

@@ -99,7 +99,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_orchestrationList({
+            this.$$api_uci_orchestrationList({
                 data: {
                     name: this.searchParams.name,
                 },
@@ -129,7 +129,7 @@ export default {
 
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_saveOrchestration({
+                    this.$$api_uci_saveOrchestration({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -152,7 +152,7 @@ export default {
                 return;
             }
             this.getPipelines();
-            this.$$api_ci_orchestrationDetail({
+            this.$$api_uci_orchestrationDetail({
                 data: {
                     id: row.id,
                 },
@@ -185,7 +185,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_delOrchestration({
+                this.$$api_uci_delOrchestration({
                     data: {
                         id: row.id,
                     },
@@ -204,7 +204,7 @@ export default {
 
         // 获取列表数据
         getPipelines() {
-            this.$$api_ci_getPipelineForSelect({
+            this.$$api_uci_getPipelineForSelect({
                 data: {
                     environment: this.saveForm.environment
                 },
@@ -250,7 +250,7 @@ export default {
                 cancelButtonText: 'No',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_runOrchestration({
+                this.$$api_uci_runOrchestration({
                     data: {
                         id: row.id,
                     },
@@ -324,7 +324,7 @@ export default {
             this.saveLoading = true;
             this.$refs['confirmForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_runOrchestration({
+                    this.$$api_uci_runOrchestration({
                         data: this.confirmForm,
                         fn: json => {
                             this.getData();
@@ -356,7 +356,7 @@ export default {
             this.getIssues();
         },
         getUsers() {
-            this.$$api_ci_getUsers({
+            this.$$api_uci_getUsers({
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
@@ -366,7 +366,7 @@ export default {
             })
         },
         getProjects() {
-            this.$$api_ci_getPcmProjects({
+            this.$$api_uci_getPcmProjects({
                 data: {
                     pcmId: this.confirmForm.pcmId
                 },
@@ -376,7 +376,7 @@ export default {
             })
         },
         getIssues() {
-            this.$$api_ci_getIssues({
+            this.$$api_uci_getIssues({
                 data: {
                     pcmId: this.confirmForm.pcmId,
                     userId: this.confirmForm.userId,

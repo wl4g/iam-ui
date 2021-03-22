@@ -50,7 +50,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_dts_projectList({
+            this.$$api_lcdp_projectList({
                 data: {
                     projectName: this.searchParams.projectName,
                     pageNum: this.pageNum,
@@ -86,7 +86,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_dts_delProject({
+                this.$$api_lcdp_delProject({
                     data: {
                         id: row.id,
                     },
@@ -112,7 +112,7 @@ export default {
                 return;
             }
             row.generating = true;
-            this.$$api_dts_generate({
+            this.$$api_lcdp_generate({
                 data: {
                     id: row.id,
                 },

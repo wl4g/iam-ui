@@ -58,7 +58,7 @@ export default {
             this.loading = true;
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseTeamList({
+            this.$$api_udm_enterpriseTeamList({
                 data: this.searchParams,
                 fn: json => {
                     this.loading = false;
@@ -81,7 +81,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveEnterpriseTeam({
+                    this.$$api_udm_saveEnterpriseTeam({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -103,7 +103,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_doc_enterpriseTeamDetail({
+            this.$$api_udm_enterpriseTeamDetail({
                 data: {
                     id: row.id,
                 },
@@ -123,7 +123,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseTeam({
+                this.$$api_udm_delEnterpriseTeam({
                     data: {
                         id: row.id,
                     },

@@ -113,7 +113,7 @@ export default {
 
         //获取主机列表
         getAllHost() {
-            this.$$api_erm_allHost({
+            this.$$api_cmdb_allHost({
                 fn: json => {
                     this.allHost = json.data;
                 }
@@ -122,7 +122,7 @@ export default {
 
 
         connectTest(row){
-            this.$$api_erm_connectTest({
+            this.$$api_cmdb_connectTest({
                 data: {
                     hostId: row.hostId,
                     sshUser: row.sshUser,
@@ -141,7 +141,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveCluster({
+                    this.$$api_cmdb_saveCluster({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -160,7 +160,7 @@ export default {
         },
 
         dataDetail(id) {
-            this.$$api_erm_clusterDetail({
+            this.$$api_cmdb_clusterDetail({
                 data: {
                     id: id,
                 },
@@ -182,7 +182,7 @@ export default {
         },
 
         getSshs() {
-            this.$$api_erm_getSshForSelect({
+            this.$$api_cmdb_getSshForSelect({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -193,7 +193,7 @@ export default {
         },
 
         getDockerRepositorys() {
-            this.$$api_erm_getDockerRepositoryForSelect({
+            this.$$api_cmdb_getDockerRepositoryForSelect({
                 data: {},
                 fn: json => {
                     if(json.data){
@@ -211,7 +211,7 @@ export default {
 
         getRepositoryProjects(repositoryId, address, name, cb){
             this.searchRepositoryProjectsLoading = true;
-            this.$$api_erm_getRepositoryProjects({
+            this.$$api_cmdb_getRepositoryProjects({
                 data: {
                     id: repositoryId,
                     address: address,

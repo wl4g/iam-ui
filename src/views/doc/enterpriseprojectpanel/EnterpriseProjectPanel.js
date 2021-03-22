@@ -65,7 +65,7 @@ export default {
             this.loading = true;
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseGroupList({
+            this.$$api_udm_enterpriseGroupList({
                 data: this.searchParams,
                 fn: json => {
                     this.loading = false;
@@ -86,7 +86,7 @@ export default {
             this.dialogLoading = true;
             this.$refs['groupSaveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveEnterpriseGroup({
+                    this.$$api_udm_saveEnterpriseGroup({
                         data: this.groupSaveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -113,7 +113,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_doc_enterpriseGroupDetail({
+            this.$$api_udm_enterpriseGroupDetail({
                 data: {
                     id: item.id,
                 },
@@ -133,7 +133,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseGroup({
+                this.$$api_udm_delEnterpriseGroup({
                     data: {
                         id: item.id,
                     },
@@ -185,7 +185,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveEnterpriseProject({
+                    this.$$api_udm_saveEnterpriseProject({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -207,7 +207,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_doc_enterpriseProjectDetail({
+            this.$$api_udm_enterpriseProjectDetail({
                 data: {
                     id: row.id,
                 },
@@ -227,7 +227,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseProject({
+                this.$$api_udm_delEnterpriseProject({
                     data: {
                         id: row.id,
                     },

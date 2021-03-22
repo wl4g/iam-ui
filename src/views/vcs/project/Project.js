@@ -62,7 +62,7 @@ export default {
 
         // 获取列表数据
         getData() {
-            this.$$api_vcs_getProjects({
+            this.$$api_urm_getProjects({
                 data: {
                     vcsId: this.searchParams.vscId,
                     groupId: this.searchParams.groupId,
@@ -81,7 +81,7 @@ export default {
         },
 
         getGroups() {
-            this.$$api_vcs_getGroups({
+            this.$$api_urm_getGroups({
                 data: {
                     id: this.searchParams.vscId,
                     groupName: this.searchParams.groupName,

@@ -62,7 +62,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_erm_dnsPublicDomainList({
+            this.$$api_cmdb_dnsPublicDomainList({
                 data: {
                     name: this.searchParams.name,
                     pageNum: this.pageNum,
@@ -92,7 +92,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_erm_saveDnsPublicDomain({
+                    this.$$api_cmdb_saveDnsPublicDomain({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -115,7 +115,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_erm_dnsPublicDomainDetail({
+            this.$$api_cmdb_dnsPublicDomainDetail({
                 data: {
                     id: row.id,
                 },
@@ -137,7 +137,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_erm_delDnsPublicDomain({
+                this.$$api_cmdb_delDnsPublicDomain({
                     data: {
                         id: row.id,
                     },

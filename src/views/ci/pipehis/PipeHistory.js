@@ -135,7 +135,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_pipeHisList({
+            this.$$api_uci_pipeHisList({
                 data: {
                     clusterName: this.searchParams.groupName,
                     pipeName: this.searchParams.pipeName,
@@ -241,7 +241,7 @@ export default {
                 cancelButtonText: 'cancel',
                 type: 'info'
             }).then(() => {
-                this.$$api_ci_stopTask({
+                this.$$api_uci_stopTask({
                     data: {
                         pipeHisId: id,
                     },
@@ -267,7 +267,7 @@ export default {
                 type: 'warning'
             }).then(() => {
 
-                this.$$api_ci_rollbackPipeHis({
+                this.$$api_uci_rollbackPipeHis({
                     data: {
                         pipeHisId: row.id,
                     },

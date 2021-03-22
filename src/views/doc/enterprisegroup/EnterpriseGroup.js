@@ -58,7 +58,7 @@ export default {
             this.loading = true;
             this.searchParams.pageNum = this.pageNum;
             this.searchParams.pageSize = this.pageSize;
-            this.$$api_doc_enterpriseGroupList({
+            this.$$api_udm_enterpriseGroupList({
                 data: this.searchParams,
                 fn: json => {
                     this.loading = false;
@@ -81,7 +81,7 @@ export default {
             this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_doc_saveEnterpriseGroup({
+                    this.$$api_udm_saveEnterpriseGroup({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -103,7 +103,7 @@ export default {
                 return;
             }
             this.cleanSaveForm();
-            this.$$api_doc_enterpriseGroupDetail({
+            this.$$api_udm_enterpriseGroupDetail({
                 data: {
                     id: row.id,
                 },
@@ -123,7 +123,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_doc_delEnterpriseGroup({
+                this.$$api_udm_delEnterpriseGroup({
                     data: {
                         id: row.id,
                     },

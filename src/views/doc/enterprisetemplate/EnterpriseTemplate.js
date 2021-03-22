@@ -69,7 +69,7 @@ export default {
         openFile(path){
             console.info(path)
             this.path = path;
-            this.$$api_doc_getFileInfo({
+            this.$$api_udm_getFileInfo({
                 data: {
                     subPath: this.subPath,
                     path: path,
@@ -92,7 +92,7 @@ export default {
 
         saveFile(){
             let content = this.aceEditor.getValue();
-            this.$$api_doc_saveFile({
+            this.$$api_udm_saveFile({
                 data: {
                     subPath: this.subPath,
                     path: this.path,

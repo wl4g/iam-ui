@@ -119,7 +119,7 @@ export default {
 
         // 获取分组名称
         getVcs() {
-            this.$$api_vcs_vcsAll({
+            this.$$api_urm_vcsAll({
                 fn: json => {
                     this.vcsData = json.data;
                     if(this.vcsData && this.vcsData[0] && !this.saveForm.vcsId){
@@ -131,7 +131,7 @@ export default {
 
         // 获取分组名称
         getProject() {
-            this.$$api_ci_getProjectBySelect({
+            this.$$api_uci_getProjectBySelect({
                 fn: json => {
                     this.ProjectData = json.data.list;
                 },
@@ -157,7 +157,7 @@ export default {
             if (!row.id) {
                 return;
             }
-            this.$$api_ci_projectDetail({
+            this.$$api_uci_projectDetail({
                 data: {
                     id: row.id,
                 },
@@ -181,7 +181,7 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_ci_projectList({
+            this.$$api_uci_projectList({
                 data: {
                     groupName: this.searchParams.groupName,
                     projectName: this.searchParams.projectName,
@@ -201,7 +201,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-            this.$$api_erm_clusters({
+            this.$$api_cmdb_clusters({
                 fn: json => {
                     this.groupData = json.data.clusters;
                     //this.saveForm.appClusterId = this.appClusterId;
@@ -214,7 +214,7 @@ export default {
 
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_ci_saveProject({
+                    this.$$api_uci_saveProject({
                         data: {
                             id: this.saveForm.id,
                             appClusterId: this.saveForm.appClusterId,
@@ -280,7 +280,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_delProject({
+                this.$$api_uci_delProject({
                     data: {
                         id: row.id,
                     },
@@ -318,7 +318,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_ci_unlock({
+                this.$$api_uci_unlock({
                     data: {
                         id: row.id,
                     },
@@ -348,7 +348,7 @@ export default {
 
         remoteMethod(query) {
             this.searchProjectLoading = true;
-            this.$$api_vcs_vcsProjects({
+            this.$$api_urm_vcsProjects({
                 data: {
                     vcsId: this.saveForm.vcsId,
                     projectName: query,

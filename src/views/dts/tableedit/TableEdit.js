@@ -140,7 +140,7 @@ export default {
             if (!this.saveForm.projectId) {
                 return;
             }
-            this.$$api_dts_findTables({
+            this.$$api_lcdp_findTables({
                 data: { projectId: this.saveForm.projectId },
                 fn: json => {
                     this.tables = json.data;
@@ -195,7 +195,7 @@ export default {
         },
         loadGenColumns() {
             this.loadGenColumnsLoading = true;
-            this.$$api_dts_loadGenColumns({
+            this.$$api_lcdp_loadGenColumns({
                 data: {
                     projectId: this.saveForm.projectId,
                     tableName: this.saveForm.tableName,
@@ -244,7 +244,7 @@ export default {
             this.saveLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_dts_saveGenConfig({
+                    this.$$api_lcdp_saveGenConfig({
                         data: this.saveForm,
                         fn: json => {
                             this.saveLoading = false;
@@ -260,7 +260,7 @@ export default {
             });
         },
         editData() {
-            this.$$api_dts_genConfigDetail({
+            this.$$api_lcdp_genConfigDetail({
                 data: {
                     tableId: this.saveForm.id,
                 },
@@ -289,7 +289,7 @@ export default {
             this.dialogTitle = 'Edit';
         },
         tableExtraOptions() {
-            this.$$api_dts_tableExtraOptions({
+            this.$$api_lcdp_tableExtraOptions({
                 data: {
                     providerSet: this.saveForm.providerSet,
                 },
@@ -328,7 +328,7 @@ export default {
         },
         // 获取AttrTypes
         getAttrTypes() {
-            this.$$api_dts_getAttrTypes({
+            this.$$api_lcdp_getAttrTypes({
                 data: { projectId: this.saveForm.projectId },
                 fn: json => {
                     this.attrTypes = json.data;
