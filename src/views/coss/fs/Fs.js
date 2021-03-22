@@ -36,7 +36,7 @@ export default {
 
             uploadDialog: false,
             fileList: [],
-            uploadUrl: global.getBaseUrl(global.coss, false) + '/webservice/putObject',
+            uploadUrl: global.getBaseUrl(global.uos, false) + '/webservice/putObject',
             uploadData: {
                 cossProvider: '',
                 bucketName: '',
