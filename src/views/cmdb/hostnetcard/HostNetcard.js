@@ -1,14 +1,13 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'metricTemplate',
+    name: 'host',
     data() {
         return {
             //查询条件
             searchParams: {
+                hostId: '',
                 name: '',
-                metric: '',
-                classify: '',
             },
 
             //分页信息
@@ -19,12 +18,18 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
+                hostId: '',
                 name: '',
-                metric: '',
-                classify: '',
-                notifyLevel: '',
-                tagMap: [],
-                rules: [],
+                vpnTunnelType: '',
+                openvpnTunnelId: '',
+                pptpTunnelId: '',
+                ipv4: '',
+                ipv6: '',
+                hwaddr: '',
+                netmask: '',
+                broadcast: '',
+                getway: '',
+
             },
 
             dialogVisible: false,
@@ -32,13 +37,33 @@ export default {
             dialogLoading: false,
 
             tableData: [],
+
+            openvpns: [],
+            pptps: [],
+            hosts: [],
+
+            // 表单规则
+            rules: {
+                name: [
+                    {required: true, message: 'Please Input name', trigger: 'blur'},
+                    {min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur'}
+                ],
+                hostId: [{required: true, message: 'Please Select Host', trigger: 'change'},],
+                ipv4: [{required: true, message: 'Please Input ipv4', trigger: 'change'},],
+            },
             loading: false
         }
     },
 
     mounted() {
-        this.getData();
+        this.allHost();
+    },
 
+    activated() {
+        if (this.$route.query.id) {
+            this.searchParams.hostId = this.$route.query.id;
+        }
+        this.getData();
     },
 
     methods: {
@@ -55,17 +80,18 @@ export default {
         addData() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add Host Netcard information';
+
+            this.saveForm.hostId = this.searchParams.hostId;
         },
 
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_umc_metricList({
+            this.$$api_cmdb_netcardList({
                 data: {
                     name: this.searchParams.name,
-                    metric: this.searchParams.metric,
-                    classify: this.searchParams.classify,
+                    hostId: this.searchParams.hostId,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -80,38 +106,28 @@ export default {
             })
         },
 
-        // 获取列表数据
-        getAllHost() {
-            this.$$api_cmdb_allHost({
-                data: {},
-                fn: json => {
-                    this.allHost = json.data;
-                }
-            })
-        },
-
-        addCollector() {
-            this.cleanSaveForm();
-            this.dialogVisible = true;
-            this.dialogTitle = '新增';
-        },
-
         cleanSaveForm() {
-            this.saveForm = {};
-            /*this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.metric = '';
-            this.saveForm.classify = '';
-            this.saveForm.notifyLevel = '';
-            this.saveForm.tagMap = [];
-            this.saveForm.rules = [];*/
+            this.saveForm = {
+                id: '',
+                hostId: '',
+                name: '',
+                vpnTunnelType: '',
+                openvpnTunnelId: '',
+                pptpTunnelId: '',
+                ipv4: '',
+                ipv6: '',
+                hwaddr: '',
+                netmask: '',
+                broadcast: '',
+                getway: '',
+            };
         },
 
         saveData() {
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_umc_saveMetric({
+                    this.$$api_cmdb_saveNetcard({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -123,47 +139,54 @@ export default {
                             this.dialogLoading = false;
                         }
                     });
-                }else {
+                } else {
                     this.dialogLoading = false;
                 }
             });
-        },
-
-        convertClassifyValue(value){
-            console.debug("convertClassifyValue:"+value);
-            if (value == 1) {
-                return 'basic';
-            }
-            if (value == 2) {
-                return 'docker';
-            }
-            if (value == 3) {
-                return 'redis';
-            }
-            if (value == 4) {
-                return 'kafka';
-            }
-            if (value == 5) {
-                return 'zookeeper';
-            }
-            return '--';
         },
 
         editData(row) {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_metricDetail({
+            this.cleanSaveForm();
+            this.$$api_cmdb_netcardDetail({
                 data: {
                     id: row.id,
                 },
                 fn: json => {
                     this.saveForm = json.data;
-                }
+                    this.saveForm.vpnTunnelType = json.data.vpnTunnelType.toString();
+                },
             });
-
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Configure Host NetCard';
+        },
+
+        getHostTunnelByType() {
+            this.$$api_cmdb_getHostTunnel({
+                data: {},
+                fn: json => {
+                    this.saveForm = json.data;
+                    if (json.data.openvpn) {
+                        this.openvpns = json.data.openvpn;
+                    }
+                    if (json.data.pptp) {
+                        this.pptps = json.data.pptp;
+                    }
+                },
+            });
+        },
+
+        allHost() {
+            this.$$api_cmdb_allHost({
+                data: {},
+                fn: json => {
+                    if (json.data) {
+                        this.hosts = json.data;
+                    }
+                },
+            });
         },
 
 
@@ -176,7 +199,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_umc_delMetric({
+                this.$$api_cmdb_delNetcard({
                     data: {
                         id: row.id,
                     },
@@ -186,13 +209,17 @@ export default {
                             type: 'success'
                         });
                         this.getData();
-                    }
+                    },
                 })
             }).catch(() => {
                 //do nothing
             });
-
         },
+
+        back() {
+            this.$router.push({path: this.permitutil.getRoutePathByPermission('cmdb:host')})
+        }
+
 
     }
 }

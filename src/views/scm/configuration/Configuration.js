@@ -264,7 +264,7 @@ export default {
               return;
             }
           }
-          this.$$api_erm_instances({
+          this.$$api_cmdb_instances({
             data: {
               clusterId: clusterId,
               envType: environmentId
@@ -289,7 +289,7 @@ export default {
 
         // 获取分组名称
         getGroup() {
-          this.$$api_erm_clusters({
+          this.$$api_cmdb_clusters({
             fn: json => {
                 this.groupData = json.data.clusters;
             }

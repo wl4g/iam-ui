@@ -7,23 +7,23 @@ import Login from './login/'
 import Home from './home/'
 import Umc from './umc'
 import Scm from './scm/'
-import Ci from './ci'
+import Uci from './uci'
 import Iam from './iam'
-import Erm from './erm'
-import Doc from './doc'
-import Coss from './coss'
-import Vcs from './vcs'
+import Cmdb from './cmdb'
+import Udm from './udm'
+import Uos from './uos'
+import Urm from './urm'
 
 export {
     Init,
     Login,
     Home,
     Scm,
-    Ci,
+    Uci,
     Umc,
     Iam,
-    Erm,
-    Doc,
-    Coss,
-    Vcs
+    Cmdb,
+    Udm,
+    Uos,
+    Urm
 }

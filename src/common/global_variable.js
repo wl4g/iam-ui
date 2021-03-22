@@ -31,8 +31,8 @@ export default {
     udm: {
         cluster: 'udm-manager',
     },
-    coss: {
-        cluster: 'coss-manager',
+    uos: {
+        cluster: 'uos-manager',
     },
     urm: {
         cluster: 'urm-manager',
@@ -40,8 +40,8 @@ export default {
     gw: {
         cluster: 'gateway-manager',
     },
-    udc: {
-        cluster: 'udc-manager',
+    lcdp: {
+        cluster: 'lcdp-manager',
     },
     // 'standalone' mode definition.
     standaloneIamWeb: {

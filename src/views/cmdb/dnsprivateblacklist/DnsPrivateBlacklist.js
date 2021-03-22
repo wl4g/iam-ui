@@ -1,14 +1,12 @@
 import {transDate, getDay} from 'utils/'
 
 export default {
-    name: 'metricTemplate',
+    name: 'host',
     data() {
         return {
             //查询条件
             searchParams: {
-                name: '',
-                metric: '',
-                classify: '',
+                expression: '',
             },
 
             //分页信息
@@ -19,12 +17,10 @@ export default {
             //弹窗表单
             saveForm: {
                 id: '',
-                name: '',
-                metric: '',
-                classify: '',
-                notifyLevel: '',
-                tagMap: [],
-                rules: [],
+                expression: '',
+                type: '',
+                remark: '',
+                enable: 1,
             },
 
             dialogVisible: false,
@@ -32,13 +28,19 @@ export default {
             dialogLoading: false,
 
             tableData: [],
+
+            // 表单规则
+            rules: {
+                expression: [
+                    {required: true, message: 'Please Input name', trigger: 'blur' },
+                ],
+            },
             loading: false
         }
     },
 
     mounted() {
         this.getData();
-
     },
 
     methods: {
@@ -55,17 +57,15 @@ export default {
         addData() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add Host Netcard information';
         },
 
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_umc_metricList({
+            this.$$api_cmdb_dnsPrivateBlacklistList({
                 data: {
                     name: this.searchParams.name,
-                    metric: this.searchParams.metric,
-                    classify: this.searchParams.classify,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -80,38 +80,22 @@ export default {
             })
         },
 
-        // 获取列表数据
-        getAllHost() {
-            this.$$api_cmdb_allHost({
-                data: {},
-                fn: json => {
-                    this.allHost = json.data;
-                }
-            })
-        },
-
-        addCollector() {
-            this.cleanSaveForm();
-            this.dialogVisible = true;
-            this.dialogTitle = '新增';
-        },
-
         cleanSaveForm() {
-            this.saveForm = {};
-            /*this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.metric = '';
-            this.saveForm.classify = '';
-            this.saveForm.notifyLevel = '';
-            this.saveForm.tagMap = [];
-            this.saveForm.rules = [];*/
+            this.saveForm = {
+                id: '',
+                expression: '',
+                type: '',
+                remark: '',
+                enable: 1,
+            };
         },
 
         saveData() {
             this.dialogLoading = true;
+            this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_umc_saveMetric({
+                    this.$$api_cmdb_saveDnsPrivateBlacklist({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -129,41 +113,21 @@ export default {
             });
         },
 
-        convertClassifyValue(value){
-            console.debug("convertClassifyValue:"+value);
-            if (value == 1) {
-                return 'basic';
-            }
-            if (value == 2) {
-                return 'docker';
-            }
-            if (value == 3) {
-                return 'redis';
-            }
-            if (value == 4) {
-                return 'kafka';
-            }
-            if (value == 5) {
-                return 'zookeeper';
-            }
-            return '--';
-        },
-
         editData(row) {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_metricDetail({
+            this.cleanSaveForm();
+            this.$$api_cmdb_dnsPrivateBlacklistDetail({
                 data: {
                     id: row.id,
                 },
                 fn: json => {
                     this.saveForm = json.data;
-                }
+                },
             });
-
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Configure Host NetCard';
         },
 
 
@@ -176,7 +140,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_umc_delMetric({
+                this.$$api_cmdb_delDnsPrivateBlacklist({
                     data: {
                         id: row.id,
                     },
@@ -186,13 +150,19 @@ export default {
                             type: 'success'
                         });
                         this.getData();
-                    }
+                    },
                 })
             }).catch(() => {
                 //do nothing
             });
-
         },
+
+        back(){
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('cmdb:dnsprivatedomain') })
+        }
+
+
+
 
     }
 }

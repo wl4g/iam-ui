@@ -1,44 +1,65 @@
 import {transDate, getDay} from 'utils/'
+import de from "element-ui/src/locale/lang/de";
 
 export default {
-    name: 'metricTemplate',
+    name: 'database',
     data() {
         return {
             //查询条件
             searchParams: {
                 name: '',
-                metric: '',
-                classify: '',
             },
-
             //分页信息
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
             //弹窗表单
             saveForm: {
                 id: '',
                 name: '',
-                metric: '',
-                classify: '',
-                notifyLevel: '',
-                tagMap: [],
-                rules: [],
+                type: '',
+                host: '',
+                port: '',
+                database: '',
+                username: '',
+                password: '',
+                remark: '',
             },
-
             dialogVisible: false,
             dialogTitle: '',
             dialogLoading: false,
-
             tableData: [],
+            // 表单规则
+            rules: {
+                name: [
+                    {required: true, message: 'Please Input name', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                type: [
+                    {required: true, message: 'DbType is requires', trigger: 'blur' },
+                ],
+                host: [
+                    {required: true, message: 'DbHost is requires', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                port: [
+                    {required: true, message: 'DbPort is requires', trigger: 'blur' },
+                ],
+                database: [
+                    {required: true, message: 'DbName is requires', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+                username: [
+                    {required: true, message: 'DbUsername is requires', trigger: 'blur' },
+                    { min: 1, max: 30, message: 'length between 1 to 30', trigger: 'blur' }
+                ],
+            },
             loading: false
         }
     },
 
     mounted() {
         this.getData();
-
     },
 
     methods: {
@@ -55,17 +76,20 @@ export default {
         addData() {
             this.cleanSaveForm();
             this.dialogVisible = true;
-            this.dialogTitle = '新增';
+            this.dialogTitle = 'Add';
+        },
+
+        openDataSourceEdit(row) {
+            //TODO ??
+            this.$router.push({ path: this.permitutil.getRoutePathByPermission('udc:codegen:database'), query: { id: row.id } })
         },
 
         // 获取列表数据
         getData() {
             this.loading = true;
-            this.$$api_umc_metricList({
+            this.$$api_lcdp_databaseList({
                 data: {
                     name: this.searchParams.name,
-                    metric: this.searchParams.metric,
-                    classify: this.searchParams.classify,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -80,38 +104,26 @@ export default {
             })
         },
 
-        // 获取列表数据
-        getAllHost() {
-            this.$$api_cmdb_allHost({
-                data: {},
-                fn: json => {
-                    this.allHost = json.data;
-                }
-            })
-        },
-
-        addCollector() {
-            this.cleanSaveForm();
-            this.dialogVisible = true;
-            this.dialogTitle = '新增';
-        },
-
         cleanSaveForm() {
-            this.saveForm = {};
-            /*this.saveForm.id = '';
-            this.saveForm.name = '';
-            this.saveForm.metric = '';
-            this.saveForm.classify = '';
-            this.saveForm.notifyLevel = '';
-            this.saveForm.tagMap = [];
-            this.saveForm.rules = [];*/
+            this.saveForm = {
+                id: '',
+                name: '',
+                type: '',
+                host: '',
+                port: '',
+                database: '',
+                username: '',
+                password: '',
+                remark: '',
+            };
         },
 
         saveData() {
             this.dialogLoading = true;
+            this.saveForm.hostId = this.searchParams.hostId;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
-                    this.$$api_umc_saveMetric({
+                    this.$$api_lcdp_saveDatabase({
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
@@ -129,41 +141,21 @@ export default {
             });
         },
 
-        convertClassifyValue(value){
-            console.debug("convertClassifyValue:"+value);
-            if (value == 1) {
-                return 'basic';
-            }
-            if (value == 2) {
-                return 'docker';
-            }
-            if (value == 3) {
-                return 'redis';
-            }
-            if (value == 4) {
-                return 'kafka';
-            }
-            if (value == 5) {
-                return 'zookeeper';
-            }
-            return '--';
-        },
-
         editData(row) {
             if (!row.id) {
                 return;
             }
-            this.$$api_umc_metricDetail({
+            this.cleanSaveForm();
+            this.$$api_lcdp_databaseDetail({
                 data: {
                     id: row.id,
                 },
                 fn: json => {
                     this.saveForm = json.data;
-                }
+                },
             });
-
             this.dialogVisible = true;
-            this.dialogTitle = '编辑';
+            this.dialogTitle = 'Edit';
         },
 
 
@@ -176,7 +168,7 @@ export default {
                 cancelButtonText: 'Cancel',
                 type: 'warning'
             }).then(() => {
-                this.$$api_umc_delMetric({
+                this.$$api_lcdp_delDatabase({
                     data: {
                         id: row.id,
                     },
@@ -186,13 +178,40 @@ export default {
                             type: 'success'
                         });
                         this.getData();
-                    }
+                    },
                 })
             }).catch(() => {
                 //do nothing
             });
-
         },
+
+        testConnectDb(row) {
+            if (!row || !row.id) {
+                this.$$api_lcdp_testConnectDb({
+                    data: this.saveForm,
+                    fn: json => {
+                        this.$message({
+                            message: 'Connect Success',
+                            type: 'success'
+                        });
+                    },
+                });
+            }else{
+                this.$$api_lcdp_testConnectDb({
+                    data: {
+                        id: row.id,
+                    },
+                    fn: json => {
+                        this.$message({
+                            message: 'Connect Success',
+                            type: 'success'
+                        });
+                    },
+                });
+            }
+        },
+
+
 
     }
 }
