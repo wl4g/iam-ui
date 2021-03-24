@@ -43,6 +43,9 @@ export default {
     lcdp: {
         cluster: 'lcdp-manager',
     },
+    uds: {
+        cluster: 'uds-manager',
+    },
     // 'standalone' mode definition.
     standaloneIamWeb: {
         cluster: 'iam-web',

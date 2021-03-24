@@ -9,9 +9,9 @@ export default {
             pageTitle = target.displayName;
         }
         if (pageTitle) {
-            return pageTitle + ' - XCloud DevOps'
+            return pageTitle + ' - XCloud DevOps PaaS Platform'
         } else {
-            return 'XCloud DevOps'
+            return 'XCloud DevOps PaaS Platform'
         }
     },
     getDisplayByLang(lang) {

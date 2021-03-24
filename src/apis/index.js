@@ -18,6 +18,7 @@ import uos from './uos/'
 import urm from './urm/'
 import gw from './gw/'
 import lcdp from './lcdp/'
+import uds from './uds/'
 
 export default [
     {
@@ -76,5 +77,9 @@ export default [
         module: 'lcdp',
         name: '开发者套件',
         list: lcdp
+    }, {
+        module: 'uds',
+        name: 'uds',
+        list: uds
     }
 ]

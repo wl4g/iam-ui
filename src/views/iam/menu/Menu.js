@@ -138,12 +138,14 @@ export default {
     },
     watch: {
         isDynamicMenu: function (newValue, oldValue) {
-            this.$refs.menuForm.clearValidate();
-            if (newValue) {
-                this.asyncRoutePathRule = {required: true, message: 'Please input routePath', trigger: 'blur'};
-            } else {
-                this.asyncRoutePathRule = {};
-            }
+            this.$nextTick(()=>{
+                this.$refs.menuForm.clearValidate();
+                if (newValue) {
+                    this.asyncRoutePathRule = {required: true, message: 'Please input routePath', trigger: 'blur'};
+                } else {
+                    this.asyncRoutePathRule = {};
+                }
+            })
         }
     },
     computed: {
