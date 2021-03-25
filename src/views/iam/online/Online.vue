@@ -6,7 +6,7 @@
                     <el-option
                             v-for="item in iamServers"
                             :key="item.id"
-                            :label="item.displayName+'-'+item.envType"
+                            :label="item.appName+'-'+item.envType"
                             :value="item.id">
                     </el-option>
                 </el-select>
