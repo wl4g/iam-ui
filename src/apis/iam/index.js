@@ -139,21 +139,21 @@ export default [
     {
         name: 'onlineList',
         method: 'onlineList',
-        path: '/mgr/v1/getSessions',
+        path: '/mgr/v2/getSessions',
         type: 'post',
         sysModule: global.iam
     },
     {
         name: 'getIamServer',
         method: 'getIamServer',
-        path: '/mgr/v1/findIamServers',
+        path: '/mgr/v2/getIamServers',
         type: 'post',
         sysModule: global.iam
     },
     {
         name: 'destroySessions',
         method: 'destroySessions',
-        path: '/mgr/v1/destroySessions',
+        path: '/mgr/v2/destroySessions',
         type: 'post',
         sysModule: global.iam
     },
