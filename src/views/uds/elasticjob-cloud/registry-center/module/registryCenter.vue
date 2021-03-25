@@ -203,17 +203,26 @@ export default {
       this.tableData = data.splice(val - 1, this.pageSize)
     },
     getRegCenter() {
-      API.getRegCenter().then(res => {
-        const data = res.model
-        this.total = data.length
-        this.cloneTableData = clone(res.model)
-        this.tableData = data.splice(0, this.pageSize)
+      this.$$api_uds_getRegCenter({
+        data: {},
+        fn: json => {
+          let res = json.data
+          const data = res.model
+          this.total = data.length
+          this.cloneTableData = clone(res.model)
+          this.tableData = data.splice(0, this.pageSize)
+        }
       })
+
       this.getRegCenterActivated()
     },
     getRegCenterActivated() {
-      API.getRegCenterActivated().then(res => {
-        this.setRegCenterActivated(res.model.name)
+      this.$$api_uds_getRegCenterActivated({
+        data: {},
+        fn: json => {
+          let res = json.data
+          this.setRegCenterActivated(res.model.name)
+        }
       })
     },
     handleConnect(row) {
@@ -227,13 +236,16 @@ export default {
         const params = {
           name: row.name
         }
-        API.postRegCenterConnect(params).then(res => {
-          this.$notify({
-            title: this.$t('elasticjob.common').notify.title,
-            message: this.$t('elasticjob.common').notify.conSucMessage,
-            type: 'success'
-          })
-          this.getRegCenter()
+        this.$$api_uds_postRegCenterConnect({
+          data: params,
+          fn: json => {
+            this.$notify({
+              title: this.$t('elasticjob.common').notify.title,
+              message: this.$t('elasticjob.common').notify.conSucMessage,
+              type: 'success'
+            })
+            this.getRegCenter()
+          }
         })
       }
     },
@@ -241,26 +253,31 @@ export default {
       const params = {
         name: row.name
       }
-      API.deleteRegCenter(params).then(res => {
-        this.$notify({
-          title: this.$t('elasticjob.common').notify.title,
-          message: this.$t('elasticjob.common').notify.delSucMessage,
-          type: 'success'
-        })
-        this.getRegCenter()
+      this.$$api_uds_deleteRegCenter({
+        data: params,
+        fn: json => {
+          this.$notify({
+            title: this.$t('elasticjob.common').notify.title,
+            message: this.$t('elasticjob.common').notify.delSucMessage,
+            type: 'success'
+          })
+        }
       })
     },
     onConfirm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          API.postRegCenter(this.form).then(res => {
-            this.addDialogVisible = false
-            this.$notify({
-              title: this.$t('elasticjob.common').notify.title,
-              message: this.$t('elasticjob.common').notify.addSucMessage,
-              type: 'success'
-            })
-            this.getRegCenter()
+          this.$$api_uds_postRegCenter({
+            data: this.form,
+            fn: json => {
+              this.addDialogVisible = false
+              this.$notify({
+                title: this.$t('elasticjob.common').notify.title,
+                message: this.$t('elasticjob.common').notify.addSucMessage,
+                type: 'success'
+              })
+              this.getRegCenter()
+            }
           })
         } else {
           console.log('error submit!!')

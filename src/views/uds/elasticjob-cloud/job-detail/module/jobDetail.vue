@@ -313,19 +313,25 @@ export default {
       var params = {
         jobName: this.jobName
       }
-      API.getJobDetail(params).then(res => {
-        const data = clone(res.model)
-        data.props = data.props || {}
-        if (data.props['streaming.process'] === 'true') {
-          data.streamingProcess = true
-        } else if (!data.props['streaming.process'] || data.props['streaming.process'] === 'false') {
-          data.streamingProcess = false
-        } else {
-          data.streamingProcess = true
-        }
 
-        this.detailModel = data
+      this.$$api_uds_getJobDetail({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = clone(res.model)
+          data.props = data.props || {}
+          if (data.props['streaming.process'] === 'true') {
+            data.streamingProcess = true
+          } else if (!data.props['streaming.process'] || data.props['streaming.process'] === 'false') {
+            data.streamingProcess = false
+          } else {
+            data.streamingProcess = true
+          }
+
+          this.detailModel = data
+        }
       })
+
     },
     search() {
       this.getJobDetail()

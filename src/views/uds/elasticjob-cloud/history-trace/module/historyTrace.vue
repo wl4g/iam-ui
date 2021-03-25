@@ -164,17 +164,25 @@ export default {
         per_page: this.pageSize,
         page: val
       }
-      API.loadExecution(Object.assign(this.searchForm, page)).then(res => {
-        const data = res.model.rows
-        this.total = res.model.total
-        this.tableData = data
+      this.$$api_uds_loadExecution({
+        data: Object.assign(this.searchForm, page),
+        fn: json => {
+          let res = json.data
+          const data = res.model.rows
+          this.total = res.model.total
+          this.tableData = data
+        }
       })
     },
     getJobTrace() {
-      API.loadExecution(this.searchForm).then(res => {
-        const data = res.model.rows
-        this.total = res.model.total
-        this.tableData = data
+      this.$$api_uds_loadExecution({
+        data: this.searchForm,
+        fn: json => {
+          let res = json.data
+          const data = res.model.rows
+          this.total = res.model.total
+          this.tableData = data
+        }
       })
     }
   }

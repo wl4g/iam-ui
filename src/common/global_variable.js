@@ -51,7 +51,7 @@ export default {
         cluster: 'iam-web',
     },
     standaloneDevOpsServer: {
-        cluster: 'dopaas-server',
+        cluster: 'standalone-dopaas',
     },
     getBaseUrl: function (sysModule) {
         if (!sysModule) { return null; }

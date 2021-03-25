@@ -437,12 +437,17 @@ export default {
     getJobConfig() {
       var params = {
       }
-      API.getJobConfig(params).then(res => {
-        const data = Array.prototype.filter.call(res.model, this.filterSearchData)
-        this.total = data.length
-        this.cloneTableData = clone(data)
-        this.tableData = data.splice(this.pageSize * (this.currentPage - 1), this.pageSize)
+      this.$$api_uds_getJobConfig({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = Array.prototype.filter.call(res.model, this.filterSearchData)
+          this.total = data.length
+          this.cloneTableData = clone(data)
+          this.tableData = data.splice(this.pageSize * (this.currentPage - 1), this.pageSize)
+        }
       })
+
     },
     filterSearchData(model) {
       if (!this.searchForm.jobName) {
@@ -480,21 +485,26 @@ export default {
       const params = {
         jobName: row.jobName
       }
-      API.getJobDetail(params).then(res => {
-        const data = res.model
-        data.props = data.props || {}
-        if (data.props['streaming.process'] === 'true') {
-          data.streamingProcess2 = true
-        } else if (!data.props['streaming.process'] || data.props['streaming.process'] === 'false') {
-          data.streamingProcess2 = false
-        } else {
-          data.streamingProcess2 = true
+      this.$$api_uds_getJobDetail({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = res.model
+          data.props = data.props || {}
+          if (data.props['streaming.process'] === 'true') {
+            data.streamingProcess2 = true
+          } else if (!data.props['streaming.process'] || data.props['streaming.process'] === 'false') {
+            data.streamingProcess2 = false
+          } else {
+            data.streamingProcess2 = true
+          }
+          this.editTitle = this.$t('elasticjob.jobConfig').labelInfo.editTitle
+          data.editMode = true
+          this.editForm = data
+          this.modifyDialogVisible = true
         }
-        this.editTitle = this.$t('elasticjob.jobConfig').labelInfo.editTitle
-        data.editMode = true
-        this.editForm = data
-        this.modifyDialogVisible = true
       })
+
     },
     handleDetail(row) {
       const params = {
@@ -507,39 +517,50 @@ export default {
       const params = {
         jobName: row.jobName
       }
-      API.enableJob(params).then(res => {
-        this.$notify({
-          title: this.$t('elasticjob.common').notify.title,
-          message: this.$t('elasticjob.common').notify.actionSucMessage,
-          type: 'success'
-        })
-        this.search()
+      this.$$api_uds_loadExecution({
+        data: params,
+        fn: json => {
+          this.$notify({
+            title: this.$t('elasticjob.common').notify.title,
+            message: this.$t('elasticjob.common').notify.actionSucMessage,
+            type: 'success'
+          })
+          this.search()
+        }
       })
+
     },
     handleDisable(row) {
       const params = {
         jobName: row.jobName
       }
-      API.disableJob(params).then(res => {
-        this.$notify({
-          title: this.$t('elasticjob.common').notify.title,
-          message: this.$t('elasticjob.common').notify.actionSucMessage,
-          type: 'success'
-        })
-        this.search()
+      this.$$api_uds_disableJob({
+        data: params,
+        fn: json => {
+          this.$notify({
+            title: this.$t('elasticjob.common').notify.title,
+            message: this.$t('elasticjob.common').notify.actionSucMessage,
+            type: 'success'
+          })
+          this.search()
+        }
       })
+
     },
     handlerRemove(row) {
       const params = {
         jobName: row.jobName
       }
-      API.removeJob(params).then(res => {
-        this.$notify({
-          title: this.$t('elasticjob.common').notify.title,
-          message: this.$t('elasticjob.common').notify.delSucMessage,
-          type: 'success'
-        })
-        this.search()
+      this.$$api_uds_removeJob({
+        data: params,
+        fn: json => {
+          this.$notify({
+            title: this.$t('elasticjob.common').notify.title,
+            message: this.$t('elasticjob.common').notify.delSucMessage,
+            type: 'success'
+          })
+          this.search()
+        }
       })
     },
     onEditConfirm(formName) {
@@ -557,19 +578,24 @@ export default {
 
       this.$refs[formName].validate(valid => {
         if (valid) {
-          API.getAppDetail(params).then(res => {
-            const data = res.model
-            if (!data) {
-              this.$notify({
-                title: this.$t('elasticjob.common').notify.title,
-                message: this.$t('elasticjob.common').notify.appNotRegisterMessage + ':' + params.appName,
-                type: 'error'
-              })
-              return false
-            } else {
-              this.onEditConfirmReal(formName)
+          this.$$api_uds_getAppDetail({
+            data: params,
+            fn: json => {
+              let res = json.data
+              const data = res.model
+              if (!data) {
+                this.$notify({
+                  title: this.$t('elasticjob.common').notify.title,
+                  message: this.$t('elasticjob.common').notify.appNotRegisterMessage + ':' + params.appName,
+                  type: 'error'
+                })
+                return false
+              } else {
+                this.onEditConfirmReal(formName)
+              }
             }
           })
+
         } else {
           if (!params.appName) {
             this.$notify({
@@ -595,24 +621,32 @@ export default {
           }
           //
           if (data.editMode) {
-            API.updateJobConfig(data).then(res => {
-              this.modifyDialogVisible = false
-              this.$notify({
-                title: this.$t('elasticjob.common').notify.title,
-                message: this.$t('elasticjob.common').notify.editSucMessage,
-                type: 'success'
-              })
-              this.search()
+            this.$$api_uds_updateJobConfig({
+              data: data,
+              fn: json => {
+                let res = json.data
+                this.modifyDialogVisible = false
+                this.$notify({
+                  title: this.$t('elasticjob.common').notify.title,
+                  message: this.$t('elasticjob.common').notify.editSucMessage,
+                  type: 'success'
+                })
+                this.search()
+              }
             })
+
           } else {
-            API.addJobConfig(data).then(res => {
-              this.modifyDialogVisible = false
-              this.$notify({
-                title: this.$t('elasticjob.common').notify.title,
-                message: this.$t('elasticjob.common').notify.addSucMessage,
-                type: 'success'
-              })
-              this.search()
+            this.$$api_uds_addJobConfig({
+              data: data,
+              fn: json => {
+                this.modifyDialogVisible = false
+                this.$notify({
+                  title: this.$t('elasticjob.common').notify.title,
+                  message: this.$t('elasticjob.common').notify.addSucMessage,
+                  type: 'success'
+                })
+                this.search()
+              }
             })
           }
         } else {

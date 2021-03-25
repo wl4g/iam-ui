@@ -226,17 +226,25 @@ export default {
         per_page: this.pageSize,
         page: val
       }
-      API.loadStatus(Object.assign(this.searchForm, page)).then(res => {
-        const data = res.model.rows
-        this.total = res.model.total
-        this.tableData = data
+      this.$$api_uds_loadStatus({
+        data: Object.assign(this.searchForm, page),
+        fn: json => {
+          let res = json.data;
+          const data = res.model.rows
+          this.total = res.model.total
+          this.tableData = data
+        }
       })
     },
     getJobStatus() {
-      API.loadStatus(this.searchForm).then(res => {
-        const data = res.model.rows
-        this.total = res.model.total
-        this.tableData = data
+      this.$$api_uds_loadStatus({
+        data: this.searchForm,
+        fn: json => {
+          let res = json.data
+          const data = res.model.rows
+          this.total = res.model.total
+          this.tableData = data
+        }
       })
     }
   }

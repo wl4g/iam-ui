@@ -8,7 +8,7 @@ export default [
         name: 'getApp',
         method: 'getApp',
         path: '/api/app/list',
-        type: 'post',
+        type: 'get',
         sysModule: global.uds
     },{
         name: 'deleteApp',

@@ -290,31 +290,45 @@ export default {
     findAllRunningTasks() {
       var params = {
       }
-      API.findAllRunningTasks(params).then(res => {
-        const data = Array.prototype.filter.call(res.model, this.filterSearchDataRunning)
-        this.totalRunning = data.length
-        this.cloneTableDataRunning = clone(data)
-        this.tableDataRunning = data.splice(this.pageSizeRunning * (this.currentPageRunning - 1), this.pageSizeRunning)
+      this.$$api_uds_findAllRunningTasks({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = Array.prototype.filter.call(res.model, this.filterSearchDataRunning)
+          this.totalRunning = data.length
+          this.cloneTableDataRunning = clone(data)
+          this.tableDataRunning = data.splice(this.pageSizeRunning * (this.currentPageRunning - 1), this.pageSizeRunning)
+        }
       })
+
     },
     findAllReadyTasks() {
       var params = {
       }
-      API.findAllReadyTasks(params).then(res => {
-        const data = Array.prototype.filter.call(res.model, this.filterSearchDataReady)
-        this.totalReady = data.length
-        this.cloneTableDataReady = clone(data)
-        this.tableDataReady = data.splice(this.pageSizeReady * (this.currentPageReady - 1), this.pageSizeReady)
+      this.$$api_uds_findAllReadyTasks({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = Array.prototype.filter.call(res.model, this.filterSearchDataReady)
+          this.totalReady = data.length
+          this.cloneTableDataReady = clone(data)
+          this.tableDataReady = data.splice(this.pageSizeReady * (this.currentPageReady - 1), this.pageSizeReady)
+        }
       })
+
     },
     findAllFailoverTasks() {
       var params = {
       }
-      API.findAllFailoverTasks(params).then(res => {
-        const data = Array.prototype.filter.call(res.model, this.filterSearchDataFailover)
-        this.totalFailover = data.length
-        this.cloneTableDataFailover = clone(data)
-        this.tableDataFailover = data.splice(this.pageSizeFailover * (this.currentPageFailover - 1), this.pageSizeFailover)
+      this.$$api_uds_findAllFailoverTasks({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const data = Array.prototype.filter.call(res.model, this.filterSearchDataFailover)
+          this.totalFailover = data.length
+          this.cloneTableDataFailover = clone(data)
+          this.tableDataFailover = data.splice(this.pageSizeFailover * (this.currentPageFailover - 1), this.pageSizeFailover)
+        }
       })
     },
     filterSearchDataRunning(model) {

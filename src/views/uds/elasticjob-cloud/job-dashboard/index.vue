@@ -124,263 +124,302 @@ export default {
       const params = {
         since: 'last24hours'
       }
-      API.getTasksResults(params).then(res => {
-        const series1 = []
-        const series2 = []
-        if (res.model && res.model.length) {
-          res.model.forEach(item => {
-            series1.push([moment(item.statisticsTime).format('HH:00'), item.successCount])
-            series2.push([moment(item.statisticsTime).format('HH:00'), item.failedCount])
-          })
-        }
-        this.result = {
-          color: this.color,
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend: {
-            data: [this.$t('elasticjob.historyDashboard').jobSuccessCount, this.$t('elasticjob.historyDashboard').jobFailureCount],
-            bottom: 0
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '9%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            name: this.$t('elasticjob.historyDashboard').jobSuccessCount,
-            type: 'line',
-            data: series1
-          }, {
-            name: this.$t('elasticjob.historyDashboard').jobFailureCount,
-            type: 'line',
-            data: series2
-          }]
+      this.$$api_uds_getTasksResults({
+        data: params,
+        fn: json => {
+          let res = json.data
+          const series1 = []
+          const series2 = []
+          if (res.model && res.model.length) {
+            res.model.forEach(item => {
+              series1.push([moment(item.statisticsTime).format('HH:00'), item.successCount])
+              series2.push([moment(item.statisticsTime).format('HH:00'), item.failedCount])
+            })
+          }
+          this.result = {
+            color: this.color,
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              data: [this.$t('elasticjob.historyDashboard').jobSuccessCount, this.$t('elasticjob.historyDashboard').jobFailureCount],
+              bottom: 0
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '9%',
+              containLabel: true
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [{
+              name: this.$t('elasticjob.historyDashboard').jobSuccessCount,
+              type: 'line',
+              data: series1
+            }, {
+              name: this.$t('elasticjob.historyDashboard').jobFailureCount,
+              type: 'line',
+              data: series2
+            }]
+          }
         }
       })
+
     },
     getJobsRunning() {
       const params = {
         since: 'lastWeek'
       }
-      API.getJobsRunning(params).then(res => {
-        API.getTasksRunning(params).then(resp => {
-          if (resp.model && res.model.length) {
-            const jobSeries = []
-            const taskSeries = []
-            if (res.model && res.model.length) {
-              res.model && res.model.forEach(item => {
-                jobSeries.push([moment(item.statisticsTime).format('MM-DD'), item.runningCount])
-              })
+      this.$$api_uds_getJobsRunning({
+        data: params,
+        fn: json => {
+          let res = json.data
+          this.$$api_uds_getTasksRunning({
+            data: params,
+            fn: json => {
+              let resp = json.data
+              if (resp.model && res.model.length) {
+                const jobSeries = []
+                const taskSeries = []
+                if (res.model && res.model.length) {
+                  res.model && res.model.forEach(item => {
+                    jobSeries.push([moment(item.statisticsTime).format('MM-DD'), item.runningCount])
+                  })
+                }
+                if (resp.model && resp.model.length) {
+                  resp.model && resp.model.forEach(item => {
+                    taskSeries.push([moment(item.statisticsTime).format('MM-DD'), item.runningCount])
+                  })
+                }
+                this.running = {
+                  color: this.color,
+                  tooltip: {
+                    trigger: 'axis'
+                  },
+                  legend: {
+                    data: [this.$t('elasticjob.historyDashboard').taskRunningCount, this.$t('elasticjob.historyDashboard').jobRunningCount],
+                    bottom: 0
+                  },
+                  grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                  },
+                  xAxis: {
+                    type: 'category',
+                    boundaryGap: false
+                  },
+                  yAxis: {
+                    type: 'value'
+                  },
+                  series: [{
+                    name: this.$t('elasticjob.historyDashboard').taskRunningCount,
+                    type: 'line',
+                    data: taskSeries
+                  }, {
+                    name: this.$t('elasticjob.historyDashboard').jobRunningCount,
+                    type: 'line',
+                    data: jobSeries
+                  }]
+                }
+              }
+
             }
-            if (resp.model && resp.model.length) {
-              resp.model && resp.model.forEach(item => {
-                taskSeries.push([moment(item.statisticsTime).format('MM-DD'), item.runningCount])
-              })
-            }
-            this.running = {
-              color: this.color,
-              tooltip: {
-                trigger: 'axis'
-              },
-              legend: {
-                data: [this.$t('elasticjob.historyDashboard').taskRunningCount, this.$t('elasticjob.historyDashboard').jobRunningCount],
-                bottom: 0
-              },
-              grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-              },
-              xAxis: {
-                type: 'category',
-                boundaryGap: false
-              },
-              yAxis: {
-                type: 'value'
-              },
-              series: [{
-                name: this.$t('elasticjob.historyDashboard').taskRunningCount,
-                type: 'line',
-                data: taskSeries
-              }, {
-                name: this.$t('elasticjob.historyDashboard').jobRunningCount,
-                type: 'line',
-                data: jobSeries
-              }]
-            }
-          }
-        })
+          })
+        }
       })
     },
     getJobsRegister() {
-      API.getJobsRegister().then(res => {
-        const series = []
-        if (res.model && res.model.length) {
-          res.model && res.model.forEach(item => {
-            series.push([moment(item.statisticsTime).format('HH:mm'), item.registeredCount])
-          })
-        }
-        this.register = {
-          color: this.color,
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend: {
-            data: [this.$t('elasticjob.historyDashboard').currentJobsCount],
-            bottom: 0
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            name: this.$t('elasticjob.historyDashboard').currentJobsCount,
-            type: 'line',
-            data: series
-          }]
+      this.$$api_uds_getJobsRegister({
+        data: {},
+        fn: json => {
+          let res = json.data
+          const series = []
+          if (res.model && res.model.length) {
+            res.model && res.model.forEach(item => {
+              series.push([moment(item.statisticsTime).format('HH:mm'), item.registeredCount])
+            })
+          }
+          this.register = {
+            color: this.color,
+            tooltip: {
+              trigger: 'axis'
+            },
+            legend: {
+              data: [this.$t('elasticjob.historyDashboard').currentJobsCount],
+              bottom: 0
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [{
+              name: this.$t('elasticjob.historyDashboard').currentJobsCount,
+              type: 'line',
+              data: series
+            }]
+          }
         }
       })
+
     },
     getJobsExecutionType() {
-      API.getJobsExecutionType().then(res => {
-        const { model } = res
-        this.executionType = {
-          color: this.color,
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b}<br/>{c}'
-          },
-          series: [
-            {
-              name: 'jobtype',
-              type: 'pie',
-              radius: '35%',
-              center: ['50%', '50%'],
-              data: [
-                { value: model.transientJobCount, name: 'TRANSI', label: { formatter: '{b}:\n' + this.percentage(model.transientJobCount, model.transientJobCount + model.daemonJobCount) }},
-                { value: model.daemonJobCount, name: 'DAEMON', label: { formatter: '{b}:\n' + this.percentage(model.daemonJobCount, model.transientJobCount + model.daemonJobCount) }}
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+      this.$$api_uds_getJobsExecutionType({
+        data: {},
+        fn: json => {
+          let res = json.data
+          const { model } = res
+          this.executionType = {
+            color: this.color,
+            tooltip: {
+              trigger: 'item',
+              formatter: '{b}<br/>{c}'
+            },
+            series: [
+              {
+                name: 'jobtype',
+                type: 'pie',
+                radius: '35%',
+                center: ['50%', '50%'],
+                data: [
+                  { value: model.transientJobCount, name: 'TRANSI', label: { formatter: '{b}:\n' + this.percentage(model.transientJobCount, model.transientJobCount + model.daemonJobCount) }},
+                  { value: model.daemonJobCount, name: 'DAEMON', label: { formatter: '{b}:\n' + this.percentage(model.daemonJobCount, model.transientJobCount + model.daemonJobCount) }}
+                ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
                 }
               }
-            }
-          ]
+            ]
+          }
         }
       })
+
     },
     getTasksPeriod() {
-      API.getTasksPeriod('lastMinute').then(res => {
-        const { model } = res
-        model.successCount = 40
-        model.failedCount = 60
-        this.lastMinute = {
-          color: this.color,
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b}<br/>{c}'
-          },
-          series: [
-            {
-              name: 'lastMinute',
-              type: 'pie',
-              radius: '35%',
-              center: ['50%', '50%'],
-              data: [
-                { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
-                { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+      this.$$api_uds_getTasksPeriod({
+        data: 'lastMinute',
+        fn: json => {
+          let res = json.data
+          const { model } = res
+          model.successCount = 40
+          model.failedCount = 60
+          this.lastMinute = {
+            color: this.color,
+            tooltip: {
+              trigger: 'item',
+              formatter: '{b}<br/>{c}'
+            },
+            series: [
+              {
+                name: 'lastMinute',
+                type: 'pie',
+                radius: '35%',
+                center: ['50%', '50%'],
+                data: [
+                  { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
+                  { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
+                ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
                 }
               }
-            }
-          ]
+            ]
+          }
         }
       })
-      API.getTasksPeriod('lastHour').then(res => {
-        const { model } = res
-        this.lastHour = {
-          color: this.color,
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b}<br/>{c}'
-          },
-          series: [
-            {
-              name: 'lastHour',
-              type: 'pie',
-              radius: '35%',
-              center: ['50%', '50%'],
-              data: [
-                { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
-                { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+
+      this.$$api_uds_getTasksPeriod({
+        data: 'lastHour',
+        fn: json => {
+          let res = json.data
+          const { model } = res
+          this.lastHour = {
+            color: this.color,
+            tooltip: {
+              trigger: 'item',
+              formatter: '{b}<br/>{c}'
+            },
+            series: [
+              {
+                name: 'lastHour',
+                type: 'pie',
+                radius: '35%',
+                center: ['50%', '50%'],
+                data: [
+                  { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
+                  { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
+                ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
                 }
               }
-            }
-          ]
+            ]
+          }
         }
       })
-      API.getTasksPeriod('lastWeek').then(res => {
-        const { model } = res
-        this.lastWeek = {
-          color: this.color,
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b}<br/>{c}'
-          },
-          series: [
-            {
-              name: 'lastWeek',
-              type: 'pie',
-              radius: '35%',
-              center: ['50%', '50%'],
-              data: [
-                { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
-                { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
-              ],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+
+      this.$$api_uds_getTasksPeriod({
+        data: 'lastWeek',
+        fn: json => {
+          let res = json.data
+          const { model } = res
+          this.lastWeek = {
+            color: this.color,
+            tooltip: {
+              trigger: 'item',
+              formatter: '{b}<br/>{c}'
+            },
+            series: [
+              {
+                name: 'lastWeek',
+                type: 'pie',
+                radius: '35%',
+                center: ['50%', '50%'],
+                data: [
+                  { value: model.successCount, name: this.$t('elasticjob.historyDashboard').success, label: { formatter: '{b}:\n' + this.percentage(model.successCount, model.successCount + model.failedCount) }},
+                  { value: model.failedCount, name: this.$t('elasticjob.historyDashboard').failed, label: { formatter: '{b}:\n' + this.percentage(model.failedCount, model.successCount + model.failedCount) }}
+                ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
                 }
               }
-            }
-          ]
+            ]
+          }
         }
       })
+
     },
     percentage(value, count) {
       if (value === 0) {
