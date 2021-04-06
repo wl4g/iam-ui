@@ -7,6 +7,7 @@ import OrganizationPanel from './organization-panel/'
 import AreaSelector from './area-selector/'
 import fsviewer from './fsviewer/'
 import OrganizationSelector from './organization-selector/'
+import ChartBase from './ChartBase/'
 
 export {
   Echarts,
@@ -18,4 +19,5 @@ export {
   AreaSelector,
   fsviewer,
   OrganizationSelector,
+  ChartBase,
 }

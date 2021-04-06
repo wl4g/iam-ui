@@ -19,6 +19,7 @@ import urm from './urm/'
 import gw from './gw/'
 import lcdp from './lcdp/'
 import uds from './uds/'
+import shardingsphere from './shardingsphere/'
 
 export default [
     {
@@ -81,5 +82,9 @@ export default [
         module: 'uds',
         name: 'uds',
         list: uds
+    }, {
+        module: 'shardingsphere',
+        name: 'shardingsphere',
+        list: shardingsphere
     }
 ]
