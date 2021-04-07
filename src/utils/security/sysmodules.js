@@ -129,6 +129,19 @@ function transform2OneChildrenRoutes(list) {
             } else if (item.type == '2') { // 动态菜单
                 item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                 item.component = webView;
+
+                var expression = item.pageLocation;
+                var startIndex = expression.indexOf("${");
+                var endIndex = expression.indexOf("}");
+                if (startIndex >= 0 && endIndex > 0) {
+                    let sysModuleCache = cache.get("iamSysModules");
+                    var internelExp = expression.substring(startIndex + 2, endIndex);
+                    var parts = internelExp.split(".");
+                    var obj1 = parts[0].replaceAll("'", "").replaceAll("\"", ""); // keyof appName
+                    var obj11 = parts[1].replaceAll("'", "").replaceAll("\"", ""); // keyof extranetBaseUri
+                    item.pageLocation = sysModuleCache[obj1][obj11];
+                }
+
                 item.meta = {
                     linkhref: item.pageLocation
                 };
@@ -227,6 +240,19 @@ router.beforeEach(async (to, from, next) => {
                         } else if (item.type == '2') { // 动态菜单路由
                             item.path = item.routePath ? item.routePath : 'webview' + item.nameEn;
                             item.component = webView;
+
+                            var expression = item.pageLocation;
+                            var startIndex = expression.indexOf("${");
+                            var endIndex = expression.indexOf("}");
+                            if (startIndex >= 0 && endIndex > 0) {
+                                let sysModuleCache = cache.get("iamSysModules");
+                                var internelExp = expression.substring(startIndex + 2, endIndex);
+                                var parts = internelExp.split(".");
+                                var obj1 = parts[0].replaceAll("'", "").replaceAll("\"", ""); // keyof appName
+                                var obj11 = parts[1].replaceAll("'", "").replaceAll("\"", ""); // keyof extranetBaseUri
+                                item.pageLocation = sysModuleCache[obj1][obj11];
+                            }
+
                             item.meta = {
                                 linkhref: item.pageLocation
                             }
