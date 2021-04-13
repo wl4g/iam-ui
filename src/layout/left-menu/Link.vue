@@ -20,18 +20,16 @@ export default {
   },
   methods: {
     linkProps(url) {
-
-
-      if(this.item.type == 1){
+      if (this.item.type == 1) {//静态menu
         return {
           is: 'router-link',
           to: url
         }
-      }else{
+      } else if (this.item.type == 2) {//动态menu
         var expression = this.item.pageLocation;
         var startIndex = expression.indexOf("${");
         var endIndex = expression.indexOf("}");
-        //使用 表达式解析
+        // 是否使用表达式解析，否则不改变pageLocation
         if (startIndex >= 0 && endIndex > 0) {
           let sysModuleCache = cache.get("iamSysModules");
           var internelExp = expression.substring(startIndex + 2, endIndex);
