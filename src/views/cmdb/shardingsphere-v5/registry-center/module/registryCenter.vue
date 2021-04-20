@@ -277,7 +277,7 @@ export default {
       this.tableData = data.splice(val - 1, this.pageSize)
     },
     getRegCenter() {
-      this.$$api_shardingsphere_getRegCenter({
+      this.$$api_shardingsphere5_getRegCenter({
         data: {},
         fn: json => {
           const res = json.data;
@@ -293,7 +293,7 @@ export default {
       this.getRegCenterActivated()
     },
     getRegCenterActivated() {
-      this.$$api_shardingsphere_getRegCenterActivated({
+      this.$$api_shardingsphere5_getRegCenterActivated({
         data: {},
         fn: json => {
           const res = json.data;
@@ -316,7 +316,7 @@ export default {
           name: row.name
         }
 
-        this.$$api_shardingsphere_postRegCenterConnect({
+        this.$$api_shardingsphere5_postRegCenterConnect({
           data: params,
           fn: json => {
             const res = json.data;
@@ -338,7 +338,7 @@ export default {
         name: row.name
       }
 
-      this.$$api_shardingsphere_deleteRegCenter({
+      this.$$api_shardingsphere5_deleteRegCenter({
         data: params,
         fn: json => {
           const res = json.data;
@@ -358,7 +358,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
 
-          this.$$api_shardingsphere_postRegCenter({
+          this.$$api_shardingsphere5_postRegCenter({
             data: this.form,
             fn: json => {
               const res = json.data;
@@ -374,7 +374,7 @@ export default {
             }
           })
 
-          this.$$api_shardingsphere_postRegCenter({
+          this.$$api_shardingsphere5_postRegCenter({
             data: this.form,
             fn: json => {
               const res = json.data;
@@ -408,7 +408,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
 
-          this.$$api_shardingsphere_updateRegCenter({
+          this.$$api_shardingsphere5_updateRegCenter({
             data: this.editForm,
             fn: json => {
               const res = json.data;

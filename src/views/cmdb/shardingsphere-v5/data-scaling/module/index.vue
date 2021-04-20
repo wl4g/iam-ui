@@ -467,7 +467,7 @@ export default {
     setServer() {
       if (this.serviceForm.serviceUrl) {
 
-        this.$$api_shardingsphere_postJobServer({
+        this.$$api_shardingsphere5_postJobServer({
           data: this.serviceForm,
           fn: json => {
             const res = json.data;
@@ -494,7 +494,7 @@ export default {
       }
     },
     getJobServer() {
-      this.$$api_shardingsphere_getJobServer({
+      this.$$api_shardingsphere5_getJobServer({
         data: {},
         fn: json => {
           const res = json.data;
@@ -542,7 +542,7 @@ export default {
       this.getSchemaRule(item)
     },
     getSchemaDataSource(schemaName) {
-      this.$$api_shardingsphere_getSchemaDataSource({
+      this.$$api_shardingsphere5_getSchemaDataSource({
         data: schemaName,
         fn: json => {
           const res = json.data;
@@ -557,7 +557,7 @@ export default {
 
     },
     getSchemaRule(schemaName) {
-      this.$$api_shardingsphere_getSchemaRule({
+      this.$$api_shardingsphere5_getSchemaRule({
         data: schemaName,
         fn: json => {
           const res = json.data;
@@ -573,7 +573,7 @@ export default {
       })
     },
     getSchema() {
-      this.$$api_shardingsphere_getSchema({
+      this.$$api_shardingsphere5_getSchema({
         data: {},
         fn: json => {
           const res = json.data;
@@ -588,7 +588,7 @@ export default {
       this.tableData = data.splice((val - 1) * this.pageSize, this.pageSize)
     },
     getJobList() {
-      this.$$api_shardingsphere_getJobList({
+      this.$$api_shardingsphere5_getJobList({
         data: {},
         fn: json => {
           const res = json.data;
@@ -602,7 +602,7 @@ export default {
       })
     },
     handlerStop(row) {
-      this.$$api_shardingsphere_getJobStop({
+      this.$$api_shardingsphere5_getJobStop({
         data: {id: row.jobId},
         fn: json => {
           const res = json.data;
@@ -620,7 +620,7 @@ export default {
     getJobProgress(row) {
       const { jobId, status } = row
 
-      this.$$api_shardingsphere_getJobProgress({
+      this.$$api_shardingsphere5_getJobProgress({
         data: {id: jobId},
         fn: json => {
           const res = json.data;
@@ -670,7 +670,7 @@ export default {
             }
           }
 
-          this.$$api_shardingsphere_getJobStart({
+          this.$$api_shardingsphere5_getJobStart({
             data: params,
             fn: json => {
               const res = json.data;

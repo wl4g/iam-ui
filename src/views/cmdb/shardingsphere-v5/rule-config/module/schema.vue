@@ -241,7 +241,7 @@ export default {
     },
     handlerClick(parent, child) {
       if (child === 'rule') {
-        this.$$api_shardingsphere_getSchemaRule({
+        this.$$api_shardingsphere5_getSchemaRule({
           data: {id: parent},
           fn: json => {
             const res = json.data;
@@ -251,7 +251,7 @@ export default {
           }
         })
       } else if (child === 'datasource') {
-        this.$$api_shardingsphere_getSchemaDataSource({
+        this.$$api_shardingsphere5_getSchemaDataSource({
           data: {id: parent},
           fn: json => {
             const res = json.data;
@@ -261,7 +261,7 @@ export default {
           }
         })
       } else {
-        this.$$api_shardingsphere_getSchemaMetadata({
+        this.$$api_shardingsphere5_getSchemaMetadata({
           data: {id: parent},
           fn: json => {
             const res = json.data;
@@ -300,7 +300,7 @@ export default {
       this.centerDialogVisible = true
     },
     getSchema() {
-      this.$$api_shardingsphere_getSchema({
+      this.$$api_shardingsphere5_getSchema({
         data: {},
         fn: json => {
           const res = json.data;
@@ -321,7 +321,7 @@ export default {
     },
     onConfirm() {
       if (this.scname === 'rule') {
-        this.$$api_shardingsphere_putSchemaRule({
+        this.$$api_shardingsphere5_putSchemaRule({
           data: {sname: this.sname, ruleConfig: this.textarea },
           fn: json => {
             const res = json.data;
@@ -331,7 +331,7 @@ export default {
           }
         })
       } else {
-        this.$$api_shardingsphere_putSchemaDataSource({
+        this.$$api_shardingsphere5_putSchemaDataSource({
           data: {sname: this.sname, dataSourceConfig: this.textarea },
           fn: json => {
             const res = json.data;
@@ -366,7 +366,7 @@ export default {
     addSchema(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          this.$$api_shardingsphere_addSchema({
+          this.$$api_shardingsphere5_addSchema({
             data: {
               name: this.form.name,
               ruleConfiguration: this.form.ruleConfig,
@@ -391,7 +391,7 @@ export default {
       this.schemaName = schemaName
     },
     deleteSchema() {
-      this.$$api_shardingsphere_deleteSchema({
+      this.$$api_shardingsphere5_deleteSchema({
         data: {name: this.schemaName},
         fn: json => {
           const res = json.data;

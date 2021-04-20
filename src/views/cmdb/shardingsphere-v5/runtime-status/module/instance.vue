@@ -75,7 +75,7 @@ export default {
       this.tableData = data.splice(val - 1, this.pageSize)
     },
     getOrcheInstance() {
-      this.$$api_shardingsphere_getOrcheInstance({
+      this.$$api_shardingsphere5_getOrcheInstance({
         data: {},
         fn: json => {
           const res = json.data;
@@ -90,7 +90,7 @@ export default {
 
     },
     putOrcheInstance(row) {
-      this.$$api_shardingsphere_putOrcheInstance({
+      this.$$api_shardingsphere5_putOrcheInstance({
         data: row,
         fn: json => {
           const res = json.data;

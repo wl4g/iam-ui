@@ -47,7 +47,7 @@ export default {
   methods: {
     getAuthentication() {
 
-      this.$$api_shardingsphere_getAuth({
+      this.$$api_shardingsphere5_getAuth({
         data: {},
         fn: json => {
           const res = json.data;
@@ -65,7 +65,7 @@ export default {
 
     },
     onConfirm() {
-      this.$$api_shardingsphere_putAuth({
+      this.$$api_shardingsphere5_putAuth({
         data: { authentication: this.textarea },
         fn: json => {
           const res = json.data;

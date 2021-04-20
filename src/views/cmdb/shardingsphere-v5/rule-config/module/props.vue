@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getProps() {
-      this.$$api_shardingsphere_getProps({
+      this.$$api_shardingsphere5_getProps({
         data: {},
         fn: json => {
           const res = json.data;
@@ -65,7 +65,7 @@ export default {
 
     },
     onConfirm() {
-      this.$$api_shardingsphere_putProps({
+      this.$$api_shardingsphere5_putProps({
         data: { props: this.textarea },
         fn: json => {
           const res = json.data;
