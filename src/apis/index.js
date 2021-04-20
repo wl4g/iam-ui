@@ -20,6 +20,7 @@ import gw from './gw/'
 import lcdp from './lcdp/'
 import uds from './uds/'
 import shardingsphere5 from './shardingsphere5/'
+import shardingsphere4 from './shardingsphere4/'
 
 export default [
     {
@@ -86,5 +87,9 @@ export default [
         module: 'shardingsphere5',
         name: 'shardingsphere5',
         list: shardingsphere5
+    }, {
+        module: 'shardingsphere4',
+        name: 'shardingsphere4',
+        list: shardingsphere4
     }
 ]
