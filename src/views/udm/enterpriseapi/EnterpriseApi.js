@@ -614,7 +614,17 @@ export default {
             if(this.isApi(data)){
                 this.delData(data);
             }else{
-                if(node.parent.data.children){
+                debugger
+                this.$$api_udm_delEnterpriseApiModule({
+                    data: {
+                        id: data.id,
+                    },
+                    fn: json => {
+                        this.reloadApiTree();
+                    },
+                });
+
+                /*if(node.parent.data.children){
                     for(let i in node.parent.data.children){
                         if(node.parent.data.children[i] == data){
                             node.parent.data.children.splice(i, 1);
@@ -628,7 +638,7 @@ export default {
                             return;
                         }
                     }
-                }
+                }*/
             }
         },
         cleanSaveForm() {
@@ -747,6 +757,7 @@ export default {
                             type: 'success'
                         });
                         //this.getData();
+                        this.getVersionsByRepositoryId();
                     },
                 })
             }).catch(() => {

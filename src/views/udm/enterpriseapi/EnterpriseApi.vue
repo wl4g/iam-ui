@@ -38,7 +38,7 @@
                     </el-col>
                 </el-row>
 
-                <el-tree ref="apiTree" node-key="key" :props="defaultProps" :load="loadModule" lazy @node-click="handleNodeClick">
+                <el-tree ref="apiTree" node-key="key" :props="defaultProps" :load="loadModule" lazy :highlight-current="true" @node-click="handleNodeClick">
                     <span class="custom-tree-node" slot-scope="{ data, node  }">
                         <span>{{ node.label }}</span>
                         <span>
