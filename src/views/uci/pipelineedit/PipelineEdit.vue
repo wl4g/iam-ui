@@ -28,7 +28,7 @@
                             </el-col>
                             <el-col :span="6" class="text-center">
                                 <i class="el-icon-refresh" style="cursor:pointer;" @click="refreshClusterData"></i>
-                                <router-link to="/erm/cluster" target="_blank" class="link">前往配置</router-link>
+                                <router-link to="/cmdb/app/cluster" target="_blank" class="link">前往配置</router-link>
                             </el-col>
                         </el-form-item>
                     </el-col>

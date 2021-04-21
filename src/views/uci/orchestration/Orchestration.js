@@ -102,6 +102,8 @@ export default {
             this.$$api_uci_orchestrationList({
                 data: {
                     name: this.searchParams.name,
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
                 },
                 fn: json => {
                     this.loading = false;

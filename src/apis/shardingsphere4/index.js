@@ -230,7 +230,7 @@ export default [
     {
         name: 'getAuth',
         method: 'getAuth',
-        path: '/api/authentication',
+        path: '/api/authentication/get',
         type: 'get',
         sysModule: global.cmdb
     },
@@ -240,7 +240,7 @@ export default [
     {
         name: 'putAuth',
         method: 'putAuth',
-        path: '/api/authentication',
+        path: '/api/authentication/put',
         type: 'post',
         dataType: 'json',
         sysModule: global.cmdb
@@ -250,7 +250,7 @@ export default [
     {
         name: 'getProps',
         method: 'getProps',
-        path: '/api/props',
+        path: '/api/props/get',
         type: 'get',
         sysModule: global.cmdb
     },
@@ -259,7 +259,7 @@ export default [
     {
         name: 'putProps',
         method: 'putProps',
-        path: '/api/props',
+        path: '/api/props/put',
         type: 'post',
         dataType: 'json',
         sysModule: global.cmdb
@@ -270,7 +270,7 @@ export default [
     {
         name: 'getOrcheData',
         method: 'getOrcheData',
-        path: '/api/orchestration/datasource',
+        path: '/api/orchestration/datasource/get',
         type: 'get',
         sysModule: global.cmdb
     },
@@ -281,7 +281,7 @@ export default [
     {
         name: 'putOrcheData',
         method: 'putOrcheData',
-        path: '/api/orchestration/datasource',
+        path: '/api/orchestration/datasource/put',
         type: 'post',
         dataType: 'json',
         sysModule: global.cmdb
@@ -291,7 +291,7 @@ export default [
     {
         name: 'getOrcheInstance',
         method: 'getOrcheInstance',
-        path: '/api/orchestration/instance',
+        path: '/api/orchestration/instance/get',
         type: 'get',
         sysModule: global.cmdb
     },
@@ -300,7 +300,7 @@ export default [
     {
         name: 'putOrcheInstance',
         method: 'putOrcheInstance',
-        path: '/api/orchestration/instance',
+        path: '/api/orchestration/instance/put',
         type: 'post',
         dataType: 'json',
         sysModule: global.cmdb
