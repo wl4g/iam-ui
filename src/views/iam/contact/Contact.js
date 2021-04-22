@@ -59,6 +59,7 @@ export default {
     methods: {
 
         onSubmit() {
+            this.pageNum = 1;
             this.getData();
         },
 
@@ -129,15 +130,9 @@ export default {
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
-                            if (data.code == 200) {
-                                this.dialogVisible = false;
-                                this.getData();
-                                this.cleanSaveForm();
-                            } else {
-                                this.$alert(data.message, '错误', {
-                                    confirmButtonText: '确定'
-                                });
-                            }
+                            this.getData();
+                            this.cleanSaveForm();
+                            this.dialogVisible = false;
                         },
                         errFn: () => {
                             this.dialogLoading = false;
@@ -200,6 +195,12 @@ export default {
 
 
 //=============================group=============================
+        searchGroup(){
+            this.groupPageNum = 1;
+            this.getGroupData();
+        },
+
+
         getGroupData() {
             this.groupLoading = true;
             this.$$api_iam_contactGroupList({

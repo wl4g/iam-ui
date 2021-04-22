@@ -28,7 +28,7 @@
                             </el-col>
                             <el-col :span="6" class="text-center">
                                 <i class="el-icon-refresh" style="cursor:pointer;" @click="refreshClusterData"></i>
-                                <router-link to="/cmdb/app/cluster" target="_blank" class="link">前往配置</router-link>
+                                <router-link :to="permitutil.getRoutePathByPermission('cmdb:cluster')" target="_blank" class="link">前往配置</router-link>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -251,7 +251,7 @@
                                         v-model="saveForm.instanceIds"
                                         :data="instanceData2">
                                     <i class="el-icon-refresh" slot="left-footer" style="cursor:pointer;margin-left: 16px" @click="refreshInstanceData"></i>
-                                    <router-link slot="left-footer" to="/erm/cluster" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
+                                    <router-link slot="left-footer" :to="permitutil.getRoutePathByPermission('cmdb:cluster')" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
                                 </el-transfer>
                             </el-form-item>
                         </el-col>
@@ -329,7 +329,7 @@
                                     </el-option>
                                 </el-select>
                                 <i class="el-icon-refresh" style="cursor:pointer;" @click="refreshPcmtData"></i>
-                                <router-link to="/ci/pcm" target="_blank" class="link">前往配置</router-link>
+                                <router-link :to="permitutil.getRoutePathByPermission('uci:pcm')" target="_blank" class="link">前往配置</router-link>
                             </el-form-item>
                         </el-col>
                         <el-col :span="7">

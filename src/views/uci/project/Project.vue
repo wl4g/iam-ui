@@ -82,7 +82,7 @@
                             </el-col>
                             <el-col :span="8" class="text-center">
                                 <i class="el-icon-refresh" @click="getGroup"></i>
-                                <router-link to="/share/cluster" target="_blank" class="link">前往配置</router-link>
+                                <router-link :to="permitutil.getRoutePathByPermission('cmdb:cluster')" target="_blank" class="link">前往配置</router-link>
                             </el-col>
                         </el-form-item>
                     </el-col>
@@ -104,7 +104,7 @@
                         </el-col>
                         <el-col :span="6" class="text-center">
                             <i class="el-icon-refresh" @click="getVcs"></i>
-                            <router-link to="/ci/vcs" target="_blank" class="link">前往配置</router-link>
+                            <router-link :to="permitutil.getRoutePathByPermission('urm:repository')" target="_blank" class="link">前往配置</router-link>
                         </el-col>
                     </el-col>
 

@@ -97,7 +97,7 @@
                                     :titles="['可配置密钥', '已配置密钥']"
                                     :data="sshs">
                                 <i class="el-icon-refresh" slot="left-footer" style="cursor:pointer;margin-left: 16px" @click="getSshForSelect"></i>
-                                <router-link slot="left-footer" to="/erm/ssh" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
+                                <router-link slot="left-footer" :to="permitutil.getRoutePathByPermission('cmdb:ssh')" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
                             </el-transfer>
                         </el-form-item>
                     </el-col>

@@ -48,6 +48,7 @@ export default {
 
             //弹窗表单
             saveForm: {
+                id: '',
                 moduleId: '',
                 name: '',
                 url: '',
@@ -643,6 +644,7 @@ export default {
         },
         cleanSaveForm() {
             this.saveForm = {
+                id: '',
                 moduleId: '',
                 name: '',
                 url: '',

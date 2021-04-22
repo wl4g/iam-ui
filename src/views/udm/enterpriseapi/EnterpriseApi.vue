@@ -50,7 +50,7 @@
                       </span>
                 </el-tree>
             </div>
-            <div class="right" v-loading="loading">
+            <div class="right" v-if="saveForm.id" v-loading="loading">
                 <!--base info-->
                 <div style="width: 70%;">
                     <el-form label-width="100px"  :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
@@ -345,5 +345,20 @@
         padding-right: 8px;
     }
 
+
+
+</style>
+<style>
+  .left .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+    background-color: #d8aa9a;
+  }
+
+  .left .el-tree-node:focus>.el-tree-node__content {
+    background-color: #e7dad6;
+  }
+
+  .left .el-tree-node__content:hover {
+    background-color: #e7dad6;
+  }
 </style>
 

@@ -54,7 +54,7 @@
                         <el-input v-model="searchGroupParams.name" placeholder="Input group name"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button @click="getGroupData" type="success" :loading="groupLoading">{{$t('message.common.search')}}</el-button>
+                        <el-button @click="searchGroup" type="success" :loading="groupLoading">{{$t('message.common.search')}}</el-button>
                     </el-form-item>
                 </el-form>
                 <!--================================table================================-->

@@ -7,7 +7,7 @@ export default {
             //查询条件
             searchParams: {
                 userName: '',
-                nameZh: '',
+                displayName: '',
                 roleId: '',
             },
 
@@ -105,6 +105,10 @@ export default {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
+
+            this.$nextTick(()=>{
+                this.$refs['saveForm'].clearValidate();
+            })
         },
 
         // 获取列表数据
@@ -113,9 +117,8 @@ export default {
             this.$$api_iam_userList({
                 data: {
                     userName: this.searchParams.userName,
-                    nameEn: this.searchParams.nameEn,
                     roleId: this.searchParams.roleId,
-                    nameZh: this.searchParams.nameZh,
+                    displayName: this.searchParams.displayName,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                 },
@@ -146,7 +149,6 @@ export default {
 
         save() {
             this.dialogLoading = true;
-
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
                     if (this.saveForm.oldPassword != this.saveForm.password || this.saveForm.oldPassword == '') {//need update password

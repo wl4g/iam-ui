@@ -74,7 +74,7 @@
                     <el-table-column :label="$t('message.common.operation')" min-width="240">
                         <template slot-scope="scope">
                             <!--edit-->
-                            <el-button v-if="permitutil.hasPermit('udm:edit')" type="info" icon='edit' @click="edit(scope.row)">{{$t('message.common.edit')}}</el-button>
+                            <el-button v-if="permitutil.hasPermit('udm:file:edit')" type="info" icon='edit' @click="edit(scope.row)">{{$t('message.common.edit')}}</el-button>
                             <!--del-->
                             <el-button type="danger" icon='delete' @click="delData(scope.row)">{{$t('message.common.del')}}</el-button>
                             <!--compare-->
@@ -91,14 +91,14 @@
         <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
 
         <el-dialog :close-on-click-modal="false" title="Upload" :visible.sync="dialogVisible" size="small">
-            <el-form label-width="80px" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
+            <el-form label-width="60px" :model="saveForm" ref="saveForm" class="demo-form-inline" :rules="rules">
                 <el-row>
-                    <el-col :span="6">
+                    <el-col :span="8">
                         <el-form-item prop="name" :label="$t('message.common.name')">
                             <el-input v-model="saveForm.name" placeholder="e.g. fileName"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="8">
                         <el-form-item :label="$t('message.common.language')">
                             <el-select clearable v-model="saveForm.lang">
                                 <el-option
@@ -110,7 +110,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                         <el-form-item :label="$t('message.share.label')">
                             <el-select clearable multiple filterable v-model="saveForm.labelIds" style="width: 100%">
                                 <el-option
