@@ -79,6 +79,7 @@ export default {
     methods: {
 
         onSubmit() {
+            this.pageNum = 1;
             this.getData();
         },
 
@@ -398,7 +399,7 @@ export default {
 
         getInstanceByIdCount(id) {
             for (let i in this.pipelines) {
-                if (id === this.pipelines[i].id) {
+                if (id === this.pipelines[i].id && this.pipelines[i]['instances']) {
                     return this.pipelines[i]['instances'].length;
                 }
             }

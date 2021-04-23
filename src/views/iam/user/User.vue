@@ -8,7 +8,7 @@
             <el-form-item :label="$t('message.common.username')">
                 <el-input v-model="searchParams.userName" clearable placeholder="e.g zhangsan"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('message.common.username')">
+            <el-form-item label="角色">
                 <el-select v-model="searchParams.roleId" :filterable="true" clearable  placeholder="请选择" style="width: 100%">
                     <el-option
                             v-for="item in rolesData"

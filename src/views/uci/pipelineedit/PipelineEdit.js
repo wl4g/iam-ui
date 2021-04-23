@@ -150,6 +150,8 @@ export default {
 
     methods: {
         cleanSaveForm() {
+            this.instanceData2 = [];
+
             this.saveForm = {
                 providerKind: '',
                 id: '',

@@ -160,6 +160,12 @@ export default {
                         width: 100,
                         align: "center",
                         editable: true,
+                        input:{
+                            type: 'select', // text | select | checkbox
+                            selectData: {
+                                list: [{label: '1',value: '1'},{label: '2',value: '2'}],
+                            }
+                        },
                     },{
                         title: "rule",
                         field: "rule",

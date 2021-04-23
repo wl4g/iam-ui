@@ -50,6 +50,7 @@ export default {
     methods: {
 
         onSubmit() {
+            this.pageNum = 1;
             this.getData();
         },
 

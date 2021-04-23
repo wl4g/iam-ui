@@ -103,11 +103,11 @@
                                             </el-select>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="instance" label="实例" width="50">
+<!--                                    <el-table-column prop="instance" label="实例" width="50">
                                         <template scope="scope">
                                             {{ getInstanceByIdCount(scope.row.pipelineId) }}
                                         </template>
-                                    </el-table-column>
+                                    </el-table-column>-->
                                     <el-table-column prop="priority" :label="$t('message.ci.priority')" width="180">
                                         <template slot="header" slot-scope="scope">
                                             {{$t('message.ci.priority')}}
