@@ -68,7 +68,7 @@
                 </el-table>
             </template>
         </div>
-        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
+        <el-pagination background layout="prev, pager, next" :total="total" :current-page="currentPage" @current-change='currentChange'></el-pagination>
 
         <!--================================save dialog================================-->
         <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="dialogVisible" size="small" v-loading='dialogLoading'>

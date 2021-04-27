@@ -27,6 +27,9 @@
         <span v-else-if="column.jump">
           <el-button type="text" @click="$router.push({path: column.jump.path, query: { [column.jump.query] : scope.row[column.jump.query]}})">{{ scope.row[column.value] }}</el-button>
         </span>
+        <span v-else-if="column.type">
+          <span>{{scope.row['type'] == 1 ? '静态菜单': scope.row['type'] == 2? '动态菜单' :'按钮' }}</span>
+        </span>
         <span v-else>
           {{ scope.row[column.value] }}
         </span>

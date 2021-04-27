@@ -15,6 +15,7 @@ export default {
             total: 0,
             pageNum: 1,
             pageSize: 10,
+            currentPage:1,
 
             //弹窗表单
             saveForm: {
@@ -67,6 +68,7 @@ export default {
     methods: {
 
         onSubmit() {
+            this.currentPage= 1 
             this.pageNum = 1;
             this.getData();
         },
@@ -74,6 +76,7 @@ export default {
         currentChange(i) {
             //this.loading = true;
             this.pageNum = i;
+            this.currentPage = i
             this.getData();
         },
 
@@ -155,7 +158,7 @@ export default {
                         id: json.data.id,
                         name: json.data.name,
                         providerKind: json.data.providerKind,
-                        authType: json.data.authType.toString(),
+                        authType: json.data.authType.toString() || undefined,
                         baseUrl: json.data.baseUrl,
                         accessToken: json.data.accessToken,
                         username: json.data.username,

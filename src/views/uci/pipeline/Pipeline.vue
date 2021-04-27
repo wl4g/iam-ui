@@ -94,7 +94,7 @@
                 </el-table>
             </template>
         </div>
-        <el-pagination background layout="prev, pager, next" :total="total" @current-change='currentChange'></el-pagination>
+        <el-pagination background layout="prev, pager, next" :current-page="currentPage"  :total="total" @current-change='currentChange'></el-pagination>
 
 
         <right-panel :show="confirmDialog" @close="confirmDialog = false">

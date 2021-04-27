@@ -19,7 +19,7 @@ export default {
             total: 0,
             pageNum: 1,
             pageSize: 10,
-
+            currentPage:1,
 
             //列表Data
             tableData: [],
@@ -81,6 +81,8 @@ export default {
     methods: {
         onSubmit() {
             this.loading = true;
+            this.currentPage = 1
+            this.pageNum = 1;
             this.getData();
         },
 
@@ -107,6 +109,7 @@ export default {
 
         currentChange(i) {
             //this.loading = true;
+            this.currentPage = i
             this.pageNum = i;
             this.getData();
         },

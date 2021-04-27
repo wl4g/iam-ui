@@ -13,6 +13,7 @@ export default {
             total: 0,
             pageNum: 1,
             pageSize: 10,
+            currentPage:1,
             //弹窗表单
             saveForm: {
                 id: '',
@@ -79,12 +80,12 @@ export default {
     methods: {
 
         onSubmit() {
-            this.pageNum = 1;
+            this.pageNum = 1
             this.getData();
         },
 
         currentChange(i) {
-            //this.loading = true;
+            
             this.pageNum = i;
             this.getData();
         },
@@ -100,12 +101,11 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
+            this.currentPage = this.pageNum;
+            this.searchParams.pageNum = this.pageNum;
+            this.searchParams.pageSize = this.pageSize;
             this.$$api_uci_orchestrationList({
-                data: {
-                    name: this.searchParams.name,
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                },
+                data: this.searchParams,
                 fn: json => {
                     this.loading = false;
                     this.total = json.data.total;
@@ -124,6 +124,7 @@ export default {
                 type: '1',
                 remark: '',
                 orchestrationPipelines: [],
+                organizationCode:undefined
             };
         },
 

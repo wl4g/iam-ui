@@ -1,6 +1,5 @@
 import i18n from "../../../i18n/i18n";
 import iconJson from '../../../../static/icon/iconfont.json'
-import de from "element-ui/src/locale/lang/de";
 
 export default {
     name: 'manage-menu',
@@ -47,6 +46,12 @@ export default {
                     text: i18n.t('message.iam.permission'),
                     value: 'permission',
                     width: 150,
+                },
+                {
+                    text: '类型',
+                    width: 150,
+                    type:true
+                    
                 },
                 {
                     text: i18n.t('message.common.icon'),
