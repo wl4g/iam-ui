@@ -77,6 +77,7 @@ export default {
                 }
             } else {
                 this.displayName = '';
+                this.$refs.modulesTree.setCheckedNodes([{}]);
             }
         }
     },

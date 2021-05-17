@@ -9,7 +9,8 @@ import dictutil from './common/dictutil'
 import permitutil from './common/permitutil'
 import globalVariable from './common/global_variable.js'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
+import '../src/element-variables.scss'
 import VueClipboard from 'vue-clipboard2'
 import OrganizationSelector from './components/organization-selector';
 import fsviewer from './components/fsviewer';

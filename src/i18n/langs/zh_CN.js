@@ -18,7 +18,7 @@ const zh_CN = {
             'remark': '备注',
             'save': '保 存',
             'cancel': '取消',
-            'search': '搜索',
+            'search': '查询',
             'selectAll': '全选',
             'status': '状态',
             'type': '类型',

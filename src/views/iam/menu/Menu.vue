@@ -138,8 +138,8 @@
             </el-row>
 
             <el-row>
-                <el-col :span="12" v-if="isDynamicMenu">
-                    <el-form-item label="打开方式" prop="renderTarget">
+                <el-col :span="12" v-if="formFields.type == 2">
+                    <el-form-item label="打开方式" prop="renderTarget" :rules="renderTargetRule">
                         <el-col :span="22">
                             <el-select v-model="formFields.renderTarget" style="width: 100%">
                                 <el-option value="_self" label="_self"></el-option>

@@ -92,9 +92,14 @@ export default {
         // 获取列表数据
         getData() {
             this.loading = true;
+            let param = {
+                pageNum: this.pageNum,
+                pageSize:10,
+                runId: this.searchParams.runId,
+            }
             this.$$api_uci_orchestrationHistoryList({
                 data: {
-                    runId: this.searchParams.runId,
+                    ...param
                 },
                 fn: json => {
                     this.loading = false;

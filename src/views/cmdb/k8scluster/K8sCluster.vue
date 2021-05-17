@@ -71,6 +71,7 @@
                                     filterable
                                     filter-placeholder="Search"
                                     v-model="saveForm.hostIds"
+                                    style= 'height:auto !important'
                                     :data="hosts">
                                 <i class="el-icon-refresh" slot="left-footer" style="cursor:pointer;margin-left: 16px" @click="allHost"></i>
                                 <router-link slot="left-footer" :to="permitutil.getRoutePathByPermission('cmdb:host')" target="_blank" class="link" style="margin-left: 10px">前往配置</router-link>
@@ -101,7 +102,10 @@
     export default K8sCluster
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.el-transfer-panel__body.is-with-footer {
+    height:auto !important;
+    bottom:17px;
+}
 </style>
 

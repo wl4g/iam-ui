@@ -24,7 +24,7 @@
                             <i class="cs-i" style="background-color: red;">组织</i>
                         </el-col>
                         <el-col :span="8">
-                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.park" placeholder="输入关键字搜索"></el-input>
+                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.park" placeholder="输入关键字查询"></el-input>
                         </el-col>
                         <el-col :offset="1" :span="10">
                             <area-selector ref="clearParkArea" @onChangeAreaCode="onChangeParkAreaCode"></area-selector>
@@ -42,7 +42,7 @@
                             <i class="cs-i" style="background-color: blue;">公司</i>
                         </el-col>
                         <el-col :span="8">
-                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.company" placeholder="输入关键字搜索"></el-input>
+                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.company" placeholder="输入关键字查询"></el-input>
                         </el-col>
                         <el-col :offset="1" :span="10">
                             <area-selector ref="clearCompanyArea" @onChangeAreaCode="onChangeCompanyAreaCode"></area-selector>
@@ -60,7 +60,7 @@
                             <i class="cs-i" style="background-color: #4dff64;">部门</i>
                         </el-col>
                         <el-col :span="8">
-                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.department" placeholder="输入关键字搜索"></el-input>
+                            <el-input clearable @keyup.native="search" size="small" v-model="searchParams.department" placeholder="输入关键字查询"></el-input>
                         </el-col>
                         <el-col :offset="1" :span="10">
                             <area-selector ref="clearDepartmentArea" @onChangeAreaCode="onChangeDepartmentAreaCode"></area-selector>
