@@ -7,7 +7,7 @@ var gbs = {
     api_data_field: 'data',
     api_custom: {
         401: function (that, res, method, url, success, error, dataParams) {
-            IAMCore.multiModularMutexAuthenticatingHandler(res, method, url, success, error, dataParams, function (res) {
+            new IAMCore().multiModularMutexAuthenticatingHandler(res, method, url, success, error, dataParams, function (res) {
                 IAMCore.Console.info("Devops redirection...");
                 // window.location.href = res.data.redirect_url;
                 // TODO that is null??
@@ -60,7 +60,7 @@ var cbs = {
             })
         } else {
             this.$store.dispatch('remove_userinfo').then(() => {
-                this.$alert(err.status + ',' + err.msg + '！', 'Login Timeout', {
+                this.$alert(err.status + ',' + err.msg + '!', 'Login Timeout', {
                     confirmButtonText: 'OK',
                     callback: action => {
                         //this.$router.push('/login')
