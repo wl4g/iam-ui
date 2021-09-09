@@ -30,3 +30,6 @@ http://wl4g.debug
 - /config/index.js 可配置开发环境的端口,代理地址等
 
 对应后端项目 [XCloud DoPaaS](../../../xcloud-dopaas)
+
+
+4. monaco editor 引入导致路由识别不出的问题：https://www.pianshen.com/article/55321711064/   (srcPath默认是null 导致)
