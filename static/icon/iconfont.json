@@ -1,10 +1,66 @@
 {
   "id": "1697894",
-  "name": "super-devops",
+  "name": "xcloud-dopaas",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
-  "description": "https://github.com/wl4g/super-devops or https://gitee.com/wl4g/super-devops 官方账号",
+  "description": "https://github.com/wl4g/xcloud-dopaas or https://gitee.com/wl4g/xcloud-dopaas 官方账号",
   "glyphs": [
+    {
+      "icon_id": "5387937",
+      "name": "箭头_左右切换_o",
+      "font_class": "jiantou_zuoyouqiehuan_o",
+      "unicode": "eb95",
+      "unicode_decimal": 60309
+    },
+    {
+      "icon_id": "1314403",
+      "name": "温度",
+      "font_class": "wendu",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "1509775",
+      "name": "问号",
+      "font_class": "question",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "7550199",
+      "name": "左",
+      "font_class": "zuo",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "10131701",
+      "name": "指纹",
+      "font_class": "zhiwen",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "13191353",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "13673280",
+      "name": "打针",
+      "font_class": "dazhen",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "14196363",
+      "name": "小程序-关闭",
+      "font_class": "xiaochengxu-guanbi",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
     {
       "icon_id": "397886",
       "name": "开发，代码",

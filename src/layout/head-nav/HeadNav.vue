@@ -11,8 +11,11 @@
 
       <div class="pull-right">
         <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
-          <span class="el-dropdown-link" style="height: 50px;display: block;">
-            <img src="static/images/bg_icon/def_user.png" alt="" style="border-radius:50%;height: 40px;">
+          <span class="el-dropdown-link" style="height: 50px;display: flex;align-items: center;">
+            <!-- <img src="static/images/bg_icon/def_user.png" alt="" style="border-radius:50%;height: 40px;"> -->
+            <svg class="top-menu-iconfont" aria-hidden="true" style="cursor:pointer;width: 30px;height: 40px;padding-right: 2px;">
+              <use xlink:href="#icon-zhiwen"></use>
+            </svg>
             {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
