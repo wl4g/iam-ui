@@ -1,7 +1,7 @@
 import router from '../router'
 
 var gbs = {
-    db_prefix: 'devops_', // 本地存储的key
+    db_prefix: 'dopass_', // 本地存储的key
     api_status_key_field: 'code',
     api_status_value_field: 200,
     api_data_field: 'data',
