@@ -6,22 +6,48 @@
       </div>
 
       <div class='logo-container'>
-        <img data-v-12af00ba="" src="static/images/logo.png" alt="" class="logo">
+        <img data-v-12af00ba="" src="../../../static/images/logo.png" alt="" class="logo">
       </div>
 
       <div class="pull-right">
-        <el-dropdown  style="height:50px;line-height:50px;cursor: pointer" @command='setDialogInfo'>
-          <span class="el-dropdown-link" style="height: 50px;display: flex;align-items: center;">
+        <el-dropdown  class="pull-right-dropdown"  @command='setDialogInfo'>
+          <span class="el-dropdown-link">
             <!-- <img src="static/images/bg_icon/def_user.png" alt="" style="border-radius:50%;height: 40px;"> -->
             <svg class="top-menu-iconfont" aria-hidden="true" style="cursor:pointer;width: 30px;height: 40px;padding-right: 2px;">
               <use xlink:href="#icon-zhiwen"></use>
             </svg>
-            {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i>
+            <!-- {{getUsername()}}<i class="el-icon-caret-bottom el-icon--right"></i> -->
           </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item style="font-size:13px;" command='pass'>{{$t('message.common.profile')}}</el-dropdown-item>
+          <el-dropdown-menu slot="dropdown" class="sort-menu">
+            <!-- <el-dropdown-item style="font-size:13px;" command='pass'>{{$t('message.common.profile')}}</el-dropdown-item>
             <el-dropdown-item style="font-size:13px;" command='info'>{{$t('message.common.help')}}</el-dropdown-item>
-            <el-dropdown-item style="font-size:13px;" command='logout'>{{$t('message.common.logout')}}</el-dropdown-item>
+            <el-dropdown-item style="font-size:13px;" command='logout'>{{$t('message.common.logout')}}</el-dropdown-item> -->
+            <el-container class="sort-list-container">
+              <div class="dropdown-content">
+                <div class="dropdown-content-top">
+                  <div class="dropdown-userName">
+                    {{getUsername()}}
+                  </div>
+                  <div class="dropdown-userId">
+                    <p>账号ID：</p>{{userId}}
+                  </div>
+                </div>
+                <div class="dropdown-content-center" style="display:flex;text-align:center">
+                  <!-- 基础应用 -->
+                  <div :class="{'baseClass': true ,hoverClass:isHover}" v-on:mouseover="changeActiveBase($event)">基础应用</div>
+                  <div :class="{'baseClass': true ,hoverClass:!isHover}" v-on:mouseover="changeActiveSave($event)">安全设置</div>
+                </div>
+                <div style="padding-top:5px">
+                  <el-dropdown-item v-if="isHover" style="font-size:13px;padding:5px 10px 5px;" command='pass'>{{$t('message.common.profile')}}</el-dropdown-item>
+                  <el-dropdown-item v-if="!isHover" style="font-size:13px;padding:5px 10px 5px;" command='logout'>修改密码</el-dropdown-item>
+                  <el-dropdown-item v-if="!isHover" style="font-size:13px;padding:5px 10px 5px;" command='logout'>AccessKey</el-dropdown-item>
+                  <el-dropdown-item v-if="isHover" style="font-size:13px;padding:5px 10px 5px;" command='logout'>关于我们</el-dropdown-item>
+                </div>
+                <div class="loginout">
+                  <el-button class="loginoutButton" @click="logout">退出登录</el-button>
+                </div>
+              </div>
+            </el-container>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -145,8 +171,8 @@
     text-align: center;
   }
   .logo {
-    width: 160px;
-    height: 30px;
+    width: 105px;
+    height: 25px;
     margin: 12px;
   }
   .fa-user {
@@ -154,6 +180,68 @@
     top: -2px;
     margin-right: 4px;
   }
+  .pull-right-dropdown{
+    height:50px;
+    line-height:50px;
+    cursor: pointer
+  }
+  .el-dropdown-link{
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  .dropdown-content{
+
+    width: 280px;
+    height: 300px;
+    padding: 0;
+    position: relative;
+  }
+  .dropdown-content-top{
+    background: #f4f6f7;
+    height: 65px;
+  }
+  .dropdown-userName{
+    font-size: 15px;
+    font-weight: bold;
+    padding:5px 10px 5px;
+  }
+  .dropdown-userId{
+    display: flex;
+    color: #b9babb;
+    padding:5px 10px 5px;
+  }
+  .sort-menu{
+    padding: 0;
+  }
+  .dropdown-content-center{
+    border: #ededed 1px solid;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+  }
+  .loginout{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  .loginoutButton{
+    margin: 18px auto;
+    width: 80%;
+  }
+  .hoverClass{
+    width:50%;border-right:#ededed 1px solid;cursor: pointer; background: #e2e3e5;
+  }
+  // .baseUse:hover{
+  //   background: #b9babb;
+  // }
+  .baseClass{
+    width:50%;cursor: pointer;
+  }
+  // .saveSetting:hover{
+  //   background: #b9babb;
+  // }
   .head-nav {
     padding-right: 20px;
     width: 100%;
@@ -169,13 +257,13 @@
       float: left;
     }
 
-  .logout {
-      width: 60px;
-      height: 67px;
-      line-height: 67px;
-      text-align: center;
-      float: right;
-      cursor: pointer;
+    .logout {
+        width: 60px;
+        height: 67px;
+        line-height: 67px;
+        text-align: center;
+        float: right;
+        cursor: pointer;
     }
   }
   .username {

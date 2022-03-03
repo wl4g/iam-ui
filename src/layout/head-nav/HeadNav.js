@@ -19,6 +19,8 @@ export default {
             },
             lang: 'zh_CN',
             display: '',
+            userId:123123123123,
+            isHover:true,
             dialog: {
                 show_access: false,
                 show_set: false,
@@ -76,6 +78,7 @@ export default {
     },
     mounted() {
         this.routList = cache.get('rootDeepChildRoutes');
+        console.info('111111',this.$store.state.user.userinfo)
         this.changeDisplay();
     },
     methods: {
@@ -239,6 +242,12 @@ export default {
         clickToggleSidebarLightbox() {
             this.$store.dispatch('set_menu_open')
             this.$root.$emit('clickLightBoxVisibleChange');
+        },
+        changeActiveBase(val){
+            this.isHover = true
+        },
+        changeActiveSave(val){
+            this.isHover = false
         }
     }
 }

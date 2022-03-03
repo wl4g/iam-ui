@@ -29,7 +29,10 @@
         <!-- 查询结果表格 -->
         <div>
             <template>
-                <el-table :data="tableData" :border="false" style="width: 100%">
+                <el-table height="700px" :data="tableData" :border="false" style="width: 100%" 
+                v-table-scroll="lazyLoad" 
+                ref='table' 
+                v-loading="loading"  element-loading-background = "rgba(0, 0, 0, 0.5)" element-loading-text = "数据正在加载中" element-loading-spinner = "el-icon-loading">
                     <el-table-column :label="$t('message.common.selectAll')" type="selection"></el-table-column>
                     <el-table-column prop="id" label="ID">
                         <template slot-scope="scope">
@@ -50,7 +53,7 @@
                             <el-button type="danger" class="el-icon-circle-close"  @click="destroySessions(scope.row)" :loading="loading">{{$t('message.iam.destroy')}}</el-button>
                         </template>
                     </el-table-column>
-
+                    <div>123123</div>
                 </el-table>
             </template>
         </div>

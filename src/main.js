@@ -29,8 +29,8 @@ import '@toast-ui/editor/dist/i18n/zh-cn.js';
 import Contextmenu from "vue-contextmenujs"
 Vue.use(Contextmenu);
 
-import ace from 'ace-builds'
-Vue.use(ace)
+// import ace from 'ace-builds'
+// Vue.use(ace)
 
 Vue.prototype.dictutil = dictutil;
 Vue.prototype.permitutil = permitutil;
@@ -46,6 +46,22 @@ Vue.component('editor', Editor);
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
+
+Vue.directive('tableScroll', {
+    bind (el, binding) {
+    	// el-table 内容滚动区域
+        const bodyWrap = el.querySelector('.el-table__body-wrapper')
+        bodyWrap.addEventListener('scroll', function () {
+            let sign = 0
+            // 滚动到底部
+            const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
+            if (scrollDistance <= sign) {
+                binding.value()
+            }
+        })
+    }
+})
+
 
 new Promise(resolve => {
     var iamModuleConfig = { "pluginName": "IamPlugin", "version": "v2.0.0", "modules": [{ "modName": "IamAllModule", "stable": "IAM.all.min.js", "grey": "IAM.all.js", "css_stable": "IAM.all.min.css", "css_grey": "IAM.all.css", "ratio": 100 }], "dependencies": [{ "features": ["IamAll"], "depends": ["IamAllModule"], "sync": true }] };

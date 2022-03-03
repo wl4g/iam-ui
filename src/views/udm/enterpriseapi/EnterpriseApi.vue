@@ -124,7 +124,8 @@
                             :data="treeData"
                             :onDrag="onTreeDataChange"
                             fixed
-                            border>
+                            border
+                            >
                     </dragTreeTable>
 
                   <span style="font-size: 16px;font-weight: bold">返回参数</span>
@@ -359,6 +360,9 @@
 
   .left .el-tree-node__content:hover {
     background-color: #e7dad6;
+  }
+  .drag-tree-table .drag-tree-table-header{
+      height: 36px;
   }
 </style>
 

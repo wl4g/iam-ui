@@ -4,7 +4,7 @@
         <el-form :inline="true" :model="searchParams" class="searchbar" @keyup.enter.native="onSubmit()">
 
             <el-form-item :label="$t('message.common.name')">
-                <el-input v-model="searchParams.name" placeholder="Name"></el-input>
+                <el-input v-model="searchParams.name" placeholder="请输入规则名称"></el-input>
             </el-form-item>
 
             <el-form-item :label="$t('message.common.classify')">
@@ -45,6 +45,7 @@
                 {{$t('message.common.total')}}： <span class="number">{{total}}</span>
             </div>
             <!-- 新增按钮 -->
+            <el-button type="primary" @click="addTemplatOld()"> old + </el-button>
             <el-button type="primary" @click="addTemplat()"> + </el-button>
         </div>
         <!-- 查询结果表格 -->
@@ -247,6 +248,106 @@
                         <el-button type="primary" @click="saveTemplat()">{{$t('message.common.save')}}</el-button>
                         <el-button @click="dialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
                     </span>
+        </el-dialog>
+        <el-dialog :close-on-click-modal="false" :title="dialogTitle" :visible.sync="newDialogVisible" width="80%" v-loading='dialogLoading'>
+            <el-form label-width="80px" size="mini" :model="saveForm" ref="saveForm" class="demo-form-inline">
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item :label="$t('message.common.name')" prop="name">
+                            <el-input v-model="saveForm.name" placeholder="请输入规则名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item :label="$t('message.common.classify')">
+                            <el-select v-model="saveForm.classify" @change="getMetricByClassifyForm()">
+                                <el-option
+                                        v-for="item in dictutil.getDictListByType('metric_classify')"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item :label="$t('message.umc.metric')" prop="addr">
+                            <el-select v-model="saveForm.metricId" filterable>
+                                <el-option
+                                        v-for="item in metricList2"
+                                        :key="item.id"
+                                        :label="item.metric"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item :label="$t('message.umc.alarmLevel')" >
+                            <el-select v-model="saveForm.notifyLevel" placeholder="请选择">
+                                <!-- TODO -->
+                                <el-option label="warn" :value="1"></el-option>
+                                <el-option label="error" :value="2"></el-option>
+                                <el-option label="danger" :value="3"></el-option>
+                                <el-option label="death" :value="4"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <!-- tags -->
+                <el-row >
+                    <el-col>
+                        <el-form-item :label="$t('message.scm.tag')">
+                            <template>
+                                <el-table :data="saveForm.tagMap" :border="false" style="width: 100%">
+                                    <!-- 动态标签 -->
+                                    <el-table-column prop="name" :label="$t('message.common.name')">
+                                        <template scope="scope">
+                                            <el-input v-model="scope.row.name" placeholder="tagName"></el-input>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="value" :label="$t('message.share.value')" >
+                                        <template scope="scope">
+                                            <el-input  v-model="scope.row.value"></el-input>
+                                        </template>
+                                    </el-table-column>
+
+                                    <el-table-column :label="$t('message.common.operation')">
+                                        <template slot-scope="scope">
+                                            <el-row>
+                                                <el-button @click.native.prevent="deleteTag(scope.$index)" type="danger">
+                                                    Delete
+                                                </el-button>
+                                            </el-row>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                            <!--</div>-->
+                            <el-button type="primary"  @click.native.prevent="addTag()"> + </el-button>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <!-- rules -->
+                <el-row >
+                    <el-col>
+                        <el-form-item :label="$t('message.umc.rule')">
+                            <template>
+                                <MyEditor
+                                    style="width:90%;height:150px"
+                                    :language="'sql'"
+                                    :codes="sqlCodes"
+                                    @onMounted="sqlOnMounted"
+                                    @onCodeChange="sqlOnCodeChange" />
+                            </template>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="saveTemplat()">{{$t('message.common.save')}}</el-button>
+                <el-button @click="newDialogVisible = false;">{{$t('message.common.cancel')}}</el-button>
+            </span>
         </el-dialog>
     </section>
 </template>

@@ -69,7 +69,7 @@
   export default Organization
 </script>
 
-<style scoped lang='less'>
+<style scoped lang=''>
   .top-level-btn{
     margin-bottom: 10px;
   }

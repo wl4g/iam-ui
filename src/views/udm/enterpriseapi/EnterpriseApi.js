@@ -181,7 +181,7 @@ export default {
                     },{
                         title: "必填",
                         field: "required",
-                        width: 20,
+                        width: 40,
                         align: "center",
                         editable: true,
                         input:{
@@ -330,7 +330,7 @@ export default {
                     },{
                         title: "必填",
                         field: "required",
-                        width: 20,
+                        width: 40,
                         align: "center",
                         editable: true,
                         input:{
@@ -371,7 +371,8 @@ export default {
                             {
                                 text: "删除",
                                 onclick: (item, parentModel) => {
-                                    console.info('into del')
+                                    console.info('into del2')
+                                    console.info(parentModel)
                                     if(parentModel){
                                         for(let i in parentModel.children){
                                             let li = parentModel.children[i];
@@ -381,10 +382,10 @@ export default {
                                             }
                                         }
                                     }else{
-                                        for(let i in this.treeData.lists){
-                                            let li = this.treeData.lists[i];
+                                        for(let i in this.treeData2.lists){
+                                            let li = this.treeData2.lists[i];
                                             if(item == li){
-                                                this.treeData.lists.splice(i,1);
+                                                this.treeData2.lists.splice(i,1);
                                                 return;
                                             }
                                         }

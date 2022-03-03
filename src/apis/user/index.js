@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/4/30.
  */
-
+ import global from "../../common/global_variable";
 /**
  * 用户模块
  * @type {Object}
@@ -49,7 +49,8 @@ export default [
         name: '修改密码',
         method: 'updatePass',
         path: '/User/updatePass',
-        type: 'post'
+        type: 'post',
+        sysModule: global.iam
     },
     {
         name: '设置权限',

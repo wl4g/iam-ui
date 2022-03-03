@@ -1,7 +1,10 @@
 import {transDate, getDay} from 'utils/'
-
+import MyEditor from '../../lcdp/dataDev/MonacoEeditor.vue'
 export default {
     name: 'templat',
+    components:{
+        MyEditor
+    },
     data() {
         return {
             //查询条件
@@ -28,6 +31,7 @@ export default {
             },
 
             dialogVisible: false,
+            newDialogVisible: false,
             dialogTitle: '',
             dialogLoading: false,
 
@@ -56,6 +60,11 @@ export default {
         },
 
         addTemplat() {
+            this.cleanSaveForm();
+            this.newDialogVisible = true;
+            this.dialogTitle = '新增';
+        },
+        addTemplatOld() {
             this.cleanSaveForm();
             this.dialogVisible = true;
             this.dialogTitle = '新增';
@@ -124,6 +133,9 @@ export default {
 
 
         saveTemplat() {
+            this.after()
+            console.info(this.after())
+            return
             this.dialogLoading = true;
             this.$refs['saveForm'].validate((valid) => {
                 if (valid) {
@@ -131,7 +143,7 @@ export default {
                         data: this.saveForm,
                         fn: json => {
                             this.dialogLoading = false;
-                            this.dialogVisible = false;
+                            this.newDialogVisible = false;
                             this.getData();
                             this.cleanSaveForm();
                         },
@@ -165,11 +177,37 @@ export default {
                 }
             })
 
-            this.dialogVisible = true;
+            this.newDialogVisible = true;
             this.dialogTitle = '编辑';
         },
 
+        after(){
+            let logicalOperator = ['1','2']
+            let aggregator      = ['sum','','min']
+            let relateOperator  = ['2','','']
+            let value           = ['value1','value2','value3','value4']
+            let queueTime       = ['1','3','5']
+            let alarmLevel      = ['1','2','3']
 
+            let list = []
+            let lastNum = Math.max(logicalOperator.length,aggregator.length,relateOperator.length,value.length,queueTime.length,alarmLevel.length)
+            for(let i=0;i<=lastNum-1;i++){
+                list.push({
+                    'logicalOperator':logicalOperator[i],
+                    'aggregator':aggregator[i],
+                    'relateOperator':relateOperator[i],
+                    'value':value[i],
+                    'queueTime':queueTime[i],
+                    'alarmLevel':alarmLevel[i]
+                })
+            }
+            // lastNum.forEach((element,i) => {
+            //     console.info(i)
+            //     list.push({'logicalOperator':logicalOperator[4],'aggregator':aggregator[i],'relateOperator':relateOperator[i]})
+            // });
+            console.info(list)
+            return list
+        },
         delTemplat(row) {
             if (!row.id) {
                 return;
