@@ -96,7 +96,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new MonacoWebpackPlugin(),
     new CopyWebpackPlugin([{
       from: 'node_modules/monaco-editor/min/vs',
       to: 'vs',
