@@ -77,7 +77,6 @@
 
 <script>
 
-import treeToArray from './TreeTable'
 export default {
   name: 'tree-table',
   data () {

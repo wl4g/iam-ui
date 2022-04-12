@@ -5,8 +5,9 @@ import DragTreeTable from './drag-tree-table/'
 import ThemePicker from './theme-picker/'
 import OrganizationPanel from './organization-panel/'
 import AreaSelector from './area-selector/'
-import fsviewer from './fsviewer/'
+import Fsviewer from './fsviewer/'
 import OrganizationSelector from './organization-selector/'
+import SliderSwitch from "./slider-switch/"
 
 export {
   Echarts,
@@ -16,6 +17,7 @@ export {
   ThemePicker,
   OrganizationPanel,
   AreaSelector,
-  fsviewer,
+  Fsviewer,
   OrganizationSelector,
+  SliderSwitch,
 }

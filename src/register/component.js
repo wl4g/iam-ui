@@ -1,4 +1,4 @@
-import { ListData, FormData, DialogInfo, Echarts, TreeTable,DragTreeTable } from 'cps/'
+import { ListData, FormData, DialogInfo, Echarts, TreeTable,DragTreeTable, SliderSwitch } from 'cps/'
 console.debug(ListData);
 
 export default {
@@ -7,6 +7,7 @@ export default {
     DialogInfo,
     TreeTable,
     DragTreeTable,
+    SliderSwitch,
     EchartsBarDefault: Echarts.Bar.Default,
     EchartsBarHorizontal: Echarts.Bar.Horizontal,
     EchartsLineDefault: Echarts.Line.Default,

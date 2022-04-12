@@ -2,7 +2,6 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
-var MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -95,10 +94,4 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new CopyWebpackPlugin([{
-      from: 'node_modules/monaco-editor/min/vs',
-      to: 'vs',
-    }]),
-  ]
 }

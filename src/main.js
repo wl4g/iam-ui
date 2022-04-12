@@ -13,33 +13,30 @@ import ElementUI from 'element-ui'
 import '../src/element-variables.scss'
 import VueClipboard from 'vue-clipboard2'
 import OrganizationSelector from './components/organization-selector';
-import fsviewer from './components/fsviewer';
+import Fsviewer from './components/fsviewer';
 import SvgIcon from './layout/left-menu/svgIcon'
 import i18n from '@/i18n/i18n'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 import '@/utils/security/sysmodules'
 import splitPane from 'vue-splitpane'
 /*toastui-editor*/
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/vue-editor';
+import {
+    Editor
+} from '@toast-ui/vue-editor';
 import '@toast-ui/editor/dist/i18n/zh-cn.js';
 
 import Contextmenu from "vue-contextmenujs"
 Vue.use(Contextmenu);
-
-// import ace from 'ace-builds'
-// Vue.use(ace)
-
 Vue.prototype.dictutil = dictutil;
 Vue.prototype.permitutil = permitutil;
 Vue.prototype.GLOBAL = globalVariable;
-Vue.use(ElementUI, { size: 'mini' });
-Vue.use(mavonEditor);
+Vue.use(ElementUI, {
+    size: 'mini'
+});
 Vue.use(VueClipboard);
 Vue.component('organization-selector', OrganizationSelector);
-Vue.component('fsviewer', fsviewer);
+Vue.component('fsviewer', Fsviewer);
 Vue.component('svg-icon', SvgIcon);
 Vue.component('split-pane', splitPane);
 Vue.component('editor', Editor);
@@ -48,8 +45,8 @@ Vue.config.productionTip = false;
 Vue.config.devtools = true;
 
 Vue.directive('tableScroll', {
-    bind (el, binding) {
-    	// el-table 内容滚动区域
+    bind(el, binding) {
+        // el-table 内容滚动区域
         const bodyWrap = el.querySelector('.el-table__body-wrapper')
         bodyWrap.addEventListener('scroll', function () {
             let sign = 0
@@ -64,7 +61,23 @@ Vue.directive('tableScroll', {
 
 
 new Promise(resolve => {
-    var iamModuleConfig = { "pluginName": "IamPlugin", "version": "v2.0.0", "modules": [{ "modName": "IamAllModule", "stable": "IAM.all.min.js", "grey": "IAM.all.js", "css_stable": "IAM.all.min.css", "css_grey": "IAM.all.css", "ratio": 100 }], "dependencies": [{ "features": ["IamAll"], "depends": ["IamAllModule"], "sync": true }] };
+    var iamModuleConfig = {
+        "pluginName": "IamPlugin",
+        "version": "v2.0.0",
+        "modules": [{
+            "modName": "IamAllModule",
+            "stable": "IAM.all.min.js",
+            "grey": "IAM.all.js",
+            "css_stable": "IAM.all.min.css",
+            "css_grey": "IAM.all.css",
+            "ratio": 100
+        }],
+        "dependencies": [{
+            "features": ["IamAll"],
+            "depends": ["IamAllModule"],
+            "sync": true
+        }]
+    };
     new LoaderJS(iamModuleConfig).use("IamAll", function () {
         console.log("******* IAM JSSDK loaded completed! *******");
         resolve()
@@ -77,7 +90,9 @@ new Promise(resolve => {
         store,
         i18n,
         template: '<App/>',
-        components: { App },
+        components: {
+            App
+        },
         beforeCreate() {
             console.debug('根组件：beforeCreate')
         },

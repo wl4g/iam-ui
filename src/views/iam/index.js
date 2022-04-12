@@ -9,6 +9,9 @@ import AboutUs from '../iam/userCenter/aboutUs/'
 import PassWord from '../iam/userCenter/passWord/'
 import AccountInfo from '../iam/userCenter/accountInfo/'
 import AccessKey from '../iam/userCenter/accessKey/'
+import RealmSetting from '../iam/userCenter/realmSetting/'
+import IdentityProviders from "./identityProviders/"
+import Events from "./events"
 
 
 export default {
@@ -22,5 +25,8 @@ export default {
     AboutUs,
     PassWord,
     AccountInfo,
-    AccessKey
+    AccessKey,
+    RealmSetting,
+    IdentityProviders,
+    Events
 }
