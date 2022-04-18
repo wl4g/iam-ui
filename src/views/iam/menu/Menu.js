@@ -140,7 +140,7 @@ export default {
                     validator: function (rule, value, callback) {
                         if (!value) {
                             callback(); // Pass
-                        } else if(this.formFields.renderTarget === '_blank' && value.indexOf('http') !== 0){
+                        } else if(value === '_blank' && value.indexOf('http') !== 0){
                             callback(new Error("_blank方式下pageLocation必须是外链，且以http或https开头"));
                         } else {
                             callback(); // Pass

@@ -1,6 +1,6 @@
 import Content from './Content.vue'
-import Home from './Home.vue'
-
+import Layout from './Layout.vue'
+import DynamicPage from "./DynamicPage.vue"
 export {
-    Home, Content
+    Layout, Content, DynamicPage
 }

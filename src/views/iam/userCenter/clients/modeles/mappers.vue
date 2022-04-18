@@ -219,7 +219,6 @@ export default {
     },
     methods:{
         addData(){
-            console.info('111111111')
             this.isShow = !this.isShow
         },
         submitForm(){

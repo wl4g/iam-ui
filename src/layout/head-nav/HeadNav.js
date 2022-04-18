@@ -78,7 +78,6 @@ export default {
     },
     mounted() {
         this.routList = cache.get('rootDeepChildRoutes');
-        console.info('111111',this.$store.state.user.userinfo)
         this.changeDisplay();
     },
     methods: {

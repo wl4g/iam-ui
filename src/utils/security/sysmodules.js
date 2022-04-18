@@ -4,7 +4,8 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import webView from '@/views/webview.vue'
-import Layout from 'layout/routeview/Home.vue'
+import Layout from 'layout/routeview/Layout.vue'
+import DynamicPage from 'layout/routeview/DynamicPage.vue'
 import Content from 'layout/routeview/Content.vue'
 import cache from '../cache'
 import i18nutil from '../../common/i18nutil'
@@ -112,6 +113,26 @@ function transform2OneChildrenRoutes(list) {
             item.path = item.routePath;
             assertMenu(item); // 校验routePath
             item.component = Layout;
+            if(item.type == '2'){ //顶级菜单为动态
+                assertMenu(item); // 校验routePath
+                item.component = DynamicPage;//顶级菜单为动态
+                
+                var expression = item.pageLocation;
+                var startIndex = expression.indexOf("${");
+                var endIndex = expression.indexOf("}");
+                if (startIndex >= 0 && endIndex > 0) {
+                    let sysModuleCache = cache.get("iamSysModules");
+                    var internelExp = expression.substring(startIndex + 2, endIndex);
+                    var parts = internelExp.split(".");
+                    var obj1 = parts[0].replaceAll("'", "").replaceAll("\"", ""); // keyof appName
+                    var obj11 = parts[1].replaceAll("'", "").replaceAll("\"", ""); // keyof extranetBaseUri
+                    item.pageLocation = sysModuleCache[obj1][obj11];
+                }
+
+                item.meta = {
+                    linkhref: item.pageLocation
+                };
+            }
             return true;
         } else {
             i++;

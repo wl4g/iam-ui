@@ -8,7 +8,7 @@ Vue.use(Router)
 
 import { Login } from 'views/'
 import { Init } from 'views/'
-import Layout from 'layout/routeview/Home.vue'
+import Layout from 'layout/routeview/Layout.vue'
 import middleware from '@/views/middleware.vue'
 
 const createRouter = () => new Router({
