@@ -5,7 +5,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import webView from '@/views/webview.vue'
 import Layout from 'layout/routeview/Layout.vue'
-import DynamicPage from 'layout/routeview/DynamicPage.vue'
 import Content from 'layout/routeview/Content.vue'
 import cache from '../cache'
 import i18nutil from '../../common/i18nutil'
@@ -81,9 +80,9 @@ function findRootParent(list, one) {
 
 // 默认指向第一个子菜单
 function processFirstRedirect(list) {
-    let findFirstChild = function (list, parentId) {
+    let findFirstChild = function (list, parentId, pageLocation) {
         let childs = list.filter(item => {
-            return item.parentId == parentId && item.type != 3;
+            return item.parentId == parentId && item.type != 3 && item.type !=2;
         });
         if (childs) {
             childs.sort(function (a, b) {
@@ -95,7 +94,7 @@ function processFirstRedirect(list) {
         }
     };
     list.forEach((item, index) => {
-        let firstChild = findFirstChild(list, item.id);
+        let firstChild = findFirstChild(list, item.id,item.pageLocation);
         if (firstChild && firstChild.routePath) {
             assertMenu(firstChild); // 校验routePath
             item.redirect = firstChild.routePath;
@@ -103,35 +102,29 @@ function processFirstRedirect(list) {
     });
 }
 
+function topDynamicMenuAddChildren(item){// 为顶级动态菜单创建子菜单
+    item.children = []
+    let parent = {}
+    parent.path = item.routePath
+    parent.component = webView
+    parent.name = item.name
+    parent.meta = {
+        linkhref: item.pageLocation
+    };
+    item.children.push(parent)
+}
+
 // 转换为只有一级childrens树
 function transform2OneChildrenRoutes(list) {
     processFirstRedirect(list);
-
     let i = 0;
     let flatOneChildRoutes = list.filter(item => {
         if (item.parentId == 0) {//顶级
             item.path = item.routePath;
             assertMenu(item); // 校验routePath
             item.component = Layout;
-            if(item.type == '2'){ //顶级菜单为动态
-                assertMenu(item); // 校验routePath
-                item.component = DynamicPage;//顶级菜单为动态
-                
-                var expression = item.pageLocation;
-                var startIndex = expression.indexOf("${");
-                var endIndex = expression.indexOf("}");
-                if (startIndex >= 0 && endIndex > 0) {
-                    let sysModuleCache = cache.get("iamSysModules");
-                    var internelExp = expression.substring(startIndex + 2, endIndex);
-                    var parts = internelExp.split(".");
-                    var obj1 = parts[0].replaceAll("'", "").replaceAll("\"", ""); // keyof appName
-                    var obj11 = parts[1].replaceAll("'", "").replaceAll("\"", ""); // keyof extranetBaseUri
-                    item.pageLocation = sysModuleCache[obj1][obj11];
-                }
-
-                item.meta = {
-                    linkhref: item.pageLocation
-                };
+            if(item.type ==2){
+                topDynamicMenuAddChildren(item)
             }
             return true;
         } else {

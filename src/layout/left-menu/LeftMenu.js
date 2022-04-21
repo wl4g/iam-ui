@@ -7,7 +7,9 @@ import SidebarItem from './SidebarItem'
 
 export default {
     name: 'left-menu',
-    components: { SidebarItem },
+    components: {
+        SidebarItem
+    },
     data() {
         return {
             permission_routes: [],
@@ -63,11 +65,18 @@ export default {
                 window.location.href = route;
             } else {
                 if (item.renderTarget && item.renderTarget == '_blank') {
-                    this.$router.push({ path: '/common/middleware', query: { url: item.meta.linkhref } })
+                    this.$router.push({
+                        path: '/common/middleware',
+                        query: {
+                            url: item.meta.linkhref
+                        }
+                    })
                 } else {
                     let base = this.$route.matched[0].path;
                     //this.$router.push({path: base + '/' + route})
-                    this.$router.push({ path: route })
+                    this.$router.push({
+                        path: route
+                    })
                 }
             }
         },
@@ -153,7 +162,9 @@ export default {
 
         // 遮罩层菜单子项点击事件
         handleRouteLinkClick(path) {
-            this.$router.push({ path: path })
+            this.$router.push({
+                path: path
+            })
             this.closeMaskLayer();
             this.lightBoxVisible = false;
         },
@@ -174,10 +185,36 @@ export default {
         },
 
         // lightbox的一级菜单点击事件
-        parentLevelMenuClick() {
+        parentLevelMenuClick(e) {
+            // start 判断当前页面是否为顶级页面动态页面，是则关闭左边菜单栏 
+            let reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+            if ((typeof e == 'string') && e.constructor == String) {
+                let [currentPage] = this.$store.state.router.routList.filter((item) => item.path == e)
+                if (reg.test(currentPage.pageLocation)) {
+                    this.$store.dispatch('set_menu_close')
+                    document.querySelector('.toggle-menu').style.display = "none"
+                } else {
+                    this.$store.dispatch('set_menu_open')
+                    document.querySelector('.toggle-menu').style.display = ""
+                }
+            } else {
+                let [currentPage] = this.$store.state.router.routList.filter((item) => item.path == window.location.hash.replace("#", ""))
+                if (currentPage && reg.test(currentPage.pageLocation)) {
+                    this.$store.dispatch('set_menu_close')
+                    document.querySelector('.toggle-menu').style.display = "none"
+                } else {
+                    this.$store.dispatch('set_menu_open')
+                    document.querySelector('.toggle-menu').style.display = ""
+                }
+            }
+            // end
             this.lightBoxVisible = false;
             this.closeMaskLayer();
-        }
+        },
+        parentLevelMenuClick1(e, val) {
+            this.lightBoxVisible = false;
+            this.closeMaskLayer();
+        },
 
     },
     created() {
