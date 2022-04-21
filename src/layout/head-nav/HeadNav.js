@@ -1,6 +1,4 @@
-import {
-    cache
-} from '../../utils/'
+import { cache } from '../../utils/'
 import i18nutil from '../../common/i18nutil'
 import ThemePicker from '../../components/theme-picker'
 import OrganizationPanel from '../../components/organization-panel'
@@ -10,7 +8,7 @@ export default {
     components: {
         'organization-panel': OrganizationPanel,
 
-        'theme-picker': ThemePicker
+        'theme-picker': ThemePicker,
     },
     data() {
         return {
@@ -19,8 +17,8 @@ export default {
             },
             lang: 'zh_CN',
             display: '',
-            userId:123123123123,
-            isHover:true,
+            userId: 123123123123,
+            isHover: true,
             dialog: {
                 show_access: false,
                 show_set: false,
@@ -30,85 +28,99 @@ export default {
                 set_info: {
                     login_style: '',
                     disabled_update_pass: [],
-                    select_users: []
+                    select_users: [],
                 },
                 user_info_rules: {
-                    old_password: [{
-                        required: true,
-                        message: '旧密码不能为空！',
-                        trigger: 'blur'
-                    }],
-                    password: [{
-                        required: true,
-                        message: '新密码不能为空！',
-                        trigger: 'blur'
-                    }, {
-                        trigger: 'blur',
-                        validator: (rule, value, callback) => {
-                            if (value === '') {
-                                callback(new Error('请再次输入密码'))
-                            } else {
-                                if (this.dialog.user_info.password !== '') {
-                                    this.$refs.user_info.validateField('password_confirm')
+                    old_password: [
+                        {
+                            required: true,
+                            message: '旧密码不能为空！',
+                            trigger: 'blur',
+                        },
+                    ],
+                    password: [
+                        {
+                            required: true,
+                            message: '新密码不能为空！',
+                            trigger: 'blur',
+                        },
+                        {
+                            trigger: 'blur',
+                            validator: (rule, value, callback) => {
+                                if (value === '') {
+                                    callback(new Error('请再次输入密码'))
+                                } else {
+                                    if (this.dialog.user_info.password !== '') {
+                                        this.$refs.user_info.validateField(
+                                            'password_confirm'
+                                        )
+                                    }
+                                    callback()
                                 }
-                                callback()
-                            }
-                        }
-                    }],
-                    password_confirm: [{
-                        required: true,
-                        message: '确认密码不能为空！',
-                        trigger: 'blur'
-                    }, {
-                        trigger: 'blur',
-                        validator: (rule, value, callback) => {
-                            if (value === '') {
-                                callback(new Error('请再次输入密码'))
-                            } else if (value !== this.dialog.user_info.password) {
-                                callback(new Error('两次输入密码不一致!'))
-                            } else {
-                                callback()
-                            }
-                        }
-                    }]
+                            },
+                        },
+                    ],
+                    password_confirm: [
+                        {
+                            required: true,
+                            message: '确认密码不能为空！',
+                            trigger: 'blur',
+                        },
+                        {
+                            trigger: 'blur',
+                            validator: (rule, value, callback) => {
+                                if (value === '') {
+                                    callback(new Error('请再次输入密码'))
+                                } else if (
+                                    value !== this.dialog.user_info.password
+                                ) {
+                                    callback(new Error('两次输入密码不一致!'))
+                                } else {
+                                    callback()
+                                }
+                            },
+                        },
+                    ],
                 },
             },
-            routList: []
+            routList: [],
         }
     },
     mounted() {
-        this.routList = cache.get('rootDeepChildRoutes');
-        this.changeDisplay();
+        this.routList = cache.get('rootDeepChildRoutes')
+        this.changeDisplay()
     },
     methods: {
-        change (e) {  // el-input框有时无法输入的问题
+        change(e) {
+            // el-input框有时无法输入的问题
             this.$forceUpdate()
         },
         getMenuName(item) {
-            return this.$i18n.locale == 'en_US' ? item.name : item.displayName;
+            return this.$i18n.locale == 'en_US' ? item.name : item.displayName
         },
         changeLang(lang) {
             if (lang) {
-                this.$i18n.locale = lang;
+                this.$i18n.locale = lang
             } else {
-                this.$i18n.locale = this.lang;
+                this.$i18n.locale = this.lang
             }
-            sessionStorage.setItem("authzPrincipalLangAttributeName", this.$i18n.locale);
-            let target = this.$route.meta;
-            document.title = i18nutil.getPageTitle(target);
+            sessionStorage.setItem(
+                'authzPrincipalLangAttributeName',
+                this.$i18n.locale
+            )
+            let target = this.$route.meta
+            document.title = i18nutil.getPageTitle(target)
             this.$$api_iam_applylocale({
                 data: {
-                    lang: this.$i18n.locale
+                    lang: this.$i18n.locale,
                 },
-                fn: data => {
-
-                },
+                fn: data => {},
             })
-            this.changeDisplay();
+            this.changeDisplay()
         },
-        changeDisplay(){
-            let lang = this.$i18n.locale;
-            this.display = i18nutil.getDisplayByLang(lang);
+        changeDisplay() {
+            let lang = this.$i18n.locale
+            this.display = i18nutil.getDisplayByLang(lang)
         },
         getUsername() {
             return cache.get('login_username')
@@ -117,24 +129,26 @@ export default {
             this.$confirm('确认安全退出登录?', '确认', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$store.dispatch('remove_userinfo').then(() => {
-                    this.$$api_iam_logout({
-                        data: {},
-                        fn: data => {
-                            cache.remove('login_username');
-                            this.$router.push('/login');
-                            location.reload();
-                        },
-                    });
-                });
-            }).catch(() => {
-                /*this.$message({
+                type: 'warning',
+            })
+                .then(() => {
+                    this.$store.dispatch('remove_userinfo').then(() => {
+                        this.$$api_iam_logout({
+                            data: {},
+                            fn: data => {
+                                cache.remove('login_username')
+                                this.$router.push('/login')
+                                location.reload()
+                            },
+                        })
+                    })
+                })
+                .catch(() => {
+                    /*this.$message({
                   type: 'info',
                   message: '已取消退出'
                 });*/
-            });
+                })
         },
 
         /**
@@ -152,8 +166,8 @@ export default {
                     this.$router.push({
                         path: '/demo/user/edit',
                         query: {
-                            id: this.$store.state.user.userinfo.id
-                        }
+                            id: this.$store.state.user.userinfo.id,
+                        },
                     })
                     break
                 case 'pass':
@@ -176,18 +190,19 @@ export default {
          * @param  {object} userinfo 当前修改密码的表单信息
          */
         updUserPass(userinfo) {
-            this.$refs[userinfo].validate((valid) => {
+            this.$refs[userinfo].validate(valid => {
                 if (valid) {
                     this.$$api_user_updatePass({
                         data: {
                             old_password: this.dialog[userinfo].old_password,
                             password: this.dialog[userinfo].password,
-                            password_confirm: this.dialog[userinfo].password_confirm
+                            password_confirm:
+                                this.dialog[userinfo].password_confirm,
                         },
                         fn: data => {
                             this.dialog.show_pass = false
                             this.$message.success('修改成功！')
-                        }
+                        },
                     })
                 }
             })
@@ -201,13 +216,17 @@ export default {
                 this.$$api_system_getSetting({
                     fn: data => {
                         if (data.setting_info.disabled_update_pass) {
-                            data.setting_info.disabled_update_pass = data.setting_info.disabled_update_pass.split(',')
+                            data.setting_info.disabled_update_pass =
+                                data.setting_info.disabled_update_pass.split(
+                                    ','
+                                )
                         } else {
                             data.setting_info.disabled_update_pass = []
                         }
-                        data.setting_info.login_style = data.setting_info.login_style + ''
+                        data.setting_info.login_style =
+                            data.setting_info.login_style + ''
                         this.dialog.set_info = data.setting_info
-                    }
+                    },
                 })
             } else {
                 this.$message.error('只有管理员才能操作！')
@@ -221,32 +240,38 @@ export default {
                 data: {
                     id: this.dialog.set_info.id,
                     login_style: this.dialog.set_info.login_style,
-                    disabled_update_pass: this.dialog.set_info.disabled_update_pass && this.dialog.set_info.disabled_update_pass.length ? this.dialog.set_info.disabled_update_pass.join(',') : ''
+                    disabled_update_pass:
+                        this.dialog.set_info.disabled_update_pass &&
+                        this.dialog.set_info.disabled_update_pass.length
+                            ? this.dialog.set_info.disabled_update_pass.join(
+                                  ','
+                              )
+                            : '',
                 },
                 fn: data => {
                     this.dialog.show_set = false
-                }
+                },
             })
         },
 
         // 左上角菜单触发切换(@mouseenter)
         toggleSidebarLightbox() {
-            let that = this.$root;
-            setTimeout(function(){
+            let that = this.$root
+            setTimeout(function () {
                 that.$store.dispatch('set_menu_open')
-                that.$emit('lightBoxVisibleChange');
-            }, 300);
+                that.$emit('lightBoxVisibleChange')
+            }, 300)
         },
         // 左上角菜单触发切换(@click)
         clickToggleSidebarLightbox() {
             this.$store.dispatch('set_menu_open')
-            this.$root.$emit('clickLightBoxVisibleChange');
+            this.$root.$emit('clickLightBoxVisibleChange')
         },
-        changeActiveBase(val){
+        changeActiveBase(val) {
             this.isHover = true
         },
-        changeActiveSave(val){
+        changeActiveSave(val) {
             this.isHover = false
-        }
-    }
+        },
+    },
 }
