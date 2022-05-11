@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ClusterManageDetail from "./detail"
+import ClusterManageDetail from "./tabs.js"
 export default ClusterManageDetail
 </script>
 

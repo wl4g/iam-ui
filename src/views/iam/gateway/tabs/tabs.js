@@ -1,7 +1,7 @@
-import routeConfig from "./routeConfig.vue"
-import serviceDiscovery from "./serviceDiscovery.vue"
-import clusterInfo from "./clusterInfo.vue"
-import monitoringInfo from "./monitoringInfo.vue"
+import routeConfig from "./route/routeList.vue"
+import serviceDiscovery from "./servicediscovery/serviceDiscovery.vue"
+import clusterInfo from "./cluster/clusterInfo.vue"
+import monitoringInfo from "./monitoring/monitoringInfo.vue"
 export default {
   name: "ClusterManageDetail",
   components: {

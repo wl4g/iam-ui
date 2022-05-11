@@ -1,4 +1,4 @@
-import { getAllEditData, getFilterOptions } from "./../../mock.js"
+import { getAllEditData, getFilterOptions } from "../../cluster/mock"
 
 function deleteNode(data) {
   //根据checked，删除对应的树节点
@@ -134,7 +134,7 @@ export default {
     this.getAllEditData = getAllEditData().gateway_routes_schema
     this.matchPredicateData = this.getAllEditData.predicates
     this.templateList =
-      require("../../../../../../../static/config/gateway/router-schema.json").data.gateway_routes_schema
+      require("../../../../../../static/config/gateway/router-schema.json").data.gateway_routes_schema
     this.templateFiltersList = this.templateList.filters
     this.predicateOptions = this.templateList.predicates
     this.changePredicateOptions()
@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     test() {
-      fetch("../../../../../../../static/config/gateway/router-schema.json")
+      fetch("../../../../../../static/config/gateway/router-schema.json")
         .then(res => res.json())
         .then(data => {
           this.templateList = data.data.gateway_routes_schema

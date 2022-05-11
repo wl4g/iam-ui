@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import { getRouteConfigTableData, getMatchPredicateData, getPredicateOptions, getFilterData, getFilterOptions, getFilterTreeData, getSelectNameOptions, getChildrenSelectNameOptions, filterValueoptions } from "../mock.js"
+import { getRouteConfigTableData, getMatchPredicateData, getPredicateOptions, getFilterData, getFilterOptions, getFilterTreeData, getSelectNameOptions, getChildrenSelectNameOptions, filterValueoptions } from "../../cluster/mock.js"
 
 function deleteNode (data) { //根据checked，删除对应的树节点
   data.forEach((item, index) => {

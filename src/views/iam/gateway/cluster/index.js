@@ -1,2 +1,2 @@
-import Cluster from "./cluster.vue"
+import Cluster from "./clusterList.vue"
 export default Cluster

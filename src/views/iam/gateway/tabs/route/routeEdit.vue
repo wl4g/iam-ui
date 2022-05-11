@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import RouteConfigEdit from "./routeConfigEdit.js";
+import RouteConfigEdit from "./routeEdit.js";
 export default RouteConfigEdit;
 </script>
 

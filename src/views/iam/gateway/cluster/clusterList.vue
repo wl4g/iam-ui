@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Cluster from "./cluster.js"
+import Cluster from "./clusterList.js"
 export default Cluster
 </script>
 
