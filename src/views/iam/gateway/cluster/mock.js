@@ -37,25 +37,91 @@ export function getRouteConfigTableData() {
   ]
   return res
 }
+export function getAllEditData() {
+  let res = {
+    gateway_routes_schema: {
+      predicates: [
+        { type: "Path", value: "Path" },
+        { type: "StripPrefix", value: "StripPrefix" },
+        { type: "RewritePath", value: "RewritePath" },
+      ],
+      filters: [
+        {
+          type: "SimpleSignAuthing",
+          args: [
+            {
+              name: "appIdExtractor",
+              value: "Parameter",
+            },
+            {
+              name: "appIdParam",
+              value: "appIdParam",
+            },
+          ],
+        },
+        {
+          type: "RequestSize",
+          args: [
+            {
+              name: "maxSize",
+              value: "10485760",
+            },
+          ],
+        },
+      ],
+    },
+  }
+  return res
+}
 export function getMatchPredicateData() {
   let res = [
-    { id: "1", predicateType: "1", value: "11111", placeholder: "11111000" },
-    { id: "2", predicateType: "2", value: "22222", placeholder: "22222000" },
+    {
+      type: "Path",
+      value: "Path",
+      placeholder: "11111000",
+    },
+    {
+      type: "StripPrefix",
+      value: "StripPrefix",
+      placeholder: "22222000",
+    },
   ]
   return res
 }
 export function getPredicateOptions() {
   let res = [
-    { predicateType: "1", value: "11111", placeholder: "11111000" },
-    { predicateType: "2", value: "22222", placeholder: "22222000" },
-    { predicateType: "3", value: "33333", placeholder: "33333000" },
+    {
+      type: "Path",
+      value: "Path",
+      placeholder: "11111000",
+    },
+    {
+      type: "StripPrefix",
+      value: "StripPrefix",
+      placeholder: "22222000",
+    },
+    {
+      type: "3",
+      value: "33333",
+      placeholder: "33333000",
+    },
   ]
   return res
 }
 export function getFilterData() {
   let res = [
-    { id: "1", filterType: "A", value: "AAAAA", placeholder: "AAAAA000" },
-    { id: "2", filterType: "B", value: "BBBBB", placeholder: "BBBBB000" },
+    {
+      id: "1",
+      type: "SimpleSignAuthing",
+      value: "AAAAA",
+      placeholder: "AAAAA000",
+    },
+    {
+      id: "2",
+      type: "IamRequestLimiter",
+      value: "BBBBB",
+      placeholder: "BBBBB000",
+    },
   ]
   return res
 }
@@ -63,7 +129,9 @@ export function getFilterOptions() {
   let res = allData().data.gatewayRoutesSchema.filters
   let res1 = []
   res.forEach(item => {
-    res1.push({ filterType: item.type })
+    res1.push({
+      type: item.type,
+    })
   })
   return res1
 }
@@ -90,6 +158,7 @@ export function filterValueoptions(parent, val) {
   console.info("11111", parent, val, res1)
   return res1
 }
+
 function formatNode(data) {
   //格式化代码
   data.forEach(item => {
@@ -106,102 +175,90 @@ function formatNode(data) {
 export function getFilterTreeData() {
   let res = [
     {
-      name: "appIdExtractor",
-      type: "enum",
+      name: "keyResolver",
+      type: "object",
       multi: "false",
-      defaultValue: "Parameter",
-      help: "",
-      options: [
+      childrens: [
         {
-          name: "Parameter",
+          name: "provider",
+          type: "object",
+          multi: "false",
+          defaultValue: "Host",
           help: "",
+          options: [
+            {
+              name: "Host",
+              help: "",
+            },
+            {
+              name: "Header",
+              help: "",
+            },
+            {
+              name: "Path",
+              help: "",
+            },
+            {
+              name: "Principal",
+              help: "",
+            },
+            {
+              name: "Interval",
+              help: "",
+            },
+          ],
         },
         {
-          name: "RouteId",
+          name: "properties",
+          type: "string",
+          multi: "false",
+          defaultValue: "500",
+          help: "",
+          childrens: [
+            {
+              name: "headerNames",
+              type: "string",
+              defaultValue:
+                "['X-Forwarded-For','Proxy-Client-IP','WL-Proxy-Client-IP']",
+              help: "",
+            },
+          ],
+        },
+      ],
+      help: "",
+    },
+    {
+      name: "limiter",
+      multi: "false",
+      type: "object",
+      childrens: [
+        {
+          name: "provider",
+          type: "string",
+          multi: "false",
+          defaultValue: "RedisRateLimiter",
+          help: "",
+          options: [
+            {
+              name: "RedisRateLimiter",
+              help: "",
+            },
+            {
+              name: "RedisQuotaLimiter",
+              help: "",
+            },
+          ],
+        },
+        {
+          name: "includeHeaders",
+          type: "boolean",
+          multi: "false",
+          defaultValue: "true",
           help: "",
         },
       ],
-    },
-    {
-      name: "appIdParam",
-      type: "string",
-      multi: "false",
-      defaultValue: "appId",
       help: "",
     },
-    {
-      name: "secretParam",
-      type: "string",
-      multi: "false",
-      defaultValue: "appSecret",
-      help: "",
-    },
-    {
-      name: "signReplayVerifyEnabled",
-      type: "boolean",
-      multi: "false",
-      defaultValue: "true",
-      help: "",
-    },
-    {
-      name: "signReplayVerifyBloomExpireSeconds",
-      type: "int",
-      multi: "false",
-      defaultValue: "604800",
-      help: "",
-    },
-    {
-      name: "signParam",
-      type: "string",
-      multi: "false",
-      defaultValue: "sign",
-      help: "",
-    },
-    // {
-    //   name: "signAlgorithm",
-    //   type: "enum",
-    //   multi: "false",
-    //   defaultValue: "Parameter",
-    //   help: "",
-    //   options: [
-    //     {
-    //       name: "MD5",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "S1",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "S256",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "S384",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "S512",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "HMD5",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "HS1",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "HS256",
-    //       help: "",
-    //     },
-    //     {
-    //       name: "HS512",
-    //       help: "",
-    //     },
-    //   ],
-    // },
   ]
   return res
 }
@@ -213,7 +270,10 @@ export function getSelectNameOptions(value) {
   console.info(res)
   let res1 = []
   res.forEach(item => {
-    res1.push({ name: item.name, type: item.type })
+    res1.push({
+      name: item.name,
+      type: item.type,
+    })
   })
   return res1
 }
@@ -230,7 +290,10 @@ export function getChildrenSelectNameOptions(
   let res1 = forEachNode(res, parentNodeName)[0].childrens
   let res3 = []
   res1.forEach(item => {
-    res3.push({ name: item.name, type: item.type })
+    res3.push({
+      name: item.name,
+      type: item.type,
+    })
   })
   return res3
 }

@@ -1,21 +1,10 @@
-import {
-  getRouteConfigTableData,
-  getMatchPredicateData,
-  getPredicateOptions,
-  getFilterData,
-  getFilterOptions,
-  getFilterTreeData,
-  getSelectNameOptions,
-  getChildrenSelectNameOptions,
-  filterValueoptions,
-} from "./../../mock.js"
+import { getAllEditData, getFilterOptions } from "./../../mock.js"
 
 function deleteNode(data) {
   //根据checked，删除对应的树节点
   data.forEach((item, index) => {
     if (item.checked) {
-      // data.splice(index, 1)
-      item._show = false
+      data.splice(index, 1)
     }
     if (item.childrens.length > 0) {
       deleteNode(item.childrens)
@@ -23,8 +12,12 @@ function deleteNode(data) {
   })
   return data
 }
+
+/**
+ * 格式化返回的json，确保tree json一定有childrens字段
+ * @param {data} tree json
+ **/
 function formatNode(data) {
-  //格式化代码
   data.forEach(item => {
     if (!item.childrens) {
       item.childrens = []
@@ -38,23 +31,78 @@ function formatNode(data) {
 }
 
 function mergeTrees(value1, value2) {
-  //合并树形数组，并判断是否显示:_show
+  // value1是请求数据 ，value2是模板数据
+  //比对树形数组，并判断是否显示加号:_show
   if (value1 != null && value2 != null) {
-    value2.forEach(item2 => {
-      item2._show =
-        value1.filter(item1 => item1.name == item2.name).length > 0
-          ? true
-          : false
-      // item2.value = value1.filter(item1 => item1.name == item2.name)[0].value
-      value1.forEach(item1 => {
-        if (item1.childrens.length > 0) {
-          mergeTrees(item1.childrens, item2.childrens)
-        }
-      })
+    value1.forEach(item1 => {
+      let newArr3 = value2.filter(item3 => item3.name == item1.name)
+      let newArr2 = value2.filter(
+        item2 => item2.name == item1.name && item2.childrens.length > 0
+      )
+      item1._show = newArr2.length > 0 ? true : false
+
+      if (newArr3.length > 0) {
+        console.info(newArr3)
+        item1.type = newArr3[0].type
+        item1.value = item1.value ? item1.value : newArr3[0].defaultValue
+      }
+      if (item1.childrens.length > 0) {
+        mergeTrees(item1.childrens, newArr2[0].childrens)
+      }
     })
   }
+  return value1
+}
 
-  return value2
+function filterChildTreeData(data, name) {
+  let res = []
+  let returnedItem //定义一个不不赋值的变量
+  let find = function (arr, name) {
+    arr.forEach(item => {
+      //利用foreach循环遍历
+      if (item.name == name) {
+        //判断递归结束条件
+        returnedItem = item
+        return item
+      } else if (item.childrens.length > 0) {
+        //判断chlidrens是否有数据
+        find(item.childrens, name) //递归调用
+      }
+    })
+  }
+  let item = find(data, name)
+  res.push(...returnedItem.childrens)
+  return res
+}
+
+function filterValueoptions(templateFiltersList, parent, val) {
+  let res = []
+  let returnedItem //定义一个不不赋值的变量
+  let find = function (templateFiltersList, val) {
+    templateFiltersList.forEach(item => {
+      //利用foreach循环遍历
+      if (item.name == val) {
+        returnedItem = item
+        return item
+      } else if (item.childrens.length > 0) {
+        find(item.childrens, val) //递归调用
+      }
+    })
+  }
+  let item = find(templateFiltersList, val)
+  res.push(...returnedItem.options)
+  return res
+}
+
+function formatOutputNode(data) {
+  data.forEach(item => {
+    delete item._show
+    delete item.type
+    if (item.childrens.length > 0) {
+      formatNode(item.childrens)
+    }
+  })
+  return data
 }
 
 export default {
@@ -75,7 +123,7 @@ export default {
         children: "childrens",
         label: "name",
       },
-      filterType: "",
+      type: "",
       dialogFilterOptions: [],
       selectFilterValueOptions: [],
       rightToolTip: "",
@@ -83,15 +131,16 @@ export default {
     }
   },
   mounted() {
-    this.matchPredicateData = getMatchPredicateData()
-    this.predicateOptionsAll = getPredicateOptions()
-    this.predicateOptions = getPredicateOptions()
-    this.templateFiltersList =
-      require("../../../../../../../static/config/gateway/router-schema.json.json").data.gateway_routes_schema.filters
-    this.filterData = getFilterData()
+    this.getAllEditData = getAllEditData().gateway_routes_schema
+    this.matchPredicateData = this.getAllEditData.predicates
+    this.templateList =
+      require("../../../../../../../static/config/gateway/router-schema.json").data.gateway_routes_schema
+    this.templateFiltersList = this.templateList.filters
+    this.predicateOptions = this.templateList.predicates
+    this.changePredicateOptions()
+    this.filterData = this.getAllEditData.filters
     this.filterOptionsAll = getFilterOptions()
-    this.filterOptions = getFilterOptions()
-    // this.filterTreeData = formatNode(getFilterTreeData())
+    this.getFilterOptions()
     this.templateFiltersList.forEach(item => {
       if (item.args) {
         formatNode(item.args)
@@ -99,25 +148,55 @@ export default {
     })
   },
   methods: {
+    test() {
+      fetch("../../../../../../../static/config/gateway/router-schema.json")
+        .then(res => res.json())
+        .then(data => {
+          this.templateList = data.data.gateway_routes_schema
+        })
+    },
     delMatchPredicate(val) {
       this.matchPredicateData.splice(val, 1)
     },
     addMatchPredicate() {
-      this.matchPredicateData.push({ predicateType: "", value: "" })
+      this.matchPredicateData.push({
+        type: "",
+        value: "",
+        placeholder: "",
+      })
+    },
+    getFilterOptions() {
+      let res1 = []
+      this.templateFiltersList.forEach(item => {
+        let newArr = this.filterData.filter(
+          item1 => item1.type == item.type && item.repeat == "false"
+        )
+        if (newArr.length == 0) {
+          res1.push({
+            type: item.type,
+          })
+        }
+      })
+      this.filterOptions = res1
     },
     changePredicateOptions() {
-      let newData = this.predicateOptionsAll
-      this.matchPredicateData.forEach(item => {
-        newData = newData.filter(
-          item1 => item1.predicateType != item.predicateType
+      let newData = []
+      this.predicateOptions.forEach(item => {
+        let newArr = this.matchPredicateData.filter(
+          item1 => item1.type == item.type && item.repeat == "false"
         )
+        if (newArr.length == 0) {
+          newData.push({
+            ...item,
+          })
+        }
       })
       this.predicateOptions = newData
     },
     queryName(row) {
       row.value = ""
       let newData = this.predicateOptionsAll.filter(
-        item => item.predicateType == row.predicateType
+        item => item.type == row.type
       )
       row.placeholder = newData[0].placeholder
     },
@@ -125,35 +204,77 @@ export default {
       this.filterData.splice(val, 1)
     },
     addFilter() {
-      this.filterData.push({ filterType: "", value: "" })
+      this.filterData.push({
+        type: "",
+        value: "",
+      })
     },
-    showValue(val) {
+    editValue(val) {
       this.drawer = true
-      this.filterType = val
-      this.filterTreeData = formatNode(getFilterTreeData())
-      this.getSelectNameOptions(this.filterTreeData)
+      this.type = val.type
+      this.filterTreeData = formatNode(val.args)
+      this.handleTreeData(this.filterTreeData)
     },
-    getSelectNameOptions(val) {
+    handleTreeData(val) {
       let res = this.templateFiltersList.filter(
-        item => item.type == this.filterType
+        item => item.type == this.type
       )[0].args
-      console.info("11111", res)
-      let res1 = []
-      res.forEach(item => {
-        res1.push({ ...item })
-      })
-      this.dialogFilterOptions = res1
       this.filterTreeData = mergeTrees(val, res)
-      this.operateDom()
-      console.info("11111filterTreeData", this.filterTreeData)
     },
-    operateDom() {
-      this.$nextTick(() => {
-        let dom = document.querySelectorAll(".notShowNode")
-        dom.forEach((item, i) => {
-          item.parentNode.parentNode.style.display = "none"
+    handleFilterKeyOptions(node, data) {
+      let res = this.templateFiltersList.filter(
+        item => item.type == this.type
+      )[0].args
+      if (node.level == 1) {
+        let res1 = []
+        res.forEach(item => {
+          let newArr = this.filterTreeData.filter(
+            item1 => item1.name == item.name && item.repeat == "false"
+          )
+          if (newArr.length == 0) {
+            res1.push({
+              ...item,
+            })
+          }
         })
-      })
+        this.dialogFilterOptions = res1
+      } else {
+        let newArr1 = filterChildTreeData(res, node.parent.data.name)
+        let newArr2 = filterChildTreeData(
+          this.filterTreeData,
+          node.parent.data.name
+        )
+        let finallArr = []
+        newArr1.forEach(item => {
+          let newArr = newArr2.filter(
+            item1 => item1.name == item.name && item.repeat == "false"
+          )
+          if (newArr.length == 0) {
+            finallArr.push({
+              ...item,
+            })
+          }
+        })
+        this.dialogFilterOptions = finallArr
+      }
+    },
+    handleFilterValueOptions(node, data) {
+      let res = this.templateFiltersList.filter(
+        item => item.type == this.type
+      )[0].args
+      if (node.level == 1) {
+        this.selectFilterValueOptions = filterValueoptions(
+          res,
+          this.type,
+          data.name
+        )
+      } else {
+        this.selectFilterValueOptions = filterValueoptions(
+          res,
+          node.parent.data.name,
+          data.name
+        )
+      }
     },
     selectFilterName(val, data) {
       let newObj = this.dialogFilterOptions.filter(item => item.name == val)[0]
@@ -161,6 +282,21 @@ export default {
       data.help = newObj.help
       data.defaultValue = newObj.defaultValue
       data.options = newObj.options
+      data.childrens = []
+      let res = this.templateFiltersList.filter(
+        item => item.type == this.type
+      )[0].args
+      this.filterTreeData = mergeTrees(this.filterTreeData, res)
+    },
+    showToolTip(node, data) {
+      if (data.defaultValue) {
+        this.handleFilterValueOptions(node, data)
+        this.rightToolTip = this.selectFilterValueOptions.filter(
+          item => item.name == data.defaultValue
+        )[0].help
+      } else {
+        this.rightToolTip = ""
+      }
     },
     delNodeData(node, data) {
       data.checked = true
@@ -190,12 +326,41 @@ export default {
       }
       this.filterTreeData.push(newObj)
     },
+    changeValue(val) {
+      console.info(val)
+    },
     handleClose(done) {
-      this.$confirm("确认关闭？")
+      this.$confirm("确认关闭？", "提示")
         .then(_ => {
           done()
         })
         .catch(_ => {})
+    },
+    commit() {
+      this.drawer = false
+      this.filterTreeData = formatOutputNode(this.filterTreeData)
+    },
+    commitAllData() {
+      console.info(this.getAllEditData)
+      fetch("http://httpbin.org/post", {
+        method: "post",
+        body: JSON.stringify({
+          ...this.getAllEditData,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (data) {
+          // return data.text();
+          return data
+        })
+        .then(function (data) {
+          console.log(data)
+        })
+      // fetch("../../../../../../../static/config/gateway/router-schema.json")
+      //   .then(res => res.json())
+      //   .then(data => console.log(data))
     },
   },
 }

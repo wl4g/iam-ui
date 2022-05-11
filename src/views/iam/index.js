@@ -12,7 +12,6 @@ import AccessKey from "../iam/userCenter/accessKey/"
 import RealmSetting from "../iam/userCenter/realmSetting/"
 import IdentityProviders from "./identityProviders/"
 import Events from "./events"
-import ClusterManageDetail from "./detail/"
 import Cluster from "./gateway/cluster/"
 
 export default {
@@ -31,5 +30,4 @@ export default {
   IdentityProviders,
   Events,
   Cluster,
-  ClusterManageDetail,
 }
