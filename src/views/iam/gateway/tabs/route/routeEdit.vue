@@ -1,76 +1,90 @@
 <template>
   <div class="routerConfig">
     <div class="drawerTitle">
-      <div class="titleName">转发策略</div>
+      <i class="el-icon-back" @click="back"></i>
+      <div class="titleName">{{headName}}</div>
       <el-tooltip placement="top">
         <div slot="content">*********</div>
         <i class="el-icon-question"></i>
       </el-tooltip>
-      <div class="subtitle">添加域名和路径转发</div>
     </div>
-    <div class="drawerContent">
-      <div class="matchPredicate">
-        <div class="matchPredicateTitle">匹配谓词</div>
-        <el-table :data="matchPredicateData" style="width: 100%">
-          <el-table-column label="谓词类型">
-            <templat slot-scope="scope">
-              <el-select v-model="scope.row.type" placeholder="请选择类型" @change="queryName(scope.row)" @click.native="changePredicateOptions">
-                <el-option v-for="item in predicateOptions" :key="item.value" :label="item.label" :value="item.type">
-                </el-option>
-              </el-select>
-            </templat>
-          </el-table-column>
-          <el-table-column label="编辑">
-            <templat slot-scope="scope">
-              <el-input v-model="scope.row.value" @change="changeValue(scope.row)" :placeholder="scope.row.placeholder"></el-input>
-            </templat>
-          </el-table-column>
-          <el-table-column label="操作" min-width="100">
-            <template slot-scope="scope">
-              <i class="el-icon-remove-outline drawer_i" @click="delMatchPredicate(scope.$index)" v-if="matchPredicateData.length > 1"></i>
-              <i class="el-icon-circle-plus-outline drawer_i" v-if="
+    <div class="directions">
+      <i class="el-icon-question"></i>
+      <div>
+        通过刷新功能，您可以删除DCDN节点上已经缓存的资源，并强制DCDN节点回源站获取最新资源，适用于源站资源更新和发布、违规资源清理、域名配置变更等；通过预热功能，您可以在业务高峰前预先将热门资源缓存到DCDN节点，降低源站压力提升用户体验。了解更多
+      </div>
+    </div>
+    <el-card class="box-card">
+      <div>
+        <div>
+          <div class="matchPredicate">
+            <div class="matchPredicateTitle">匹配谓词</div>
+            <el-table :data="matchPredicateData" style="width: 100%">
+              <el-table-column label="">
+                <templat slot-scope="scope">
+                  <el-select v-model="scope.row.type" placeholder="请选择类型" @change="queryName(scope.row)" @click.native="changePredicateOptions">
+                    <el-option v-for="item in predicateOptions" :key="item.value" :label="item.label" :value="item.type">
+                    </el-option>
+                  </el-select>
+                  <el-tooltip placement="top">
+                    <div slot="content">{{ scope.row.help }}</div>
+                    <i class="el-icon-question"></i>
+                  </el-tooltip>
+                </templat>
+              </el-table-column>
+              <el-table-column label="配置">
+                <templat slot-scope="scope" style="display:flex;align-items:center">
+                  <el-input v-model="scope.row.value" @change="changeValue(scope.row)" :placeholder="scope.row.placeholder"></el-input>
+                  <el-tooltip placement="top">
+                    <div slot="content">{{ scope.row.help }}</div>
+                    <i class="el-icon-question"></i>
+                  </el-tooltip>
+                </templat>
+              </el-table-column>
+              <el-table-column label="操作" min-width="100">
+                <template slot-scope="scope">
+                  <i class="el-icon-remove-outline drawer_i" @click="delMatchPredicate(scope.$index)" v-if="matchPredicateData.length > 1"></i>
+                  <i class="el-icon-circle-plus-outline drawer_i" v-if="
                   scope.$index == matchPredicateData.length - 1 &&
                   predicateOptions.length > 0
                 " @click="addMatchPredicate"></i>
-            </template>
-          </el-table-column>
-        </el-table>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="line"></div>
+          <div class="filter">
+            <div class="filterTitle">过滤器</div>
+            <el-table :data="filterData" style="width: 100%">
+              <el-table-column label="">
+                <templat slot-scope="scope">
+                  <el-select v-model="scope.row.type" placeholder="请选择类型" @click.native="getFilterOptions">
+                    <el-option v-for="item in filterOptions" :key="item.type" :label="item.type" :value="item.type">
+                    </el-option>
+                  </el-select>
+                  <el-tooltip placement="top">
+                    <div slot="content">{{ scope.row.help }}</div>
+                    <i class="el-icon-question"></i>
+                  </el-tooltip>
+                </templat>
+              </el-table-column>
+              <el-table-column label="操作" min-width="100">
+                <template slot-scope="scope">
+                  <i class="el-icon-remove-outline drawer_i" @click="delFilter(scope.$index)" v-if="filterData.length > 1"></i>
+                  <i class="el-icon-circle-plus-outline drawer_i" v-if="scope.$index == filterData.length - 1 && filterData.length < filterOptionsAll.length" @click="addFilter"></i>
+                  <i class="el-icon-circle-plus-outline drawer_i" v-else style="visibility:hidden"></i>
+                  <a class="table_a drawer_a" @click="editValue(scope.row)">修改</a>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="routerConfigBottom">
+            <el-button class="drawerButton" type="primary" @click="commitAllData">提交</el-button>
+          </div>
+        </div>
       </div>
-      <div class="filter">
-        <div class="filterTitle">过滤器</div>
-        <el-table :data="filterData" style="width: 100%">
-          <el-table-column label="谓词类型">
-            <templat slot-scope="scope">
-              <el-select v-model="scope.row.type" placeholder="请选择类型" @click.native="getFilterOptions">
-                <el-option v-for="item in filterOptions" :key="item.type" :label="item.type" :value="item.type">
-                </el-option>
-              </el-select>
-            </templat>
-          </el-table-column>
-          <el-table-column label="编辑">
-            <templat slot-scope="scope">
-              <el-button type="success" @click="editValue(scope.row)">修改</el-button>
-            </templat>
-          </el-table-column>
-          <el-table-column label="操作" min-width="100">
-            <template slot-scope="scope">
-              <i class="el-icon-remove-outline drawer_i" @click="delFilter(scope.$index)" v-if="filterData.length > 1"></i>
-              <i class="el-icon-circle-plus-outline drawer_i" v-if="
-                  scope.$index == filterData.length - 1 &&
-                  filterData.length < filterOptionsAll.length
-                " @click="addFilter"></i>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div class="routerConfigBottom">
-        <el-button class="drawerButton" @click="dialogVisible = false">{{
-          $t("message.common.cancel")
-        }}</el-button>
-        <el-button class="drawerButton" type="primary" @click="commitAllData">提交</el-button>
-      </div>
-    </div>
-    <el-drawer :visible.sync="drawer" :direction="direction" :before-close="handleClose" class="drawer">
+    </el-card>
+    <el-drawer :visible.sync="drawer" :direction="direction" class="drawer">
       <slot></slot>
       <div slot="title" class="drawerTitle">
         <div class="titleName">转发策略编辑</div>
@@ -120,12 +134,6 @@
         </el-tree>
         <div class="addTopNode" @click="addTopNode">+添加</div>
       </div>
-      <span class="demo-drawer__footer">
-        <el-button class="drawerButton" @click="drawer = false">{{
-          $t("message.common.cancel")
-        }}</el-button>
-        <el-button class="drawerButton" type="primary" @click="commit">确定</el-button>
-      </span>
     </el-drawer>
   </div>
 </template>
@@ -135,10 +143,18 @@ import RouteConfigEdit from "./routeEdit.js";
 export default RouteConfigEdit;
 </script>
 
-<style>
+<style scoped>
 .routerConfig {
-  height: calc(89vh - 50px);
+  margin: 18px 49px 18px 20px;
   overflow-y: auto;
+}
+.Back {
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 0;
+}
+.Back i {
+  font-size: 16px;
 }
 .drawer .el-drawer.rtl {
   width: 50% !important;
@@ -148,11 +164,13 @@ export default RouteConfigEdit;
   display: flex;
   align-items: center;
 }
+.drawerTitle i {
+  font-size: 24px;
+  padding-right: 4px;
+  cursor: pointer;
+}
 .titleName {
   font-size: 20px;
-}
-.drawerContent {
-  padding: 20px;
 }
 .drawer_content {
   height: 95%;
@@ -163,17 +181,40 @@ export default RouteConfigEdit;
   justify-content: space-around;
 }
 .drawerButton {
-  width: 46%;
   height: 34px;
 }
 i.el-tooltip.el-icon-question {
   padding-right: 5px;
 }
 .routerConfigBottom {
-  bottom: 0px;
-  position: fixed;
+  padding: 20px 0;
+  float: right;
+}
+.line {
+  width: 100%;
+  height: 2px;
+  background: rgb(224, 224, 224);
+  margin: 40px 0;
+}
+.directions {
+  margin: 0 0 18px;
+  background: #e2f2ff;
+  padding: 18px 10px;
   display: flex;
-  height: 50px;
-  right: 50px;
+}
+.directions i {
+  padding-right: 10px;
+}
+.addTopNode {
+  border: 1px dashed #dcdfe6;
+  text-align: center;
+  width: 50%;
+  height: 28px;
+  line-height: 28px;
+  margin: 3% auto;
+  cursor: pointer;
+}
+.drawer_a {
+  padding-left: 5px;
 }
 </style>

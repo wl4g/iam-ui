@@ -37,6 +37,27 @@ export function getRouteConfigTableData() {
   ]
   return res
 }
+export function getInstanceListData() {
+  let res = [
+    {
+      instanceID: "1",
+      ips: "ips",
+      lable: "lable",
+      status: "status",
+      configVersion: "configVersion",
+      monitoring: "monitoring",
+    },
+    {
+      instanceID: "2",
+      ips: "ips",
+      lable: "lable",
+      status: "status",
+      configVersion: "configVersion",
+      monitoring: "monitoring",
+    },
+  ]
+  return res
+}
 export function getAllEditData() {
   let res = {
     gateway_routes_schema: {

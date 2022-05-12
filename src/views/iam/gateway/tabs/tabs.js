@@ -2,6 +2,7 @@ import routeConfig from "./route/routeList.vue"
 import serviceDiscovery from "./servicediscovery/serviceDiscovery.vue"
 import clusterInfo from "./cluster/clusterInfo.vue"
 import monitoringInfo from "./monitoring/monitoringInfo.vue"
+import instance from "./instance/instanceList.vue"
 export default {
   name: "ClusterManageDetail",
   components: {
@@ -9,6 +10,7 @@ export default {
     routeConfig,
     serviceDiscovery,
     monitoringInfo,
+    instance,
   },
   data() {
     return {
@@ -31,6 +33,10 @@ export default {
           labelName: "监控信息",
           name: "monitoringInfo",
         },
+        {
+          labelName: "实例",
+          name: "instance",
+        },
       ],
     }
   },
@@ -43,5 +49,19 @@ export default {
     handleClick(tab, event) {
       this.currentTabComponent = tab.name
     },
+    showTabs(val) {
+      this.currentTabComponent = this.activeName = "instance"
+    },
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.query.activeName) {
+        vm.currentTabComponent = vm.activeName = to.query.activeName
+      }
+    })
+  },
+  beforeRouteLeave(to, from, next) {
+    this.currentTabComponent = this.activeName = "clusterInfo"
+    next() //允许跳转页面
   },
 }

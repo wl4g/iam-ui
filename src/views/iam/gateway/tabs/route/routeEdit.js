@@ -109,6 +109,7 @@ export default {
   name: "RouteConfigEdit",
   data() {
     return {
+      headName: "",
       drawer: false,
       direction: "rtl",
       matchPredicateData: [],
@@ -130,6 +131,18 @@ export default {
       templateList: {},
     }
   },
+  /**
+   * 监听路由进入
+   **/
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.query.pageType == "instance") {
+        vm.headName = "实例"
+      } else {
+        vm.headName = "路由转发策略"
+      }
+    })
+  },
   mounted() {
     this.getAllEditData = getAllEditData().gateway_routes_schema
     this.matchPredicateData = this.getAllEditData.predicates
@@ -148,12 +161,23 @@ export default {
     })
   },
   methods: {
-    test() {
-      fetch("../../../../../../static/config/gateway/router-schema.json")
-        .then(res => res.json())
-        .then(data => {
-          this.templateList = data.data.gateway_routes_schema
-        })
+    // test() {
+    //   fetch("../../../../../../static/config/gateway/router-schema.json")
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       this.templateList = data.data.gateway_routes_schema
+    //     })
+    // },
+    back() {
+      this.$router.push({
+        path: this.permitutil.getRoutePathByPermission(
+          "iam:securityGatewaydetail"
+        ),
+        query: {
+          id: this.$route.query.id,
+          activeName: this.$route.query.pageType,
+        },
+      })
     },
     delMatchPredicate(val) {
       this.matchPredicateData.splice(val, 1)
@@ -328,13 +352,6 @@ export default {
     },
     changeValue(val) {
       console.info(val)
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？", "提示")
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
     },
     commit() {
       this.drawer = false

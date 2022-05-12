@@ -12,32 +12,32 @@
 export default {
   name: 'app',
   components: {},
-  data() {
+  data () {
     return {}
   },
   methods: {
-    onTestRestFulApi() {
+    onTestRestFulApi () {
       this.$api_test_getArticle({
         pathParams: {
           id: 1,
         },
-        fn: () => {},
+        fn: () => { },
       })
     },
-    onUpdateTabs() {
+    onUpdateTabs () {
       this.$store.dispatch('update_tabs', {
         route: this.$route,
       })
     },
-    init() {
+    init () {
       this.onUpdateTabs()
     },
   },
-  mounted() {
+  mounted () {
     this.init()
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.init()
     },
   },
@@ -55,7 +55,7 @@ body {
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }
 
@@ -359,7 +359,7 @@ p {
   margin-top: 60px;
 }
 
-.organization-popover[x-placement^='bottom'] .popper__arrow::after {
+.organization-popover[x-placement^="bottom"] .popper__arrow::after {
   border-bottom-color: #092a47 !important;
 }
 
@@ -371,8 +371,8 @@ aside {
   display: block;
   line-height: 18px;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   color: #2c3e50;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -394,11 +394,23 @@ aside {
     margin-top: 60px;
   }
 
-  .organization-popover[x-placement^='bottom'] .popper__arrow::after {
+  .organization-popover[x-placement^="bottom"] .popper__arrow::after {
     border-bottom-color: #092a47 !important;
   }
 }
 #nprogress .bar {
   z-index: 9999 !important;
+}
+.table_a {
+  color: #52c6e8;
+  padding-right: 5px;
+  cursor: pointer;
+}
+.el-table th {
+  background: #f2f3f3 !important;
+  padding-left: 12px !important;
+}
+.el-table td {
+  padding-left: 12px !important;
 }
 </style>
