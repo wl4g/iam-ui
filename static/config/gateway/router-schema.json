@@ -5,6 +5,7 @@
   "requestId": "0000000000000000",
   "data": {
     "gateway_routes_schema": {
+      "version": "3.0.0-RC3",
       "predicates": [
         {
           "type": "Path",
@@ -23,16 +24,6 @@
           "value": {
             "type": "int",
             "regex": "(^[\\d]+)",
-            "help": ""
-          }
-        },
-        {
-          "type": "RewritePath",
-          "help": "",
-          "repeat": "false",
-          "value": {
-            "type": "string",
-            "regex": "(^/[\\S_-]+)(^,/[\\S_-]+)*",
             "help": ""
           }
         },
@@ -143,7 +134,10 @@
               "options": [
                 {
                   "name": "Parameter",
-                  "help": ""
+                  "help": {
+                    "zh_CN": "",
+                    "en_US": ""
+                  }
                 },
                 {
                   "name": "RouteId",
@@ -290,16 +284,16 @@
           ]
         },
         {
-          "type": "RequestSize",
+          "type": "IamRequestSize",
           "repeat": "false",
           "help": "",
           "args": [
             {
-              "name": "maxSize",
-              "type": "int",
+              "name": "maxBodySize",
+              "type": "string",
               "multi": "false",
               "repeat": "false",
-              "defaultValue": "10485760",
+              "defaultValue": "5MB",
               "help": ""
             }
           ]
@@ -330,10 +324,13 @@
               "type": "object",
               "multi": "false",
               "repeat": "false",
+              "help": "The available options are: (RedisQuotaLimiter|RedisRateLimiter)",
+              "defaultValue": "",
+              "options": [],
               "childrens": [
                 {
                   "name": "provider",
-                  "type": "string",
+                  "type": "enum",
                   "multi": "false",
                   "repeat": "false",
                   "defaultValue": "Host",
@@ -363,63 +360,48 @@
                 },
                 {
                   "name": "properties",
-                  "type": "int",
+                  "type": "map",
                   "multi": "false",
                   "repeat": "false",
                   "defaultValue": "500",
                   "help": "",
+                  "options": [],
                   "childrens": [
                     {
                       "name": "headerNames",
-                      "type": "string",
+                      "type": "array",
                       "repeat": "false",
                       "defaultValue": "['X-Forwarded-For','Proxy-Client-IP','WL-Proxy-Client-IP']",
-                      "help": ""
+                      "help": "",
+                      "options": [],
+                      "childrens": []
                     }
                   ]
                 }
-              ],
-              "help": ""
+              ]
             },
             {
-              "name": "limiter",
+              "name": "provider",
+              "type": "enum",
               "multi": "false",
-              "type": "object",
               "repeat": "false",
-              "childrens": [
+              "defaultValue": "RedisRateLimiter",
+              "help": "The request limiter provider",
+              "options": [
                 {
-                  "name": "provider",
-                  "type": "string",
-                  "multi": "false",
-                  "repeat": "false",
-                  "defaultValue": "RedisRateLimiter",
-                  "help": "",
-                  "options": [
-                    {
-                      "name": "RedisRateLimiter",
-                      "help": ""
-                    },
-                    {
-                      "name": "RedisQuotaLimiter",
-                      "help": ""
-                    }
-                  ]
+                  "name": "RedisRateLimiter",
+                  "help": ""
                 },
                 {
-                  "name": "includeHeaders",
-                  "type": "boolean",
-                  "multi": "false",
-                  "repeat": "false",
-                  "defaultValue": "true",
+                  "name": "RedisQuotaLimiter",
                   "help": ""
                 }
-              ],
-              "help": ""
+              ]
             }
           ]
         },
         {
-          "type": "CircuitBreaker",
+          "type": "IamCircuitBreaker",
           "repeat": "false",
           "help": "",
           "args": [
@@ -515,7 +497,7 @@
           ]
         },
         {
-          "type": "Retry",
+          "type": "IamRetry",
           "repeat": "false",
           "help": "",
           "args": [
@@ -613,6 +595,20 @@
           "args": [
             {
               "name": "RemoveResponseHeader",
+              "type": "stringWithNamedConfig",
+              "repeat": "false",
+              "defaultValue": null,
+              "help": ""
+            }
+          ]
+        },
+        {
+          "type": "RewritePath",
+          "repeat": "false",
+          "help": "",
+          "args": [
+            {
+              "name": "RewritePath",
               "type": "stringWithNamedConfig",
               "repeat": "false",
               "defaultValue": null,
@@ -886,6 +882,31 @@
                   "help": ""
                 }
               ]
+            },
+            {
+              "name": "subnets",
+              "type": "array",
+              "repeat": "false",
+              "multi": "false",
+              "help": "",
+              "childrens": [
+                {
+                  "name": "allow",
+                  "type": "boolean",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "false",
+                  "help": "The allow or deny IP subnet segments."
+                },
+                {
+                  "name": "cidrs",
+                  "type": "array",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": [],
+                  "help": "The matching subnet CIDRs"
+                }
+              ]
             }
           ]
         },
@@ -1002,7 +1023,7 @@
           ]
         },
         {
-          "name": "CacheFilter",
+          "name": "ResponseCache",
           "repeat": "false",
           "multi": "false",
           "help": "",
@@ -1015,36 +1036,74 @@
               "help": "",
               "options": [
                 {
-                  "name": "localCache",
+                  "name": "SimpleCache",
                   "help": ""
                 },
                 {
-                  "name": "redisCache",
+                  "name": "EhCache",
+                  "help": ""
+                },
+                {
+                  "name": "RedisCache",
                   "help": ""
                 }
               ]
             },
             {
-              "name": "localCache",
+              "name": "simple",
               "type": "object",
               "repeat": "false",
               "multi": "false",
               "help": "",
               "childrens": [
                 {
-                  "name": "expireMs",
+                  "name": "maximumSize",
                   "type": "int",
                   "multi": "false",
                   "repeat": "false",
-                  "defaultValue": "120000",
+                  "defaultValue": "100_000",
                   "help": ""
                 },
+                {
+                  "name": "expireAfterAccessMs",
+                  "type": "int",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "60_000",
+                  "help": ""
+                },
+                {
+                  "name": "expireAfterWriteMs",
+                  "type": "int",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "600_000",
+                  "help": ""
+                },
+                {
+                  "name": "concurrencyLevel",
+                  "type": "int",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "4",
+                  "help": ""
+                }
+              ]
+            },
+            {
+              "name": "ehcache",
+              "type": "object",
+              "repeat": "false",
+              "multi": "false",
+              "help": "",
+              "childrens": [
                 {
                   "name": "eliminationAlg",
                   "type": "enum",
                   "repeat": "false",
                   "multi": "false",
-                  "help": "",
+                  "defaultValue": "LRU",
+                  "help": "The cached data elimination algorithm.",
                   "options": [
                     {
                       "name": "LFU",
@@ -1059,22 +1118,62 @@
                       "help": ""
                     }
                   ]
+                },
+                {
+                  "name": "cacheNamePrefix",
+                  "type": "string",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "ResponseCache",
+                  "help": ""
+                },
+                {
+                  "name": "offHeapEntries",
+                  "type": "int",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "100_000",
+                  "help": ""
+                },
+                {
+                  "name": "offHeapSize",
+                  "type": "string",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "128MB",
+                  "help": "The number of data size not persisted to keep in memory. must be less than diskSize"
+                },
+                {
+                  "name": "diskSize",
+                  "type": "string",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "512MB",
+                  "help": "The number of total data size not persisted to keep in disk. must be greater than offHeapSize"
                 }
               ]
             },
             {
-              "name": "redisCache",
+              "name": "redis",
               "type": "object",
               "repeat": "false",
               "multi": "false",
               "help": "",
               "childrens": [
                 {
+                  "name": "cachePrefix",
+                  "type": "string",
+                  "multi": "false",
+                  "repeat": "false",
+                  "defaultValue": "iam:gateway:responsecache:data",
+                  "help": ""
+                },
+                {
                   "name": "expireMs",
                   "type": "int",
                   "multi": "false",
                   "repeat": "false",
-                  "defaultValue": "120000",
+                  "defaultValue": "60000",
                   "help": ""
                 }
               ]

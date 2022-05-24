@@ -81,7 +81,7 @@ export function getAllEditData() {
           ],
         },
         {
-          type: "RequestSize",
+          type: "IamRequestSize",
           args: [
             {
               name: "maxSize",

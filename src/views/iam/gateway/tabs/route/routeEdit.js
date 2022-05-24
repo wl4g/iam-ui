@@ -105,6 +105,24 @@ function formatOutputNode(data) {
   return data
 }
 
+//循环对应的id，以便修改对应的样式
+function filterDom(type, condition) {
+  let newArr = []
+  let _docc = window.document.all
+  // 遍历每一个对象
+  for (let i = 0; i < _docc.length; i++) {
+    let _dc = _docc[i]
+    // 当前标签的id的值
+    let id = _dc.getAttribute(type)
+    if (id) {
+      newArr.push(id)
+    }
+  }
+  let res = newArr.filter(item => item.search(condition) == 0)
+
+  return Array.from(new Set(res))
+}
+
 export default {
   name: "RouteConfigEdit",
   data() {
@@ -160,6 +178,7 @@ export default {
       }
     })
   },
+
   methods: {
     // test() {
     //   fetch("../../../../../../static/config/gateway/router-schema.json")
@@ -168,6 +187,18 @@ export default {
     //       this.templateList = data.data.gateway_routes_schema
     //     })
     // },
+    init() {
+      this.$nextTick(() => {
+        let newArr = filterDom("id", "fristSelect")
+        for (let i = 0; i < newArr.length; i++) {
+          $(`.${newArr[i]}`).attr("style", `width:${200 - i * 18 + "px"}`)
+          $(`#${newArr[i]}`).attr("style", `width:${200 - i * 18 + "px"}`)
+        }
+      })
+    },
+    handleNodeClick(data, obj, node) {
+      this.init()
+    },
     back() {
       this.$router.push({
         path: this.permitutil.getRoutePathByPermission(
@@ -203,6 +234,9 @@ export default {
       })
       this.filterOptions = res1
     },
+    selectTopFilterType(val) {
+      val.args = []
+    },
     changePredicateOptions() {
       let newData = []
       this.predicateOptions.forEach(item => {
@@ -230,7 +264,7 @@ export default {
     addFilter() {
       this.filterData.push({
         type: "",
-        value: "",
+        args: [],
       })
     },
     editValue(val) {
@@ -244,6 +278,10 @@ export default {
         item => item.type == this.type
       )[0].args
       this.filterTreeData = mergeTrees(val, res)
+      this.$nextTick(() => {
+        this.init()
+      })
+      console.info(this.filterTreeData)
     },
     handleFilterKeyOptions(node, data) {
       let res = this.templateFiltersList.filter(
@@ -301,16 +339,22 @@ export default {
       }
     },
     selectFilterName(val, data) {
+      console.info(data)
       let newObj = this.dialogFilterOptions.filter(item => item.name == val)[0]
+      console.info(newObj)
       data.type = newObj.type
       data.help = newObj.help
       data.defaultValue = newObj.defaultValue
+      data.value = newObj.defaultValue
       data.options = newObj.options
       data.childrens = []
+      console.info(data)
+      this.$set(data, { ...data })
       let res = this.templateFiltersList.filter(
         item => item.type == this.type
       )[0].args
       this.filterTreeData = mergeTrees(this.filterTreeData, res)
+      this.init()
     },
     showToolTip(node, data) {
       if (data.defaultValue) {
@@ -325,6 +369,8 @@ export default {
     delNodeData(node, data) {
       data.checked = true
       this.filterTreeData = deleteNode(this.filterTreeData)
+      this.$set(this.filterTreeData, this.filterTreeData)
+      console.info(this.filterTreeData)
     },
     addNodeData(node, data) {
       let newObj = {
@@ -333,10 +379,12 @@ export default {
         defaultValue: null,
         options: [],
         help: "",
-        _show: true,
+        _show: false,
       }
       if (!data.childrens) this.$set(data, "childrens", [])
       data.childrens.push(newObj)
+      this.$set(data, [...data])
+      this.init()
     },
     addTopNode() {
       let newObj = {
@@ -349,6 +397,7 @@ export default {
         childrens: [],
       }
       this.filterTreeData.push(newObj)
+      this.init()
     },
     changeValue(val) {
       console.info(val)

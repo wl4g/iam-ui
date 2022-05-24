@@ -58,7 +58,7 @@
             <el-table :data="filterData" style="width: 100%">
               <el-table-column label="">
                 <templat slot-scope="scope">
-                  <el-select v-model="scope.row.type" placeholder="请选择类型" @click.native="getFilterOptions">
+                  <el-select v-model="scope.row.type" placeholder="请选择类型" @click.native="getFilterOptions" @change="selectTopFilterType(scope.row)">
                     <el-option v-for="item in filterOptions" :key="item.type" :label="item.type" :value="item.type">
                     </el-option>
                   </el-select>
@@ -90,12 +90,12 @@
         <div class="titleName">转发策略编辑</div>
       </div>
       <div class="drawer_content">
-        <el-tree :data="filterTreeData" :props="defaultProps" node-key="index" class="dialogTree">
+        <el-tree :data="filterTreeData" :props="defaultProps" node-key="index" class="dialogTree" @node-expand="handleNodeClick">
           <span class="custom-tree-node span_item" slot-scope="{ node, data }">
             <span class="treeContent">
               <div class="treeContentLeft">
                 <!-- key -->
-                <el-select v-model="data.name" placeholder="请选择类型" @click.native="handleFilterKeyOptions(node, data)" @change="selectFilterName($event, data)">
+                <el-select v-model="data.name" placeholder="请选择类型" @click.native="handleFilterKeyOptions(node, data)" @change="selectFilterName($event, data)" :id="`fristSelect${node.level}`" :class="`fristSelect${node.level}`" :key="`fristSelect${node.id}`">
                   <el-option v-for="item in dialogFilterOptions" :key="item.name" :label="item.name" :value="item.name">
                   </el-option>
                 </el-select>
@@ -105,24 +105,27 @@
                   <i class="el-icon-question"></i>
                 </el-tooltip>
                 <!-- value start -->
+                <!-- <div v-if="data.type == 'object' "> -->
                 <!-- 多选 -->
-                <el-select v-model="data.value" collapse-tags multiple placeholder="请选择" v-if="data.muti == 'true'" @click.native="handleFilterValueOptions(node, data)">
+                <el-select v-model="data.value" collapse-tags multiple placeholder="请选择" v-if="data.muti == 'true'" class="treeItem" @click.native="handleFilterValueOptions(node, data)">
                   <el-option v-for="item in selectFilterValueOptions" :key="item.name" :label="item.name" :value="item.name">
                   </el-option>
                 </el-select>
                 <!-- 单选 -->
                 <el-select v-model="data.value" v-else-if="
-                    data.type && data.type != 'string' && data.type != 'int'
-                  " @click.native="handleFilterValueOptions(node, data)">
+                      data.type && data.type != 'string' && data.type != 'int'
+                    " @click.native="handleFilterValueOptions(node, data)" class="treeItem">
                   <el-option v-for="item in selectFilterValueOptions" :key="item.name" :label="item.name" :value="item.name">
                   </el-option>
                 </el-select>
                 <!-- 输入框 -->
-                <el-input style="width: 51%" v-else v-model="data.value" @change="changeValue(data)" :placeholder="data.help"></el-input>
+                <el-input :id="`secondGroup${node.level}`" :class="`secondGroup${node.level}`" v-else v-model="data.value" @change="changeValue(data)" :placeholder="data.help" class="treeItem"></el-input>
                 <el-tooltip placement="top" v-if="data.type != 'string'">
                   <div slot="content">{{ rightToolTip }}</div>
                   <i class="el-icon-question selectTooltip" @mouseenter="showToolTip(node, data)"></i>
                 </el-tooltip>
+
+                <!-- </div> -->
               </div>
               <div class="treeContentRight">
                 <i class="el-icon-remove-outline drawer_i" @click.stop="delNodeData(node, data)"></i>
@@ -216,5 +219,8 @@ i.el-tooltip.el-icon-question {
 }
 .drawer_a {
   padding-left: 5px;
+}
+.el-select.el-select--mini.fristSelect[n] {
+  width: n * 100px;
 }
 </style>

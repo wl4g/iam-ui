@@ -92,7 +92,7 @@ export default {
 .dialogTree .el-tree-node__content {
   height: 35px !important;
 }
-.dialogTree input {
+.dialogTree .treeItem input {
   width: 200px !important;
 }
 span.custom-tree-node.span_item {
