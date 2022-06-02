@@ -62,7 +62,7 @@ export default {
 
 <style>
 .drawer .el-drawer.rtl {
-  width: 50% !important;
+  width: 45% !important;
   color: black !important;
 }
 .drawerTitle {
@@ -86,6 +86,12 @@ export default {
   line-height: 2 !important;
   cursor: pointer;
 }
+.drawer_i_1 {
+  font-size: 16px;
+  line-height: 2 !important;
+  cursor: pointer;
+  color: #cfcaca;
+}
 .code .el-dialog {
   width: 600px !important;
 }
@@ -93,7 +99,7 @@ export default {
   height: 35px !important;
 }
 .dialogTree .treeItem input {
-  width: 200px !important;
+  width: 13vw !important;
 }
 span.custom-tree-node.span_item {
   width: 100%;
@@ -101,7 +107,7 @@ span.custom-tree-node.span_item {
 .treeContent {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 .treeContentLeft {

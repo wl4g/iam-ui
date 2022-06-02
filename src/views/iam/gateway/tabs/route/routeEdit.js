@@ -1,17 +1,5 @@
 import { getAllEditData, getFilterOptions } from "../../cluster/mock"
-
-function deleteNode(data) {
-  //根据checked，删除对应的树节点
-  data.forEach((item, index) => {
-    if (item.checked) {
-      data.splice(index, 1)
-    }
-    if (item.childrens.length > 0) {
-      deleteNode(item.childrens)
-    }
-  })
-  return data
-}
+import ResponseCacheEdit from "./strategyModules/responseCacheEdit.vue"
 
 /**
  * 格式化返回的json，确保tree json一定有childrens字段
@@ -42,9 +30,10 @@ function mergeTrees(value1, value2) {
       item1._show = newArr2.length > 0 ? true : false
 
       if (newArr3.length > 0) {
-        console.info(newArr3)
         item1.type = newArr3[0].type
+        item1.multi = newArr3[0].multi
         item1.value = item1.value ? item1.value : newArr3[0].defaultValue
+        item1.defaultValue = item1.value ? item1.value : newArr3[0].defaultValue
       }
       if (item1.childrens.length > 0) {
         mergeTrees(item1.childrens, newArr2[0].childrens)
@@ -52,6 +41,46 @@ function mergeTrees(value1, value2) {
     })
   }
   return value1
+}
+
+function mergeParentList(value1, value2, language) {
+  value1.forEach(item1 => {
+    let newArr3 = value2.filter(item3 => item3.type == item1.type)
+    if (newArr3.length > 0) {
+      item1.help =
+        language == "zh_CN" ? newArr3[0].help.zh_CN : newArr3[0].help.en_US
+      let newObj = { ...newArr3[0].value, value: item1.value }
+      item1.value = newObj
+    }
+  })
+  return value1
+}
+/**
+ *
+ * @param {data} 需要校验规则的数组
+ * @returns
+ */
+function addRule(data) {
+  let ruleobj = []
+  data.forEach((item, index) => {
+    let newArr = []
+    if (item.type) {
+      newArr.push({
+        // message: `规则value${index + 1}`,
+        message: item.value.message.zh_CN || "",
+        trigger: "blur",
+        pattern: eval(item.value.regex) || null,
+      })
+    } else {
+      newArr.push({
+        message: "",
+        trigger: "blur",
+        pattern: null,
+      })
+    }
+    ruleobj.push(newArr)
+  })
+  return ruleobj
 }
 
 function filterChildTreeData(data, name) {
@@ -98,6 +127,8 @@ function formatOutputNode(data) {
   data.forEach(item => {
     delete item._show
     delete item.type
+    delete item.multi
+    delete item.help
     if (item.childrens.length > 0) {
       formatNode(item.childrens)
     }
@@ -125,13 +156,13 @@ function filterDom(type, condition) {
 
 export default {
   name: "RouteConfigEdit",
+  components: { ResponseCacheEdit },
   data() {
     return {
       headName: "",
       drawer: false,
       direction: "rtl",
       matchPredicateData: [],
-      predicateOptionsAll: [],
       predicateOptions: [],
       filterData: [],
       filterOptionsAll: [],
@@ -147,6 +178,12 @@ export default {
       selectFilterValueOptions: [],
       rightToolTip: "",
       templateList: {},
+      paramsForm: {
+        matchPredicateData: [],
+      },
+      paramsRules: [],
+      editVisible: false,
+      responseCacheTreeData: [],
     }
   },
   /**
@@ -163,41 +200,56 @@ export default {
   },
   mounted() {
     this.getAllEditData = getAllEditData().gateway_routes_schema
-    this.matchPredicateData = this.getAllEditData.predicates
-    this.templateList =
-      require("../../../../../../static/config/gateway/router-schema.json").data.gateway_routes_schema
-    this.templateFiltersList = this.templateList.filters
-    this.predicateOptions = this.templateList.predicates
-    this.changePredicateOptions()
-    this.filterData = this.getAllEditData.filters
-    this.filterOptionsAll = getFilterOptions()
-    this.getFilterOptions()
-    this.templateFiltersList.forEach(item => {
-      if (item.args) {
-        formatNode(item.args)
-      }
-    })
+    this.getRouterSchema()
   },
 
   methods: {
-    // test() {
-    //   fetch("../../../../../../static/config/gateway/router-schema.json")
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       this.templateList = data.data.gateway_routes_schema
-    //     })
-    // },
-    init() {
+    getRouterSchema() {
+      fetch("../../../../../../static/config/gateway/router-schema.json")
+        .then(res => res.json())
+        .then(data => {
+          this.templateList = data.data.gateway_routes_schema
+          this.responseCacheTreeData = this.getAllEditData.filters.filter(
+            item => item.type == "ResponseCache"
+          )[0].strategy.ResponseCacheCleaner.paths
+          this.matchPredicateData = mergeParentList(
+            this.getAllEditData.predicates,
+            this.templateList.predicates,
+            this.$i18n.locale
+          )
+          this.paramsRules = addRule(this.matchPredicateData)
+          this.templateFiltersList = this.templateList.filters
+          this.predicateAllOptions = this.templateList.predicates
+          this.predicateOptions = this.templateList.predicates
+          this.changePredicateOptions()
+          this.filterData = mergeParentList(
+            this.getAllEditData.filters,
+            this.templateList.filters,
+            this.$i18n.locale
+          )
+          this.filterOptionsAll = getFilterOptions(this.templateFiltersList)
+          this.getFilterOptions()
+          this.templateFiltersList.forEach(item => {
+            if (item.args) {
+              formatNode(item.args)
+            }
+          })
+        })
+    },
+    initTree() {
       this.$nextTick(() => {
-        let newArr = filterDom("id", "fristSelect")
+        let newArr = filterDom("name", "fristSelect")
         for (let i = 0; i < newArr.length; i++) {
-          $(`.${newArr[i]}`).attr("style", `width:${200 - i * 18 + "px"}`)
-          $(`#${newArr[i]}`).attr("style", `width:${200 - i * 18 + "px"}`)
+          let obj = document.getElementsByClassName(`${newArr[i]}`)
+          for (let o = 0; o < obj.length; o++) {
+            obj[o].style.width = `calc(18vw - ${i * 18 + "px"})`
+          }
+          let obj1 = document.getElementsByName(`${newArr[i]}`)
+          for (let o = 0; o < obj1.length; o++) {
+            obj1[o].style.width = `calc(18vw - ${i * 18 + "px"})`
+          }
         }
       })
-    },
-    handleNodeClick(data, obj, node) {
-      this.init()
     },
     back() {
       this.$router.push({
@@ -212,13 +264,17 @@ export default {
     },
     delMatchPredicate(val) {
       this.matchPredicateData.splice(val, 1)
+      this.paramsRules = addRule(this.matchPredicateData)
     },
     addMatchPredicate() {
       this.matchPredicateData.push({
         type: "",
-        value: "",
         placeholder: "",
+        value: {
+          value: "",
+        },
       })
+      this.paramsRules = addRule(this.matchPredicateData) // TODO rules添加规则不够完善
     },
     getFilterOptions() {
       let res1 = []
@@ -232,14 +288,19 @@ export default {
           })
         }
       })
-      this.filterOptions = res1
+      this.filterOptions = res1.filter(item => item.type)
     },
     selectTopFilterType(val) {
       val.args = []
+      this.filterData = mergeParentList(
+        this.getAllEditData.filters,
+        this.templateList.filters,
+        this.$i18n.locale
+      )
     },
     changePredicateOptions() {
       let newData = []
-      this.predicateOptions.forEach(item => {
+      this.predicateAllOptions.forEach(item => {
         let newArr = this.matchPredicateData.filter(
           item1 => item1.type == item.type && item.repeat == "false"
         )
@@ -251,12 +312,22 @@ export default {
       })
       this.predicateOptions = newData
     },
-    queryName(row) {
-      row.value = ""
-      let newData = this.predicateOptionsAll.filter(
-        item => item.type == row.type
+    queryName(row, index) {
+      let that = this
+      row.value = {}
+      let newArr = []
+      that.matchPredicateData.forEach(item => {
+        newArr.push({ type: item.type, value: item.value.value || "" })
+      })
+      that.matchPredicateData = mergeParentList(
+        newArr,
+        that.templateList.predicates,
+        that.$i18n.locale
       )
-      row.placeholder = newData[0].placeholder
+      let newArr1 = addRule(that.matchPredicateData)
+      that.paramsRules[index] = []
+      that.paramsRules[index].push(...newArr1[index])
+      that.$refs[`childFrom${index}`].resetFields()
     },
     delFilter(val) {
       this.filterData.splice(val, 1)
@@ -279,9 +350,8 @@ export default {
       )[0].args
       this.filterTreeData = mergeTrees(val, res)
       this.$nextTick(() => {
-        this.init()
+        this.initTree()
       })
-      console.info(this.filterTreeData)
     },
     handleFilterKeyOptions(node, data) {
       let res = this.templateFiltersList.filter(
@@ -338,23 +408,22 @@ export default {
         )
       }
     },
+    selectTrigger(val, data) {
+      data.value = data.defaultValue
+    },
     selectFilterName(val, data) {
-      console.info(data)
       let newObj = this.dialogFilterOptions.filter(item => item.name == val)[0]
-      console.info(newObj)
       data.type = newObj.type
       data.help = newObj.help
       data.defaultValue = newObj.defaultValue
       data.value = newObj.defaultValue
       data.options = newObj.options
       data.childrens = []
-      console.info(data)
       this.$set(data, { ...data })
       let res = this.templateFiltersList.filter(
         item => item.type == this.type
       )[0].args
       this.filterTreeData = mergeTrees(this.filterTreeData, res)
-      this.init()
     },
     showToolTip(node, data) {
       if (data.defaultValue) {
@@ -367,10 +436,11 @@ export default {
       }
     },
     delNodeData(node, data) {
-      data.checked = true
-      this.filterTreeData = deleteNode(this.filterTreeData)
-      this.$set(this.filterTreeData, this.filterTreeData)
-      console.info(this.filterTreeData)
+      node.data.id = node.id
+      const parent = node.parent
+      const children = parent.data.childrens || parent.data
+      const index = children.findIndex(d => d.id && d.id === node.id)
+      children.splice(index, 1)
     },
     addNodeData(node, data) {
       let newObj = {
@@ -378,13 +448,13 @@ export default {
         type: "",
         defaultValue: null,
         options: [],
+        childrens: [],
         help: "",
         _show: false,
       }
-      if (!data.childrens) this.$set(data, "childrens", [])
-      data.childrens.push(newObj)
-      this.$set(data, [...data])
-      this.init()
+      node.data.childrens.push(newObj)
+      node.expanded = true
+      this.initTree()
     },
     addTopNode() {
       let newObj = {
@@ -397,17 +467,27 @@ export default {
         childrens: [],
       }
       this.filterTreeData.push(newObj)
-      this.init()
+      this.initTree()
     },
     changeValue(val) {
       console.info(val)
     },
-    commit() {
+    changeFilterValue(val) {
+      console.info(val)
+    },
+    showEdit() {
+      this.editVisible = true
+    },
+    handleClose() {
+      this.$refs.responseCache.synchronousData()
+      this.editVisible = false
+    },
+    processingFilterTreeData() {
       this.drawer = false
       this.filterTreeData = formatOutputNode(this.filterTreeData)
     },
     commitAllData() {
-      console.info(this.getAllEditData)
+      this.processingFilterTreeData()
       fetch("http://httpbin.org/post", {
         method: "post",
         body: JSON.stringify({
@@ -418,15 +498,11 @@ export default {
         },
       })
         .then(function (data) {
-          // return data.text();
           return data
         })
         .then(function (data) {
           console.log(data)
         })
-      // fetch("../../../../../../../static/config/gateway/router-schema.json")
-      //   .then(res => res.json())
-      //   .then(data => console.log(data))
     },
   },
 }

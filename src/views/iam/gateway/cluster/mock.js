@@ -64,7 +64,7 @@ export function getAllEditData() {
       predicates: [
         { type: "Path", value: "Path" },
         { type: "StripPrefix", value: "StripPrefix" },
-        { type: "RewritePath", value: "RewritePath" },
+        { type: "Query", value: "Query" },
       ],
       filters: [
         {
@@ -88,6 +88,103 @@ export function getAllEditData() {
               value: "10485760",
             },
           ],
+        },
+        {
+          type: "ResponseCache",
+          args: [
+            {
+              name: "maxSize",
+              value: "10485760",
+            },
+          ],
+          strategy: {
+            ResponseCacheCleaner: {
+              help: {
+                zh_CN: "",
+                en_US: "",
+              },
+              paths: [
+                {
+                  path: "/openapi",
+                  childrens: [
+                    {
+                      path: "/v1",
+                      childrens: [
+                        {
+                          path: "/device",
+                          childrens: [
+                            {
+                              path: "/info",
+                              childrens: [],
+                            },
+                            {
+                              path: "/state",
+                              childrens: [],
+                            },
+                            {
+                              path: "/config",
+                              childrens: [],
+                            },
+                            {
+                              path: "/delete",
+                              childrens: [],
+                            },
+                          ],
+                        },
+                        {
+                          path: "/marketing",
+                          childrens: [
+                            {
+                              path: "/create",
+                              childrens: [],
+                            },
+                            {
+                              path: "/list",
+                              childrens: [],
+                            },
+                            {
+                              path: "/renew",
+                              childrens: [],
+                            },
+                            {
+                              path: "/destroy",
+                              childrens: [],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      path: "/v2",
+                      childrens: [
+                        {
+                          path: "/marketing",
+                          childrens: [
+                            {
+                              path: "/create",
+                              childrens: [],
+                            },
+                            {
+                              path: "/list",
+                              childrens: [],
+                            },
+                            {
+                              path: "/renew",
+                              childrens: [],
+                            },
+                            {
+                              path: "/destroy",
+                              childrens: [],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
         },
       ],
     },
@@ -146,8 +243,8 @@ export function getFilterData() {
   ]
   return res
 }
-export function getFilterOptions() {
-  let res = allData().data.gatewayRoutesSchema.filters
+export function getFilterOptions(data) {
+  let res = data
   let res1 = []
   res.forEach(item => {
     res1.push({
@@ -172,11 +269,9 @@ function forEachNode(data, val) {
 }
 
 export function filterValueoptions(parent, val) {
-  console.info("11111part", parent, val)
   let res = allData().data.gatewayRoutesSchema.filters
   let res12 = res.filter(item => item.type == parent)[0].args
   let res1 = forEachNode(res12, val)[0].options
-  console.info("11111", parent, val, res1)
   return res1
 }
 
