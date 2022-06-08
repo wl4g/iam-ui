@@ -259,4 +259,7 @@ i.el-tooltip.el-icon-question {
   margin: 0 !important;
   padding-bottom: 18px !important;
 }
+header#el-drawer__title {
+  margin-bottom: 0px !important;
+}
 </style>
