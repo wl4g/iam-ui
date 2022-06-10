@@ -2,19 +2,23 @@
   <section>
     <div class="button_group">
       <div class="button_group_item">
-        <el-button round :class="state1 === false?'color2':'color1'" class="different" @click="getData(1)">1小时访问</el-button>
+        <el-button round :class="state1 === false?'color2':'color1'" class="different" @click="getData('OF_HOUR')">1小时访问</el-button>
       </div>
       <div class="button_group_item">
-        <el-button round :class="state2 === false?'color2':'color1'" class="different" @click="getData(2)">今日访问</el-button>
+        <el-button round :class="state2 === false?'color2':'color1'" class="different" @click="getData('OF_DAY')">今日访问</el-button>
       </div>
       <div class="button_group_item">
-        <el-button round :class="state3 === false?'color2':'color1'" class="different" @click="getData(3)">本周访问</el-button>
+        <el-button round :class="state3 === false?'color2':'color1'" class="different" @click="getData('OF_WEEK')">本周访问</el-button>
       </div>
       <div class="button_group_item">
-        <el-button round :class="state4 === false?'color2':'color1'" class="different" @click="getData(4)">本月访问</el-button>
+        <el-button round :class="state4 === false?'color2':'color1'" class="different" @click="getData('OF_MONTH')">本月访问</el-button>
       </div>
     </div>
     <div>
+      <el-button-group>
+        <el-button @click="showChart('map')" :class="mapType === 'map'?'color1':'color2'">地图</el-button>
+        <el-button @click="showChart('line')" :class="mapType === 'line'?'color1':'color2'">折线图</el-button>
+      </el-button-group>
       <chart ref="myChart" style="width: 600px; height: 400px" id="myChart" />
       <chart ref="mapChart" style="height:80vh;width:80vw" id="mapChart" />
     </div>
@@ -24,11 +28,31 @@
 import ECharts from "vue-echarts"
 import echarts from "echarts";
 import "echarts/lib/chart/line"
+import moment from 'moment'
 import { getLoginEventsData } from "../mock"
 import worldMapJson from "../../../../../static/config/geo/world.json"
 import usaJson from "../../../../../static/config/geo/usa/usa.json"
-import chinaJson from '../../../../../static/config/geo/cn/china.json'
+import chinaJson from '../../../../../static/config/geo/cn/100000.json'
 import hongkongJson from '../../../../../static/config/geo/cn/hongkong.json'
+
+function getData (val) {
+  let endDate, beginDate
+  if (val == 'OF_HOUR') {//一小时
+    endDate = `${moment().subtract(0, 'm').format('YYYY-MM-DD HH:mm:ss')}`
+    beginDate = `${moment().subtract(60, 'm').format('YYYY-MM-DD HH:mm:ss')}`;
+  } else if (val == 'OF_DAY') {//今日
+    endDate = `${moment().subtract(0, 'days').format('YYYY-MM-DD')} 23:59:59`
+    beginDate = `${moment().subtract(0, 'days').format('YYYY-MM-DD')} 00:00:00`;
+  } else if (val == 'OF_WEEK') {//本周
+    beginDate = moment().day("Monday").format("YYYY-MM-DD 00:00:00");
+    endDate = moment().day("Monday").day(+7).format("YYYY-MM-DD 23:59:59");
+  } else if (val == 'OF_MONTH') {//本月
+    beginDate = moment().startOf("month").format("YYYY-MM-DD 00:00:00");
+    endDate = moment().endOf("month").format("YYYY-MM-DD 23:59:59");
+  }
+  return { beginDate, endDate }
+}
+
 export default {
   name: 'loginEvents',
   components: {
@@ -41,6 +65,11 @@ export default {
       state2: false,
       state3: false,
       state4: false,
+      dataType: 1,
+      mapType: 'map',
+      level: "OF_COUNTRY",
+      chartJson: [],
+      oldLevel: [],
       register: {},
       option: {
         tooltip: {
@@ -140,9 +169,9 @@ export default {
         },
         series: [
           {
-            name: 'USA PopEstimates',
+            name: '访问量',
             type: 'map',
-            map: 'USA',
+            map: 'world',
             projection: {
               project: function (point) {
                 return projection(point);
@@ -154,13 +183,13 @@ export default {
             zoom: 1, //当前视角的缩放比例
             roam: true, //是否开启平游或缩放
             scaleLimit: { //滚轮缩放的极限控制
-              min: 1,
-              max: 4
+              min: 0.5,
+              max: 5
             },
             emphasis: {
               label: {
                 show: true
-              }
+              },
             },
             data: [
               {
@@ -710,6 +739,7 @@ export default {
       handler: function (nVal, oVal) {
         console.info(nVal, oVal)
         if (nVal && nVal != oVal) {
+          this.dataType == nVal
           this.getData(nVal)
         }
       },
@@ -719,168 +749,306 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
+      this.getViewsData()
       // let myChart = echarts.init(document.getElementById("myChart"));
       // myChart.setOption(this.option)
-      this.worldMap = echarts.init(document.getElementById('mapChart'));
-      echarts.registerMap('USA', worldMapJson);
-      this.worldMap.setOption(this.mapOptions)
-      // let newArr = []
-      let newArr1 = [
-        {
-          "name": "南海诸岛"
-        },
-        {
-          "name": "北京"
-        },
-        {
-          "name": "天津"
-        },
-        {
-          "name": "上海"
-        },
-        {
-          "name": "重庆"
-        },
-        {
-          "name": "河北"
-        },
-        {
-          "name": "河南"
-        },
-        {
-          "name": "云南"
-        },
-        {
-          "name": "辽宁"
-        },
-        {
-          "name": "黑龙江"
-        },
-        {
-          "name": "湖南"
-        },
-        {
-          "name": "安徽"
-        },
-        {
-          "name": "山东"
-        },
-        {
-          "name": "新疆"
-        },
-        {
-          "name": "江苏"
-        },
-        {
-          "name": "浙江"
-        },
-        {
-          "name": "江西"
-        },
-        {
-          "name": "湖北"
-        },
-        {
-          "name": "广西"
-        },
-        {
-          "name": "甘肃"
-        },
-        {
-          "name": "山西"
-        },
-        {
-          "name": "内蒙古"
-        },
-        {
-          "name": "陕西"
-        },
-        {
-          "name": "吉林"
-        },
-        {
-          "name": "福建"
-        },
-        {
-          "name": "贵州"
-        },
-        {
-          "name": "广东"
-        },
-        {
-          "name": "青海"
-        },
-        {
-          "name": "西藏"
-        },
-        {
-          "name": "四川"
-        },
-        {
-          "name": "宁夏"
-        },
-        {
-          "name": "海南"
-        },
-        {
-          "name": "台湾"
-        },
-        {
-          "name": "香港"
-        },
-        {
-          "name": "澳门"
-        }
-      ]
-      // newArr1.forEach(item => {
-      //   newArr.push({ name: item.name })
+      // this.worldMap = echarts.init(document.getElementById('mapChart'));
+      // echarts.registerMap('world', worldMapJson);
+      // this.worldMap.setOption(this.mapOptions)
+      // let newArr1 = [
+      //   {
+      //     "name": "南海诸岛"
+      //   },
+      //   {
+      //     "code": "110000", value: "99999999"
+      //   },
+      //   {
+      //     "name": "天津"
+      //   },
+      //   {
+      //     "name": "上海"
+      //   },
+      //   {
+      //     "name": "重庆"
+      //   },
+      //   {
+      //     "name": "河北"
+      //   },
+      //   {
+      //     "name": "河南"
+      //   },
+      //   {
+      //     "name": "云南"
+      //   },
+      //   {
+      //     "name": "辽宁"
+      //   },
+      //   {
+      //     "name": "黑龙江"
+      //   },
+      //   {
+      //     "name": "湖南"
+      //   },
+      //   {
+      //     "name": "安徽"
+      //   },
+      //   {
+      //     "name": "山东"
+      //   },
+      //   {
+      //     "name": "新疆"
+      //   },
+      //   {
+      //     "name": "江苏"
+      //   },
+      //   {
+      //     "name": "浙江"
+      //   },
+      //   {
+      //     "name": "江西"
+      //   },
+      //   {
+      //     "name": "湖北"
+      //   },
+      //   {
+      //     "name": "广西"
+      //   },
+      //   {
+      //     "name": "甘肃"
+      //   },
+      //   {
+      //     "name": "山西"
+      //   },
+      //   {
+      //     "name": "内蒙古"
+      //   },
+      //   {
+      //     "name": "陕西"
+      //   },
+      //   {
+      //     "name": "吉林"
+      //   },
+      //   {
+      //     "name": "福建"
+      //   },
+      //   {
+      //     "name": "贵州"
+      //   },
+      //   {
+      //     "name": "广东", value: '22222222222'
+      //   },
+      //   {
+      //     "name": "青海"
+      //   },
+      //   {
+      //     "name": "西藏"
+      //   },
+      //   {
+      //     "name": "四川"
+      //   },
+      //   {
+      //     "name": "宁夏"
+      //   },
+      //   {
+      //     "name": "海南"
+      //   },
+      //   {
+      //     "name": "台湾"
+      //   },
+      //   {
+      //     "name": "香港"
+      //   },
+      //   {
+      //     "name": "澳门"
+      //   }
+      // ]
+      // this.worldMap.on("click", param => {
+      //   echarts.registerMap(param.name, chinaJson)
+      //   this.mapOptions.series[0].data = newArr1
+      //   this.mapOptions.series[0].map = param.name
+      //   this.worldMap.setOption(this.mapOptions)
       // })
-      // console.info(newArr)
-      this.worldMap.on("click", param => {
-        console.info(param)
-        // if (param.name == "china") {
-        this.mapOptions.series[0].data = newArr1
-        this.mapOptions.series[0].map = param.name
-        echarts.registerMap(param.name, chinaJson)
-        // console.info(this.mapOptions.series[0].data)
-        this.worldMap.setOption(this.mapOptions)
-        // }
-        // if (param.name == "HK") {
-        //   this.mapOptions.series[0].data = newArr1
-        //   this.mapOptions.series[0].map = param.name
-        //   echarts.registerMap(param.name, hongkongJson)
-        //   // console.info(this.mapOptions.series[0].data)
-        //   this.worldMap.setOption(this.mapOptions)
-        // }
-      })
     })
   },
   methods: {
     getData (id) {
       switch (id) {
-        case 1:
+        case 'OF_HOUR':
           this.state1 = true
           this.state2 = false
           this.state3 = false
           this.state4 = false
           break
-        case 2:
+        case 'OF_DAY':
           this.state1 = false
           this.state2 = true
           this.state3 = false
           this.state4 = false
           break
-        case 3:
+        case 'OF_WEEK':
           this.state1 = false
           this.state2 = false
           this.state3 = true
           this.state4 = false
           break
-        case 4:
+        case 'OF_MONTH':
           this.state1 = false
           this.state2 = false
           this.state3 = false
           this.state4 = true
+          break
+      }
+      this.dataType = id
+      this.getViewsData()
+    },
+    showChart (val) {
+      this.mapType = val
+    },
+    getViewsData () {
+      let that = this
+      let param = {}
+      let data = getData(that.dataType)
+      param = { ...data, scope: that.dataType }
+      if (that.mapType == "map") {
+        param = { ...param, level: that.level }
+      }
+      fetch("http://httpbin.org/post", {
+        method: "post",
+        body: JSON.stringify({
+          ...param,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (data) {
+          return data
+        })
+        .then(function (data) {
+          if (that.level == "OF_COUNTRY") {
+            data = [
+              {
+                name: "China",
+                value: '999999',
+                adcode: '100000'
+              }
+            ]
+            that.initChart()
+            that.mapOptions.series[0].data = data
+            that.mapOptions.series[0].map = "world"
+            echarts.registerMap('world', worldMapJson);
+            that.worldMap.setOption(that.mapOptions)
+          } else if (that.level == "OF_PROVINCE") {
+            data = [
+              {
+                value: '999999',
+                adcode: '440000'
+              }
+            ]
+            that.initChart()
+            fetch("../../../../../../static/mock/gadm40_RUS_1.json")
+              .then(res => res.json())
+              .then(jsonData => {
+                echarts.registerMap(param.name, jsonData)
+                // data.forEach(item => {
+                //   let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
+                //   item.name = newArr[0].properties.name
+                // });
+                that.mapOptions.series[0].data = data
+                that.mapOptions.series[0].map = param.name
+                that.worldMap.setOption(that.mapOptions)
+              })
+          } else if (that.level == "OF_CITY") {
+            data = [
+              {
+                value: '440100',
+                adcode: '440100'
+              }
+            ]
+            that.initChart()
+            fetch("../../../../../../static/mock/get-440000.json")
+              .then(res => res.json())
+              .then(jsonData => {
+                echarts.registerMap(param.name, jsonData)
+                data.forEach(item => {
+                  let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
+                  item.name = newArr[0].properties.name
+                });
+                that.mapOptions.series[0].data = data
+                that.mapOptions.series[0].map = param.name
+                that.worldMap.setOption(that.mapOptions)
+              })
+          } else if (that.level == "OF_AREA") {
+            data = [
+              {
+                value: '440103',
+                adcode: '440103'
+              }
+            ]
+            that.initChart()
+            fetch("../../../../../../static/mock/get-440100.json")
+              .then(res => res.json())
+              .then(jsonData => {
+                echarts.registerMap(param.name, jsonData)
+                data.forEach(item => {
+                  let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
+                  item.name = newArr[0].properties.name
+                });
+                that.mapOptions.series[0].data = data
+                that.mapOptions.series[0].map = param.name
+                that.worldMap.setOption(that.mapOptions)
+              })
+          }
+          that.worldMap.off('click');
+          that.worldMap.on("click", param => {
+            console.info(param)
+            that.toNextLevel(param)
+          })
+          that.worldMap.off('georoam');
+          that.worldMap.on("georoam", param => {
+            if (that.level != "OF_COUNTRY") {
+              let option = that.worldMap.getOption();
+              let zoom = option.series[0].zoom;
+              if (zoom == 0.5) {
+                that.worldMap.off('georoam');
+                that.level = that.oldLevel.pop()
+                console.info(that.oldLevel)
+                console.info(that.level)
+                that.getViewsData()
+              }
+            }
+          })
+        })
+    },
+    initChart () {
+      this.worldMap && this.worldMap.dispose();
+      this.worldMap = echarts.init(document.getElementById('mapChart'));
+    },
+    toNextLevel (param) {
+      switch (this.level) {
+        case 'OF_COUNTRY':
+          this.oldLevel.push(this.level)
+          this.oldLevel = Array.from(new Set(this.oldLevel))
+          console.info(this.oldLevel)
+          this.level = "OF_PROVINCE"
+          this.getViewsData()
+          break
+        case 'OF_PROVINCE':
+          this.oldLevel.push(this.level)
+          this.oldLevel = Array.from(new Set(this.oldLevel))
+          console.info(this.oldLevel)
+          this.level = "OF_CITY"
+          console.info(this.level)
+          this.getViewsData()
+          break
+        case 'OF_CITY':
+          this.oldLevel.push(this.level)
+          this.oldLevel = Array.from(new Set(this.oldLevel))
+          console.info(this.oldLevel)
+          this.level = "OF_AREA"
+          this.getViewsData()
+          break
+        case 'OF_AREA':
           break
       }
     },
@@ -907,4 +1075,7 @@ export default {
   width: auto;
   height: 55vh;
 }
+/* .activeButton {
+  background: red;
+} */
 </style>
