@@ -35,7 +35,7 @@ import usaJson from "../../../../../static/config/geo/usa/usa.json"
 import chinaJson from '../../../../../static/config/geo/cn/100000.json'
 import hongkongJson from '../../../../../static/config/geo/cn/hongkong.json'
 
-function getData (val) {
+function getDataRangeParms (val) {
   let endDate, beginDate
   if (val == 'OF_HOUR') {//一小时
     endDate = `${moment().subtract(0, 'm').format('YYYY-MM-DD HH:mm:ss')}`
@@ -53,6 +53,12 @@ function getData (val) {
   return { beginDate, endDate }
 }
 
+function compare (arr1, arr2) {
+  return arr1.filter((v) => {
+    return arr2.includes(v);
+  });
+}
+
 export default {
   name: 'loginEvents',
   components: {
@@ -68,6 +74,7 @@ export default {
       dataType: 1,
       mapType: 'map',
       level: "OF_COUNTRY",
+      levelNum: '0',
       chartJson: [],
       oldLevel: [],
       register: {},
@@ -749,7 +756,7 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
-      this.getViewsData()
+      this.loadEventData()
       // let myChart = echarts.init(document.getElementById("myChart"));
       // myChart.setOption(this.option)
       // this.worldMap = echarts.init(document.getElementById('mapChart'));
@@ -899,24 +906,32 @@ export default {
           break
       }
       this.dataType = id
-      this.getViewsData()
+      this.loadEventData()
     },
     showChart (val) {
       this.mapType = val
     },
-    getViewsData () {
+    loadEventData () {
       let that = this
       let param = {}
-      let data = getData(that.dataType)
+      let data = getDataRangeParms(that.dataType)
       param = { ...data, scope: that.dataType }
       if (that.mapType == "map") {
         param = { ...param, level: that.level }
       }
-      fetch("http://httpbin.org/post", {
-        method: "post",
-        body: JSON.stringify({
-          ...param,
-        }),
+      let url = "http://httpbin.org/get"
+      if (param) {
+        let paramsArray = [];
+        //拼接参数
+        Object.keys(param).forEach(key => paramsArray.push(key + '=' + param[key]))
+        if (url.search(/\?/) === -1) {
+          url += '?' + paramsArray.join('&')
+        } else {
+          url += '&' + paramsArray.join('&')
+        }
+      }
+      fetch(url, {
+        method: "get",
         headers: {
           "Content-Type": "application/json",
         },
@@ -942,18 +957,36 @@ export default {
             data = [
               {
                 value: '999999',
-                adcode: '440000'
+                adcode: '440000',
+                name: "Республика Саха",
               }
             ]
             that.initChart()
             fetch("../../../../../../static/mock/gadm40_RUS_1.json")
               .then(res => res.json())
               .then(jsonData => {
-                echarts.registerMap(param.name, jsonData)
                 // data.forEach(item => {
                 //   let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
                 //   item.name = newArr[0].properties.name
                 // });
+
+                let jsonKeyName = Object.keys(jsonData.features[0].properties)
+                let nameArr = ["NL_NAME_", "name"]
+                let nameArr1 = []
+                console.info("this.levelNum", that.levelNum)
+                nameArr.map(item => {
+                  if (item.indexOf("_") > -1) {
+                    item = item + that.levelNum
+                  }
+                  nameArr1.push(item)
+                })
+                let sameKeyArr = compare(jsonKeyName, nameArr1)
+                if (sameKeyArr.length > 0) {
+                  jsonData.features.forEach(item => {
+                    item.properties.name = item.properties[sameKeyArr[0]]
+                  })
+                }
+                echarts.registerMap(param.name, jsonData)
                 that.mapOptions.series[0].data = data
                 that.mapOptions.series[0].map = param.name
                 that.worldMap.setOption(that.mapOptions)
@@ -1012,9 +1045,7 @@ export default {
               if (zoom == 0.5) {
                 that.worldMap.off('georoam');
                 that.level = that.oldLevel.pop()
-                console.info(that.oldLevel)
-                console.info(that.level)
-                that.getViewsData()
+                that.loadEventData()
               }
             }
           })
@@ -1031,22 +1062,25 @@ export default {
           this.oldLevel = Array.from(new Set(this.oldLevel))
           console.info(this.oldLevel)
           this.level = "OF_PROVINCE"
-          this.getViewsData()
+          this.levelNum = "1"
+          this.loadEventData()
           break
         case 'OF_PROVINCE':
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
           console.info(this.oldLevel)
           this.level = "OF_CITY"
+          this.levelNum = "2"
           console.info(this.level)
-          this.getViewsData()
+          this.loadEventData()
           break
         case 'OF_CITY':
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
           console.info(this.oldLevel)
           this.level = "OF_AREA"
-          this.getViewsData()
+          this.levelNum = "3"
+          this.loadEventData()
           break
         case 'OF_AREA':
           break
