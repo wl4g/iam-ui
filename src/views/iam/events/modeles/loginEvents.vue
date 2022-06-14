@@ -75,8 +75,10 @@ export default {
       mapType: 'map',
       level: "OF_COUNTRY",
       levelNum: '0',
+      rootName: 'world',
       chartJson: [],
       oldLevel: [],
+      oldRootName: [],
       register: {},
       option: {
         tooltip: {
@@ -917,9 +919,10 @@ export default {
       let data = getDataRangeParms(that.dataType)
       param = { ...data, scope: that.dataType }
       if (that.mapType == "map") {
-        param = { ...param, level: that.level }
+
+        param = { ...param, level: that.level, rootName: this.rootName }
       }
-      let url = "http://httpbin.org/get"
+      let url = "http://127.0.0.1:4523/m1/1109183-0-default/mock"
       if (param) {
         let paramsArray = [];
         //拼接参数
@@ -937,101 +940,60 @@ export default {
         },
       })
         .then(function (data) {
-          return data
+          return data.json()
         })
         .then(function (data) {
-          if (that.level == "OF_COUNTRY") {
-            data = [
-              {
-                name: "China",
-                value: '999999',
-                adcode: '100000'
-              }
-            ]
-            that.initChart()
-            that.mapOptions.series[0].data = data
-            that.mapOptions.series[0].map = "world"
-            echarts.registerMap('world', worldMapJson);
-            that.worldMap.setOption(that.mapOptions)
-          } else if (that.level == "OF_PROVINCE") {
-            data = [
-              {
-                value: '999999',
-                adcode: '440000',
-                name: "Республика Саха",
-              }
-            ]
-            that.initChart()
-            fetch("../../../../../../static/mock/gadm40_RUS_1.json")
-              .then(res => res.json())
-              .then(jsonData => {
-                // data.forEach(item => {
-                //   let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
-                //   item.name = newArr[0].properties.name
-                // });
 
-                let jsonKeyName = Object.keys(jsonData.features[0].properties)
-                let nameArr = ["NL_NAME_", "name"]
-                let nameArr1 = []
-                console.info("this.levelNum", that.levelNum)
-                nameArr.map(item => {
-                  if (item.indexOf("_") > -1) {
-                    item = item + that.levelNum
-                  }
-                  nameArr1.push(item)
-                })
-                let sameKeyArr = compare(jsonKeyName, nameArr1)
-                if (sameKeyArr.length > 0) {
-                  jsonData.features.forEach(item => {
-                    item.properties.name = item.properties[sameKeyArr[0]]
-                  })
+          that.initChart()
+          that.currentMapName = that.level == "OF_COUNTRY" ? "get-world" : that.currentMapName
+          fetch(`../../../../../../static/mock/${that.currentMapName}.json`)
+            .then(res => res.json())
+            .then(jsonData => {
+              console.info(jsonData)
+              // 过滤出当前市、区边界数据 start  Country/Region/City/ area 
+              if (that.currentMapName != "get-world" && that.levelNum > 1) {
+                let filterCityOrArea = jsonData.features.filter(item =>
+                  item.properties[`NAME_${that.levelNum - 1}`] == that.rootName
+                )
+                jsonData.features = []
+                jsonData.features.push(...filterCityOrArea)
+              }
+              // 过滤出当前市、区边界数据 start
+              console.info(jsonData)
+              //给json文件添加name start
+              let jsonKeyName = Object.keys(jsonData.features[0].properties)
+              let nameArr = ["NL_NAME_", "name"]
+              let nameArr1 = []
+              console.info("this.levelNum", that.levelNum)
+              nameArr.map(item => {
+                if (item.indexOf("_") > -1) {
+                  item = item + that.levelNum
                 }
-                echarts.registerMap(param.name, jsonData)
-                that.mapOptions.series[0].data = data
-                that.mapOptions.series[0].map = param.name
-                that.worldMap.setOption(that.mapOptions)
+                nameArr1.push(item)
               })
-          } else if (that.level == "OF_CITY") {
-            data = [
-              {
-                value: '440100',
-                adcode: '440100'
+              console.info(nameArr1)
+              let sameKeyArr = compare(jsonKeyName, nameArr1)
+              if (sameKeyArr.length > 0) {
+                jsonData.features.forEach(item => {
+                  item.properties.name = item.properties[sameKeyArr[0]] || item.properties[`NAME_${that.levelNum}`]
+                  console.info(item.properties.name)
+                })
               }
-            ]
-            that.initChart()
-            fetch("../../../../../../static/mock/get-440000.json")
-              .then(res => res.json())
-              .then(jsonData => {
-                echarts.registerMap(param.name, jsonData)
-                data.forEach(item => {
-                  let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
-                  item.name = newArr[0].properties.name
-                });
-                that.mapOptions.series[0].data = data
-                that.mapOptions.series[0].map = param.name
-                that.worldMap.setOption(that.mapOptions)
-              })
-          } else if (that.level == "OF_AREA") {
-            data = [
-              {
-                value: '440103',
-                adcode: '440103'
-              }
-            ]
-            that.initChart()
-            fetch("../../../../../../static/mock/get-440100.json")
-              .then(res => res.json())
-              .then(jsonData => {
-                echarts.registerMap(param.name, jsonData)
-                data.forEach(item => {
-                  let newArr = jsonData.features.filter(item1 => item1.properties.adcode == item.adcode)
-                  item.name = newArr[0].properties.name
-                });
-                that.mapOptions.series[0].data = data
-                that.mapOptions.series[0].map = param.name
-                that.worldMap.setOption(that.mapOptions)
-              })
-          }
+              //给json文件添加name end
+
+              //给数据添加name字段
+              data.data.data.forEach(item => {
+                let sameIdArr = jsonData.features.filter(item1 => item1.properties[`NAME_${that.levelNum}`] == item[`NAME_${that.levelNum}`])
+                console.info(sameIdArr)
+                item.name = sameIdArr[0].properties.name || ""
+              });
+              echarts.registerMap(param.name, jsonData)
+              that.mapOptions.series[0].data = data.data.data
+              that.mapOptions.series[0].map = param.name
+              that.worldMap.setOption(that.mapOptions)
+            })
+
+
           that.worldMap.off('click');
           that.worldMap.on("click", param => {
             console.info(param)
@@ -1056,28 +1018,39 @@ export default {
       this.worldMap = echarts.init(document.getElementById('mapChart'));
     },
     toNextLevel (param) {
+      console.info(param)
       switch (this.level) {
         case 'OF_COUNTRY':
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
           console.info(this.oldLevel)
           this.level = "OF_PROVINCE"
+          this.currentMapName = param.data.NAME_0 + "_1"
+          this.rootName = param.data.NAME_0
+          this.oldRootName.push(this.rootName)
+          // this.oldRootName = Array.from(new Set(this.rootName))
+          console.info(this.oldRootName)
           this.levelNum = "1"
           this.loadEventData()
           break
         case 'OF_PROVINCE':
           this.oldLevel.push(this.level)
-          this.oldLevel = Array.from(new Set(this.oldLevel))
+          // this.oldLevel = Array.from(new Set(this.oldLevel))
           console.info(this.oldLevel)
           this.level = "OF_CITY"
+          console.info(this.oldRootName)
+          this.currentMapName = this.oldRootName[0] + "_2"
+          this.rootName = param.data.NAME_1
+          this.oldRootName.push(this.rootName)
           this.levelNum = "2"
-          console.info(this.level)
           this.loadEventData()
           break
         case 'OF_CITY':
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
-          console.info(this.oldLevel)
+          this.currentMapName = this.oldRootName[0] + "_3"
+          this.rootName = param.data.NAME_2
+          this.oldRootName.push(this.rootName)
           this.level = "OF_AREA"
           this.levelNum = "3"
           this.loadEventData()
