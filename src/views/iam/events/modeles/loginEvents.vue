@@ -29,11 +29,6 @@ import ECharts from "vue-echarts"
 import echarts from "echarts";
 import "echarts/lib/chart/line"
 import moment from 'moment'
-import { getLoginEventsData } from "../mock"
-import worldMapJson from "../../../../../static/config/geo/world.json"
-import usaJson from "../../../../../static/config/geo/usa/usa.json"
-import chinaJson from '../../../../../static/config/geo/cn/100000.json'
-import hongkongJson from '../../../../../static/config/geo/cn/hongkong.json'
 
 function getDataRangeParms (val) {
   let endDate, beginDate
@@ -200,539 +195,7 @@ export default {
                 show: true
               },
             },
-            data: [
-              {
-                "name": "Afghanistan", value: "999999"
-              },
-              {
-                "name": "Angola"
-              },
-              {
-                "name": "Albania"
-              },
-              {
-                "name": "United Arab Emirates"
-              },
-              {
-                "name": "Argentina"
-              },
-              {
-                "name": "Armenia"
-              },
-              {
-                "name": "French Southern and Antarctic Lands"
-              },
-              {
-                "name": "Australia"
-              },
-              {
-                "name": "Austria"
-              },
-              {
-                "name": "Azerbaijan"
-              },
-              {
-                "name": "Burundi"
-              },
-              {
-                "name": "Belgium"
-              },
-              {
-                "name": "Benin"
-              },
-              {
-                "name": "Burkina Faso"
-              },
-              {
-                "name": "Bangladesh"
-              },
-              {
-                "name": "Bulgaria"
-              },
-              {
-                "name": "The Bahamas"
-              },
-              {
-                "name": "Bosnia and Herzegovina"
-              },
-              {
-                "name": "Belarus"
-              },
-              {
-                "name": "Belize"
-              },
-              {
-                "name": "Bermuda"
-              },
-              {
-                "name": "Bolivia"
-              },
-              {
-                "name": "Brazil"
-              },
-              {
-                "name": "Brunei"
-              },
-              {
-                "name": "Bhutan"
-              },
-              {
-                "name": "Botswana"
-              },
-              {
-                "name": "Central African Republic"
-              },
-              {
-                "name": "Canada"
-              },
-              {
-                "name": "Switzerland"
-              },
-              {
-                "name": "Chile"
-              },
-              {
-                "name": "China"
-              },
-              {
-                "name": "Ivory Coast"
-              },
-              {
-                "name": "Cameroon"
-              },
-              {
-                "name": "Democratic Republic of the Congo"
-              },
-              {
-                "name": "Republic of the Congo"
-              },
-              {
-                "name": "Colombia"
-              },
-              {
-                "name": "Costa Rica"
-              },
-              {
-                "name": "Cuba"
-              },
-              {
-                "name": "Northern Cyprus"
-              },
-              {
-                "name": "Cyprus"
-              },
-              {
-                "name": "Czech Republic"
-              },
-              {
-                "name": "Germany"
-              },
-              {
-                "name": "Djibouti"
-              },
-              {
-                "name": "Denmark"
-              },
-              {
-                "name": "Dominican Republic"
-              },
-              {
-                "name": "Algeria"
-              },
-              {
-                "name": "Ecuador"
-              },
-              {
-                "name": "Egypt"
-              },
-              {
-                "name": "Eritrea"
-              },
-              {
-                "name": "Spain"
-              },
-              {
-                "name": "Estonia"
-              },
-              {
-                "name": "Ethiopia"
-              },
-              {
-                "name": "Finland"
-              },
-              {
-                "name": "Fiji"
-              },
-              {
-                "name": "Falkland Islands"
-              },
-              {
-                "name": "France"
-              },
-              {
-                "name": "Gabon"
-              },
-              {
-                "name": "United Kingdom"
-              },
-              {
-                "name": "Georgia"
-              },
-              {
-                "name": "Ghana"
-              },
-              {
-                "name": "Guinea"
-              },
-              {
-                "name": "Gambia"
-              },
-              {
-                "name": "Guinea Bissau"
-              },
-              {
-                "name": "Equatorial Guinea"
-              },
-              {
-                "name": "Greece"
-              },
-              {
-                "name": "Greenland"
-              },
-              {
-                "name": "Guatemala"
-              },
-              {
-                "name": "French Guiana"
-              },
-              {
-                "name": "Guyana"
-              },
-              {
-                "name": "Honduras"
-              },
-              {
-                "name": "Croatia"
-              },
-              {
-                "name": "Haiti"
-              },
-              {
-                "name": "Hungary"
-              },
-              {
-                "name": "Indonesia"
-              },
-              {
-                "name": "India"
-              },
-              {
-                "name": "Ireland"
-              },
-              {
-                "name": "Iran"
-              },
-              {
-                "name": "Iraq"
-              },
-              {
-                "name": "Iceland"
-              },
-              {
-                "name": "Israel"
-              },
-              {
-                "name": "Italy"
-              },
-              {
-                "name": "Jamaica"
-              },
-              {
-                "name": "Jordan"
-              },
-              {
-                "name": "Japan"
-              },
-              {
-                "name": "Kazakhstan"
-              },
-              {
-                "name": "Kenya"
-              },
-              {
-                "name": "Kyrgyzstan"
-              },
-              {
-                "name": "Cambodia"
-              },
-              {
-                "name": "South Korea"
-              },
-              {
-                "name": "Kosovo"
-              },
-              {
-                "name": "Kuwait"
-              },
-              {
-                "name": "Laos"
-              },
-              {
-                "name": "Lebanon"
-              },
-              {
-                "name": "Liberia"
-              },
-              {
-                "name": "Libya"
-              },
-              {
-                "name": "Sri Lanka"
-              },
-              {
-                "name": "Lesotho"
-              },
-              {
-                "name": "Lithuania"
-              },
-              {
-                "name": "Luxembourg"
-              },
-              {
-                "name": "Latvia"
-              },
-              {
-                "name": "Morocco"
-              },
-              {
-                "name": "Moldova"
-              },
-              {
-                "name": "Madagascar"
-              },
-              {
-                "name": "Mexico"
-              },
-              {
-                "name": "Macedonia"
-              },
-              {
-                "name": "Mali"
-              },
-              {
-                "name": "Myanmar"
-              },
-              {
-                "name": "Montenegro"
-              },
-              {
-                "name": "Mongolia"
-              },
-              {
-                "name": "Mozambique"
-              },
-              {
-                "name": "Mauritania"
-              },
-              {
-                "name": "Malawi"
-              },
-              {
-                "name": "Malaysia"
-              },
-              {
-                "name": "Namibia"
-              },
-              {
-                "name": "New Caledonia"
-              },
-              {
-                "name": "Niger"
-              },
-              {
-                "name": "Nigeria"
-              },
-              {
-                "name": "Nicaragua"
-              },
-              {
-                "name": "Netherlands"
-              },
-              {
-                "name": "Norway"
-              },
-              {
-                "name": "Nepal"
-              },
-              {
-                "name": "New Zealand"
-              },
-              {
-                "name": "Oman"
-              },
-              {
-                "name": "Pakistan"
-              },
-              {
-                "name": "Panama"
-              },
-              {
-                "name": "Peru"
-              },
-              {
-                "name": "Philippines"
-              },
-              {
-                "name": "Papua New Guinea"
-              },
-              {
-                "name": "Poland"
-              },
-              {
-                "name": "Puerto Rico"
-              },
-              {
-                "name": "North Korea"
-              },
-              {
-                "name": "Portugal"
-              },
-              {
-                "name": "Paraguay"
-              },
-              {
-                "name": "Qatar"
-              },
-              {
-                "name": "Romania"
-              },
-              {
-                "name": "Russia"
-              },
-              {
-                "name": "Rwanda"
-              },
-              {
-                "name": "Western Sahara"
-              },
-              {
-                "name": "Saudi Arabia"
-              },
-              {
-                "name": "Sudan"
-              },
-              {
-                "name": "South Sudan"
-              },
-              {
-                "name": "Senegal"
-              },
-              {
-                "name": "Solomon Islands"
-              },
-              {
-                "name": "Sierra Leone"
-              },
-              {
-                "name": "El Salvador"
-              },
-              {
-                "name": "Somaliland"
-              },
-              {
-                "name": "Somalia"
-              },
-              {
-                "name": "Republic of Serbia"
-              },
-              {
-                "name": "Suriname"
-              },
-              {
-                "name": "Slovakia"
-              },
-              {
-                "name": "Slovenia"
-              },
-              {
-                "name": "Sweden"
-              },
-              {
-                "name": "Swaziland"
-              },
-              {
-                "name": "Syria"
-              },
-              {
-                "name": "Chad"
-              },
-              {
-                "name": "Togo"
-              },
-              {
-                "name": "Thailand"
-              },
-              {
-                "name": "Tajikistan"
-              },
-              {
-                "name": "Turkmenistan"
-              },
-              {
-                "name": "East Timor"
-              },
-              {
-                "name": "Trinidad and Tobago"
-              },
-              {
-                "name": "Tunisia"
-              },
-              {
-                "name": "Turkey"
-              },
-              {
-                "name": "United Republic of Tanzania"
-              },
-              {
-                "name": "Uganda"
-              },
-              {
-                "name": "Ukraine"
-              },
-              {
-                "name": "Uruguay"
-              },
-              {
-                "name": "United States of America"
-              },
-              {
-                "name": "Uzbekistan"
-              },
-              {
-                "name": "Venezuela"
-              },
-              {
-                "name": "Vietnam"
-              },
-              {
-                "name": "Vanuatu"
-              },
-              {
-                "name": "West Bank"
-              },
-              {
-                "name": "Yemen"
-              },
-              {
-                "name": "South Africa"
-              },
-              {
-                "name": "Zambia"
-              },
-              {
-                "name": "Zimbabwe"
-              }
-            ]
+            data: []
           },
         ]
       }
@@ -746,7 +209,6 @@ export default {
   watch: {
     loginEventId: {
       handler: function (nVal, oVal) {
-        console.info(nVal, oVal)
         if (nVal && nVal != oVal) {
           this.dataType == nVal
           this.getData(nVal)
@@ -759,124 +221,6 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.loadEventData()
-      // let myChart = echarts.init(document.getElementById("myChart"));
-      // myChart.setOption(this.option)
-      // this.worldMap = echarts.init(document.getElementById('mapChart'));
-      // echarts.registerMap('world', worldMapJson);
-      // this.worldMap.setOption(this.mapOptions)
-      // let newArr1 = [
-      //   {
-      //     "name": "南海诸岛"
-      //   },
-      //   {
-      //     "code": "110000", value: "99999999"
-      //   },
-      //   {
-      //     "name": "天津"
-      //   },
-      //   {
-      //     "name": "上海"
-      //   },
-      //   {
-      //     "name": "重庆"
-      //   },
-      //   {
-      //     "name": "河北"
-      //   },
-      //   {
-      //     "name": "河南"
-      //   },
-      //   {
-      //     "name": "云南"
-      //   },
-      //   {
-      //     "name": "辽宁"
-      //   },
-      //   {
-      //     "name": "黑龙江"
-      //   },
-      //   {
-      //     "name": "湖南"
-      //   },
-      //   {
-      //     "name": "安徽"
-      //   },
-      //   {
-      //     "name": "山东"
-      //   },
-      //   {
-      //     "name": "新疆"
-      //   },
-      //   {
-      //     "name": "江苏"
-      //   },
-      //   {
-      //     "name": "浙江"
-      //   },
-      //   {
-      //     "name": "江西"
-      //   },
-      //   {
-      //     "name": "湖北"
-      //   },
-      //   {
-      //     "name": "广西"
-      //   },
-      //   {
-      //     "name": "甘肃"
-      //   },
-      //   {
-      //     "name": "山西"
-      //   },
-      //   {
-      //     "name": "内蒙古"
-      //   },
-      //   {
-      //     "name": "陕西"
-      //   },
-      //   {
-      //     "name": "吉林"
-      //   },
-      //   {
-      //     "name": "福建"
-      //   },
-      //   {
-      //     "name": "贵州"
-      //   },
-      //   {
-      //     "name": "广东", value: '22222222222'
-      //   },
-      //   {
-      //     "name": "青海"
-      //   },
-      //   {
-      //     "name": "西藏"
-      //   },
-      //   {
-      //     "name": "四川"
-      //   },
-      //   {
-      //     "name": "宁夏"
-      //   },
-      //   {
-      //     "name": "海南"
-      //   },
-      //   {
-      //     "name": "台湾"
-      //   },
-      //   {
-      //     "name": "香港"
-      //   },
-      //   {
-      //     "name": "澳门"
-      //   }
-      // ]
-      // this.worldMap.on("click", param => {
-      //   echarts.registerMap(param.name, chinaJson)
-      //   this.mapOptions.series[0].data = newArr1
-      //   this.mapOptions.series[0].map = param.name
-      //   this.worldMap.setOption(this.mapOptions)
-      // })
     })
   },
   methods: {
@@ -916,10 +260,9 @@ export default {
     loadEventData () {
       let that = this
       let param = {}
-      let data = getDataRangeParms(that.dataType)
-      param = { ...data, scope: that.dataType }
+      let dataRangeParms = getDataRangeParms(that.dataType)
+      param = { ...dataRangeParms, scope: that.dataType }
       if (that.mapType == "map") {
-
         param = { ...param, level: that.level, rootName: this.rootName }
       }
       let url = "http://127.0.0.1:4523/m1/1109183-0-default/mock"
@@ -942,71 +285,71 @@ export default {
         .then(function (data) {
           return data.json()
         })
-        .then(function (data) {
-
+        .then(function (body1) {
           that.initChart()
           that.currentMapName = that.level == "OF_COUNTRY" ? "get-world" : that.currentMapName
           fetch(`../../../../../../static/mock/${that.currentMapName}.json`)
             .then(res => res.json())
-            .then(jsonData => {
-              console.info(jsonData)
+            .then(body2 => {
               // 过滤出当前市、区边界数据 start  Country/Region/City/ area 
               if (that.currentMapName != "get-world" && that.levelNum > 1) {
-                let filterCityOrArea = jsonData.features.filter(item =>
+                let filterCityOrArea = body2.features.filter(item =>
                   item.properties[`NAME_${that.levelNum - 1}`] == that.rootName
                 )
-                jsonData.features = []
-                jsonData.features.push(...filterCityOrArea)
+                body2.features = []
+                body2.features.push(...filterCityOrArea)
               }
               // 过滤出当前市、区边界数据 start
-              console.info(jsonData)
-              //给json文件添加name start
-              let jsonKeyName = Object.keys(jsonData.features[0].properties)
-              let nameArr = ["NL_NAME_", "name"]
-              let nameArr1 = []
-              console.info("this.levelNum", that.levelNum)
-              nameArr.map(item => {
-                if (item.indexOf("_") > -1) {
-                  item = item + that.levelNum
-                }
-                nameArr1.push(item)
-              })
-              console.info(nameArr1)
-              let sameKeyArr = compare(jsonKeyName, nameArr1)
-              if (sameKeyArr.length > 0) {
-                jsonData.features.forEach(item => {
-                  item.properties.name = item.properties[sameKeyArr[0]] || item.properties[`NAME_${that.levelNum}`]
-                  console.info(item.properties.name)
-                })
-              }
+
+              // 给json文件添加name start
+              // if (!body2.features[0].properties.name) {
+              //   let jsonKeyName = Object.keys(body2.features[0].properties)
+              //   let matchNameArr = ["NL_NAME_", "name"]
+              //   let natchFinalNameArr = []
+              //   matchNameArr.map(item => {
+              //     if (item.indexOf("_") > -1) {
+              //       item = item + that.levelNum
+              //     }
+              //     natchFinalNameArr.push(item)
+              //   })
+              //   let sameKeyArr = compare(jsonKeyName, natchFinalNameArr)
+              //   if (sameKeyArr.length > 0) {
+              //     body2.features.forEach(item => {
+              //       item.properties.name = item.properties[sameKeyArr[0]] || item.properties[`NAME_${that.levelNum}`]
+              //     })
+              //   }
+              // }
               //给json文件添加name end
 
               //给数据添加name字段
-              data.data.data.forEach(item => {
-                let sameIdArr = jsonData.features.filter(item1 => item1.properties[`NAME_${that.levelNum}`] == item[`NAME_${that.levelNum}`])
-                console.info(sameIdArr)
+              body1.data.geoStatis.forEach(item => {
+                let sameIdArr = body2.features.filter(item1 =>
+                  item1.properties.zipCode == item.zipCode
+                )
                 item.name = sameIdArr[0].properties.name || ""
               });
-              echarts.registerMap(param.name, jsonData)
-              that.mapOptions.series[0].data = data.data.data
+              echarts.registerMap(param.name, body2)
+              that.mapOptions.series[0].data = body1.data.geoStatis
               that.mapOptions.series[0].map = param.name
               that.worldMap.setOption(that.mapOptions)
             })
 
-
+          // 地图点击事件
           that.worldMap.off('click');
           that.worldMap.on("click", param => {
-            console.info(param)
             that.toNextLevel(param)
           })
+          // 地图缩小事件
           that.worldMap.off('georoam');
           that.worldMap.on("georoam", param => {
             if (that.level != "OF_COUNTRY") {
               let option = that.worldMap.getOption();
               let zoom = option.series[0].zoom;
               if (zoom == 0.5) {
+                if (that.level == "OF_COUNTRY") return
                 that.worldMap.off('georoam');
                 that.level = that.oldLevel.pop()
+                that.rootName = that.oldRootName.pop()
                 that.loadEventData()
               }
             }
@@ -1018,30 +361,23 @@ export default {
       this.worldMap = echarts.init(document.getElementById('mapChart'));
     },
     toNextLevel (param) {
-      console.info(param)
       switch (this.level) {
         case 'OF_COUNTRY':
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
-          console.info(this.oldLevel)
           this.level = "OF_PROVINCE"
-          this.currentMapName = param.data.NAME_0 + "_1"
-          this.rootName = param.data.NAME_0
+          this.currentMapName = param.data.zipCode + "_1"
           this.oldRootName.push(this.rootName)
-          // this.oldRootName = Array.from(new Set(this.rootName))
-          console.info(this.oldRootName)
+          this.rootName = param.data.zipCode
           this.levelNum = "1"
           this.loadEventData()
           break
         case 'OF_PROVINCE':
           this.oldLevel.push(this.level)
-          // this.oldLevel = Array.from(new Set(this.oldLevel))
-          console.info(this.oldLevel)
           this.level = "OF_CITY"
-          console.info(this.oldRootName)
           this.currentMapName = this.oldRootName[0] + "_2"
-          this.rootName = param.data.NAME_1
           this.oldRootName.push(this.rootName)
+          this.rootName = param.data.zipCode
           this.levelNum = "2"
           this.loadEventData()
           break
@@ -1049,8 +385,8 @@ export default {
           this.oldLevel.push(this.level)
           this.oldLevel = Array.from(new Set(this.oldLevel))
           this.currentMapName = this.oldRootName[0] + "_3"
-          this.rootName = param.data.NAME_2
           this.oldRootName.push(this.rootName)
+          this.rootName = param.data.zipCode
           this.level = "OF_AREA"
           this.levelNum = "3"
           this.loadEventData()
