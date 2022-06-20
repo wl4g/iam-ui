@@ -13,6 +13,7 @@ import RealmSetting from "../iam/userCenter/realmSetting/"
 import IdentityProviders from "./identityProviders/"
 import Events from "./events"
 import Cluster from "./gateway/cluster/"
+import RuleEngine from "./gateway/ruleEngine"
 
 export default {
   Online,
@@ -30,4 +31,5 @@ export default {
   IdentityProviders,
   Events,
   Cluster,
+  RuleEngine,
 }
