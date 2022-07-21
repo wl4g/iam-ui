@@ -1,0 +1,160 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  background: #f6f3f7;
+}
+.title {
+  height: 5vh;
+  line-height: 5vh;
+  display: flex;
+  align-items: center;
+  padding: 0 2vh;
+  background: #fff;
+}
+.title-img {
+  height: 2.2vh;
+  padding-right: 1.2vh;
+}
+.title-p {
+  font-size: 2.3vh;
+  font-weight: bold;
+}
+.content {
+  background: #128eea;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.transformationImg {
+  height: 4vh;
+  padding: 0 2vh;
+}
+.accountImg {
+  height: 8vh;
+  border: 1px #fff solid;
+  border-radius: 10%;
+}
+.contentAccountName {
+  color: #fff;
+  font-size: 2.2vh;
+  padding-top: 2vh;
+}
+.titleName {
+  display: flex;
+  padding: 0 2vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.titleName_p {
+  line-height: 0vh;
+}
+.line {
+  width: 100%;
+  height: 2px;
+  background: rgb(224, 224, 224);
+}
+.permission_checkBox {
+  background: #fff;
+  padding: 2vh 2vh;
+}
+.brandData {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.brandData label {
+  height: 5vh;
+  line-height: 5vh;
+  font-size: 2.2vh;
+}
+input[type="checkbox"] {
+  border: 1px solid #627bf6;
+  vertical-align: middle;
+  width: 2.2vh;
+  height: 2.2vh;
+  float: left;
+  margin-top: 1.4vh;
+  margin-right: 1vh !important;
+  border-radius: 0;
+}
+.bottom {
+  margin-top: 5vh;
+}
+.bottom-button1 {
+  width: 94%;
+  margin: 0 3%;
+  height: 6.5vh;
+  background: #128eea;
+  color: #fff;
+  border-radius: 12px;
+  border: #128eea;
+  font-size: 2.5vh;
+}
+.bottom-button2 {
+  width: 94%;
+  margin: 0 3%;
+  height: 6.5vh;
+  background: #f6f3f7;
+  color: #128eea;
+  border-radius: 12px;
+  border: #128eea;
+  font-size: 2.5vh;
+}
+.titleName_p1 {
+  display: none;
+}
+@media (min-width: 800px) {
+  body {
+    width: 50%;
+    margin: auto;
+    background: #f3f8fe;
+  }
+  .title {
+    background: #f3f8fe;
+    padding-top: 10vh;
+  }
+  .title-img {
+    display: none;
+  }
+  .title-p {
+    color: #13c6fbd6;
+    width: 100%;
+    text-align: center;
+    font-size: 5vh;
+    font-weight: 500;
+  }
+  .content {
+    background: #f3f8fe;
+  }
+  .contentAccountName {
+    color: #000;
+  }
+  .titleName,
+  .permission_checkBox {
+    background: #f3f8fe;
+    text-align: center;
+  }
+  .titleName_p {
+    line-height: 0vh;
+    font-size: 2vh;
+  }
+  .titleName_p1 {
+    display: block;
+  }
+  .bottom-button1 {
+    width: 24%;
+    margin: 0 38%;
+  }
+  .brandData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .line {
+    display: none;
+  }
+}

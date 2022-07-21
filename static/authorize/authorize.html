@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="user-scalable=0,width=device-width, initial-scale=1.0"
+    />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>商物云_授权登录</title>
+    <link href="./authorize.css" rel="stylesheet" />
+    <script type="text/javascript" src="./authorize.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+  </head>
+  <body>
+    <div class="title">
+      <img src="img/close_btn.png" class="title-img" alt="" />
+      <p class="title-p">用户授权确认</p>
+    </div>
+    <div class="content">
+      <div class="contentmain">
+        <img
+          class="accountImg"
+          src="../../../static/images/bg_icon/sina.png"
+          alt=""
+        />
+        <img class="transformationImg" src="./img//transformation.png" alt="" />
+        <img
+          class="accountImg"
+          src="../../../static/images/bg_icon/sina.png"
+          alt=""
+        />
+      </div>
+      <div class="contentAccountName">iam 账号: 1212****@qq.com</div>
+    </div>
+    <div class="titleName">
+      <p class="titleName_p titleName_p1">应用iam想要访问您的账号 user</p>
+      <p class="titleName_p titleName_p1">上述应用程序请求以下权限</p>
+      <p class="titleName_p">请审阅以下选项并勾选您同意的权限</p>
+    </div>
+    <div class="line"></div>
+    <div class="permission_checkBox">
+      <div id="brandData" class="brandData"></div>
+    </div>
+    <div class="bottom">
+      <button class="bottom-button1" onclick="btnAction()" type="button">
+        确定授权
+      </button>
+      <button class="bottom-button2" type="button">取消</button>
+    </div>
+  </body>
+</html>
