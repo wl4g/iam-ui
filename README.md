@@ -2,8 +2,8 @@
 
 1. Compile installation
 ```
-git clone https://github.com/wl4g/xcloud-dopaas-view.git # 上游最新(推荐)
-# or: git clone https://gitee.com/wl4g/xcloud-dopaas-view.git # CN大陆最快(可能延迟)
+git clone https://github.com/wl4g/iam-ui.git # 上游最新(推荐)
+# or: git clone https://gitee.com/wl4g/iam-ui.git # CN大陆最快(可能延迟)
 npm install
 # Development environment startup
 npm run dev
@@ -27,4 +27,4 @@ http://wl4g.debug
 - /node_modules Dependent package directory
 - /static Rely on static files
 
-Corresponded backend project [XCloud DoPaaS](../../../xcloud-dopaas)
+Corresponded backend project [DoPaaS](../../../xcloud-dopaas)
