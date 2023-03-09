@@ -50,7 +50,7 @@ export default {
     standaloneIamWeb: {
         cluster: 'iam-web',
     },
-    standaloneDevOpsServer: {
+    standaloneDoPaaSServer: {
         cluster: 'standalone-dopaas',
     },
     getBaseUrl: function (sysModule) {
@@ -63,7 +63,7 @@ export default {
             if (sysModule.cluster == this.iam.cluster) {
                 sysModule = this.standaloneIamWeb;
             } else {
-                sysModule = this.standaloneDevOpsServer;
+                sysModule = this.standaloneDoPaaSServer;
             }
         }
 

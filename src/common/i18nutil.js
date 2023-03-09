@@ -9,9 +9,9 @@ export default {
             pageTitle = target.displayName;
         }
         if (pageTitle) {
-            return pageTitle + ' - DevOps PaaS Platform'
+            return pageTitle + ' - DoPaaS PaaS Platform'
         } else {
-            return 'DevOps PaaS Platform'
+            return 'DoPaaS PaaS Platform'
         }
     },
     getDisplayByLang(lang) {
