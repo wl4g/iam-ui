@@ -24,63 +24,26 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 80,
+    port: 8080,
     autoOpenBrowser: false,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     devtool: 'eval-source-map',
     cacheBusting: false,
-    // @Deprecated
-    proxyTable: {
-      /*'/cmdb-manager': {
-        target: 'http://localhost:17010',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/cmdb-manager': 'cmdb-manager'
-        }
-      },
-      '/uci-server': {
-        target: 'http://localhost:17020',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/uci-server': 'uci-server'
-        }
-      },
-      '/ucm-server': {
-        target: 'http://localhost:17030',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/ucm-server': 'ucm-server'
-        }
-      },
-      '/udc-manager': {
-        target: 'http://localhost:17040',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/udc-manager': 'udc-manager'
-        }
-      },
-      '/udm-manager': {
-        target: 'http://localhost:17050',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/udm-manager': 'udm-manager'
-        }
-      },
-      '/umc-manager': {
-        target: 'http://localhost:17060',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/umc-manager': 'umc-manager'
-        }
-      },*/
-    },
-
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false
+    cssSourceMap: false,
+    proxyTable: {
+    //   '/other-service': {
+    //     target: 'http://localhost:17010',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/other-service': 'other-service'
+    //     }
+    //   },
+    },
   }
 }

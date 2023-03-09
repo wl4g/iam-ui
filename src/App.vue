@@ -13,7 +13,7 @@ export default {
   name: "app",
   components: {},
   data() {
-    return {};
+    return {}
   },
   methods: {
     onTestRestFulApi() {
@@ -22,26 +22,26 @@ export default {
           id: 1,
         },
         fn: () => {},
-      });
+      })
     },
     onUpdateTabs() {
       this.$store.dispatch("update_tabs", {
         route: this.$route,
-      });
+      })
     },
     init() {
-      this.onUpdateTabs();
+      this.onUpdateTabs()
     },
   },
   mounted() {
-    this.init();
+    this.init()
   },
   watch: {
     $route(to, from) {
-      this.init();
+      this.init()
     },
   },
-};
+}
 </script>
 
 <style lang="less">
@@ -371,8 +371,8 @@ aside {
   display: block;
   line-height: 18px;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   color: #2c3e50;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
