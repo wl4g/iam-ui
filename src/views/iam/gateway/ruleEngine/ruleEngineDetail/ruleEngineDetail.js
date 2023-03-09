@@ -1,4 +1,3 @@
-import G6 from "@antv/g6"
 import { getRuleEngineDetailList } from "../mock"
 const getStyle = type => {
   if (type <= 4) {
